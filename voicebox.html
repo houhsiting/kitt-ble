@@ -3,181 +3,285 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>*-VOICEBOX REMOTE CONTROLLER-*</title>
+<title>*-VOICEBOX REMOTE CONTROLER-*</title>
 
 <style>
 :root{
-  --bg:#0b0f14;
-  --card:#121a26;
-  --gold:#c9a24d;
-  --red:#ff3b30;
-  --text:#e6edf6;
-  --muted:#9bb0c6;
-  --ok:#36d399;
-  --shadow:0 10px 26px rgba(0,0,0,.35);
-  --radius:18px;
+  --bg:#000;
+  --panel:#070707;
+  --panel2:#0e0e0e;
+  --gold:#DAA64A;
+  --gold2:#B8933A;
+  --red:#ff0000;
+  --dim:#666;
 }
+
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);
-font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans-serif;}
-.app{max-width:980px;margin:auto;padding:16px}
+body{
+  margin:0;
+  background:#000;
+  color:#fff;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans-serif;
+}
 
-.appbar{
-  border:1px solid var(--gold);
-  border-radius:22px;
+.app{max-width:980px;margin:auto;padding:14px}
+
+.frame{
+  background:var(--panel);
+  border:1.8px solid var(--gold2);
+  border-radius:16px;
   padding:14px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  box-shadow:var(--shadow);
-}
-h1{margin:0;font-size:18px}
-
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
-@media(max-width:800px){.grid{grid-template-columns:1fr}}
-
-.card{
-  border:1px solid var(--gold);
-  border-radius:var(--radius);
-  padding:14px;
-  background:var(--card);
-  box-shadow:var(--shadow);
-}
-h2{margin:0 0 12px;font-size:14px;color:var(--gold)}
-
-.modeGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-@media(max-width:520px){.modeGrid{grid-template-columns:repeat(2,1fr)}}
-
-.modeBtn{
-  height:44px;border-radius:16px;border:1px solid #333;
-  background:#1a2230;color:var(--text);font-size:12px;
-}
-.modeBtn small{display:block;font-size:10px;color:var(--muted)}
-.modeBtn.selected{
-  border:2px solid var(--red);
-  box-shadow:0 0 0 6px rgba(255,59,48,.2);
+  margin-bottom:12px;
+  box-shadow:
+    0 10px 18px #000,
+    0 0 24px rgba(184,147,58,.25);
 }
 
-.toolbar{display:flex;gap:10px}
+.center{text-align:center}
+
+.pill{
+  display:inline-block;
+  padding:8px 14px;
+  border-radius:999px;
+  border:1.4px solid var(--gold);
+  background:var(--panel2);
+  color:var(--gold);
+  font-weight:900;
+  letter-spacing:1.2px;
+  font-size:12px;
+}
+
+h2{
+  margin:0 0 6px;
+  font-size:13px;
+  letter-spacing:1.6px;
+  color:var(--gold);
+}
+
+.sub{
+  font-size:11px;
+  color:var(--gold2);
+  letter-spacing:1.1px;
+  margin-bottom:10px;
+}
+
 .btn{
-  height:40px;border-radius:14px;border:1px solid var(--gold);
-  background:#1a2230;color:var(--text);cursor:pointer;
+  border-radius:16px;
+  height:74px;
+  border:1.8px solid var(--gold2);
+  background:linear-gradient(135deg,#1b1200,#0a0a0a);
+  color:var(--gold);
+  font-weight:900;
+  letter-spacing:.8px;
+  cursor:pointer;
+  position:relative;
 }
-.btn.primary{background:linear-gradient(180deg,#3a2f15,#1a2230)}
-.btn.danger{border-color:var(--red)}
 
-.log{
-  background:#05080c;border-radius:12px;height:200px;
-  overflow:auto;padding:10px;font-size:12px;color:#9bd;
+.btn:disabled{
+  border-color:#2e2e2e;
+  color:#666;
+  cursor:default;
+}
+
+.btn.active{
+  border:2.6px solid var(--red);
+  box-shadow:
+    0 0 18px rgba(255,0,0,.5),
+    0 0 42px rgba(255,0,0,.35);
+}
+
+.row{display:flex;gap:10px}
+
+.modeRow{margin-bottom:10px}
+
+.modeBig{height:90px}
+
+.scanbar{
+  display:flex;
+  justify-content:center;
+  gap:4px;
+  margin:10px 0;
+}
+.scanbar div{
+  width:26px;
+  height:12px;
+  border-radius:4px;
+  border:1px solid #2a0a0a;
+  background:#140000;
+}
+.scanbar .on{
+  background:linear-gradient(#ff3a3a,#7a0000);
+  border-color:#ff8a8a;
+  box-shadow:0 0 18px #f00;
+}
+
+.list{
+  background:#050505;
+  border:1.3px solid var(--gold2);
+  border-radius:14px;
+  max-height:320px;
+  overflow:auto;
+}
+
+.item{
+  padding:10px;
+  margin:6px;
+  border-radius:12px;
+  border:1px solid #303030;
+  cursor:pointer;
+}
+.item.sel{
+  border-color:var(--red);
+  box-shadow:0 0 18px rgba(255,0,0,.4);
+}
+
+.footer{
+  text-align:center;
+  font-size:10px;
+  color:#666;
+  letter-spacing:1.2px;
+  margin-top:16px;
 }
 </style>
 </head>
 
 <body>
 <div class="app">
-<div class="appbar">
-<h1>*-VOICEBOX REMOTE CONTROLLER-*</h1>
-<div id="connState">DISCONNECTED</div>
+
+<!-- HEADER -->
+<div class="frame center">
+  <span class="pill">*-VOICEBOX REMOTE CONTROLER-*</span>
 </div>
 
-<div class="grid">
-
-<div class="card">
-<h2>MODE</h2>
-<div class="modeGrid" id="modeGrid"></div>
+<!-- SCANNER -->
+<div class="frame">
+  <h2>SCANNER</h2>
+  <div class="scanbar" id="scanbar"></div>
+  <div class="center sub" id="scanText">CONNECT TO ENABLE SCAN SEQUENCE</div>
 </div>
 
-<div class="card">
-<h2>GAIN</h2>
-<div class="toolbar">
-<button class="btn" id="gainDown">GAIN −</button>
-<button class="btn" id="gainUp">GAIN +</button>
-</div>
+<!-- STATUS -->
+<div class="frame">
+  <div class="sub" id="statusText">LINK: NOT CONNECTED</div>
+  <div class="sub" id="deviceText">DEVICE: -</div>
 </div>
 
-<div class="card">
-<h2>LINK</h2>
-<div class="toolbar">
-<button class="btn primary" id="btnScan">SCAN</button>
-<button class="btn danger" id="btnDis">DISCONNECT</button>
-</div>
+<!-- MODE -->
+<div class="frame">
+  <h2>MODE SELECT</h2>
+  <div class="sub">PUSH BUTTON TO SWITCH</div>
+
+  <div class="row modeRow">
+    <button class="btn" onclick="setMode(0)">KITT</button>
+    <button class="btn" onclick="setMode(1)">KARR</button>
+    <button class="btn" onclick="setMode(2)">PILOT<br>KITT</button>
+    <button class="btn" onclick="setMode(3)">PILOT<br>KARR</button>
+  </div>
+
+  <div class="row modeRow">
+    <button class="btn" onclick="setMode(5)">BLUE<br>KITT</button>
+    <button class="btn" onclick="setMode(6)">GREEN<br>KARR</button>
+    <button class="btn" onclick="setMode(4)">DAMAGE<br>KITT</button>
+    <button class="btn" onclick="setMode(7)">FLAME<br>KITT</button>
+  </div>
+
+  <div class="row">
+    <div style="flex:1"></div>
+    <button class="btn modeBig" onclick="setMode(8)">SPECTRUM</button>
+    <button class="btn modeBig" onclick="setMode(9)">ANALYSIS</button>
+    <div style="flex:1"></div>
+  </div>
 </div>
 
-<div class="card">
-<h2>LOG</h2>
-<div class="log" id="log"></div>
+<!-- GAIN -->
+<div class="frame">
+  <h2>GAIN CONTROL</h2>
+  <div class="sub">VOICE DISPLAY SENSITIVITY</div>
+  <div class="row">
+    <button class="btn" onclick="send('-')">GAIN −</button>
+    <button class="btn" onclick="send('+')">GAIN +</button>
+  </div>
+</div>
+
+<!-- DEVICE LIST -->
+<div class="frame">
+  <h2>VOICEBOX DEVICE LIST</h2>
+  <div class="sub">SCAN • SELECT • CONNECT</div>
+  <div class="row">
+    <button class="btn" onclick="startScan()">START SCAN</button>
+    <button class="btn" onclick="clearList()">CLEAR</button>
+  </div>
+  <div class="list" id="devList"></div>
+</div>
+
+<div class="footer">
+  KNIGHT RIDER WEB REMOTE CONTROL SYSTEM
 </div>
 
 </div>
-</div>
 
-<audio id="sfxScan" src="./scan.mp3"></audio>
-<audio id="sfxConnect" src="./connect.mp3"></audio>
-<audio id="sfxButton" src="./button.mp3"></audio>
+<audio id="sScan" src="./scan.mp3"></audio>
+<audio id="sConn" src="./connect.mp3"></audio>
+<audio id="sBtn" src="./button.mp3"></audio>
 
 <script>
-/* ========= COMMAND MAP（Web / Flutter 共用） ========= */
-const COMMAND_MAP = {
-  MODE_SET:(m)=>m===10?"0":String(m),
-  MODE_NEXT:()=> "m",
-  GAIN_UP:()=>"+",
-  GAIN_DOWN:()=>"-",
-};
+/* ===== STATE ===== */
+let connected=false;
+let activeMode=null;
+let scanPos=0,scanDir=1,scanTimer=null;
+const scanbar=document.getElementById("scanbar");
 
-/* ========= STATE ========= */
-const state={
-  connected:false,
-  mode:null,
-  gain:null,
-};
-
-/* ========= UI ========= */
-const logEl=document.getElementById("log");
-const connEl=document.getElementById("connState");
-function log(m){logEl.textContent+=m+"\\n";logEl.scrollTop=9999;}
-
-const modeGrid=document.getElementById("modeGrid");
-for(let i=1;i<=10;i++){
-  const b=document.createElement("button");
-  b.className="modeBtn";
-  b.innerHTML=i+"<small>"+[
-    "KITT","KARR","PILOT_KITT","PILOT_KARR",
-    "DAMAGE_KITT","BLUE_KITT","GREEN_KARR",
-    "FLAME_KITT","SPECTRUM","ANALYSIS"
-  ][i-1]+"</small>";
-  b.onclick=()=>sendCmd(COMMAND_MAP.MODE_SET(i));
-  modeGrid.appendChild(b);
+/* build scan leds */
+for(let i=0;i<8;i++){
+  const d=document.createElement("div");
+  scanbar.appendChild(d);
 }
 
-function render(){
-  connEl.textContent=state.connected?"CONNECTED":"DISCONNECTED";
-  [...modeGrid.children].forEach((b,i)=>{
-    b.classList.toggle("selected",state.mode===i+1);
+function updateScan(){
+  [...scanbar.children].forEach((d,i)=>{
+    d.className = (connected && i===scanPos)?"on":"";
   });
+  scanPos+=scanDir;
+  if(scanPos>=7||scanPos<=0)scanDir*=-1;
 }
 
-/* ========= BLE（示意，沿用你原本 NUS） ========= */
-function sendCmd(c){
-  document.getElementById("sfxButton").play();
-  log("TX: "+c);
-  // write BLE here
+function startScanAnim(){
+  scanTimer=setInterval(updateScan,150);
+}
+function stopScanAnim(){
+  clearInterval(scanTimer);
 }
 
-/* ========= Demo 模擬 Notify ========= */
+/* MODE */
+function setMode(i){
+  if(!connected)return;
+  activeMode=i;
+  document.querySelectorAll(".btn").forEach(b=>b.classList.remove("active"));
+  event.target.classList.add("active");
+  send(i===9?"0":String(i+1));
+}
+
+/* BLE PLACEHOLDER */
+function send(c){
+  document.getElementById("sBtn").play();
+  console.log("TX",c);
+}
+
+/* SCAN */
+function startScan(){
+  document.getElementById("sScan").play();
+  alert("Web BLE device picker will appear here\n(Chrome only)");
+}
+
+/* UI DEMO CONNECT */
 setTimeout(()=>{
-  state.connected=true;
-  state.mode=3;
-  state.gain=7;
-  render();
-  document.getElementById("sfxConnect").play();
-  log("RX: MODE=3;GAIN=7");
-},1200);
-
-/* ========= Scan ========= */
-document.getElementById("btnScan").onclick=()=>{
-  document.getElementById("sfxScan").play();
-  log("SCAN pressed");
-};
+  connected=true;
+  document.getElementById("statusText").textContent="LINK: ESTABLISHED";
+  document.getElementById("deviceText").textContent="DEVICE: KITT_REMOTE_SYSTEM";
+  document.getElementById("sConn").play();
+  startScanAnim();
+},1500);
 </script>
+
 </body>
 </html>
