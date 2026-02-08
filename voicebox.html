@@ -10,19 +10,27 @@
   --bg:#000000;
   --panel:#070707;
   --panel2:#0E0E0E;
+
+  /* Flutter: _gold / _gold2 / _red / dim */
   --gold:#DAA64A;
   --gold2:#B8933A;
   --red:#FF0000;
   --dim:#666666;
+
   --shadow1: 0 10px 18px rgba(0,0,0,.85);
   --shadow2: 0 0 24px rgba(184,147,58,.25);
 }
+
 *{box-sizing:border-box}
 body{
-  margin:0;background:var(--bg);color:#fff;
+  margin:0;
+  background:var(--bg);
+  color:#fff;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans-serif;
 }
+
 .app{max-width:980px;margin:auto;padding:14px}
+
 .frame{
   background:var(--panel);
   border:1.8px solid var(--gold2);
@@ -31,6 +39,7 @@ body{
   margin-bottom:12px;
   box-shadow: var(--shadow1), var(--shadow2);
 }
+
 .center{display:flex; justify-content:center; align-items:center; text-align:center}
 .col{display:flex; flex-direction:column; justify-content:center; align-items:center}
 .row{
@@ -41,9 +50,13 @@ body{
   gap:10px;
   flex-wrap:wrap;
 }
+
 .pill{
-  display:inline-flex;align-items:center;justify-content:center;
-  padding:8px 14px;border-radius:999px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:8px 14px;
+  border-radius:999px;
   border:1.4px solid var(--gold);
   background:var(--panel2);
   color:var(--gold);
@@ -51,10 +64,30 @@ body{
   letter-spacing:1.2px;
   font-size:12px;
 }
-.h2{margin:0;font-size:13px;letter-spacing:1.8px;color:var(--gold);font-weight:900;}
-.sub{margin-top:4px;font-size:11px;color:var(--gold2);letter-spacing:1.2px;font-weight:700;}
-.mini{margin-top:4px;font-size:10px;color:var(--dim);letter-spacing:1.0px;font-weight:700;}
 
+.h2{
+  margin:0;
+  font-size:13px;
+  letter-spacing:1.8px;
+  color:var(--gold);
+  font-weight:900;
+}
+.sub{
+  margin-top:4px;
+  font-size:11px;
+  color:var(--gold2);
+  letter-spacing:1.2px;
+  font-weight:700;
+}
+.mini{
+  margin-top:4px;
+  font-size:10px;
+  color:var(--dim);
+  letter-spacing:1.0px;
+  font-weight:700;
+}
+
+/* Buttons (Flutter-like gold gradient) */
 .btn{
   border-radius:16px;
   border:1.8px solid var(--gold2);
@@ -63,40 +96,111 @@ body{
   font-weight:900;
   letter-spacing:.9px;
   cursor:pointer;
-  position:relative;
   user-select:none;
+
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
   gap:6px;
+
   padding:10px 10px;
+  position:relative;
 }
-.btn:disabled{border-color:#2E2E2E;color:var(--dim);cursor:default;filter:saturate(.7);}
+
+.btn:disabled{
+  border-color:#2E2E2E;
+  color:var(--dim);
+  cursor:default;
+  filter:saturate(.7);
+  box-shadow:none;
+}
+
 .btn.active{
   border:2.6px solid var(--red);
-  box-shadow: 0 0 18px rgba(255,0,0,.55), 0 0 46px rgba(255,0,0,.35);
+  box-shadow:
+    0 0 22px rgba(255,0,0,.55),
+    0 0 46px rgba(255,0,0,.35),
+    0 10px 14px rgba(0,0,0,.8);
 }
+
 .btnSmall{
-  width:118px;height:40px;border-radius:14px;
-  padding:0 10px;flex-direction:row;gap:8px;letter-spacing:1.0px;
+  width:118px;
+  height:40px;
+  border-radius:14px;
+  padding:0 10px;
+  flex-direction:row;
+  gap:8px;
+  letter-spacing:1.0px;
 }
-.btnMode{height:82px;flex:1 1 0;min-width:140px;}
-.btnMode.big{height:90px;min-width:180px;}
-@media (max-width:720px){.btnMode{min-width:140px;}.btnMode.big{min-width:160px;}}
+
+.btnMode{
+  height:82px;
+  flex:1 1 0;
+  min-width: 140px;
+}
+.btnMode.big{
+  height:90px;
+  min-width: 180px;
+}
+
+@media (max-width:720px){
+  .btnMode{min-width: 140px;}
+  .btnMode.big{min-width: 160px;}
+}
 
 .icon{width:18px;height:18px;display:block;fill:currentColor;opacity:.95;}
 .iconSmall{width:16px;height:16px;}
 
-.label{line-height:1.05;font-size:14px;font-weight:900;color:var(--gold);text-align:center;}
-.label small{display:block;margin-top:3px;font-size:11px;font-weight:900;color:var(--gold2);letter-spacing:1.0px;}
+.label{
+  line-height:1.05;
+  font-size:14px;
+  font-weight:900;
+  color:var(--gold);
+  text-align:center;
+}
+.label small{
+  display:block;
+  margin-top:3px;
+  font-size:11px;
+  font-weight:900;
+  color:var(--gold2);
+  letter-spacing:1.0px;
+}
 
-.scanbar{display:flex;justify-content:center;align-items:center;gap:4px;margin-top:12px;margin-bottom:10px;}
-.led{width:26px;height:12px;border-radius:4px;border:1px solid #2A0A0A;background:#140000;transition:all .12s ease;}
-.led.on{background:linear-gradient(#FF3A3A,#7A0000);border-color:#FF8A8A;box-shadow:0 0 18px rgba(255,0,0,.85);}
-.led.tail1{background:linear-gradient(#D02A2A,#4A0000);border-color:#C06060;box-shadow:0 0 10px rgba(255,0,0,.35);}
-.led.tail2{background:linear-gradient(#5A1010,#240000);border-color:#5A2A2A;}
+/* Scanner LEDs */
+.scanbar{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:4px;
+  margin-top:12px;
+  margin-bottom:10px;
+}
+.led{
+  width:26px;
+  height:12px;
+  border-radius:4px;
+  border:1px solid #2A0A0A;
+  background:#140000;
+  transition: all .12s ease;
+}
+.led.on{
+  background:linear-gradient(#FF3A3A,#7A0000);
+  border-color:#FF8A8A;
+  box-shadow:0 0 18px rgba(255,0,0,.85);
+}
+.led.tail1{
+  background:linear-gradient(#D02A2A,#4A0000);
+  border-color:#C06060;
+  box-shadow:0 0 10px rgba(255,0,0,.35);
+}
+.led.tail2{
+  background:linear-gradient(#5A1010,#240000);
+  border-color:#5A2A2A;
+}
 
+/* Status block */
 .kv{
   width:100%;
   display:flex;
@@ -116,7 +220,7 @@ body{
   overflow:hidden;
   text-overflow:ellipsis;
 }
-.kv .line.dim{color:var(--dim);font-size:10px;}
+.kv .line.dim{color:var(--dim); font-size:10px;}
 
 .footer{
   width:100%;
@@ -127,16 +231,21 @@ body{
   font-weight:600;
   margin-top:16px;
 }
+
+/* Little helper to keep mode rows clean */
+.modeRow{width:100%;max-width:920px;}
 </style>
 </head>
 
 <body>
 <div class="app">
 
+  <!-- HEADER -->
   <div class="frame center">
     <span class="pill">*-VOICEBOX REMOTE CONTROLER-*</span>
   </div>
 
+  <!-- SCANNER -->
   <div class="frame col">
     <div class="row" style="justify-content:space-between; max-width:860px;">
       <div class="h2">SCANNER</div>
@@ -144,9 +253,11 @@ body{
     </div>
 
     <div class="scanbar" id="scanbar"></div>
+
     <div class="sub center" id="scanText">CONNECT TO ENABLE SCAN SEQUENCE</div>
   </div>
 
+  <!-- STATUS + LINKS -->
   <div class="frame col">
     <div class="kv">
       <div class="line" id="statusText">LINK: NOT CONNECTED</div>
@@ -173,110 +284,279 @@ body{
         <span>DISCONNECT</span>
       </button>
     </div>
+
+    <div class="mini center" id="hintText" style="margin-top:10px;">
+      流程：按 SCAN → 選擇裝置（看名稱）→ 按 CONNECT
+    </div>
+  </div>
+
+  <!-- MODE SELECT -->
+  <div class="frame col">
+    <div class="h2">MODE SELECT</div>
+    <div class="sub">PUSH BUTTON TO SWITCH</div>
+    <div style="height:10px;"></div>
+
+    <!-- Row 1: 4 (idx 0..3) -->
+    <div class="row modeRow">
+      <button class="btn btnMode modeBtn" data-mode="1" disabled>
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 .001 18.001A9 9 0 0 0 12 3Zm0 2a7 7 0 1 1-.001 14.001A7 7 0 0 1 12 5Zm-1 3h2v6h-2V8Zm0 7h2v2h-2v-2Z"/></svg>
+        <div class="label">KITT<small>MODE 1</small></div>
+      </button>
+
+      <button class="btn btnMode modeBtn" data-mode="2" disabled>
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6Zm0 5h18v2H3v-2Zm0 5h18v2H3v-2Z"/></svg>
+        <div class="label">KARR<small>MODE 2</small></div>
+      </button>
+
+      <button class="btn btnMode modeBtn" data-mode="3" disabled>
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 2 1 7l11 5 9-4.09V17h2V7L12 2Zm-7 9v8l7 3 7-3v-8l-7 3-7-3Z"/></svg>
+        <div class="label">PILOT<br>KITT<small>MODE 3</small></div>
+      </button>
+
+      <button class="btn btnMode modeBtn" data-mode="4" disabled>
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 4a8 8 0 1 0 .001 16.001A8 8 0 0 0 12 4Zm0 2a6 6 0 1 1-.001 12.001A6 6 0 0 1 12 6Zm-1 2h2v4h-2V8Zm0 5h2v2h-2v-2Z"/></svg>
+        <div class="label">PILOT<br>KARR<small>MODE 4</small></div>
+      </button>
+    </div>
+
+    <div style="height:10px;"></div>
+
+    <!-- Row 2: 4 (order matches Flutter: 5,6,4,7 => modes 6,7,5,8) -->
+    <div class="row modeRow">
+      <button class="btn btnMode modeBtn" data-mode="6" disabled>
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 6a6 6 0 0 0-6 6v7h12v-7a6 6 0 0 0-6-6Zm0-4 3 4H9l3-4Z"/></svg>
+        <div class="label">BLUE<br>KITT<small>MODE 6</small></div>
+      </button>
+
+      <button class="btn btnMode modeBtn" data-mode="7" disabled>
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C8 6 6 9 6 12a6 6 0 0 0 12 0c0-3-2-6-6-10Z"/></svg>
+        <div class="label">GREEN<br>KARR<small>MODE 7</small></div>
+      </button>
+
+      <button class="btn btnMode modeBtn" data-mode="5" disabled>
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 2 3 9h3v11h12V9h3L12 2Zm-1 7h2v6h-2V9Z"/></svg>
+        <div class="label">DAMAGE<br>KITT<small>MODE 5</small></div>
+      </button>
+
+      <button class="btn btnMode modeBtn" data-mode="8" disabled>
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 2s4 4 4 8a4 4 0 0 1-8 0c0-4 4-8 4-8Zm-6 20c0-3 2-5 6-5s6 2 6 5H6Z"/></svg>
+        <div class="label">FLAME<br>KITT<small>MODE 8</small></div>
+      </button>
+    </div>
+
+    <div style="height:10px;"></div>
+
+    <!-- Row 3: 2 centered (modes 9 & 10) -->
+    <div class="row modeRow">
+      <button class="btn btnMode big modeBtn" data-mode="9" disabled>
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 17h2v-7H3v7Zm4 0h2V7H7v10Zm4 0h2v-4h-2v4Zm4 0h2V5h-2v12Zm4 0h2V9h-2v8Z"/></svg>
+        <div class="label">SPECTRUM<small>MODE 9</small></div>
+      </button>
+
+      <button class="btn btnMode big modeBtn" data-mode="10" disabled>
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 3h18v2H3V3Zm2 5h14v2H5V8Zm-2 5h18v2H3v-2Zm2 5h14v2H5v-2Z"/></svg>
+        <div class="label">ANALYSIS<small>MODE 10</small></div>
+      </button>
+    </div>
+  </div>
+
+  <!-- GAIN CONTROL -->
+  <div class="frame col">
+    <div class="h2">GAIN CONTROL</div>
+    <div class="sub">VOICE DISPLAY SENSITIVITY ＋ or －</div>
+    <div style="height:10px;"></div>
+
+    <div class="row modeRow">
+      <button id="btnGainDown" class="btn btnMode" style="max-width:420px;" disabled>
+        <svg class="icon" viewBox="0 0 24 24"><path d="M19 13H5v-2h14v2Z"/></svg>
+        <div class="label">GAIN −</div>
+      </button>
+
+      <button id="btnGainUp" class="btn btnMode" style="max-width:420px;" disabled>
+        <svg class="icon" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2Z"/></svg>
+        <div class="label">GAIN ＋</div>
+      </button>
+    </div>
   </div>
 
   <div class="footer">KNIGHT RIDER WEB REMOTE CONTROL SYSTEM</div>
 
 </div>
 
+<!-- SFX -->
 <audio id="sScan" src="./scan.mp3" preload="auto"></audio>
 <audio id="sConn" src="./connect.mp3" preload="auto"></audio>
 <audio id="sBtn"  src="./button.mp3" preload="auto"></audio>
 
 <script>
 (() => {
+  // ===== NUS UUIDs =====
   const SVC_UUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
-  const RX_UUID  = "6e400002-b5a3-f393-e0a9-e50e24dcca9e";
-  const TX_UUID  = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
+  const RX_UUID  = "6e400002-b5a3-f393-e0a9-e50e24dcca9e"; // write
+  const TX_UUID  = "6e400003-b5a3-f393-e0a9-e50e24dcca9e"; // notify (optional)
 
   const $ = (id)=>document.getElementById(id);
 
+  // DOM
   const btnScan       = $("btnScan");
   const btnConnect    = $("btnConnect");
   const btnDisconnect = $("btnDisconnect");
+  const btnGainUp     = $("btnGainUp");
+  const btnGainDown   = $("btnGainDown");
 
-  const statusText = $("statusText");
-  const bleText    = $("bleText");
-  const deviceText = $("deviceText");
-  const idText     = $("idText");
-  const scanText   = $("scanText");
+  const statusText   = $("statusText");
+  const bleText      = $("bleText");
+  const deviceText   = $("deviceText");
+  const idText       = $("idText");
+  const scanText     = $("scanText");
   const scannerState = $("scannerState");
 
   const sScan = $("sScan");
   const sConn = $("sConn");
   const sBtn  = $("sBtn");
 
-  let device=null, server=null, rxChar=null, txChar=null;
-  let connected=false;
+  // BLE handles
+  let device = null;
+  let server = null;
+  let rxChar = null;
+  let txChar = null;
 
-  // Scanner
-  const scanbar = $("scanbar");
-  let scanPos=0, scanDir=1, scanTimer=null;
-  for (let i=0;i<8;i++){
-    const d=document.createElement("div");
-    d.className="led";
-    scanbar.appendChild(d);
-  }
-  function renderScanner(){
-    const leds=[...scanbar.children];
-    leds.forEach(d=>d.className="led");
-    if(!connected) return;
-    for(let i=0;i<8;i++){
-      const dist=Math.abs(i-scanPos);
-      if(dist===0) leds[i].classList.add("on");
-      else if(dist===1) leds[i].classList.add("tail1");
-      else if(dist===2) leds[i].classList.add("tail2");
-    }
-  }
-  function startScanner(){
-    stopScanner();
-    scanPos=0; scanDir=1;
-    renderScanner();
-    scanTimer=setInterval(()=>{
-      scanPos += scanDir;
-      if(scanPos>=7){ scanPos=7; scanDir=-1; }
-      else if(scanPos<=0){ scanPos=0; scanDir=1; }
-      renderScanner();
-    },150);
-  }
-  function stopScanner(){
-    if(scanTimer){ clearInterval(scanTimer); scanTimer=null; }
-    [...scanbar.children].forEach(d=>d.className="led");
-  }
+  // State
+  let connected = false;
+  let activeMode = null;
 
+  // ===== Audio helpers =====
   function audioOnce(a){
     try{
-      a.pause(); a.currentTime=0;
-      const p=a.play(); if(p && p.catch) p.catch(()=>{});
+      a.pause(); a.currentTime = 0;
+      const p = a.play();
+      if (p && p.catch) p.catch(()=>{});
     }catch(_){}
   }
 
-  function setEnabledForConnected(isConn){
-    connected=isConn;
+  // ===== Scanner animation (Flutter-like) =====
+  const scanbar = $("scanbar");
+  let scanPos = 0;
+  let scanDir = 1;
+  let scanTimer = null;
 
-    btnConnect.disabled = (device==null) || isConn;
-    btnDisconnect.disabled = !isConn;
-
-    statusText.textContent = isConn ? "LINK: ESTABLISHED" : "LINK: NOT CONNECTED";
-    scannerState.textContent = isConn ? "ACTIVE" : "OFFLINE";
-    scannerState.style.color = isConn ? "var(--red)" : "var(--dim)";
-    scanText.textContent = isConn ? "CONNECTED — SCAN SEQUENCE RUNNING" : "CONNECT TO ENABLE SCAN SEQUENCE";
-
-    if(isConn) startScanner(); else stopScanner();
+  // Build 8 leds once
+  for (let i=0;i<8;i++){
+    const d = document.createElement("div");
+    d.className = "led";
+    scanbar.appendChild(d);
   }
 
+  function renderScanner(){
+    const leds = [...scanbar.children];
+    leds.forEach(d => d.className = "led");
+    if (!connected) return;
+
+    for (let i=0;i<8;i++){
+      const dist = Math.abs(i - scanPos);
+      if (dist === 0) leds[i].classList.add("on");
+      else if (dist === 1) leds[i].classList.add("tail1");
+      else if (dist === 2) leds[i].classList.add("tail2");
+    }
+  }
+
+  function startScanner(){
+    stopScanner();
+    scanPos = 0; scanDir = 1;
+    renderScanner();
+    // Flutter: 1200ms with 8 segments => ~150ms per step
+    scanTimer = setInterval(() => {
+      scanPos += scanDir;
+      if (scanPos >= 7){ scanPos = 7; scanDir = -1; }
+      else if (scanPos <= 0){ scanPos = 0; scanDir = 1; }
+      renderScanner();
+    }, 150);
+  }
+
+  function stopScanner(){
+    if (scanTimer){ clearInterval(scanTimer); scanTimer = null; }
+    [...scanbar.children].forEach(d => d.className = "led");
+  }
+
+  // ===== UI enable/disable =====
+  function setConnectedUI(isConn){
+    connected = isConn;
+
+    // Mode & Gain enabled only when connected
+    document.querySelectorAll(".modeBtn").forEach(b => b.disabled = !isConn);
+    btnGainUp.disabled = !isConn;
+    btnGainDown.disabled = !isConn;
+
+    btnDisconnect.disabled = !isConn;
+    btnConnect.disabled = (device == null) || isConn;
+
+    statusText.textContent = isConn ? "LINK: ESTABLISHED" : "LINK: NOT CONNECTED";
+
+    scannerState.textContent = isConn ? "ACTIVE" : "OFFLINE";
+    scannerState.style.color = isConn ? "var(--red)" : "var(--dim)";
+
+    scanText.textContent = isConn
+      ? "CONNECTED — SCAN SEQUENCE RUNNING"
+      : "CONNECT TO ENABLE SCAN SEQUENCE";
+
+    if (isConn) startScanner(); else stopScanner();
+
+    if (!isConn){
+      // Flutter: disconnect -> activeModeIndex = null
+      activeMode = null;
+      clearModeActive();
+    }
+  }
+
+  function clearModeActive(){
+    document.querySelectorAll(".modeBtn").forEach(b => b.classList.remove("active"));
+  }
+
+  function setModeActive(m){
+    clearModeActive();
+    const btn = document.querySelector(`.modeBtn[data-mode="${m}"]`);
+    if (btn) btn.classList.add("active");
+  }
+
+  // ===== Command mapping (same as Flutter) =====
+  function cmdForMode(m){
+    // Mode 10 => '0'
+    return (m === 10) ? "0" : String(m);
+  }
+
+  async function writeCmd(c){
+    if (!connected || !rxChar) return;
+
+    const data = new TextEncoder().encode(c);
+
+    // Try without response first (if supported)
+    try{
+      if (typeof rxChar.writeValueWithoutResponse === "function"){
+        await rxChar.writeValueWithoutResponse(data);
+        return;
+      }
+    } catch(_) {}
+
+    // Fallback: with response
+    try{
+      await rxChar.writeValue(data);
+    } catch(_) {}
+  }
+
+  // ===== BLE flow =====
   async function doScanPickDevice(){
-    if(!navigator.bluetooth){
-      bleText.textContent="BLE: NOT SUPPORTED (Use Chrome/Edge)";
+    if (!navigator.bluetooth){
+      bleText.textContent = "BLE: NOT SUPPORTED (Use Chrome/Edge)";
       alert("此瀏覽器不支援 Web Bluetooth。\n請用 Android Chrome / PC Chrome / Edge。\niOS Safari/Chrome 不支援。");
       return;
     }
 
+    // scan sound: only on press
     audioOnce(sScan);
-    bleText.textContent="BLE: READY";
+    bleText.textContent = "BLE: READY";
 
-    // ✅ 改成第一版風格：acceptAllDevices + optionalServices
-    // 讓 chooser 更容易顯示名稱（前提仍是裝置有廣播 Local Name）
+    // IMPORTANT: chooser shows name if device advertises local name
+    // Match your “first version”: acceptAllDevices
     device = await navigator.bluetooth.requestDevice({
       acceptAllDevices: true,
       optionalServices: [SVC_UUID],
@@ -284,11 +564,14 @@ body{
 
     deviceText.textContent = "DEVICE: " + (device.name && device.name.trim() ? device.name : "(Unnamed)");
     idText.textContent = "ID: " + (device.id || "-");
+
+    // Now can connect
     btnConnect.disabled = false;
   }
 
   async function doConnect(){
-    if(!device) return;
+    if (!device) return;
+
     audioOnce(sBtn);
 
     try{
@@ -296,20 +579,26 @@ body{
 
       server = await device.gatt.connect();
       const svc = await server.getPrimaryService(SVC_UUID);
+
       rxChar = await svc.getCharacteristic(RX_UUID);
 
       // optional notify
       try{
         txChar = await svc.getCharacteristic(TX_UUID);
-        if(txChar.properties.notify){
+        if (txChar && txChar.properties && txChar.properties.notify){
           await txChar.startNotifications();
+          txChar.addEventListener("characteristicvaluechanged", (ev)=>{
+            // If ESP32 sends status text, parse here later
+            // const txt = new TextDecoder().decode(ev.target.value);
+          });
         }
-      }catch(_){}
+      } catch(_){}
 
-      setEnabledForConnected(true);
+      setConnectedUI(true);
       audioOnce(sConn);
-    }catch(e){
-      alert("CONNECT FAILED: " + (e?.message || e));
+    } catch(e){
+      // If chosen device is NOT your NUS device -> service not found -> connect fails
+      alert("CONNECT FAILED（可能選到不是 VOICEBOX 的裝置）\n請重新 SCAN 選擇正確的裝置。\n\n" + (e?.message || e));
       onDisconnected();
     }
   }
@@ -317,23 +606,66 @@ body{
   function doDisconnect(){
     audioOnce(sBtn);
     try{
-      if(txChar){ try{ txChar.stopNotifications(); }catch(_){} }
-      if(device?.gatt?.connected) device.gatt.disconnect();
-    }catch(_){}
+      if (txChar){
+        try{ txChar.stopNotifications(); } catch(_){}
+      }
+      if (device?.gatt?.connected){
+        device.gatt.disconnect();
+      }
+    } catch(_){}
     onDisconnected();
   }
 
   function onDisconnected(){
-    setEnabledForConnected(false);
-    server=null; rxChar=null; txChar=null;
-    btnConnect.disabled = (device==null);
+    server = null;
+    rxChar = null;
+    txChar = null;
+    setConnectedUI(false);
   }
 
-  btnScan.addEventListener("click", async ()=>{ try{ await doScanPickDevice(); }catch(_){} });
-  btnConnect.addEventListener("click", async ()=>{ await doConnect(); });
-  btnDisconnect.addEventListener("click", ()=>{ doDisconnect(); });
+  // ===== Wire events =====
+  btnScan.addEventListener("click", async ()=>{
+    try{ await doScanPickDevice(); }catch(_){}
+  });
 
-  setEnabledForConnected(false);
+  btnConnect.addEventListener("click", async ()=>{
+    await doConnect();
+  });
+
+  btnDisconnect.addEventListener("click", ()=>{
+    doDisconnect();
+  });
+
+  // Mode buttons
+  document.querySelectorAll(".modeBtn").forEach(btn=>{
+    btn.addEventListener("click", async ()=>{
+      if (!connected) return;
+
+      audioOnce(sBtn);
+
+      const m = parseInt(btn.getAttribute("data-mode"), 10);
+      activeMode = m;
+      setModeActive(m);
+
+      await writeCmd(cmdForMode(m));
+    });
+  });
+
+  // Gain buttons
+  btnGainUp.addEventListener("click", async ()=>{
+    if (!connected) return;
+    audioOnce(sBtn);
+    await writeCmd("+");
+  });
+
+  btnGainDown.addEventListener("click", async ()=>{
+    if (!connected) return;
+    audioOnce(sBtn);
+    await writeCmd("-");
+  });
+
+  // Init UI
+  setConnectedUI(false);
 })();
 </script>
 </body>
