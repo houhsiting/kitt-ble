@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>*-VOICEBOX REMOTE CONTROLLER-*</title>
+
+<style>
+:root{
+  --bg:#0b0f14;
+  --card:#121a26;
+  --gold:#c9a24d;
+  --red:#ff3b30;
+  --text:#e6edf6;
+  --muted:#9bb0c6;
+  --ok:#36d399;
+  --shadow:0 10px 26px rgba(0,0,0,.35);
+  --radius:18px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans-serif;}
+.app{max-width:980px;margin:auto;padding:16px}
+
+.appbar{
+  border:1px solid var(--gold);
+  border-radius:22px;
+  padding:14px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:var(--shadow);
+}
+h1{margin:0;font-size:18px}
+
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+
+.card{
+  border:1px solid var(--gold);
+  border-radius:var(--radius);
+  padding:14px;
+  background:var(--card);
+  box-shadow:var(--shadow);
+}
+h2{margin:0 0 12px;font-size:14px;color:var(--gold)}
+
+.modeGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:520px){.modeGrid{grid-template-columns:repeat(2,1fr)}}
+
+.modeBtn{
+  height:44px;border-radius:16px;border:1px solid #333;
+  background:#1a2230;color:var(--text);font-size:12px;
+}
+.modeBtn small{display:block;font-size:10px;color:var(--muted)}
+.modeBtn.selected{
+  border:2px solid var(--red);
+  box-shadow:0 0 0 6px rgba(255,59,48,.2);
+}
+
+.toolbar{display:flex;gap:10px}
+.btn{
+  height:40px;border-radius:14px;border:1px solid var(--gold);
+  background:#1a2230;color:var(--text);cursor:pointer;
+}
+.btn.primary{background:linear-gradient(180deg,#3a2f15,#1a2230)}
+.btn.danger{border-color:var(--red)}
+
+.log{
+  background:#05080c;border-radius:12px;height:200px;
+  overflow:auto;padding:10px;font-size:12px;color:#9bd;
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+<div class="appbar">
+<h1>*-VOICEBOX REMOTE CONTROLLER-*</h1>
+<div id="connState">DISCONNECTED</div>
+</div>
+
+<div class="grid">
+
+<div class="card">
+<h2>MODE</h2>
+<div class="modeGrid" id="modeGrid"></div>
+</div>
+
+<div class="card">
+<h2>GAIN</h2>
+<div class="toolbar">
+<button class="btn" id="gainDown">GAIN −</button>
+<button class="btn" id="gainUp">GAIN +</button>
+</div>
+</div>
+
+<div class="card">
+<h2>LINK</h2>
+<div class="toolbar">
+<button class="btn primary" id="btnScan">SCAN</button>
+<button class="btn danger" id="btnDis">DISCONNECT</button>
+</div>
+</div>
+
+<div class="card">
+<h2>LOG</h2>
+<div class="log" id="log"></div>
+</div>
+
+</div>
+</div>
+
+<audio id="sfxScan" src="./scan.mp3"></audio>
+<audio id="sfxConnect" src="./connect.mp3"></audio>
+<audio id="sfxButton" src="./button.mp3"></audio>
+
+<script>
+/* ========= COMMAND MAP（Web / Flutter 共用） ========= */
+const COMMAND_MAP = {
+  MODE_SET:(m)=>m===10?"0":String(m),
+  MODE_NEXT:()=> "m",
+  GAIN_UP:()=>"+",
+  GAIN_DOWN:()=>"-",
+};
+
+/* ========= STATE ========= */
+const state={
+  connected:false,
+  mode:null,
+  gain:null,
+};
+
+/* ========= UI ========= */
+const logEl=document.getElementById("log");
+const connEl=document.getElementById("connState");
+function log(m){logEl.textContent+=m+"\\n";logEl.scrollTop=9999;}
+
+const modeGrid=document.getElementById("modeGrid");
+for(let i=1;i<=10;i++){
+  const b=document.createElement("button");
+  b.className="modeBtn";
+  b.innerHTML=i+"<small>"+[
+    "KITT","KARR","PILOT_KITT","PILOT_KARR",
+    "DAMAGE_KITT","BLUE_KITT","GREEN_KARR",
+    "FLAME_KITT","SPECTRUM","ANALYSIS"
+  ][i-1]+"</small>";
+  b.onclick=()=>sendCmd(COMMAND_MAP.MODE_SET(i));
+  modeGrid.appendChild(b);
+}
+
+function render(){
+  connEl.textContent=state.connected?"CONNECTED":"DISCONNECTED";
+  [...modeGrid.children].forEach((b,i)=>{
+    b.classList.toggle("selected",state.mode===i+1);
+  });
+}
+
+/* ========= BLE（示意，沿用你原本 NUS） ========= */
+function sendCmd(c){
+  document.getElementById("sfxButton").play();
+  log("TX: "+c);
+  // write BLE here
+}
+
+/* ========= Demo 模擬 Notify ========= */
+setTimeout(()=>{
+  state.connected=true;
+  state.mode=3;
+  state.gain=7;
+  render();
+  document.getElementById("sfxConnect").play();
+  log("RX: MODE=3;GAIN=7");
+},1200);
+
+/* ========= Scan ========= */
+document.getElementById("btnScan").onclick=()=>{
+  document.getElementById("sfxScan").play();
+  log("SCAN pressed");
+};
+</script>
+</body>
+</html>
