@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>KITT BLE Console (NUS)</title>
+  <style>
+    body { font-family: system-ui, -apple-system, "Noto Sans TC", sans-serif; margin: 16px; }
+    .row { display: flex; gap: 10px; flex-wrap: wrap; margin: 10px 0; }
+    button { padding: 10px 14px; border-radius: 10px; border: 1px solid #bbb; background: #fff; cursor: pointer; }
+    button.primary { border-color: #0a58ca; }
+    button.danger { border-color: #dc3545; }
+    button:disabled { opacity: .5; cursor: not-allowed; }
+    .card { border: 1px solid #ddd; border-radius: 14px; padding: 12px; margin: 10px 0; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+    #log { height: 220px; overflow: auto; background: #0b0f14; color: #cfe6ff; padding: 10px; border-radius: 12px; }
+    .hint { color: #555; font-size: 14px; line-height: 1.5; }
+    .grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+    @media (max-width: 520px){ .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  </style>
+</head>
+<body>
+  <h2>KITT BLE Console (NUS)</h2>
+
+  <div class="card">
+    <div class="row">
+      <button id="btnConnect" class="primary">Connect</button>
+      <button id="btnDisconnect" class="danger" disabled>Disconnect</button>
+      <button id="btnReadStatus" disabled>Read/Refresh Status</button>
+    </div>
+    <div class="hint">
+      裝置名稱：<span class="mono">KITT_VOICE_SYSTEM</span><br/>
+      Service：<span class="mono">6E400001-B5A3-F393-E0A9-E50E24DCCA9E</span><br/>
+      RX(Write)：<span class="mono">6E400002-B5A3-F393-E0A9-E50E24DCCA9E</span><br/>
+      TX(Notify)：<span class="mono">6E400003-B5A3-F393-E0A9-E50E24DCCA9E</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin:0 0 8px 0;">Mode（1~10）</h3>
+    <div class="grid">
+      <button class="btnMode" data-mode="1" disabled>1 KITT</button>
+      <button class="btnMode" data-mode="2" disabled>2 KARR</button>
+      <button class="btnMode" data-mode="3" disabled>3 PILOT_KITT</button>
+      <button class="btnMode" data-mode="4" disabled>4 PILOT_KARR</button>
+      <button class="btnMode" data-mode="5" disabled>5 DAMAGE_KITT</button>
+      <button class="btnMode" data-mode="6" disabled>6 BLUE_KITT</button>
+      <button class="btnMode" data-mode="7" disabled>7 GREEN_KARR</button>
+      <button class="btnMode" data-mode="8" disabled>8 FLAME_KITT</button>
+      <button class="btnMode" data-mode="9" disabled>9 SPECTRUM</button>
+      <button class="btnMode" data-mode="10" disabled>10 ANALYSIS</button>
+    </div>
+
+    <div class="row" style="margin-top:12px;">
+      <button id="btnNextMode" disabled>Next Mode (m)</button>
+      <button id="btnGainUp" disabled>Gain +</button>
+      <button id="btnGainDown" disabled>Gain -</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin:0 0 8px 0;">Status</h3>
+    <div class="row">
+      <div>Connected: <span id="stConn" class="mono">false</span></div>
+      <div>Mode: <span id="stMode" class="mono">-</span></div>
+      <div>Gain: <span id="stGain" class="mono">-</span></div>
+    </div>
+    <div class="hint">
+      你的 ESP32 會用 TX Notify 回報：<span class="mono">MODE=x,G=y</span>（連線時、切換 mode 時會送）
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin:0 0 8px 0;">Log</h3>
+    <div id="log" class="mono"></div>
+  </div>
+
+<script>
+(() => {
+  // === NUS UUIDs ===
+  const SVC_UUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
+  const RX_UUID  = "6e400002-b5a3-f393-e0a9-e50e24dcca9e"; // Write / WriteNR
+  const TX_UUID  = "6e400003-b5a3-f393-e0a9-e50e24dcca9e"; // Notify
+
+  // Optional: filter by name prefix (not guaranteed in all stacks)
+  const DEV_NAME_PREFIX = "KITT_VOICE_SYSTEM";
+
+  let device = null;
+  let server = null;
+  let rxChar = null;
+  let txChar = null;
+
+  const $ = (id) => document.getElementById(id);
+  const logEl = $("log");
+
+  function log(msg) {
+    const t = new Date().toLocaleTimeString();
+    logEl.textContent += `[${t}] ${msg}\n`;
+    logEl.scrollTop = logEl.scrollHeight;
+  }
+
+  function setUiConnected(isConn) {
+    $("stConn").textContent = String(isConn);
+    $("btnDisconnect").disabled = !isConn;
+    $("btnReadStatus").disabled = !isConn;
+    $("btnNextMode").disabled = !isConn;
+    $("btnGainUp").disabled = !isConn;
+    $("btnGainDown").disabled = !isConn;
+
+    document.querySelectorAll(".btnMode").forEach(b => b.disabled = !isConn);
+  }
+
+  function parseStatus(text) {
+    // Expect "MODE=9,G=4" or similar
+    // be tolerant
+    const m = text.match(/MODE\s*=\s*(\d+)/i);
+    const g = text.match(/G\s*=\s*(\d+)/i);
+    if (m) $("stMode").textContent = m[1];
+    if (g) $("stGain").textContent = g[1];
+  }
+
+  async function writeCmd(ch) {
+    if (!rxChar) throw new Error("RX characteristic not ready");
+    const data = new TextEncoder().encode(ch);
+    // Prefer writeWithoutResponse if available (matches your ESP32 RX props include WRITE_NR)
+    if (rxChar.properties.writeWithoutResponse) {
+      await rxChar.writeValueWithoutResponse(data);
+    } else {
+      await rxChar.writeValue(data);
+    }
+    log(`TX cmd: "${ch}"`);
+  }
+
+  async function connect() {
+    if (!navigator.bluetooth) {
+      alert("這個瀏覽器不支援 Web Bluetooth。Android/Chrome/Edge 可用；iOS Safari/Chrome 不支援。");
+      return;
+    }
+
+    log("Requesting device...");
+    device = await navigator.bluetooth.requestDevice({
+      // 不同平台對 name 過濾支援度不一，提供兩種：
+      // 1) 先用 optionalServices 拿 service
+      // 2) acceptAllDevices 讓使用者選擇
+      acceptAllDevices: true,
+      optionalServices: [SVC_UUID],
+    });
+
+    log(`Selected: ${device.name || "(no name)"} (${device.id})`);
+    if (device.name && !device.name.startsWith(DEV_NAME_PREFIX)) {
+      log(`Note: device name not match prefix "${DEV_NAME_PREFIX}" (still try).`);
+    }
+
+    device.addEventListener("gattserverdisconnected", onDisconnected);
+
+    log("Connecting GATT...");
+    server = await device.gatt.connect();
+
+    log("Getting NUS service...");
+    const svc = await server.getPrimaryService(SVC_UUID);
+
+    log("Getting RX/TX characteristics...");
+    rxChar = await svc.getCharacteristic(RX_UUID);
+    txChar = await svc.getCharacteristic(TX_UUID);
+
+    // Start notify
+    if (txChar.properties.notify) {
+      await txChar.startNotifications();
+      txChar.addEventListener("characteristicvaluechanged", (ev) => {
+        const v = ev.target.value;
+        const text = new TextDecoder().decode(v);
+        log(`RX notify: ${JSON.stringify(text)}`);
+        parseStatus(text);
+      });
+      log("TX notifications started.");
+    } else {
+      log("Warning: TX characteristic has no notify property.");
+    }
+
+    setUiConnected(true);
+    log("Connected.");
+  }
+
+  async function disconnect() {
+    try {
+      if (txChar) {
+        try { await txChar.stopNotifications(); } catch(e) {}
+      }
+      if (device && device.gatt && device.gatt.connected) device.gatt.disconnect();
+    } finally {
+      cleanup();
+      setUiConnected(false);
+      log("Disconnected.");
+    }
+  }
+
+  function cleanup() {
+    rxChar = null;
+    txChar = null;
+    server = null;
+    // device 仍保留，方便 debug；要清也可以 device=null
+  }
+
+  function onDisconnected() {
+    log("GATT disconnected (event).");
+    cleanup();
+    setUiConnected(false);
+  }
+
+  async function refreshStatusHint() {
+    // 你的 ESP32 目前「沒有」定義一個「查詢狀態」指令
+    // 所以這裡只能提示使用者：切換一次 mode 或重新連線會收到 MODE/G 通知
+    log("Tip: 你的韌體目前沒有 'get status' 指令；可按 Next Mode (m) 或重連以觸發 MODE/G notify。");
+  }
+
+  // === Wire UI ===
+  $("btnConnect").addEventListener("click", async () => {
+    try { await connect(); }
+    catch (e) { log("ERROR: " + e.message); console.error(e); }
+  });
+
+  $("btnDisconnect").addEventListener("click", async () => {
+    try { await disconnect(); }
+    catch (e) { log("ERROR: " + e.message); console.error(e); }
+  });
+
+  $("btnReadStatus").addEventListener("click", async () => {
+    try { await refreshStatusHint(); }
+    catch (e) { log("ERROR: " + e.message); console.error(e); }
+  });
+
+  $("btnNextMode").addEventListener("click", async () => {
+    try { await writeCmd("m"); }
+    catch (e) { log("ERROR: " + e.message); console.error(e); }
+  });
+
+  $("btnGainUp").addEventListener("click", async () => {
+    try { await writeCmd("+"); }
+    catch (e) { log("ERROR: " + e.message); console.error(e); }
+  });
+
+  $("btnGainDown").addEventListener("click", async () => {
+    try { await writeCmd("-"); }
+    catch (e) { log("ERROR: " + e.message); console.error(e); }
+  });
+
+  document.querySelectorAll(".btnMode").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      const mode = parseInt(btn.dataset.mode, 10);
+      try {
+        // 你的韌體規則：'1'..'9' => mode 1..9； '0' => mode 10
+        const ch = (mode === 10) ? "0" : String(mode);
+        await writeCmd(ch);
+      } catch (e) {
+        log("ERROR: " + e.message);
+        console.error(e);
+      }
+    });
+  });
+
+  // initial
+  setUiConnected(false);
+  log("Ready.");
+})();
+</script>
+</body>
+</html>
