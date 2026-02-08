@@ -546,8 +546,8 @@ body{
   // ===== BLE flow =====
   async function doScanPickDevice(){
     if (!navigator.bluetooth){
-      bleText.textContent = "BLE: NOT SUPPORTED (Use Chrome/Edge)";
-      alert("此瀏覽器不支援 Web Bluetooth。\n請用 Android Chrome / PC Chrome / Edge。\niOS Safari/Chrome 不支援。");
+      bleText.textContent = "BLE: NOT SUPPORTED (Use Bluefy/Chrome/Edge)";
+      alert("This browser does not support Web Bluetooth.\nPlease use Android Chrome / PC Chrome / Edge.\niOS use Bluefy Web BLE Browser");
       return;
     }
 
@@ -598,7 +598,7 @@ body{
       audioOnce(sConn);
     } catch(e){
       // If chosen device is NOT your NUS device -> service not found -> connect fails
-      alert("CONNECT FAILED（可能選到不是 VOICEBOX 的裝置）\n請重新 SCAN 選擇正確的裝置。\n\n" + (e?.message || e));
+      alert("CONNECT FAILED（Incorrect Device selected.）\nPlease re-SCAN and select the correct device.\n\n" + (e?.message || e));
       onDisconnected();
     }
   }
