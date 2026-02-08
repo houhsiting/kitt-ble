@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>*-VOICEBOX REMOTE CONTROLER-*</title>
+<title>VOICEBOX REMOTE CONTROLER</title>
 
 <style>
 :root{
@@ -63,6 +63,18 @@ body{
   font-weight:900;
   letter-spacing:1.2px;
   font-size:12px;
+}
+
+/* ✅ App icon in header */
+.appIcon{
+  width:22px;
+  height:22px;
+  border-radius:6px;
+  margin-right:10px;
+  border:1px solid var(--gold2);
+  box-shadow:0 0 10px rgba(184,147,58,.20);
+  object-fit:cover;
+  flex:0 0 auto;
 }
 
 .h2{
@@ -242,7 +254,10 @@ body{
 
   <!-- HEADER -->
   <div class="frame center">
-    <span class="pill">*-VOICEBOX REMOTE CONTROLER-*</span>
+    <span class="pill">
+      <img class="appIcon" src="./app_icon.png" alt="app icon">
+      <span>*-VOICEBOX REMOTE CONTROLER-*</span>
+    </span>
   </div>
 
   <!-- SCANNER -->
@@ -296,7 +311,7 @@ body{
     <div class="sub">PUSH BUTTON TO SWITCH</div>
     <div style="height:10px;"></div>
 
-    <!-- Row 1: 4 (idx 0..3) -->
+    <!-- Row 1: 4 -->
     <div class="row modeRow">
       <button class="btn btnMode modeBtn" data-mode="1" disabled>
         <svg class="icon" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 .001 18.001A9 9 0 0 0 12 3Zm0 2a7 7 0 1 1-.001 14.001A7 7 0 0 1 12 5Zm-1 3h2v6h-2V8Zm0 7h2v2h-2v-2Z"/></svg>
@@ -321,7 +336,7 @@ body{
 
     <div style="height:10px;"></div>
 
-    <!-- Row 2: 4 (order matches Flutter: 5,6,4,7 => modes 6,7,5,8) -->
+    <!-- Row 2: 4 -->
     <div class="row modeRow">
       <button class="btn btnMode modeBtn" data-mode="6" disabled>
         <svg class="icon" viewBox="0 0 24 24"><path d="M12 6a6 6 0 0 0-6 6v7h12v-7a6 6 0 0 0-6-6Zm0-4 3 4H9l3-4Z"/></svg>
@@ -346,7 +361,7 @@ body{
 
     <div style="height:10px;"></div>
 
-    <!-- Row 3: 2 centered (modes 9 & 10) -->
+    <!-- Row 3: 2 -->
     <div class="row modeRow">
       <button class="btn btnMode big modeBtn" data-mode="9" disabled>
         <svg class="icon" viewBox="0 0 24 24"><path d="M3 17h2v-7H3v7Zm4 0h2V7H7v10Zm4 0h2v-4h-2v4Zm4 0h2V5h-2v12Zm4 0h2V9h-2v8Z"/></svg>
@@ -502,7 +517,6 @@ body{
     if (isConn) startScanner(); else stopScanner();
 
     if (!isConn){
-      // Flutter: disconnect -> activeModeIndex = null
       activeMode = null;
       clearModeActive();
     }
@@ -555,8 +569,6 @@ body{
     audioOnce(sScan);
     bleText.textContent = "BLE: READY";
 
-    // IMPORTANT: chooser shows name if device advertises local name
-    // Match your “first version”: acceptAllDevices
     device = await navigator.bluetooth.requestDevice({
       acceptAllDevices: true,
       optionalServices: [SVC_UUID],
@@ -565,7 +577,6 @@ body{
     deviceText.textContent = "DEVICE: " + (device.name && device.name.trim() ? device.name : "(Unnamed)");
     idText.textContent = "ID: " + (device.id || "-");
 
-    // Now can connect
     btnConnect.disabled = false;
   }
 
@@ -588,7 +599,6 @@ body{
         if (txChar && txChar.properties && txChar.properties.notify){
           await txChar.startNotifications();
           txChar.addEventListener("characteristicvaluechanged", (ev)=>{
-            // If ESP32 sends status text, parse here later
             // const txt = new TextDecoder().decode(ev.target.value);
           });
         }
@@ -597,7 +607,6 @@ body{
       setConnectedUI(true);
       audioOnce(sConn);
     } catch(e){
-      // If chosen device is NOT your NUS device -> service not found -> connect fails
       alert("CONNECT FAILED（Incorrect Device selected.）\nPlease re-SCAN and select the correct device.\n\n" + (e?.message || e));
       onDisconnected();
     }
