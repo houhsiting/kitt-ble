@@ -67,15 +67,16 @@ body{
 
 /* ✅ App icon in header */
 .appIcon{
-  width:22px;
-  height:22px;
-  border-radius:6px;
-  margin-right:10px;
+  width:33px;
+  height:33px;
+  border-radius:9px;      /* 6 × 1.5 = 9，圓角也跟著放大比較順 */
+  margin-right:12px;      /* 原本 10，稍微加一點間距 */
   border:1px solid var(--gold2);
   box-shadow:0 0 10px rgba(184,147,58,.20);
   object-fit:cover;
   flex:0 0 auto;
 }
+
 
 .h2{
   margin:0;
@@ -256,7 +257,7 @@ body{
   <div class="frame center">
     <span class="pill">
       <img class="appIcon" src="./app_icon.png" alt="app icon">
-      <span>*-VOICEBOX REMOTE CONTROLER-*</span>
+      <span>VOICEBOX REMOTE CONTROLER</span>
     </span>
   </div>
 
