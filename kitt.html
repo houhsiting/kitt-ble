@@ -1,0 +1,840 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>KITT BLE Controller (Flutter Style + Scan + Toast + MP3)</title>
+
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --card:#121a26;
+      --border:#223045;
+      --text:#e6edf6;
+      --muted:#9bb0c6;
+
+      --primary:#4ea1ff;
+      --danger:#ff5a6a;
+      --ok:#36d399;
+      --warn:#ffcc66;
+
+      --focus:#ff3b30; /* 紅框鎖定 */
+      --shadow: 0 10px 26px rgba(0,0,0,.35);
+      --radius:18px;
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, "Noto Sans TC", "Segoe UI", Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(1000px 600px at 20% -10%, rgba(78,161,255,.12), transparent 60%),
+        radial-gradient(900px 540px at 100% 0%, rgba(255,59,48,.10), transparent 55%),
+        var(--bg);
+      color:var(--text);
+    }
+
+    .app{ max-width: 980px; margin: 0 auto; padding: 16px 14px 18px; }
+
+    .appbar{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding: 12px 14px;
+      border: 1px solid rgba(34,48,69,.55);
+      background: linear-gradient(180deg, rgba(17,24,35,.92), rgba(17,24,35,.72));
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      position: sticky; top: 10px; backdrop-filter: blur(10px);
+      z-index: 5;
+    }
+
+    .title{ display:flex; flex-direction:column; gap:2px; min-width:0; }
+    .title h1{ margin:0; font-size: 18px; letter-spacing:.3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .title .sub{ font-size: 12px; color: var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
+    .chips{ display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+    .chip{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 8px 10px; border-radius: 999px;
+      border: 1px solid rgba(34,48,69,.65);
+      background: rgba(18,26,38,.75);
+      font-size: 12px; color: var(--muted);
+    }
+    .dot{ width:8px;height:8px;border-radius:999px; background:#555; box-shadow: 0 0 0 3px rgba(255,255,255,.04); }
+    .dot.ok{ background: var(--ok); }
+    .dot.off{ background: #6c7a89; }
+    .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+    .grid{ display:grid; grid-template-columns: 1.2fr .8fr; gap: 14px; margin-top: 14px; }
+    @media (max-width: 860px){ .grid{ grid-template-columns: 1fr; } }
+
+    .card{
+      background: linear-gradient(180deg, rgba(18,26,38,.90), rgba(18,26,38,.72));
+      border: 1px solid rgba(34,48,69,.60);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 14px;
+    }
+
+    .card h2{
+      margin:0 0 10px;
+      font-size: 14px;
+      color: #d8e6ff;
+      letter-spacing:.2px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+
+    .hint{ color: var(--muted); font-size: 12px; line-height: 1.45; }
+
+    .btn{
+      height: 40px;
+      padding: 0 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(34,48,69,.75);
+      background: rgba(20,30,44,.78);
+      color: var(--text);
+      cursor: pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      user-select:none;
+      transition: transform .06s ease, background .18s ease, border-color .18s ease, opacity .18s ease, box-shadow .18s ease;
+      white-space:nowrap;
+      min-width: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn:active{ transform: translateY(1px); }
+    .btn:hover{ border-color: rgba(78,161,255,.55); background: rgba(20,30,44,.92); }
+    .btn:disabled{ opacity:.45; cursor:not-allowed; transform:none; }
+
+    .btn.primary{
+      border-color: rgba(78,161,255,.55);
+      background: linear-gradient(180deg, rgba(78,161,255,.26), rgba(47,125,232,.12));
+    }
+    .btn.danger{
+      border-color: rgba(255,90,106,.55);
+      background: linear-gradient(180deg, rgba(255,90,106,.22), rgba(255,51,71,.10));
+    }
+    .btn.ghost{ background: transparent; border-color: rgba(34,48,69,.55); }
+
+    /* ===== Scan Trail ===== */
+    .scanWrap{
+      position:absolute; inset:0;
+      pointer-events:none;
+      opacity:0;
+      transition: opacity .18s ease;
+    }
+    .btn.scanning .scanWrap{ opacity:1; }
+
+    .scanBar{
+      position:absolute; top:0; bottom:0;
+      width: 32%;
+      border-radius: 12px;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(78,161,255,.14) 18%,
+        rgba(78,161,255,.36) 50%,
+        rgba(78,161,255,.14) 82%,
+        transparent 100%);
+      mix-blend-mode: screen;
+    }
+    .scanBar.ghost1{ opacity:.55; filter: blur(1.4px); transform: scaleX(.92); }
+    .scanBar.ghost2{ opacity:.28; filter: blur(2.2px); transform: scaleX(.85); }
+
+    .btnLabel{ position:relative; z-index:2; display:inline-flex; align-items:center; gap:8px; }
+
+    /* ===== Fail flash ===== */
+    @keyframes flashRed {
+      0%   { box-shadow: 0 0 0 0 rgba(255,90,106,.0); border-color: rgba(255,90,106,.0); }
+      20%  { box-shadow: 0 0 0 10px rgba(255,90,106,.18); border-color: rgba(255,90,106,.75); }
+      50%  { box-shadow: 0 0 0 0 rgba(255,90,106,.0); border-color: rgba(255,90,106,.0); }
+      70%  { box-shadow: 0 0 0 10px rgba(255,90,106,.18); border-color: rgba(255,90,106,.75); }
+      100% { box-shadow: 0 0 0 0 rgba(255,90,106,.0); border-color: rgba(255,90,106,.55); }
+    }
+    .btn.flashFail{ animation: flashRed .60s ease-in-out 1; }
+
+    .row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+
+    /* LINK 區：按鈕寬度限制（仿 maxWidth:118） */
+    .linkRow{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top: 6px; }
+    .linkBtns{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
+    .linkBtns .btn{ width: 118px; padding: 0 10px; }
+
+    /* MODE 三列佈局：4 + 4 + 2；小螢幕變 2 欄 */
+    .modeGrid{ display:grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap:10px; }
+    @media (max-width: 520px){ .modeGrid{ grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+    .modeBtn{
+      height: 44px;
+      border-radius: 16px;
+      font-size: 12px;
+      line-height: 1.1;
+      padding: 0 10px;
+      text-align:center;
+      background: rgba(20,30,44,.75);
+      border: 1px solid rgba(34,48,69,.75);
+    }
+    .modeBtn small{
+      display:block;
+      color: var(--muted);
+      font-size: 10px;
+      margin-top: 2px;
+      letter-spacing:.2px;
+    }
+    .modeBtn.selected{
+      border: 2px solid var(--focus);
+      box-shadow: 0 0 0 6px rgba(255,59,48,.08);
+      background: rgba(30,20,24,.55);
+    }
+
+    .toolbar{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 12px; }
+    .toolbar .btn{ flex: 1 1 120px; height: 44px; border-radius: 16px; font-weight: 600; }
+
+    .statusPanel{ display:flex; gap: 10px; flex-wrap:wrap; }
+    .statusItem{
+      flex: 1 1 140px;
+      background: rgba(17,24,35,.65);
+      border: 1px solid rgba(34,48,69,.55);
+      border-radius: 16px;
+      padding: 10px 12px;
+    }
+    .statusItem .k{ color: var(--muted); font-size: 11px; }
+    .statusItem .v{ font-size: 18px; font-weight: 700; margin-top: 4px; }
+
+    .log{
+      margin-top: 10px;
+      height: 220px;
+      overflow:auto;
+      background: #080c11;
+      border: 1px solid rgba(34,48,69,.60);
+      border-radius: 16px;
+      padding: 10px 10px;
+      color: #b9d6ff;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .footerHint{ margin-top: 12px; color: var(--muted); font-size: 12px; line-height: 1.45; }
+    .kbd{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding: 2px 6px; border-radius: 8px;
+      border: 1px solid rgba(34,48,69,.70);
+      background: rgba(18,26,38,.75);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 11px; color: #d9ecff;
+    }
+
+    /* ===== Toast ===== */
+    .toastHost{
+      position: fixed;
+      left: 0; right: 0; bottom: 14px;
+      display:flex;
+      justify-content:center;
+      pointer-events:none;
+      z-index: 999;
+      padding: 0 12px;
+    }
+    .toast{
+      min-width: min(520px, 92vw);
+      background: rgba(18,26,38,.92);
+      border: 1px solid rgba(34,48,69,.72);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      padding: 10px 12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      transform: translateY(18px);
+      opacity: 0;
+      transition: opacity .16s ease, transform .16s ease;
+    }
+    .toast.show{
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .toastLeft{
+      display:flex; align-items:center; gap:10px;
+      min-width:0;
+    }
+    .toastIcon{
+      width: 10px; height: 10px; border-radius: 999px;
+      background: var(--primary);
+      box-shadow: 0 0 0 6px rgba(78,161,255,.10);
+      flex: 0 0 auto;
+    }
+    .toastIcon.ok{ background: var(--ok); box-shadow: 0 0 0 6px rgba(54,211,153,.10); }
+    .toastIcon.warn{ background: var(--warn); box-shadow: 0 0 0 6px rgba(255,204,102,.10); }
+    .toastIcon.err{ background: var(--danger); box-shadow: 0 0 0 6px rgba(255,90,106,.10); }
+    .toastMsg{
+      font-size: 13px;
+      color: var(--text);
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+    .toastBtn{
+      pointer-events:auto;
+      border: 1px solid rgba(34,48,69,.70);
+      background: rgba(20,30,44,.70);
+      color: var(--text);
+      height: 30px;
+      padding: 0 10px;
+      border-radius: 12px;
+      cursor:pointer;
+      opacity: .9;
+    }
+    .toastBtn:active{ transform: translateY(1px); }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+
+    <div class="appbar">
+      <div class="title">
+        <h1>KITT BLE Controller</h1>
+        <div class="sub mono">NUS: 6E40... / Device: KITT_VOICE_SYSTEM</div>
+      </div>
+
+      <div class="chips">
+        <div class="chip"><span id="dot" class="dot off"></span><span id="connText" class="mono">DISCONNECTED</span></div>
+        <div class="chip">MODE: <span id="stMode" class="mono">-</span></div>
+        <div class="chip">GAIN: <span id="stGain" class="mono">-</span></div>
+      </div>
+    </div>
+
+    <div class="grid">
+
+      <!-- LEFT -->
+      <div class="card">
+        <h2>
+          <span>MODE（紅框鎖定）</span>
+          <button id="btnLock" class="btn ghost" disabled>Lock UI: OFF</button>
+        </h2>
+
+        <div class="modeGrid">
+          <button class="btn modeBtn" data-mode="1" disabled>1<small>KITT</small></button>
+          <button class="btn modeBtn" data-mode="2" disabled>2<small>KARR</small></button>
+          <button class="btn modeBtn" data-mode="3" disabled>3<small>PILOT_KITT</small></button>
+          <button class="btn modeBtn" data-mode="4" disabled>4<small>PILOT_KARR</small></button>
+
+          <button class="btn modeBtn" data-mode="5" disabled>5<small>DAMAGE_KITT</small></button>
+          <button class="btn modeBtn" data-mode="6" disabled>6<small>BLUE_KITT</small></button>
+          <button class="btn modeBtn" data-mode="7" disabled>7<small>GREEN_KARR</small></button>
+          <button class="btn modeBtn" data-mode="8" disabled>8<small>FLAME_KITT</small></button>
+
+          <button class="btn modeBtn" data-mode="9" disabled>9<small>SPECTRUM</small></button>
+          <button class="btn modeBtn" data-mode="10" disabled>10<small>ANALYSIS</small></button>
+        </div>
+
+        <div class="toolbar">
+          <button id="btnNextMode" class="btn primary" disabled>Next (m)</button>
+          <button id="btnGainUp" class="btn" disabled>GAIN +</button>
+          <button id="btnGainDown" class="btn" disabled>GAIN -</button>
+        </div>
+
+        <div class="footerHint">
+          指令：<span class="kbd">1..9</span>、<span class="kbd">0</span>、<span class="kbd">m</span>、<span class="kbd">+</span>/<span class="kbd">-</span><br/>
+          TX Notify：<span class="mono">MODE=x,G=y</span>
+        </div>
+      </div>
+
+      <!-- RIGHT -->
+      <div class="card">
+        <h2>LINK</h2>
+
+        <div class="linkRow">
+          <div class="hint">
+            Android/PC Chrome/Edge OK<br/>
+            iOS Safari/Chrome 不支援 Web BLE
+          </div>
+
+          <div class="linkBtns">
+            <button id="btnConnect" class="btn primary">
+              <span class="scanWrap">
+                <span class="scanBar ghost2" id="scanGhost2"></span>
+                <span class="scanBar ghost1" id="scanGhost1"></span>
+                <span class="scanBar" id="scanBar"></span>
+              </span>
+              <span class="btnLabel" id="btnConnectLabel">SCAN</span>
+            </button>
+
+            <button id="btnDisconnect" class="btn danger" disabled>
+              <span class="btnLabel">DISCONNECT</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top:12px;">
+          <button id="btnRefreshHint" class="btn ghost" disabled style="flex:1;">Refresh Status（提示）</button>
+        </div>
+
+        <div style="height:12px;"></div>
+
+        <h2 style="margin-top:0;">STATUS</h2>
+        <div class="statusPanel">
+          <div class="statusItem">
+            <div class="k">Connected</div>
+            <div class="v mono" id="stConn">false</div>
+          </div>
+          <div class="statusItem">
+            <div class="k">Device</div>
+            <div class="v mono" id="stDev">-</div>
+          </div>
+        </div>
+
+        <h2 style="margin-top:14px;">LOG</h2>
+        <div id="log" class="log mono"></div>
+
+        <div class="footerHint">
+          要「真的刷新狀態」建議 ESP32 加 <span class="kbd">?</span> 回報狀態；目前 Refresh 只提示。
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toastHost">
+    <div id="toast" class="toast" role="status" aria-live="polite">
+      <div class="toastLeft">
+        <span id="toastIcon" class="toastIcon"></span>
+        <div id="toastMsg" class="toastMsg">Ready.</div>
+      </div>
+      <button id="toastBtn" class="toastBtn">OK</button>
+    </div>
+  </div>
+
+  <!-- SFX (put files next to this html) -->
+  <audio id="sfxScan" src="./scan.mp3" preload="auto"></audio>
+  <audio id="sfxConnect" src="./connect.mp3" preload="auto"></audio>
+  <audio id="sfxButton" src="./button.mp3" preload="auto"></audio>
+
+<script>
+(() => {
+  // ===== NUS UUIDs =====
+  const SVC_UUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
+  const RX_UUID  = "6e400002-b5a3-f393-e0a9-e50e24dcca9e";
+  const TX_UUID  = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
+  const DEV_NAME_PREFIX = "KITT_VOICE_SYSTEM";
+
+  // ===== Scan timing (match Flutter) =====
+  const SCAN_PERIOD_MS = 1200;
+  const SCAN_STEPS = 8;
+
+  let device=null, server=null, rxChar=null, txChar=null;
+
+  let uiLocked=false;
+  let selectedMode=null;
+
+  // scan animation
+  let scanTimer=null;
+  let scanStep=0;
+
+  // ===== Sound (MP3 + fallback beep) =====
+  let audioCtx = null;      // fallback beep only
+  let audioEnabled = false; // must be enabled by user gesture
+  let sfxOk = false;
+
+  function ensureAudioUnlock(){
+    // 必須在 user gesture 事件內呼叫 (click/pointerdown)
+    audioEnabled = true;
+
+    const a1 = document.getElementById("sfxScan");
+    const a2 = document.getElementById("sfxConnect");
+    const a3 = document.getElementById("sfxButton");
+    sfxOk = !!(a1 && a2 && a3);
+
+    // fallback beep
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === "suspended") audioCtx.resume();
+  }
+
+  function playAudio(el, vol=0.7){
+    if (!audioEnabled || !el) return;
+    try{
+      el.pause();
+      el.currentTime = 0;
+      el.volume = vol;
+      const p = el.play();
+      if (p && typeof p.catch === "function") p.catch(()=>{});
+    } catch(e){}
+  }
+
+  function beep(freq=880, durMs=60, gain=0.06){
+    if (!audioEnabled || !audioCtx) return;
+    const t0 = audioCtx.currentTime;
+    const osc = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(freq, t0);
+
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.exponentialRampToValueAtTime(gain, t0 + 0.01);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + (durMs/1000));
+
+    osc.connect(g);
+    g.connect(audioCtx.destination);
+
+    osc.start(t0);
+    osc.stop(t0 + (durMs/1000) + 0.02);
+  }
+
+  const SND = {
+    scan(){
+      const el = document.getElementById("sfxScan");
+      if (sfxOk) playAudio(el, 0.35);
+      else beep(740, 55, 0.05);
+    },
+    connect(){
+      const el = document.getElementById("sfxConnect");
+      if (sfxOk) playAudio(el, 0.75);
+      else { beep(988, 90, 0.07); setTimeout(()=>beep(1318, 80, 0.06), 90); }
+    },
+    button(){
+      const el = document.getElementById("sfxButton");
+      if (sfxOk) playAudio(el, 0.60);
+      else beep(880, 45, 0.05);
+    },
+    error(){
+      // 可自行加 error.mp3；此處用 beep 保底
+      beep(220, 120, 0.06);
+      setTimeout(()=>beep(180, 120, 0.06), 110);
+    }
+  };
+
+  // ===== DOM helpers =====
+  const $ = (id)=>document.getElementById(id);
+  const logEl = $("log");
+
+  // ===== Toast =====
+  let toastTimer = null;
+  function showToast(msg, type="info", ms=1600){
+    const toast = $("toast");
+    const icon = $("toastIcon");
+    const text = $("toastMsg");
+
+    icon.className = "toastIcon " + (type === "ok" ? "ok" : type === "warn" ? "warn" : type === "err" ? "err" : "");
+    text.textContent = msg;
+
+    toast.classList.add("show");
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=>toast.classList.remove("show"), ms);
+  }
+  $("toastBtn").addEventListener("click", ()=>{
+    $("toast").classList.remove("show");
+    if (toastTimer) clearTimeout(toastTimer);
+  });
+
+  function log(msg){
+    const t = new Date().toLocaleTimeString();
+    logEl.textContent += `[${t}] ${msg}\n`;
+    logEl.scrollTop = logEl.scrollHeight;
+  }
+
+  // ===== UI state =====
+  function setConnUi(connected){
+    $("stConn").textContent = String(connected);
+    $("stConn").style.color = connected ? "var(--ok)" : "var(--muted)";
+    $("connText").textContent = connected ? "CONNECTED" : "DISCONNECTED";
+    $("dot").className = "dot " + (connected ? "ok" : "off");
+
+    $("btnDisconnect").disabled = !connected;
+    $("btnRefreshHint").disabled = !connected;
+    $("btnNextMode").disabled = !connected;
+    $("btnGainUp").disabled = !connected;
+    $("btnGainDown").disabled = !connected;
+    $("btnLock").disabled = !connected;
+    document.querySelectorAll(".modeBtn").forEach(b => b.disabled = !connected);
+
+    $("btnConnectLabel").textContent = connected ? "CONNECTED" : "SCAN";
+  }
+
+  function clearSelected(){
+    document.querySelectorAll(".modeBtn").forEach(b => b.classList.remove("selected"));
+  }
+  function markSelected(modeNum){
+    selectedMode = modeNum;
+    clearSelected();
+    const btn = document.querySelector(`.modeBtn[data-mode="${modeNum}"]`);
+    if (btn) btn.classList.add("selected");
+  }
+
+  function parseStatus(text){
+    const m = text.match(/MODE\s*=\s*(\d+)/i);
+    const g = text.match(/G\s*=\s*(\d+)/i);
+    if (m){
+      const mode = parseInt(m[1], 10);
+      $("stMode").textContent = String(mode);
+      if (!uiLocked && mode>=1 && mode<=10) markSelected(mode);
+    }
+    if (g) $("stGain").textContent = g[1];
+  }
+
+  async function writeCmd(ch){
+    if (!rxChar) throw new Error("RX characteristic not ready");
+    const data = new TextEncoder().encode(ch);
+    if (rxChar.properties.writeWithoutResponse) await rxChar.writeValueWithoutResponse(data);
+    else await rxChar.writeValue(data);
+    log(`TX cmd: "${ch}"`);
+    showToast(`Sent: ${ch}`, "info", 900);
+  }
+
+  // ===== Scan animation (8 steps / 1200ms, every step play scan.mp3) =====
+  function startScanAnim(){
+    stopScanAnim();
+    scanStep = 0;
+    const btn = $("btnConnect");
+    btn.classList.add("scanning");
+
+    const stepMs = Math.floor(SCAN_PERIOD_MS / SCAN_STEPS); // 150ms
+    const travelPct = 68;
+
+    scanTimer = setInterval(() => {
+      // ping-pong (0..7..0)
+      const phase = scanStep % (SCAN_STEPS * 2);
+      let k = phase;
+      if (k >= SCAN_STEPS) k = (SCAN_STEPS * 2 - 1) - k;
+
+      const pos  = (travelPct * (k / (SCAN_STEPS - 1)));
+      const k1 = Math.max(0, k - 1);
+      const k2 = Math.max(0, k - 2);
+      const pos1 = (travelPct * (k1 / (SCAN_STEPS - 1)));
+      const pos2 = (travelPct * (k2 / (SCAN_STEPS - 1)));
+
+      $("scanBar").style.left = pos + "%";
+      $("scanGhost1").style.left = pos1 + "%";
+      $("scanGhost2").style.left = pos2 + "%";
+
+      // 每步都播 scan 音（你指定的）
+      SND.scan();
+
+      scanStep++;
+    }, stepMs);
+  }
+
+  function stopScanAnim(){
+    const btn = $("btnConnect");
+    btn.classList.remove("scanning");
+    if (scanTimer){ clearInterval(scanTimer); scanTimer=null; }
+  }
+
+  function flashFail(){
+    const b = $("btnConnect");
+    b.classList.remove("flashFail");
+    void b.offsetWidth; // reflow restart
+    b.classList.add("flashFail");
+    setTimeout(()=>b.classList.remove("flashFail"), 650);
+  }
+
+  // ===== BLE connect/disconnect =====
+  async function connect(){
+    if (!navigator.bluetooth){
+      showToast("此瀏覽器不支援 Web Bluetooth", "err", 2200);
+      alert("此瀏覽器不支援 Web Bluetooth。請用 Android Chrome / PC Edge(Chromium)。iOS Safari/Chrome 不支援。");
+      return;
+    }
+
+    startScanAnim();
+    $("btnConnectLabel").textContent = "SCANNING";
+    showToast("Scanning…", "info", 1200);
+
+    try{
+      log("SCAN: requestDevice...");
+      device = await navigator.bluetooth.requestDevice({
+        acceptAllDevices: true,
+        optionalServices: [SVC_UUID],
+      });
+
+      $("stDev").textContent = (device.name || "(no name)");
+      log(`Selected: ${device.name || "(no name)"} (${device.id})`);
+      if (device.name && !device.name.startsWith(DEV_NAME_PREFIX)){
+        log(`Note: device name not match prefix "${DEV_NAME_PREFIX}" (still try).`);
+      }
+
+      device.addEventListener("gattserverdisconnected", onDisconnected);
+
+      log("Connecting GATT...");
+      server = await device.gatt.connect();
+
+      log("Getting NUS service...");
+      const svc = await server.getPrimaryService(SVC_UUID);
+
+      log("Getting RX/TX characteristics...");
+      rxChar = await svc.getCharacteristic(RX_UUID);
+      txChar = await svc.getCharacteristic(TX_UUID);
+
+      if (txChar.properties.notify){
+        await txChar.startNotifications();
+        txChar.addEventListener("characteristicvaluechanged", (ev)=>{
+          const v = ev.target.value;
+          const text = new TextDecoder().decode(v);
+          log(`RX notify: ${JSON.stringify(text)}`);
+          parseStatus(text);
+        });
+        log("TX notifications started.");
+      } else {
+        log("Warning: TX has no notify property.");
+      }
+
+      setConnUi(true);
+      stopScanAnim();
+
+      SND.connect();
+      showToast("Connected ✅", "ok", 1600);
+      log("Connected.");
+    } catch(e){
+      stopScanAnim();
+      setConnUi(false);
+      $("stDev").textContent = "-";
+
+      const name = e?.name || "Error";
+      const msg  = e?.message || String(e);
+
+      flashFail();
+      SND.error();
+
+      log(`ERROR: ${name}: ${msg}`);
+      if (name === "NotFoundError") showToast("Canceled", "warn", 1400);
+      else showToast(`Failed: ${name}`, "err", 1800);
+
+      throw e;
+    } finally {
+      if (!device?.gatt?.connected) $("btnConnectLabel").textContent = "SCAN";
+    }
+  }
+
+  async function disconnect(){
+    try{
+      stopScanAnim();
+      if (txChar){
+        try{ await txChar.stopNotifications(); }catch(e){}
+      }
+      if (device?.gatt?.connected) device.gatt.disconnect();
+    } finally {
+      cleanup();
+      setConnUi(false);
+      $("stDev").textContent = "-";
+      showToast("Disconnected", "warn", 1400);
+      log("Disconnected.");
+    }
+  }
+
+  function cleanup(){
+    rxChar=null; txChar=null; server=null;
+  }
+
+  function onDisconnected(){
+    log("GATT disconnected (event).");
+    cleanup();
+    setConnUi(false);
+    $("stDev").textContent = "-";
+    stopScanAnim();
+    showToast("Disconnected (event)", "warn", 1500);
+  }
+
+  function refreshHint(){
+    showToast("No query cmd in firmware (hint only)", "warn", 1600);
+    log("Tip: 韌體目前沒有查詢狀態指令。可按 Next(m) 或重連以觸發 MODE/G notify。");
+  }
+
+  // ===== Event wiring =====
+  // 任何第一次 user gesture 就解鎖音效（讓 scan/connect/button 可播）
+  function oneTimeUnlock(){
+    try{
+      ensureAudioUnlock();
+      window.removeEventListener("pointerdown", oneTimeUnlock, true);
+      showToast("Sound enabled", "ok", 900);
+      log("Audio unlocked.");
+    } catch(e){}
+  }
+  window.addEventListener("pointerdown", oneTimeUnlock, true);
+
+  $("btnConnect").addEventListener("click", async ()=>{
+    ensureAudioUnlock();
+    if (device?.gatt?.connected){
+      showToast("Already connected", "info", 900);
+      log("Already connected.");
+      return;
+    }
+    try{ await connect(); } catch(e){ /* already handled */ }
+  });
+
+  $("btnDisconnect").addEventListener("click", async ()=>{
+    ensureAudioUnlock();
+    SND.button();
+    try{ await disconnect(); }
+    catch(e){ showToast("Disconnect error", "err", 1600); log("ERROR: " + e.message); console.error(e); }
+  });
+
+  $("btnRefreshHint").addEventListener("click", ()=>{
+    ensureAudioUnlock();
+    SND.button();
+    refreshHint();
+  });
+
+  $("btnNextMode").addEventListener("click", async ()=>{
+    ensureAudioUnlock();
+    SND.button();
+    try{ await writeCmd("m"); }
+    catch(e){ showToast("Send failed", "err", 1400); log("ERROR: " + e.message); console.error(e); }
+  });
+
+  $("btnGainUp").addEventListener("click", async ()=>{
+    ensureAudioUnlock();
+    SND.button();
+    try{ await writeCmd("+"); }
+    catch(e){ showToast("Send failed", "err", 1400); log("ERROR: " + e.message); console.error(e); }
+  });
+
+  $("btnGainDown").addEventListener("click", async ()=>{
+    ensureAudioUnlock();
+    SND.button();
+    try{ await writeCmd("-"); }
+    catch(e){ showToast("Send failed", "err", 1400); log("ERROR: " + e.message); console.error(e); }
+  });
+
+  $("btnLock").addEventListener("click", ()=>{
+    ensureAudioUnlock();
+    SND.button();
+    uiLocked = !uiLocked;
+    $("btnLock").textContent = uiLocked ? "Lock UI: ON" : "Lock UI: OFF";
+    $("btnLock").style.borderColor = uiLocked ? "rgba(255,59,48,.65)" : "rgba(34,48,69,.55)";
+    $("btnLock").style.background = uiLocked ? "rgba(30,20,24,.45)" : "transparent";
+    showToast(`Lock UI: ${uiLocked ? "ON" : "OFF"}`, "info", 1100);
+    log(`UI Lock = ${uiLocked ? "ON" : "OFF"}`);
+  });
+
+  document.querySelectorAll(".modeBtn").forEach(btn=>{
+    btn.addEventListener("click", async ()=>{
+      ensureAudioUnlock();
+      SND.button();
+      const mode = parseInt(btn.dataset.mode, 10);
+      try{
+        markSelected(mode);
+        const ch = (mode === 10) ? "0" : String(mode);
+        await writeCmd(ch);
+        $("stMode").textContent = String(mode);
+      } catch(e){
+        showToast("Send failed", "err", 1400);
+        log("ERROR: " + e.message);
+        console.error(e);
+      }
+    });
+  });
+
+  // init
+  setConnUi(false);
+  showToast("Ready", "info", 900);
+  log("Ready (Flutter style + scan + toast + mp3).");
+})();
+</script>
+
+</body>
+</html>
