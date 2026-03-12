@@ -1,0 +1,1132 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VOICEBOX REMOTE CONTROLER</title>
+
+<style>
+:root{
+  --bg:#000000;
+  --panel:#070707;
+  --panel2:#0E0E0E;
+  --gold:#DAA64A;
+  --gold2:#B8933A;
+  --red:#FF0000;
+  --dim:#666666;
+  --green:#00FF00;
+  --yellow:#F2F500;
+  --shadow1: 0 10px 18px rgba(0,0,0,.85);
+  --shadow2: 0 0 24px rgba(184,147,58,.25);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--bg);
+  color:#fff;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans-serif;
+}
+.app{max-width:1080px;margin:auto;padding:14px}
+
+.frame{
+  background:var(--panel);
+  border:1.8px solid var(--gold2);
+  border-radius:16px;
+  padding:14px;
+  margin-bottom:12px;
+  box-shadow: var(--shadow1), var(--shadow2);
+}
+
+.center{display:flex; justify-content:center; align-items:center; text-align:center}
+.col{display:flex; flex-direction:column; justify-content:center; align-items:center}
+.row{
+  width:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.pill{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:8px 14px;
+  border-radius:999px;
+  border:1.4px solid var(--gold);
+  background:var(--panel2);
+  color:var(--gold);
+  font-weight:900;
+  letter-spacing:1.2px;
+  font-size:12px;
+}
+.appIcon{
+  width:33px;
+  height:33px;
+  border-radius:9px;
+  margin-right:12px;
+  border:1px solid var(--gold2);
+  box-shadow:0 0 10px rgba(184,147,58,.20);
+  object-fit:cover;
+  flex:0 0 auto;
+}
+
+.h2{
+  margin:0;
+  font-size:13px;
+  letter-spacing:1.8px;
+  color:var(--gold);
+  font-weight:900;
+}
+.sub{
+  margin-top:4px;
+  font-size:11px;
+  color:var(--gold2);
+  letter-spacing:1.2px;
+  font-weight:700;
+}
+.mini{
+  margin-top:4px;
+  font-size:10px;
+  color:var(--dim);
+  letter-spacing:1.0px;
+  font-weight:700;
+}
+.kv{
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+}
+.kv .line{
+  width:100%;
+  max-width:900px;
+  text-align:center;
+  color:var(--gold2);
+  font-weight:700;
+  font-size:11px;
+  letter-spacing:1.1px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.kv .line.dim{color:var(--dim); font-size:10px;}
+
+.btn{
+  border-radius:16px;
+  border:1.8px solid var(--gold2);
+  background:linear-gradient(135deg,#1B1200,#0A0A0A);
+  color:var(--gold);
+  font-weight:900;
+  letter-spacing:.9px;
+  cursor:pointer;
+  user-select:none;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:6px;
+  padding:10px 10px;
+  position:relative;
+  transition:.12s;
+}
+.btn:disabled{
+  border-color:#2E2E2E;
+  color:var(--dim);
+  cursor:default;
+  filter:saturate(.7);
+  box-shadow:none;
+}
+.btn.active{
+  border:2.6px solid var(--red);
+  box-shadow:
+    0 0 22px rgba(255,0,0,.55),
+    0 0 46px rgba(255,0,0,.35),
+    0 10px 14px rgba(0,0,0,.8);
+}
+.btn.greenActive{
+  border:2.2px solid var(--green);
+  box-shadow:
+    0 0 16px rgba(0,255,0,.35),
+    0 0 28px rgba(0,255,0,.20);
+}
+.btnSmall{
+  width:118px;
+  height:40px;
+  border-radius:14px;
+  padding:0 10px;
+  flex-direction:row;
+  gap:8px;
+  letter-spacing:1.0px;
+}
+.icon{width:18px;height:18px;display:block;fill:currentColor;opacity:.95;}
+.iconSmall{width:16px;height:16px;}
+.label{
+  line-height:1.05;
+  font-size:14px;
+  font-weight:900;
+  color:var(--gold);
+  text-align:center;
+}
+.label small{
+  display:block;
+  margin-top:3px;
+  font-size:11px;
+  font-weight:900;
+  color:var(--gold2);
+  letter-spacing:1.0px;
+}
+
+/* scanner */
+.scanbar{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:4px;
+  margin-top:12px;
+  margin-bottom:10px;
+}
+.led{
+  width:26px;
+  height:12px;
+  border-radius:4px;
+  border:1px solid #2A0A0A;
+  background:#140000;
+  transition: all .12s ease;
+}
+.led.on{
+  background:linear-gradient(#FF3A3A,#7A0000);
+  border-color:#FF8A8A;
+  box-shadow:0 0 18px rgba(255,0,0,.85);
+}
+.led.tail1{
+  background:linear-gradient(#D02A2A,#4A0000);
+  border-color:#C06060;
+  box-shadow:0 0 10px rgba(255,0,0,.35);
+}
+.led.tail2{
+  background:linear-gradient(#5A1010,#240000);
+  border-color:#5A2A2A;
+}
+
+/* main tactical panel */
+.kittWrap{
+  width:100%;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+}
+.kittPanel{
+  width:min(920px,100%);
+  background:#000;
+  padding:14px 10px 18px;
+  border-radius:18px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:18px;
+}
+
+/* top step lamps */
+.stepStack{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  align-items:center;
+}
+.stepBtn{
+  width:220px;
+  height:48px;
+  border-radius:18px;
+  font-size:13px;
+  font-weight:900;
+  letter-spacing:.8px;
+  border:2px solid #4a2a00;
+  background:#161600;
+  color:#111;
+  box-shadow:0 0 14px rgba(0,0,0,.65);
+}
+.stepBtn.yellow{
+  background:linear-gradient(#F2F500,#C7C900);
+  color:#111;
+}
+.stepBtn.red{
+  background:linear-gradient(#FF1E1E,#B00000);
+  color:#111;
+}
+.stepBtn.lit{
+  box-shadow:
+    0 0 16px rgba(255,255,0,.42),
+    0 0 28px rgba(255,255,0,.18);
+}
+.stepBtn.red.lit{
+  box-shadow:
+    0 0 18px rgba(255,0,0,.50),
+    0 0 30px rgba(255,0,0,.22);
+}
+
+/* middle cluster */
+.cluster{
+  width:100%;
+  display:grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap:18px;
+  align-items:center;
+}
+.sideCol{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  align-items:center;
+}
+.sideBtn{
+  width:88px;
+  height:72px;
+  border-radius:18px;
+  border:2px solid #3a3a00;
+  background:linear-gradient(#F2F500,#BFBF00);
+  color:#111;
+  font-weight:900;
+  font-size:12px;
+  line-height:1.05;
+  text-align:center;
+  cursor:pointer;
+  box-shadow:0 0 12px rgba(0,0,0,.55);
+}
+.sideBtn.red{
+  border-color:#4a0000;
+  background:linear-gradient(#FF1E1E,#B00000);
+}
+.sideBtn.lit.yellowGlow{
+  box-shadow:
+    0 0 16px rgba(255,255,0,.40),
+    0 0 28px rgba(255,255,0,.15);
+}
+.sideBtn.lit.redGlow{
+  box-shadow:
+    0 0 18px rgba(255,0,0,.50),
+    0 0 30px rgba(255,0,0,.20);
+}
+
+/* center meter */
+.centerCore{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:14px;
+}
+
+.barCluster{
+  display:grid;
+  grid-template-columns: 72px 82px 72px;
+  gap:18px;
+  align-items:end;
+}
+.shortCol, .midCol{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+.shortCol .seg{
+  width:72px;
+  height:18px;
+}
+.midCol .seg{
+  width:82px;
+  height:18px;
+}
+
+.seg{
+  border-radius:4px;
+  background:linear-gradient(#FF1E1E,#B00000);
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,.25);
+  cursor:pointer;
+  border:1px solid rgba(60,0,0,.9);
+  position:relative;
+}
+.seg:hover{filter:brightness(1.08)}
+.seg.active{
+  box-shadow:
+    0 0 14px rgba(255,0,0,.5),
+    inset 0 -1px 0 rgba(0,0,0,.25);
+}
+.segNum{
+  position:absolute;
+  right:6px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:10px;
+  font-weight:900;
+  color:#220000;
+  opacity:.88;
+}
+
+/* mode lights block */
+.bottomModes{
+  display:grid;
+  grid-template-columns: 24px 150px;
+  gap:14px;
+  align-items:start;
+}
+.leftIndicators{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.smallYellow{
+  width:18px;
+  height:58px;
+  border-radius:4px;
+  border:1px solid #5a5500;
+  background:linear-gradient(#F2F500,#B5B700);
+  box-shadow:0 0 10px rgba(255,255,0,.15);
+}
+.modeLamps{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.modeLamp{
+  width:150px;
+  height:58px;
+  border-radius:6px;
+  border:2px solid #003800;
+  background:#023202;
+  color:#011;
+  font-weight:900;
+  font-size:13px;
+  line-height:1.05;
+  text-align:center;
+  cursor:pointer;
+}
+.modeLamp.yellow{
+  border-color:#5a5500;
+  background:linear-gradient(#F2F500,#BFBF00);
+  color:#111;
+}
+.modeLamp.red{
+  border-color:#4a0000;
+  background:linear-gradient(#FF1E1E,#B00000);
+  color:#111;
+}
+.modeLamp.active{
+  box-shadow:0 0 16px rgba(0,255,0,.35), 0 0 28px rgba(0,255,0,.15);
+}
+
+/* external controls */
+.toolsGrid{
+  width:100%;
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap:12px;
+}
+.toolBtn{
+  height:52px;
+  font-size:13px;
+}
+.toolBtn.redTone{
+  border-color:#6A0000;
+  color:#ff9a9a;
+}
+.toolBtn.greenTone{
+  border-color:#1d5b1d;
+  color:#a7ffb1;
+}
+.toolBtn.yellowTone{
+  color:var(--gold);
+}
+.toolInputRow{
+  width:100%;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.toolInput{
+  width:min(320px,100%);
+  height:48px;
+  border-radius:14px;
+  border:1.8px solid var(--gold2);
+  background:#0a0a0a;
+  color:var(--gold);
+  padding:0 14px;
+  font-size:14px;
+  font-weight:800;
+  letter-spacing:.6px;
+  outline:none;
+}
+.footer{
+  width:100%;
+  text-align:center;
+  font-size:10px;
+  color:var(--dim);
+  letter-spacing:1.2px;
+  font-weight:600;
+  margin-top:16px;
+}
+
+@media (max-width:860px){
+  .cluster{grid-template-columns: 1fr; gap:20px;}
+  .sideCol{flex-direction:row; flex-wrap:wrap; justify-content:center;}
+  .barCluster{grid-template-columns: 56px 68px 56px; gap:12px;}
+  .shortCol .seg{width:56px;height:16px;}
+  .midCol .seg{width:68px;height:16px;}
+  .stepBtn{width:min(220px,85vw);}
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+  <!-- HEADER -->
+  <div class="frame center">
+    <span class="pill">
+      <img class="appIcon" src="./app_icon.png" alt="app icon">
+      <span>VOICEBOX REMOTE CONTROLER</span>
+    </span>
+  </div>
+
+  <!-- SCANNER -->
+  <div class="frame col">
+    <div class="row" style="justify-content:space-between; max-width:860px;">
+      <div class="h2">SCANNER</div>
+      <div class="h2" id="scannerState" style="color:var(--dim)">OFFLINE</div>
+    </div>
+    <div class="scanbar" id="scanbar"></div>
+    <div class="sub center" id="scanText">CONNECT TO ENABLE SCAN SEQUENCE</div>
+  </div>
+
+  <!-- STATUS + LINKS -->
+  <div class="frame col">
+    <div class="kv">
+      <div class="line" id="statusText">LINK: NOT CONNECTED</div>
+      <div class="line" id="bleText">BLE: UNKNOWN</div>
+      <div class="line" id="deviceText">DEVICE: (none)</div>
+      <div class="line dim" id="idText">ID: -</div>
+      <div class="line" id="modeStatus">MODE: -</div>
+      <div class="line" id="gainStatus">GAIN: -</div>
+    </div>
+
+    <div style="height:10px;"></div>
+
+    <div class="row">
+      <button id="btnScan" class="btn btnSmall">
+        <svg class="icon iconSmall" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 .001 20.001A10 10 0 0 0 12 2Zm0 2a8 8 0 1 1-.001 16.001A8 8 0 0 1 12 4Zm0 3a5 5 0 1 0 .001 10.001A5 5 0 0 0 12 7Zm0 2a3 3 0 1 1-.001 6.001A3 3 0 0 1 12 9Z"/></svg>
+        <span>SCAN</span>
+      </button>
+
+      <button id="btnConnect" class="btn btnSmall" disabled>
+        <svg class="icon iconSmall" viewBox="0 0 24 24"><path d="M10.59 13.41a1.996 1.996 0 0 1 0-2.82l2.83-2.83a2 2 0 1 1 2.83 2.83l-1.41 1.41 1.41 1.41 1.41-1.41a4 4 0 1 0-5.66-5.66l-2.83 2.83a4 4 0 0 0 0 5.66l.29.29 1.41-1.41-.28-.29Zm2.82 2.82a1.996 1.996 0 0 1 0 2.82l-2.83 2.83a2 2 0 1 1-2.83-2.83l1.41-1.41-1.41-1.41-1.41 1.41a4 4 0 1 0 5.66 5.66l2.83-2.83a4 4 0 0 0 0-5.66l-.29-.29-1.41 1.41.28.29Z"/></svg>
+        <span>CONNECT</span>
+      </button>
+
+      <button id="btnDisconnect" class="btn btnSmall" disabled style="border-color:var(--red);">
+        <svg class="icon iconSmall" viewBox="0 0 24 24"><path d="M2.1 3.51 3.51 2.1l18.39 18.39-1.41 1.41-2.83-2.83-1.41 1.41a4 4 0 1 1-5.66-5.66l1.41-1.41-2.83-2.83-1.41 1.41a4 4 0 1 1-5.66-5.66L5.8 5.92 2.1 3.51Zm7.78 10.6 1.41 1.41-1.41 1.41a2 2 0 1 0 2.83 2.83l1.41-1.41 1.41 1.41-1.41 1.41a4 4 0 1 1-5.66-5.66l1.41-1.41Zm5.66-5.66 1.41 1.41-1.41 1.41-1.41-1.41 1.41-1.41Z"/></svg>
+        <span>DISCONNECT</span>
+      </button>
+    </div>
+
+    <div class="mini center" style="margin-top:10px;">
+      Steps: Press SCAN → Select device (KITT_REMOTE_SYSTEM) → Press CONNECT
+    </div>
+  </div>
+
+  <!-- MAIN TACTICAL PANEL -->
+  <div class="frame col">
+    <div class="h2">TACTICAL LAMP CONTROL</div>
+    <div class="sub">STEP • BOX • MODE • DISPLAY</div>
+    <div style="height:12px;"></div>
+
+    <div class="kittWrap">
+      <div class="kittPanel">
+
+        <!-- top 4 STEP lamps -->
+        <div class="stepStack">
+          <button class="stepBtn yellow" id="step1Btn">POWER</button>
+          <button class="stepBtn yellow" id="step2Btn">FUEL ON</button>
+          <button class="stepBtn yellow" id="step3Btn">MIN RPM</button>
+          <button class="stepBtn red"    id="step4Btn">IGNITORS</button>
+        </div>
+
+        <!-- center dashboard -->
+        <div class="cluster">
+
+          <!-- left side -->
+          <div class="sideCol">
+            <button class="sideBtn"      data-box="1" data-side="L">ALT</button>
+            <button class="sideBtn"      data-box="2" data-side="L">OIL<br>PRESS</button>
+            <button class="sideBtn red"  data-box="3" data-side="L">OIL<br>TEMP</button>
+            <button class="sideBtn red"  data-box="4" data-side="L">EGT</button>
+            <button class="sideBtn red"  data-box="5" data-side="L">FUEL</button>
+          </div>
+
+          <!-- center -->
+          <div class="centerCore">
+            <!-- red bar / mode1~10 -->
+            <div class="barCluster">
+              <div class="shortCol">
+                <div class="seg"></div>
+                <div class="seg"></div>
+                <div class="seg"></div>
+                <div class="seg"></div>
+                <div class="seg"></div>
+                <div class="seg"></div>
+                <div class="seg"></div>
+                <div class="seg"></div>
+              </div>
+
+              <div class="midCol" id="modeBarCol">
+                <!-- 10 clickable segments -->
+              </div>
+
+              <div class="shortCol">
+                <div class="seg"></div>
+                <div class="seg"></div>
+                <div class="seg"></div>
+                <div class="seg"></div>
+                <div class="seg"></div>
+                <div class="seg"></div>
+                <div class="seg"></div>
+                <div class="seg"></div>
+              </div>
+            </div>
+
+            <!-- bottom mode lamps -->
+            <div class="bottomModes">
+              <div class="leftIndicators">
+                <div class="smallYellow"></div>
+                <div class="smallYellow"></div>
+                <div class="smallYellow"></div>
+              </div>
+
+              <div class="modeLamps">
+                <button class="modeLamp"        id="nanoNorBtn">NORMAL</button>
+                <button class="modeLamp yellow" id="nanoAutoBtn">AUTO<br>CRUISE</button>
+                <button class="modeLamp red"    id="nanoSpmBtn">PURSUIT</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- right side -->
+          <div class="sideCol">
+            <button class="sideBtn"      data-box="1" data-side="R">AUX</button>
+            <button class="sideBtn"      data-box="2" data-side="R">SAT<br>COMM</button>
+            <button class="sideBtn red"  data-box="3" data-side="R">ACC</button>
+            <button class="sideBtn red"  data-box="4" data-side="R">RADAR</button>
+            <button class="sideBtn red"  data-box="5" data-side="R">MPI</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAIN -->
+  <div class="frame col">
+    <div class="h2">GAIN CONTROL</div>
+    <div class="sub">VOICE DISPLAY SENSITIVITY ＋ or －</div>
+    <div style="height:10px;"></div>
+
+    <div class="row" style="max-width:920px;">
+      <button id="btnGainDown" class="btn" style="max-width:420px; width:min(420px,100%);" disabled>
+        <svg class="icon" viewBox="0 0 24 24"><path d="M19 13H5v-2h14v2Z"/></svg>
+        <div class="label">GAIN −</div>
+      </button>
+
+      <button id="btnGainUp" class="btn" style="max-width:420px; width:min(420px,100%);" disabled>
+        <svg class="icon" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2Z"/></svg>
+        <div class="label">GAIN ＋</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- EXTERNAL TOOLS -->
+  <div class="frame col">
+    <div class="h2">EXTERNAL COMMANDS</div>
+    <div class="sub">BOOT • SHUTDOWN • MODE OFF • ALL OFF • DTMF</div>
+    <div style="height:12px;"></div>
+
+    <div class="toolsGrid">
+      <button id="btnStartup"  class="btn toolBtn greenTone">STARTUP</button>
+      <button id="btnShutdown" class="btn toolBtn redTone">SHUTDOWN</button>
+      <button id="btnAllOff"   class="btn toolBtn yellowTone">ALL OFF</button>
+      <button id="btnModeOff"  class="btn toolBtn yellowTone">MODE OFF</button>
+      <button id="btnDTMF7"    class="btn toolBtn yellowTone">DTMF 7 / 400ms</button>
+      <button id="btnDTMF8"    class="btn toolBtn yellowTone">DTMF 8 / 400ms</button>
+    </div>
+
+    <div style="height:14px;"></div>
+
+    <div class="toolInputRow">
+      <input id="dtmfInput" class="toolInput" type="text" value="DTMF=8,400" placeholder="例如：DTMF=8,400">
+      <button id="btnSendCustom" class="btn btnSmall" style="width:140px;">SEND CMD</button>
+    </div>
+  </div>
+
+  <div class="footer">KNIGHT RIDER WEB REMOTE CONTROL SYSTEM</div>
+</div>
+
+<!-- SFX -->
+<audio id="sScan" src="./scan.mp3" preload="auto"></audio>
+<audio id="sConn" src="./connect.mp3" preload="auto"></audio>
+<audio id="sBtn"  src="./button.mp3" preload="auto"></audio>
+
+<script>
+(() => {
+  // ===== UUID =====
+  const SVC_UUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
+  const RX_UUID  = "6e400002-b5a3-f393-e0a9-e50e24dcca9e";
+  const TX_UUID  = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
+
+  const $ = (id)=>document.getElementById(id);
+
+  // DOM
+  const btnScan       = $("btnScan");
+  const btnConnect    = $("btnConnect");
+  const btnDisconnect = $("btnDisconnect");
+  const btnGainUp     = $("btnGainUp");
+  const btnGainDown   = $("btnGainDown");
+
+  const statusText    = $("statusText");
+  const bleText       = $("bleText");
+  const deviceText    = $("deviceText");
+  const idText        = $("idText");
+  const scanText      = $("scanText");
+  const scannerState  = $("scannerState");
+  const modeStatus    = $("modeStatus");
+  const gainStatus    = $("gainStatus");
+
+  const sScan = $("sScan");
+  const sConn = $("sConn");
+  const sBtn  = $("sBtn");
+
+  // BLE handles
+  let device = null;
+  let server = null;
+  let rxChar = null;
+  let txChar = null;
+
+  // App state
+  const ui = {
+    connected: false,
+    mode: null,
+    gain: null,
+    step: [false,false,false,false], // STEP1..4
+    box:  [false,false,false,false,false], // BOX1, BOX2, B3, B4, B5
+    nanoMode: null // NOR / AUTO / SPM / OFF
+  };
+
+  // ===== audio =====
+  function audioOnce(a){
+    try{
+      a.pause(); a.currentTime = 0;
+      const p = a.play();
+      if (p && p.catch) p.catch(()=>{});
+    }catch(_){}
+  }
+
+  // ===== scanner animation =====
+  const scanbar = $("scanbar");
+  let scanPos = 0;
+  let scanDir = 1;
+  let scanTimer = null;
+
+  for (let i=0;i<8;i++){
+    const d = document.createElement("div");
+    d.className = "led";
+    scanbar.appendChild(d);
+  }
+
+  function renderScanner(){
+    const leds = [...scanbar.children];
+    leds.forEach(d => d.className = "led");
+    if (!ui.connected) return;
+
+    for (let i=0;i<8;i++){
+      const dist = Math.abs(i - scanPos);
+      if (dist === 0) leds[i].classList.add("on");
+      else if (dist === 1) leds[i].classList.add("tail1");
+      else if (dist === 2) leds[i].classList.add("tail2");
+    }
+  }
+
+  function startScanner(){
+    stopScanner();
+    scanPos = 0; scanDir = 1;
+    renderScanner();
+    scanTimer = setInterval(() => {
+      scanPos += scanDir;
+      if (scanPos >= 7){ scanPos = 7; scanDir = -1; }
+      else if (scanPos <= 0){ scanPos = 0; scanDir = 1; }
+      renderScanner();
+    }, 150);
+  }
+
+  function stopScanner(){
+    if (scanTimer){ clearInterval(scanTimer); scanTimer = null; }
+    [...scanbar.children].forEach(d => d.className = "led");
+  }
+
+  // ===== mode center bar build =====
+  const modeBarCol = $("modeBarCol");
+  for (let m = 10; m >= 1; m--) {
+    const div = document.createElement("div");
+    div.className = "seg";
+    div.dataset.mode = String(m);
+    div.innerHTML = `<span class="segNum">${m}</span>`;
+    div.addEventListener("click", async ()=>{
+      if (!ui.connected) return;
+      audioOnce(sBtn);
+      ui.mode = m;
+      renderModeSegments();
+      await writeChar(cmdForMode(m));
+    });
+    modeBarCol.appendChild(div);
+  }
+
+  function renderModeSegments(){
+    document.querySelectorAll("#modeBarCol .seg").forEach(seg=>{
+      seg.classList.toggle("active", Number(seg.dataset.mode) === ui.mode);
+    });
+    modeStatus.textContent = "MODE: " + (ui.mode ?? "-");
+  }
+
+  // ===== helpers =====
+  function cmdForMode(m){
+    return (m === 10) ? "0" : String(m);
+  }
+
+  async function writeChar(c){
+    if (!ui.connected || !rxChar) return;
+    const data = new TextEncoder().encode(c);
+    try{
+      if (typeof rxChar.writeValueWithoutResponse === "function"){
+        await rxChar.writeValueWithoutResponse(data);
+        return;
+      }
+    }catch(_){}
+    try{ await rxChar.writeValue(data); }catch(_){}
+  }
+
+  async function writeLine(line){
+    if (!ui.connected || !rxChar) return;
+    const text = line.endsWith("\n") ? line : line + "\n";
+    const data = new TextEncoder().encode(text);
+    try{
+      if (typeof rxChar.writeValueWithoutResponse === "function"){
+        await rxChar.writeValueWithoutResponse(data);
+        return;
+      }
+    }catch(_){}
+    try{ await rxChar.writeValue(data); }catch(_){}
+  }
+
+  function parseNotify(text){
+    // current fw: MODE=3,G=4
+    const m = text.match(/MODE\s*=\s*(\d+)/i);
+    const g = text.match(/G\s*=\s*(\d+)/i);
+    if (m){
+      ui.mode = parseInt(m[1],10);
+      renderModeSegments();
+    }
+    if (g){
+      ui.gain = parseInt(g[1],10);
+      gainStatus.textContent = "GAIN: " + ui.gain;
+    }
+  }
+
+  function setConnectedUI(isConn){
+    ui.connected = isConn;
+
+    btnDisconnect.disabled = !isConn;
+    btnConnect.disabled = (device == null) || isConn;
+
+    btnGainUp.disabled = !isConn;
+    btnGainDown.disabled = !isConn;
+
+    // mode center segments
+    document.querySelectorAll("#modeBarCol .seg").forEach(seg=>{
+      seg.style.pointerEvents = isConn ? "auto" : "none";
+      seg.style.filter = isConn ? "none" : "grayscale(.45) brightness(.75)";
+    });
+
+    // step / box / nano mode / tools
+    [
+      "step1Btn","step2Btn","step3Btn","step4Btn",
+      "nanoNorBtn","nanoAutoBtn","nanoSpmBtn",
+      "btnStartup","btnShutdown","btnAllOff","btnModeOff","btnDTMF7","btnDTMF8","btnSendCustom"
+    ].forEach(id => $(id).disabled = !isConn);
+
+    document.querySelectorAll(".sideBtn").forEach(btn=>{
+      btn.disabled = !isConn;
+      btn.style.filter = isConn ? "none" : "grayscale(.45) brightness(.8)";
+      btn.style.pointerEvents = isConn ? "auto" : "none";
+    });
+
+    statusText.textContent = isConn ? "LINK: ESTABLISHED" : "LINK: NOT CONNECTED";
+    scannerState.textContent = isConn ? "ACTIVE" : "OFFLINE";
+    scannerState.style.color = isConn ? "var(--red)" : "var(--dim)";
+    scanText.textContent = isConn ? "CONNECTED — SCAN SEQUENCE RUNNING" : "CONNECT TO ENABLE SCAN SEQUENCE";
+
+    if (isConn) startScanner();
+    else {
+      stopScanner();
+      ui.mode = null;
+      ui.gain = null;
+      modeStatus.textContent = "MODE: -";
+      gainStatus.textContent = "GAIN: -";
+    }
+
+    renderModeSegments();
+    renderSteps();
+    renderBoxes();
+    renderNanoMode();
+  }
+
+  function renderSteps(){
+    const ids = ["step1Btn","step2Btn","step3Btn","step4Btn"];
+    ids.forEach((id, idx)=>{
+      const el = $(id);
+      el.classList.toggle("lit", ui.step[idx]);
+    });
+  }
+
+  function renderBoxes(){
+    // same logical row controls both left and right button
+    document.querySelectorAll(".sideBtn").forEach(btn=>{
+      const boxIdx = Number(btn.dataset.box) - 1;
+      const isOn = ui.box[boxIdx];
+      btn.classList.toggle("lit", isOn);
+      if (btn.classList.contains("red")) {
+        btn.classList.toggle("redGlow", isOn);
+      } else {
+        btn.classList.toggle("yellowGlow", isOn);
+      }
+    });
+  }
+
+  function renderNanoMode(){
+    $("nanoNorBtn").classList.toggle("active",  ui.nanoMode === "NOR");
+    $("nanoAutoBtn").classList.toggle("active", ui.nanoMode === "AUTO");
+    $("nanoSpmBtn").classList.toggle("active",  ui.nanoMode === "SPM");
+  }
+
+  // ===== connect / scan =====
+  async function doScanPickDevice(){
+    if (!navigator.bluetooth){
+      bleText.textContent = "BLE: NOT SUPPORTED (Use Chrome/Edge)";
+      alert("This browser does not support Web Bluetooth.\nPlease use Android Chrome / PC Chrome / Edge.");
+      return;
+    }
+
+    audioOnce(sScan);
+    bleText.textContent = "BLE: READY";
+
+    device = await navigator.bluetooth.requestDevice({
+      acceptAllDevices: true,
+      optionalServices: [SVC_UUID],
+    });
+
+    deviceText.textContent = "DEVICE: " + (device.name && device.name.trim() ? device.name : "(Unnamed)");
+    idText.textContent = "ID: " + (device.id || "-");
+    btnConnect.disabled = false;
+  }
+
+  async function doConnect(){
+    if (!device) return;
+
+    audioOnce(sBtn);
+
+    try{
+      device.addEventListener("gattserverdisconnected", onDisconnected);
+
+      server = await device.gatt.connect();
+      const svc = await server.getPrimaryService(SVC_UUID);
+      rxChar = await svc.getCharacteristic(RX_UUID);
+
+      try{
+        txChar = await svc.getCharacteristic(TX_UUID);
+        if (txChar?.properties?.notify){
+          await txChar.startNotifications();
+          txChar.addEventListener("characteristicvaluechanged", (ev)=>{
+            const txt = new TextDecoder().decode(ev.target.value);
+            parseNotify(txt);
+          });
+        }
+      }catch(_){}
+
+      setConnectedUI(true);
+      audioOnce(sConn);
+    } catch(e){
+      alert("CONNECT FAILED\nPlease re-SCAN and select the correct device.\n\n" + (e?.message || e));
+      onDisconnected();
+    }
+  }
+
+  function doDisconnect(){
+    audioOnce(sBtn);
+    try{
+      if (txChar){
+        try{ txChar.stopNotifications(); }catch(_){}
+      }
+      if (device?.gatt?.connected){
+        device.gatt.disconnect();
+      }
+    }catch(_){}
+    onDisconnected();
+  }
+
+  function onDisconnected(){
+    server = null;
+    rxChar = null;
+    txChar = null;
+    setConnectedUI(false);
+  }
+
+  // ===== step buttons =====
+  async function toggleStep(idx){
+    if (!ui.connected) return;
+    ui.step[idx] = !ui.step[idx];
+    renderSteps();
+    audioOnce(sBtn);
+
+    const n = idx + 1;
+    const cmd = `STEP${n}${ui.step[idx] ? "ON" : "OFF"}`;
+    await writeLine(cmd);
+  }
+
+  $("step1Btn").addEventListener("click", ()=>toggleStep(0));
+  $("step2Btn").addEventListener("click", ()=>toggleStep(1));
+  $("step3Btn").addEventListener("click", ()=>toggleStep(2));
+  $("step4Btn").addEventListener("click", ()=>toggleStep(3));
+
+  // ===== box buttons =====
+  const boxCmdOn  = ["BOX1ON","BOX2ON","B3ON","B4ON","B5ON"];
+  const boxCmdOff = ["BOX1OFF","BOX2OFF","B3OFF","B4OFF","B5OFF"];
+
+  async function toggleBox(idx){
+    if (!ui.connected) return;
+    ui.box[idx] = !ui.box[idx];
+    renderBoxes();
+    audioOnce(sBtn);
+
+    await writeLine(ui.box[idx] ? boxCmdOn[idx] : boxCmdOff[idx]);
+  }
+
+  document.querySelectorAll(".sideBtn").forEach(btn=>{
+    btn.addEventListener("click", ()=>toggleBox(Number(btn.dataset.box)-1));
+  });
+
+  // ===== nano mode lamps =====
+  $("nanoNorBtn").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    audioOnce(sBtn);
+    ui.nanoMode = "NOR";
+    renderNanoMode();
+    await writeLine("MODE=NOR");
+  });
+
+  $("nanoAutoBtn").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    audioOnce(sBtn);
+    ui.nanoMode = "AUTO";
+    renderNanoMode();
+    await writeLine("MODE=AUTO");
+  });
+
+  $("nanoSpmBtn").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    audioOnce(sBtn);
+    ui.nanoMode = "SPM";
+    renderNanoMode();
+    await writeLine("MODE=SPM");
+  });
+
+  // ===== gain =====
+  btnGainUp.addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    audioOnce(sBtn);
+    await writeChar("+");
+  });
+
+  btnGainDown.addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    audioOnce(sBtn);
+    await writeChar("-");
+  });
+
+  // ===== external tools =====
+  $("btnStartup").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    audioOnce(sBtn);
+    await writeLine("STARTUP");
+  });
+
+  $("btnShutdown").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    audioOnce(sBtn);
+    await writeLine("SHUTDOWN");
+  });
+
+  $("btnAllOff").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    audioOnce(sBtn);
+    // local ui clear
+    ui.step = [false,false,false,false];
+    ui.box  = [false,false,false,false,false];
+    renderSteps();
+    renderBoxes();
+    await writeLine("ALLOFF");
+  });
+
+  $("btnModeOff").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    audioOnce(sBtn);
+    ui.nanoMode = "OFF";
+    renderNanoMode();
+    await writeLine("MODE=OFF");
+  });
+
+  $("btnDTMF7").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    audioOnce(sBtn);
+    await writeLine("DTMF=7,400");
+  });
+
+  $("btnDTMF8").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    audioOnce(sBtn);
+    await writeLine("DTMF=8,400");
+  });
+
+  $("btnSendCustom").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    const v = $("dtmfInput").value.trim();
+    if (!v) return;
+    audioOnce(sBtn);
+    await writeLine(v);
+  });
+
+  // ===== BLE buttons =====
+  btnScan.addEventListener("click", async ()=>{
+    try{ await doScanPickDevice(); }catch(_){}
+  });
+
+  btnConnect.addEventListener("click", async ()=>{
+    await doConnect();
+  });
+
+  btnDisconnect.addEventListener("click", ()=>{
+    doDisconnect();
+  });
+
+  // ===== init =====
+  setConnectedUI(false);
+})();
+</script>
+</body>
+</html>
