@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>VOICEBOX REMOTE CONTROLER</title>
 
 <style>
@@ -18,23 +18,35 @@
   --yellow:#F2F500;
   --shadow1: 0 10px 18px rgba(0,0,0,.85);
   --shadow2: 0 0 24px rgba(184,147,58,.25);
+
+  /* 手機外螢幕縮放基準 */
+  --scale: 0.86;
 }
 
 *{box-sizing:border-box}
-body{
+html,body{
   margin:0;
   background:var(--bg);
   color:#fff;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans-serif;
 }
-.app{max-width:1080px;margin:auto;padding:14px}
+
+body{
+  min-width:320px;
+}
+
+.app{
+  max-width:960px;
+  margin:auto;
+  padding:10px;
+}
 
 .frame{
   background:var(--panel);
-  border:1.8px solid var(--gold2);
-  border-radius:16px;
-  padding:14px;
-  margin-bottom:12px;
+  border:1.6px solid var(--gold2);
+  border-radius:14px;
+  padding:10px;
+  margin-bottom:10px;
   box-shadow: var(--shadow1), var(--shadow2);
 }
 
@@ -45,7 +57,7 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-  gap:10px;
+  gap:8px;
   flex-wrap:wrap;
 }
 
@@ -53,20 +65,20 @@ body{
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  padding:8px 14px;
+  padding:7px 12px;
   border-radius:999px;
-  border:1.4px solid var(--gold);
+  border:1.2px solid var(--gold);
   background:var(--panel2);
   color:var(--gold);
   font-weight:900;
-  letter-spacing:1.2px;
-  font-size:12px;
+  letter-spacing:1px;
+  font-size:11px;
 }
 .appIcon{
-  width:33px;
-  height:33px;
-  border-radius:9px;
-  margin-right:12px;
+  width:30px;
+  height:30px;
+  border-radius:8px;
+  margin-right:10px;
   border:1px solid var(--gold2);
   box-shadow:0 0 10px rgba(184,147,58,.20);
   object-fit:cover;
@@ -75,23 +87,23 @@ body{
 
 .h2{
   margin:0;
-  font-size:13px;
-  letter-spacing:1.8px;
+  font-size:12px;
+  letter-spacing:1.5px;
   color:var(--gold);
   font-weight:900;
 }
 .sub{
   margin-top:4px;
-  font-size:11px;
+  font-size:10px;
   color:var(--gold2);
-  letter-spacing:1.2px;
+  letter-spacing:1px;
   font-weight:700;
 }
 .mini{
   margin-top:4px;
-  font-size:10px;
+  font-size:9px;
   color:var(--dim);
-  letter-spacing:1.0px;
+  letter-spacing:.8px;
   font-weight:700;
 }
 .kv{
@@ -99,7 +111,7 @@ body{
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:6px;
+  gap:4px;
 }
 .kv .line{
   width:100%;
@@ -107,29 +119,29 @@ body{
   text-align:center;
   color:var(--gold2);
   font-weight:700;
-  font-size:11px;
-  letter-spacing:1.1px;
+  font-size:10px;
+  letter-spacing:1px;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
 }
-.kv .line.dim{color:var(--dim); font-size:10px;}
+.kv .line.dim{color:var(--dim); font-size:9px;}
 
 .btn{
-  border-radius:16px;
-  border:1.8px solid var(--gold2);
+  border-radius:14px;
+  border:1.6px solid var(--gold2);
   background:linear-gradient(135deg,#1B1200,#0A0A0A);
   color:var(--gold);
   font-weight:900;
-  letter-spacing:.9px;
+  letter-spacing:.7px;
   cursor:pointer;
   user-select:none;
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  gap:6px;
-  padding:10px 10px;
+  gap:4px;
+  padding:8px 8px;
   position:relative;
   transition:.12s;
 }
@@ -141,43 +153,45 @@ body{
   box-shadow:none;
 }
 .btn.active{
-  border:2.6px solid var(--red);
+  border:2.2px solid var(--red);
   box-shadow:
-    0 0 22px rgba(255,0,0,.55),
-    0 0 46px rgba(255,0,0,.35),
-    0 10px 14px rgba(0,0,0,.8);
+    0 0 18px rgba(255,0,0,.55),
+    0 0 36px rgba(255,0,0,.28),
+    0 8px 10px rgba(0,0,0,.8);
 }
 .btn.greenActive{
-  border:2.2px solid var(--green);
+  border:2px solid var(--green);
   box-shadow:
-    0 0 16px rgba(0,255,0,.35),
-    0 0 28px rgba(0,255,0,.20);
+    0 0 14px rgba(0,255,0,.35),
+    0 0 24px rgba(0,255,0,.18);
 }
 .btnSmall{
-  width:118px;
-  height:40px;
-  border-radius:14px;
-  padding:0 10px;
+  width:108px;
+  height:38px;
+  border-radius:12px;
+  padding:0 8px;
   flex-direction:row;
-  gap:8px;
-  letter-spacing:1.0px;
+  gap:6px;
+  letter-spacing:.8px;
+  font-size:12px;
 }
-.icon{width:18px;height:18px;display:block;fill:currentColor;opacity:.95;}
-.iconSmall{width:16px;height:16px;}
+.icon{width:16px;height:16px;display:block;fill:currentColor;opacity:.95;}
+.iconSmall{width:14px;height:14px;}
+
 .label{
-  line-height:1.05;
-  font-size:14px;
+  line-height:1.02;
+  font-size:12px;
   font-weight:900;
   color:var(--gold);
   text-align:center;
 }
 .label small{
   display:block;
-  margin-top:3px;
-  font-size:11px;
+  margin-top:2px;
+  font-size:9px;
   font-weight:900;
   color:var(--gold2);
-  letter-spacing:1.0px;
+  letter-spacing:.8px;
 }
 
 /* scanner */
@@ -185,13 +199,13 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-  gap:4px;
-  margin-top:12px;
-  margin-bottom:10px;
+  gap:3px;
+  margin-top:10px;
+  margin-bottom:8px;
 }
 .led{
-  width:26px;
-  height:12px;
+  width:22px;
+  height:10px;
   border-radius:4px;
   border:1px solid #2A0A0A;
   background:#140000;
@@ -200,12 +214,12 @@ body{
 .led.on{
   background:linear-gradient(#FF3A3A,#7A0000);
   border-color:#FF8A8A;
-  box-shadow:0 0 18px rgba(255,0,0,.85);
+  box-shadow:0 0 16px rgba(255,0,0,.85);
 }
 .led.tail1{
   background:linear-gradient(#D02A2A,#4A0000);
   border-color:#C06060;
-  box-shadow:0 0 10px rgba(255,0,0,.35);
+  box-shadow:0 0 8px rgba(255,0,0,.35);
 }
 .led.tail2{
   background:linear-gradient(#5A1010,#240000);
@@ -218,36 +232,40 @@ body{
   display:flex;
   justify-content:center;
   align-items:flex-start;
+  overflow-x:hidden;
 }
 .kittPanel{
-  width:min(920px,100%);
+  width:min(100%, 720px);
   background:#000;
-  padding:14px 10px 18px;
-  border-radius:18px;
+  padding:10px 6px 14px;
+  border-radius:16px;
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:18px;
+  gap:14px;
+  transform:scale(var(--scale));
+  transform-origin: top center;
+  margin-bottom: calc((1 - var(--scale)) * -120px);
 }
 
-/* top step lamps */
+/* top 4 STEP lamps */
 .stepStack{
   display:flex;
   flex-direction:column;
-  gap:10px;
+  gap:8px;
   align-items:center;
 }
 .stepBtn{
-  width:220px;
-  height:48px;
-  border-radius:18px;
-  font-size:13px;
+  width:176px;
+  height:40px;
+  border-radius:16px;
+  font-size:11px;
   font-weight:900;
-  letter-spacing:.8px;
+  letter-spacing:.6px;
   border:2px solid #4a2a00;
   background:#161600;
   color:#111;
-  box-shadow:0 0 14px rgba(0,0,0,.65);
+  box-shadow:0 0 12px rgba(0,0,0,.65);
 }
 .stepBtn.yellow{
   background:linear-gradient(#F2F500,#C7C900);
@@ -259,42 +277,42 @@ body{
 }
 .stepBtn.lit{
   box-shadow:
-    0 0 16px rgba(255,255,0,.42),
-    0 0 28px rgba(255,255,0,.18);
+    0 0 14px rgba(255,255,0,.42),
+    0 0 24px rgba(255,255,0,.18);
 }
 .stepBtn.red.lit{
   box-shadow:
-    0 0 18px rgba(255,0,0,.50),
-    0 0 30px rgba(255,0,0,.22);
+    0 0 16px rgba(255,0,0,.50),
+    0 0 26px rgba(255,0,0,.22);
 }
 
-/* middle cluster */
+/* center cluster */
 .cluster{
   width:100%;
   display:grid;
-  grid-template-columns: 1fr auto 1fr;
-  gap:18px;
+  grid-template-columns: 92px auto 92px;
+  gap:14px;
   align-items:center;
 }
 .sideCol{
   display:flex;
   flex-direction:column;
-  gap:14px;
+  gap:10px;
   align-items:center;
 }
 .sideBtn{
-  width:88px;
-  height:72px;
-  border-radius:18px;
+  width:70px;
+  height:58px;
+  border-radius:14px;
   border:2px solid #3a3a00;
   background:linear-gradient(#F2F500,#BFBF00);
   color:#111;
   font-weight:900;
-  font-size:12px;
-  line-height:1.05;
+  font-size:10px;
+  line-height:1.02;
   text-align:center;
   cursor:pointer;
-  box-shadow:0 0 12px rgba(0,0,0,.55);
+  box-shadow:0 0 10px rgba(0,0,0,.55);
 }
 .sideBtn.red{
   border-color:#4a0000;
@@ -302,27 +320,27 @@ body{
 }
 .sideBtn.lit.yellowGlow{
   box-shadow:
-    0 0 16px rgba(255,255,0,.40),
-    0 0 28px rgba(255,255,0,.15);
+    0 0 14px rgba(255,255,0,.40),
+    0 0 24px rgba(255,255,0,.15);
 }
 .sideBtn.lit.redGlow{
   box-shadow:
-    0 0 18px rgba(255,0,0,.50),
-    0 0 30px rgba(255,0,0,.20);
+    0 0 16px rgba(255,0,0,.50),
+    0 0 26px rgba(255,0,0,.20);
 }
 
-/* center meter */
 .centerCore{
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:14px;
+  gap:12px;
 }
 
+/* 中間紅色聲波：中央10段，左右各8段 */
 .barCluster{
   display:grid;
-  grid-template-columns: 72px 82px 72px;
-  gap:18px;
+  grid-template-columns: 46px 52px 46px;
+  gap:12px;
   align-items:end;
 }
 .shortCol, .midCol{
@@ -331,16 +349,16 @@ body{
   gap:4px;
 }
 .shortCol .seg{
-  width:72px;
-  height:18px;
+  width:46px;
+  height:15px;
 }
 .midCol .seg{
-  width:82px;
-  height:18px;
+  width:52px;
+  height:15px;
 }
 
 .seg{
-  border-radius:4px;
+  border-radius:3px;
   background:linear-gradient(#FF1E1E,#B00000);
   box-shadow: inset 0 -1px 0 rgba(0,0,0,.25);
   cursor:pointer;
@@ -350,55 +368,54 @@ body{
 .seg:hover{filter:brightness(1.08)}
 .seg.active{
   box-shadow:
-    0 0 14px rgba(255,0,0,.5),
+    0 0 12px rgba(255,0,0,.5),
     inset 0 -1px 0 rgba(0,0,0,.25);
 }
 .segNum{
   position:absolute;
-  right:6px;
+  right:4px;
   top:50%;
   transform:translateY(-50%);
-  font-size:10px;
+  font-size:8px;
   font-weight:900;
   color:#220000;
   opacity:.88;
 }
 
-/* mode lights block */
 .bottomModes{
   display:grid;
-  grid-template-columns: 24px 150px;
-  gap:14px;
+  grid-template-columns: 18px 120px;
+  gap:12px;
   align-items:start;
 }
 .leftIndicators{
   display:flex;
   flex-direction:column;
-  gap:10px;
+  gap:8px;
 }
 .smallYellow{
-  width:18px;
-  height:58px;
+  width:14px;
+  height:46px;
   border-radius:4px;
   border:1px solid #5a5500;
   background:linear-gradient(#F2F500,#B5B700);
-  box-shadow:0 0 10px rgba(255,255,0,.15);
+  box-shadow:0 0 8px rgba(255,255,0,.15);
 }
 .modeLamps{
   display:flex;
   flex-direction:column;
-  gap:10px;
+  gap:8px;
 }
 .modeLamp{
-  width:150px;
-  height:58px;
+  width:120px;
+  height:46px;
   border-radius:6px;
   border:2px solid #003800;
   background:#023202;
   color:#011;
   font-weight:900;
-  font-size:13px;
-  line-height:1.05;
+  font-size:11px;
+  line-height:1.02;
   text-align:center;
   cursor:pointer;
 }
@@ -413,19 +430,18 @@ body{
   color:#111;
 }
 .modeLamp.active{
-  box-shadow:0 0 16px rgba(0,255,0,.35), 0 0 28px rgba(0,255,0,.15);
+  box-shadow:0 0 14px rgba(0,255,0,.35), 0 0 24px rgba(0,255,0,.15);
 }
 
-/* external controls */
 .toolsGrid{
   width:100%;
   display:grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap:12px;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap:10px;
 }
 .toolBtn{
-  height:52px;
-  font-size:13px;
+  height:48px;
+  font-size:12px;
 }
 .toolBtn.redTone{
   border-color:#6A0000;
@@ -447,15 +463,15 @@ body{
 }
 .toolInput{
   width:min(320px,100%);
-  height:48px;
-  border-radius:14px;
+  height:44px;
+  border-radius:12px;
   border:1.8px solid var(--gold2);
   background:#0a0a0a;
   color:var(--gold);
-  padding:0 14px;
-  font-size:14px;
+  padding:0 12px;
+  font-size:13px;
   font-weight:800;
-  letter-spacing:.6px;
+  letter-spacing:.5px;
   outline:none;
 }
 .footer{
@@ -468,13 +484,18 @@ body{
   margin-top:16px;
 }
 
-@media (max-width:860px){
-  .cluster{grid-template-columns: 1fr; gap:20px;}
-  .sideCol{flex-direction:row; flex-wrap:wrap; justify-content:center;}
-  .barCluster{grid-template-columns: 56px 68px 56px; gap:12px;}
-  .shortCol .seg{width:56px;height:16px;}
-  .midCol .seg{width:68px;height:16px;}
-  .stepBtn{width:min(220px,85vw);}
+@media (max-width:440px){
+  :root{ --scale: 0.79; }
+  .app{padding:8px;}
+  .frame{padding:9px;}
+  .btnSmall{width:98px;font-size:11px;}
+  .cluster{grid-template-columns: 78px auto 78px; gap:8px;}
+  .sideBtn{width:60px;height:52px;font-size:9px;}
+  .stepBtn{width:160px;height:36px;font-size:10px;}
+}
+
+@media (min-width:441px) and (max-width:520px){
+  :root{ --scale: 0.83; }
 }
 </style>
 </head>
@@ -482,7 +503,6 @@ body{
 <body>
 <div class="app">
 
-  <!-- HEADER -->
   <div class="frame center">
     <span class="pill">
       <img class="appIcon" src="./app_icon.png" alt="app icon">
@@ -490,7 +510,6 @@ body{
     </span>
   </div>
 
-  <!-- SCANNER -->
   <div class="frame col">
     <div class="row" style="justify-content:space-between; max-width:860px;">
       <div class="h2">SCANNER</div>
@@ -500,7 +519,6 @@ body{
     <div class="sub center" id="scanText">CONNECT TO ENABLE SCAN SEQUENCE</div>
   </div>
 
-  <!-- STATUS + LINKS -->
   <div class="frame col">
     <div class="kv">
       <div class="line" id="statusText">LINK: NOT CONNECTED</div>
@@ -535,7 +553,6 @@ body{
     </div>
   </div>
 
-  <!-- MAIN TACTICAL PANEL -->
   <div class="frame col">
     <div class="h2">TACTICAL LAMP CONTROL</div>
     <div class="sub">STEP • BOX • MODE • DISPLAY</div>
@@ -544,7 +561,6 @@ body{
     <div class="kittWrap">
       <div class="kittPanel">
 
-        <!-- top 4 STEP lamps -->
         <div class="stepStack">
           <button class="stepBtn yellow" id="step1Btn">POWER</button>
           <button class="stepBtn yellow" id="step2Btn">FUEL ON</button>
@@ -552,22 +568,18 @@ body{
           <button class="stepBtn red"    id="step4Btn">IGNITORS</button>
         </div>
 
-        <!-- center dashboard -->
         <div class="cluster">
-
-          <!-- left side -->
           <div class="sideCol">
-            <button class="sideBtn"      data-box="1" data-side="L">ALT</button>
-            <button class="sideBtn"      data-box="2" data-side="L">OIL<br>PRESS</button>
-            <button class="sideBtn red"  data-box="3" data-side="L">OIL<br>TEMP</button>
-            <button class="sideBtn red"  data-box="4" data-side="L">EGT</button>
-            <button class="sideBtn red"  data-box="5" data-side="L">FUEL</button>
+            <button class="sideBtn"     data-box="1" data-side="L">ALT</button>
+            <button class="sideBtn"     data-box="2" data-side="L">OIL<br>PRESS</button>
+            <button class="sideBtn red" data-box="3" data-side="L">OIL<br>TEMP</button>
+            <button class="sideBtn red" data-box="4" data-side="L">EGT</button>
+            <button class="sideBtn red" data-box="5" data-side="L">FUEL</button>
           </div>
 
-          <!-- center -->
           <div class="centerCore">
-            <!-- red bar / mode1~10 -->
             <div class="barCluster">
+              <!-- 左：8段 -->
               <div class="shortCol">
                 <div class="seg"></div>
                 <div class="seg"></div>
@@ -579,10 +591,10 @@ body{
                 <div class="seg"></div>
               </div>
 
-              <div class="midCol" id="modeBarCol">
-                <!-- 10 clickable segments -->
-              </div>
+              <!-- 中：10段，可點 -->
+              <div class="midCol" id="modeBarCol"></div>
 
+              <!-- 右：8段 -->
               <div class="shortCol">
                 <div class="seg"></div>
                 <div class="seg"></div>
@@ -595,7 +607,6 @@ body{
               </div>
             </div>
 
-            <!-- bottom mode lamps -->
             <div class="bottomModes">
               <div class="leftIndicators">
                 <div class="smallYellow"></div>
@@ -611,21 +622,18 @@ body{
             </div>
           </div>
 
-          <!-- right side -->
           <div class="sideCol">
-            <button class="sideBtn"      data-box="1" data-side="R">AUX</button>
-            <button class="sideBtn"      data-box="2" data-side="R">SAT<br>COMM</button>
-            <button class="sideBtn red"  data-box="3" data-side="R">ACC</button>
-            <button class="sideBtn red"  data-box="4" data-side="R">RADAR</button>
-            <button class="sideBtn red"  data-box="5" data-side="R">MPI</button>
+            <button class="sideBtn"     data-box="1" data-side="R">AUX</button>
+            <button class="sideBtn"     data-box="2" data-side="R">SAT<br>COMM</button>
+            <button class="sideBtn red" data-box="3" data-side="R">ACC</button>
+            <button class="sideBtn red" data-box="4" data-side="R">RADAR</button>
+            <button class="sideBtn red" data-box="5" data-side="R">MPI</button>
           </div>
-
         </div>
       </div>
     </div>
   </div>
 
-  <!-- GAIN -->
   <div class="frame col">
     <div class="h2">GAIN CONTROL</div>
     <div class="sub">VOICE DISPLAY SENSITIVITY ＋ or －</div>
@@ -644,7 +652,6 @@ body{
     </div>
   </div>
 
-  <!-- EXTERNAL TOOLS -->
   <div class="frame col">
     <div class="h2">EXTERNAL COMMANDS</div>
     <div class="sub">BOOT • SHUTDOWN • MODE OFF • ALL OFF • DTMF</div>
@@ -670,21 +677,18 @@ body{
   <div class="footer">KNIGHT RIDER WEB REMOTE CONTROL SYSTEM</div>
 </div>
 
-<!-- SFX -->
 <audio id="sScan" src="./scan.mp3" preload="auto"></audio>
 <audio id="sConn" src="./connect.mp3" preload="auto"></audio>
 <audio id="sBtn"  src="./button.mp3" preload="auto"></audio>
 
 <script>
 (() => {
-  // ===== UUID =====
   const SVC_UUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
   const RX_UUID  = "6e400002-b5a3-f393-e0a9-e50e24dcca9e";
   const TX_UUID  = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
 
   const $ = (id)=>document.getElementById(id);
 
-  // DOM
   const btnScan       = $("btnScan");
   const btnConnect    = $("btnConnect");
   const btnDisconnect = $("btnDisconnect");
@@ -704,23 +708,20 @@ body{
   const sConn = $("sConn");
   const sBtn  = $("sBtn");
 
-  // BLE handles
   let device = null;
   let server = null;
   let rxChar = null;
   let txChar = null;
 
-  // App state
   const ui = {
     connected: false,
     mode: null,
     gain: null,
-    step: [false,false,false,false], // STEP1..4
-    box:  [false,false,false,false,false], // BOX1, BOX2, B3, B4, B5
-    nanoMode: null // NOR / AUTO / SPM / OFF
+    step: [false,false,false,false],
+    box:  [false,false,false,false,false],
+    nanoMode: null
   };
 
-  // ===== audio =====
   function audioOnce(a){
     try{
       a.pause(); a.currentTime = 0;
@@ -729,7 +730,6 @@ body{
     }catch(_){}
   }
 
-  // ===== scanner animation =====
   const scanbar = $("scanbar");
   let scanPos = 0;
   let scanDir = 1;
@@ -771,7 +771,6 @@ body{
     [...scanbar.children].forEach(d => d.className = "led");
   }
 
-  // ===== mode center bar build =====
   const modeBarCol = $("modeBarCol");
   for (let m = 10; m >= 1; m--) {
     const div = document.createElement("div");
@@ -795,7 +794,6 @@ body{
     modeStatus.textContent = "MODE: " + (ui.mode ?? "-");
   }
 
-  // ===== helpers =====
   function cmdForMode(m){
     return (m === 10) ? "0" : String(m);
   }
@@ -826,7 +824,6 @@ body{
   }
 
   function parseNotify(text){
-    // current fw: MODE=3,G=4
     const m = text.match(/MODE\s*=\s*(\d+)/i);
     const g = text.match(/G\s*=\s*(\d+)/i);
     if (m){
@@ -844,17 +841,14 @@ body{
 
     btnDisconnect.disabled = !isConn;
     btnConnect.disabled = (device == null) || isConn;
-
     btnGainUp.disabled = !isConn;
     btnGainDown.disabled = !isConn;
 
-    // mode center segments
     document.querySelectorAll("#modeBarCol .seg").forEach(seg=>{
       seg.style.pointerEvents = isConn ? "auto" : "none";
       seg.style.filter = isConn ? "none" : "grayscale(.45) brightness(.75)";
     });
 
-    // step / box / nano mode / tools
     [
       "step1Btn","step2Btn","step3Btn","step4Btn",
       "nanoNorBtn","nanoAutoBtn","nanoSpmBtn",
@@ -890,13 +884,11 @@ body{
   function renderSteps(){
     const ids = ["step1Btn","step2Btn","step3Btn","step4Btn"];
     ids.forEach((id, idx)=>{
-      const el = $(id);
-      el.classList.toggle("lit", ui.step[idx]);
+      $(id).classList.toggle("lit", ui.step[idx]);
     });
   }
 
   function renderBoxes(){
-    // same logical row controls both left and right button
     document.querySelectorAll(".sideBtn").forEach(btn=>{
       const boxIdx = Number(btn.dataset.box) - 1;
       const isOn = ui.box[boxIdx];
@@ -915,7 +907,6 @@ body{
     $("nanoSpmBtn").classList.toggle("active",  ui.nanoMode === "SPM");
   }
 
-  // ===== connect / scan =====
   async function doScanPickDevice(){
     if (!navigator.bluetooth){
       bleText.textContent = "BLE: NOT SUPPORTED (Use Chrome/Edge)";
@@ -987,16 +978,14 @@ body{
     setConnectedUI(false);
   }
 
-  // ===== step buttons =====
+  // STEP: 再按一次會熄滅
   async function toggleStep(idx){
     if (!ui.connected) return;
     ui.step[idx] = !ui.step[idx];
     renderSteps();
     audioOnce(sBtn);
-
     const n = idx + 1;
-    const cmd = `STEP${n}${ui.step[idx] ? "ON" : "OFF"}`;
-    await writeLine(cmd);
+    await writeLine(`STEP${n}${ui.step[idx] ? "ON" : "OFF"}`);
   }
 
   $("step1Btn").addEventListener("click", ()=>toggleStep(0));
@@ -1004,7 +993,7 @@ body{
   $("step3Btn").addEventListener("click", ()=>toggleStep(2));
   $("step4Btn").addEventListener("click", ()=>toggleStep(3));
 
-  // ===== box buttons =====
+  // BOX: 再按一次會熄滅
   const boxCmdOn  = ["BOX1ON","BOX2ON","B3ON","B4ON","B5ON"];
   const boxCmdOff = ["BOX1OFF","BOX2OFF","B3OFF","B4OFF","B5OFF"];
 
@@ -1013,7 +1002,6 @@ body{
     ui.box[idx] = !ui.box[idx];
     renderBoxes();
     audioOnce(sBtn);
-
     await writeLine(ui.box[idx] ? boxCmdOn[idx] : boxCmdOff[idx]);
   }
 
@@ -1021,32 +1009,30 @@ body{
     btn.addEventListener("click", ()=>toggleBox(Number(btn.dataset.box)-1));
   });
 
-  // ===== nano mode lamps =====
   $("nanoNorBtn").addEventListener("click", async ()=>{
     if (!ui.connected) return;
     audioOnce(sBtn);
-    ui.nanoMode = "NOR";
+    ui.nanoMode = ui.nanoMode === "NOR" ? null : "NOR";
     renderNanoMode();
-    await writeLine("MODE=NOR");
+    await writeLine(ui.nanoMode === "NOR" ? "MODE=NOR" : "MODE=OFF");
   });
 
   $("nanoAutoBtn").addEventListener("click", async ()=>{
     if (!ui.connected) return;
     audioOnce(sBtn);
-    ui.nanoMode = "AUTO";
+    ui.nanoMode = ui.nanoMode === "AUTO" ? null : "AUTO";
     renderNanoMode();
-    await writeLine("MODE=AUTO");
+    await writeLine(ui.nanoMode === "AUTO" ? "MODE=AUTO" : "MODE=OFF");
   });
 
   $("nanoSpmBtn").addEventListener("click", async ()=>{
     if (!ui.connected) return;
     audioOnce(sBtn);
-    ui.nanoMode = "SPM";
+    ui.nanoMode = ui.nanoMode === "SPM" ? null : "SPM";
     renderNanoMode();
-    await writeLine("MODE=SPM");
+    await writeLine(ui.nanoMode === "SPM" ? "MODE=SPM" : "MODE=OFF");
   });
 
-  // ===== gain =====
   btnGainUp.addEventListener("click", async ()=>{
     if (!ui.connected) return;
     audioOnce(sBtn);
@@ -1059,7 +1045,6 @@ body{
     await writeChar("-");
   });
 
-  // ===== external tools =====
   $("btnStartup").addEventListener("click", async ()=>{
     if (!ui.connected) return;
     audioOnce(sBtn);
@@ -1075,18 +1060,19 @@ body{
   $("btnAllOff").addEventListener("click", async ()=>{
     if (!ui.connected) return;
     audioOnce(sBtn);
-    // local ui clear
     ui.step = [false,false,false,false];
     ui.box  = [false,false,false,false,false];
+    ui.nanoMode = null;
     renderSteps();
     renderBoxes();
+    renderNanoMode();
     await writeLine("ALLOFF");
   });
 
   $("btnModeOff").addEventListener("click", async ()=>{
     if (!ui.connected) return;
     audioOnce(sBtn);
-    ui.nanoMode = "OFF";
+    ui.nanoMode = null;
     renderNanoMode();
     await writeLine("MODE=OFF");
   });
@@ -1111,7 +1097,6 @@ body{
     await writeLine(v);
   });
 
-  // ===== BLE buttons =====
   btnScan.addEventListener("click", async ()=>{
     try{ await doScanPickDevice(); }catch(_){}
   });
@@ -1124,7 +1109,6 @@ body{
     doDisconnect();
   });
 
-  // ===== init =====
   setConnectedUI(false);
 })();
 </script>
