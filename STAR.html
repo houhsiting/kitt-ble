@@ -18,7 +18,7 @@
   --yellow:#F2F500;
   --shadow1: 0 10px 18px rgba(0,0,0,.85);
   --shadow2: 0 0 24px rgba(184,147,58,.25);
-  --scale: 0.86;
+  --scale: 0.84;
 }
 
 *{box-sizing:border-box}
@@ -154,12 +154,6 @@ body{min-width:320px;}
     0 0 36px rgba(255,0,0,.28),
     0 8px 10px rgba(0,0,0,.8);
 }
-.btn.greenActive{
-  border:2px solid var(--green);
-  box-shadow:
-    0 0 14px rgba(0,255,0,.35),
-    0 0 24px rgba(0,255,0,.18);
-}
 .btnSmall{
   width:108px;
   height:38px;
@@ -221,7 +215,64 @@ body{min-width:320px;}
   border-color:#5A2A2A;
 }
 
-/* main tactical panel */
+/* original mode select */
+.modeShell{
+  width:100%;
+  max-width:780px;
+  border:1.8px solid var(--gold2);
+  border-radius:22px;
+  padding:14px 12px 16px;
+  box-shadow: var(--shadow1), var(--shadow2);
+}
+.modeGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:12px;
+}
+.modeCard{
+  min-height:116px;
+  border-radius:22px;
+  border:2px solid #262626;
+  background:linear-gradient(135deg,#140b00,#000000 72%);
+  color:var(--gold);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  cursor:pointer;
+  padding:8px;
+}
+.modeCard.active{
+  border:2.4px solid var(--red);
+  box-shadow:0 0 18px rgba(255,0,0,.45), 0 0 28px rgba(255,0,0,.16);
+}
+.modeCard.big{
+  grid-column:1 / span 2;
+  min-height:118px;
+}
+.modeTitle{
+  font-size:18px;
+  font-weight:900;
+  line-height:1.05;
+  letter-spacing:1px;
+  text-align:center;
+}
+.modeSub{
+  margin-top:4px;
+  font-size:10px;
+  font-weight:900;
+  color:var(--gold2);
+  letter-spacing:1px;
+}
+.modeIcon{
+  width:18px;
+  height:18px;
+  fill:#5f5f5f;
+  margin-bottom:8px;
+}
+
+/* tactical block */
 .kittWrap{
   width:100%;
   display:flex;
@@ -232,7 +283,7 @@ body{min-width:320px;}
 .kittPanel{
   width:min(100%, 720px);
   background:#000;
-  padding:10px 6px 14px;
+  padding:10px 4px 14px;
   border-radius:16px;
   display:flex;
   flex-direction:column;
@@ -243,7 +294,6 @@ body{min-width:320px;}
   margin-bottom: calc((1 - var(--scale)) * -120px);
 }
 
-/* top 4 STEP lamps */
 .stepStack{
   display:flex;
   flex-direction:column;
@@ -262,42 +312,32 @@ body{min-width:320px;}
   color:#111;
   box-shadow:0 0 12px rgba(0,0,0,.65);
 }
-.stepBtn.yellow{
-  background:linear-gradient(#F2F500,#C7C900);
-  color:#111;
-}
-.stepBtn.red{
-  background:linear-gradient(#FF1E1E,#B00000);
-  color:#111;
-}
+.stepBtn.yellow{ background:linear-gradient(#F2F500,#C7C900); }
+.stepBtn.red{ background:linear-gradient(#FF1E1E,#B00000); }
 .stepBtn.lit{
-  box-shadow:
-    0 0 14px rgba(255,255,0,.42),
-    0 0 24px rgba(255,255,0,.18);
+  box-shadow:0 0 14px rgba(255,255,0,.42), 0 0 24px rgba(255,255,0,.18);
 }
 .stepBtn.red.lit{
-  box-shadow:
-    0 0 16px rgba(255,0,0,.50),
-    0 0 26px rgba(255,0,0,.22);
+  box-shadow:0 0 16px rgba(255,0,0,.50), 0 0 26px rgba(255,0,0,.22);
 }
 
-/* center cluster */
+/* 拉近左右燈和中間大區塊 */
 .cluster{
   width:100%;
   display:grid;
-  grid-template-columns: 92px auto 92px;
-  gap:14px;
+  grid-template-columns: 80px auto 80px;
+  gap:6px;
   align-items:center;
 }
 .sideCol{
   display:flex;
   flex-direction:column;
-  gap:10px;
+  gap:8px;
   align-items:center;
 }
 .sideBtn{
-  width:70px;
-  height:58px;
+  width:68px;
+  height:56px;
   border-radius:14px;
   border:2px solid #3a3a00;
   background:linear-gradient(#F2F500,#BFBF00);
@@ -314,14 +354,10 @@ body{min-width:320px;}
   background:linear-gradient(#FF1E1E,#B00000);
 }
 .sideBtn.lit.yellowGlow{
-  box-shadow:
-    0 0 14px rgba(255,255,0,.40),
-    0 0 24px rgba(255,255,0,.15);
+  box-shadow:0 0 14px rgba(255,255,0,.40), 0 0 24px rgba(255,255,0,.15);
 }
 .sideBtn.lit.redGlow{
-  box-shadow:
-    0 0 16px rgba(255,0,0,.50),
-    0 0 26px rgba(255,0,0,.20);
+  box-shadow:0 0 16px rgba(255,0,0,.50), 0 0 26px rgba(255,0,0,.20);
 }
 
 .centerCore{
@@ -331,69 +367,44 @@ body{min-width:320px;}
   gap:12px;
 }
 
-/* 中間紅條：中央10段，左右上下各少2段 */
-.barCluster{
-  display:grid;
-  grid-template-columns: 46px 52px 46px;
-  gap:12px;
-  align-items:end;
-}
-.shortCol, .midCol{
-  display:flex;
-  flex-direction:column;
-  gap:4px;
-}
-.shortCol .seg{
-  width:46px;
-  height:15px;
-}
-.midCol .seg{
-  width:52px;
-  height:15px;
-}
-
-.seg{
-  border-radius:3px;
-  background:linear-gradient(#FF1E1E,#B00000);
-  box-shadow: inset 0 -1px 0 rgba(0,0,0,.25);
+/* 一整個大紅區塊 */
+.bigModeZone{
+  width:120px;
+  height:240px;
+  border-radius:10px;
+  border:2px solid #5a0000;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      #ff1e1e 0px,
+      #ff1e1e 18px,
+      #970000 18px,
+      #970000 22px
+    );
   cursor:pointer;
-  border:1px solid rgba(60,0,0,.9);
-  position:relative;
+  box-shadow:0 0 18px rgba(255,0,0,.28);
 }
-.seg:hover{filter:brightness(1.08)}
-.seg.active{
-  box-shadow:
-    0 0 12px rgba(255,0,0,.5),
-    inset 0 -1px 0 rgba(0,0,0,.25);
+.bigModeZone:active{
+  transform:translateY(1px);
 }
-.seg.off{
-  visibility:hidden;
-  pointer-events:none;
-}
-.segNum{
-  position:absolute;
-  right:4px;
-  top:50%;
-  transform:translateY(-50%);
-  font-size:8px;
-  font-weight:900;
-  color:#220000;
-  opacity:.88;
+.bigModeZone.active{
+  box-shadow:0 0 18px rgba(255,0,0,.48), 0 0 30px rgba(255,0,0,.20);
 }
 
 .bottomModes{
   display:grid;
-  grid-template-columns: 18px 120px;
+  grid-template-columns: 30px 120px;
   gap:12px;
   align-items:start;
 }
+/* 左側黃燈加寬 1 倍 */
 .leftIndicators{
   display:flex;
   flex-direction:column;
   gap:8px;
 }
 .smallYellow{
-  width:14px;
+  width:28px;
   height:46px;
   border-radius:4px;
   border:1px solid #5a5500;
@@ -484,17 +495,25 @@ body{min-width:320px;}
 }
 
 @media (max-width:440px){
-  :root{ --scale: 0.79; }
+  :root{ --scale: 0.78; }
   .app{padding:8px;}
   .frame{padding:9px;}
   .btnSmall{width:98px;font-size:11px;}
-  .cluster{grid-template-columns: 78px auto 78px; gap:8px;}
+  .modeGrid{gap:10px;}
+  .modeCard{min-height:108px;}
+  .modeCard.big{min-height:112px;}
+  .modeTitle{font-size:16px;}
+  .cluster{grid-template-columns:72px auto 72px; gap:4px;}
   .sideBtn{width:60px;height:52px;font-size:9px;}
   .stepBtn{width:160px;height:36px;font-size:10px;}
+  .bigModeZone{width:102px;height:220px;}
+  .bottomModes{grid-template-columns:26px 110px;}
+  .smallYellow{width:24px;height:44px;}
+  .modeLamp{width:110px;height:44px;}
 }
 
 @media (min-width:441px) and (max-width:520px){
-  :root{ --scale: 0.83; }
+  :root{ --scale: 0.82; }
 }
 </style>
 </head>
@@ -552,6 +571,77 @@ body{min-width:320px;}
     </div>
   </div>
 
+  <!-- 原本 MODE SELECT 加回 -->
+  <div class="frame col">
+    <div class="modeShell">
+      <div class="h2 center" style="font-size:22px; letter-spacing:3px;">MODE SELECT</div>
+      <div class="sub center" style="font-size:16px; letter-spacing:2px; margin-top:8px;">PUSH BUTTON TO SWITCH</div>
+
+      <div class="modeGrid">
+        <button class="modeCard" data-mode="1">
+          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 .001 18.001A9 9 0 0 0 12 3Zm0 2a7 7 0 1 1-.001 14.001A7 7 0 0 1 12 5Zm-1 3h2v6h-2V8Zm0 7h2v2h-2v-2Z"/></svg>
+          <div class="modeTitle">KITT</div>
+          <div class="modeSub">MODE 1</div>
+        </button>
+
+        <button class="modeCard" data-mode="2">
+          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6Zm0 5h18v2H3v-2Zm0 5h18v2H3v-2Z"/></svg>
+          <div class="modeTitle">KARR</div>
+          <div class="modeSub">MODE 2</div>
+        </button>
+
+        <button class="modeCard" data-mode="3">
+          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M12 2 1 7l11 5 9-4.09V17h2V7L12 2Z"/></svg>
+          <div class="modeTitle">PILOT<br>KITT</div>
+          <div class="modeSub">MODE 3</div>
+        </button>
+
+        <button class="modeCard" data-mode="4">
+          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M12 4a8 8 0 1 0 .001 16.001A8 8 0 0 0 12 4Zm0 2a6 6 0 1 1-.001 12.001A6 6 0 0 1 12 6Z"/></svg>
+          <div class="modeTitle">PILOT<br>KARR</div>
+          <div class="modeSub">MODE 4</div>
+        </button>
+
+        <button class="modeCard" data-mode="6">
+          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M12 6a6 6 0 0 0-6 6v7h12v-7a6 6 0 0 0-6-6Z"/></svg>
+          <div class="modeTitle">BLUE<br>KITT</div>
+          <div class="modeSub">MODE 6</div>
+        </button>
+
+        <button class="modeCard" data-mode="7">
+          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M12 2C8 6 6 9 6 12a6 6 0 0 0 12 0c0-3-2-6-6-10Z"/></svg>
+          <div class="modeTitle">GREEN<br>KARR</div>
+          <div class="modeSub">MODE 7</div>
+        </button>
+
+        <button class="modeCard" data-mode="5">
+          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M12 2 3 9h3v11h12V9h3L12 2Z"/></svg>
+          <div class="modeTitle">DAMAGE<br>KITT</div>
+          <div class="modeSub">MODE 5</div>
+        </button>
+
+        <button class="modeCard" data-mode="8">
+          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M12 2s4 4 4 8a4 4 0 0 1-8 0c0-4 4-8 4-8Z"/></svg>
+          <div class="modeTitle">FLAME<br>KITT</div>
+          <div class="modeSub">MODE 8</div>
+        </button>
+
+        <button class="modeCard big" data-mode="9">
+          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M3 17h2v-7H3v7Zm4 0h2V7H7v10Zm4 0h2v-4h-2v4Zm4 0h2V5h-2v12Zm4 0h2V9h-2v8Z"/></svg>
+          <div class="modeTitle">SPECTRUM</div>
+          <div class="modeSub">MODE 9</div>
+        </button>
+
+        <button class="modeCard big" data-mode="10">
+          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M3 3h18v2H3V3Zm2 5h14v2H5V8Zm-2 5h18v2H3v-2Zm2 5h14v2H5v-2Z"/></svg>
+          <div class="modeTitle">ANALYSIS</div>
+          <div class="modeSub">MODE 10</div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 下面保留圖案模式 -->
   <div class="frame col">
     <div class="h2">TACTICAL LAMP CONTROL</div>
     <div class="sub">STEP • BOX • MODE • DISPLAY</div>
@@ -577,42 +667,7 @@ body{min-width:320px;}
           </div>
 
           <div class="centerCore">
-            <div class="barCluster">
-              <!-- 左：上下各少2段 -->
-              <div class="shortCol offsetCol">
-                <div class="seg off"></div>
-                <div class="seg off"></div>
-
-                <div class="seg"></div>
-                <div class="seg"></div>
-                <div class="seg"></div>
-                <div class="seg"></div>
-                <div class="seg"></div>
-                <div class="seg"></div>
-
-                <div class="seg off"></div>
-                <div class="seg off"></div>
-              </div>
-
-              <!-- 中：10段 -->
-              <div class="midCol" id="modeBarCol"></div>
-
-              <!-- 右：上下各少2段 -->
-              <div class="shortCol offsetCol">
-                <div class="seg off"></div>
-                <div class="seg off"></div>
-
-                <div class="seg"></div>
-                <div class="seg"></div>
-                <div class="seg"></div>
-                <div class="seg"></div>
-                <div class="seg"></div>
-                <div class="seg"></div>
-
-                <div class="seg off"></div>
-                <div class="seg off"></div>
-              </div>
-            </div>
+            <div id="bigModeZone" class="bigModeZone" title="Next Mode"></div>
 
             <div class="bottomModes">
               <div class="leftIndicators">
@@ -778,29 +833,6 @@ body{min-width:320px;}
     [...scanbar.children].forEach(d => d.className = "led");
   }
 
-  const modeBarCol = $("modeBarCol");
-  for (let m = 10; m >= 1; m--) {
-    const div = document.createElement("div");
-    div.className = "seg";
-    div.dataset.mode = String(m);
-    div.innerHTML = `<span class="segNum">${m}</span>`;
-    div.addEventListener("click", async ()=>{
-      if (!ui.connected) return;
-      audioOnce(sBtn);
-      ui.mode = m;
-      renderModeSegments();
-      await writeChar(cmdForMode(m));
-    });
-    modeBarCol.appendChild(div);
-  }
-
-  function renderModeSegments(){
-    document.querySelectorAll("#modeBarCol .seg").forEach(seg=>{
-      seg.classList.toggle("active", Number(seg.dataset.mode) === ui.mode);
-    });
-    modeStatus.textContent = "MODE: " + (ui.mode ?? "-");
-  }
-
   function cmdForMode(m){
     return (m === 10) ? "0" : String(m);
   }
@@ -835,12 +867,20 @@ body{min-width:320px;}
     const g = text.match(/G\s*=\s*(\d+)/i);
     if (m){
       ui.mode = parseInt(m[1],10);
-      renderModeSegments();
+      renderModeCards();
+      modeStatus.textContent = "MODE: " + ui.mode;
     }
     if (g){
       ui.gain = parseInt(g[1],10);
       gainStatus.textContent = "GAIN: " + ui.gain;
     }
+  }
+
+  function renderModeCards(){
+    document.querySelectorAll(".modeCard").forEach(card=>{
+      card.classList.toggle("active", Number(card.dataset.mode) === ui.mode);
+    });
+    $("bigModeZone").classList.toggle("active", ui.connected);
   }
 
   function setConnectedUI(isConn){
@@ -851,9 +891,10 @@ body{min-width:320px;}
     btnGainUp.disabled = !isConn;
     btnGainDown.disabled = !isConn;
 
-    document.querySelectorAll("#modeBarCol .seg").forEach(seg=>{
-      seg.style.pointerEvents = isConn ? "auto" : "none";
-      seg.style.filter = isConn ? "none" : "grayscale(.45) brightness(.75)";
+    document.querySelectorAll(".modeCard").forEach(card=>{
+      card.disabled = !isConn;
+      card.style.pointerEvents = isConn ? "auto" : "none";
+      card.style.filter = isConn ? "none" : "grayscale(.45) brightness(.75)";
     });
 
     [
@@ -861,6 +902,9 @@ body{min-width:320px;}
       "nanoNorBtn","nanoAutoBtn","nanoSpmBtn",
       "btnStartup","btnShutdown","btnAllOff","btnModeOff","btnDTMF7","btnDTMF8","btnSendCustom"
     ].forEach(id => $(id).disabled = !isConn);
+
+    $("bigModeZone").style.pointerEvents = isConn ? "auto" : "none";
+    $("bigModeZone").style.filter = isConn ? "none" : "grayscale(.45) brightness(.75)";
 
     document.querySelectorAll(".sideBtn").forEach(btn=>{
       btn.disabled = !isConn;
@@ -882,7 +926,7 @@ body{min-width:320px;}
       gainStatus.textContent = "GAIN: -";
     }
 
-    renderModeSegments();
+    renderModeCards();
     renderSteps();
     renderBoxes();
     renderNanoMode();
@@ -890,9 +934,7 @@ body{min-width:320px;}
 
   function renderSteps(){
     const ids = ["step1Btn","step2Btn","step3Btn","step4Btn"];
-    ids.forEach((id, idx)=>{
-      $(id).classList.toggle("lit", ui.step[idx]);
-    });
+    ids.forEach((id, idx)=>$(id).classList.toggle("lit", ui.step[idx]));
   }
 
   function renderBoxes(){
@@ -1097,6 +1139,31 @@ body{min-width:320px;}
     if (!v) return;
     audioOnce(sBtn);
     await writeLine(v);
+  });
+
+  // 原 mode select cards
+  document.querySelectorAll(".modeCard").forEach(card=>{
+    card.addEventListener("click", async ()=>{
+      if (!ui.connected) return;
+      const m = Number(card.dataset.mode);
+      ui.mode = m;
+      renderModeCards();
+      modeStatus.textContent = "MODE: " + m;
+      audioOnce(sBtn);
+      await writeChar(cmdForMode(m));
+    });
+  });
+
+  // 大紅區：下一個 mode
+  $("bigModeZone").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    audioOnce(sBtn);
+    await writeChar("m");
+    if (typeof ui.mode === "number"){
+      ui.mode = (ui.mode % 10) + 1;
+      renderModeCards();
+      modeStatus.textContent = "MODE: " + ui.mode;
+    }
   });
 
   btnScan.addEventListener("click", async ()=>{
