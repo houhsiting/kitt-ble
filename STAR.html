@@ -18,7 +18,6 @@
   --yellow:#F2F500;
   --shadow1: 0 10px 18px rgba(0,0,0,.85);
   --shadow2: 0 0 24px rgba(184,147,58,.25);
-  --scale: 0.84;
 }
 
 *{box-sizing:border-box}
@@ -28,10 +27,10 @@ html,body{
   color:#fff;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans-serif;
 }
-body{min-width:320px;}
+body{min-width:320px}
 
 .app{
-  max-width:960px;
+  max-width:920px;
   margin:auto;
   padding:10px;
 }
@@ -39,14 +38,14 @@ body{min-width:320px;}
 .frame{
   background:var(--panel);
   border:1.6px solid var(--gold2);
-  border-radius:14px;
+  border-radius:16px;
   padding:10px;
   margin-bottom:10px;
-  box-shadow: var(--shadow1), var(--shadow2);
+  box-shadow:var(--shadow1), var(--shadow2);
 }
 
-.center{display:flex; justify-content:center; align-items:center; text-align:center}
-.col{display:flex; flex-direction:column; justify-content:center; align-items:center}
+.center{display:flex;justify-content:center;align-items:center;text-align:center}
+.col{display:flex;flex-direction:column;justify-content:center;align-items:center}
 .row{
   width:100%;
   display:flex;
@@ -120,7 +119,7 @@ body{min-width:320px;}
   overflow:hidden;
   text-overflow:ellipsis;
 }
-.kv .line.dim{color:var(--dim); font-size:9px;}
+.kv .line.dim{color:var(--dim);font-size:9px}
 
 .btn{
   border-radius:14px;
@@ -164,9 +163,8 @@ body{min-width:320px;}
   letter-spacing:.8px;
   font-size:12px;
 }
-.icon{width:16px;height:16px;display:block;fill:currentColor;opacity:.95;}
-.iconSmall{width:14px;height:14px;}
-
+.icon{width:16px;height:16px;display:block;fill:currentColor;opacity:.95}
+.iconSmall{width:14px;height:14px}
 .label{
   line-height:1.02;
   font-size:12px;
@@ -198,7 +196,7 @@ body{min-width:320px;}
   border-radius:4px;
   border:1px solid #2A0A0A;
   background:#140000;
-  transition: all .12s ease;
+  transition:all .12s ease;
 }
 .led.on{
   background:linear-gradient(#FF3A3A,#7A0000);
@@ -215,14 +213,247 @@ body{min-width:320px;}
   border-color:#5A2A2A;
 }
 
-/* original mode select */
+/* ===== 圖案區 ===== */
+.graphWrap{
+  width:100%;
+  display:flex;
+  justify-content:center;
+}
+.graphPanel{
+  width:min(100%, 700px);
+  background:#000;
+  border-radius:16px;
+  padding:12px 8px 14px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:14px;
+}
+
+/* 文字大一號 */
+.stepStack{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  align-items:center;
+}
+.stepBtn{
+  width:190px;
+  height:42px;
+  border-radius:16px;
+  font-size:13px;
+  font-weight:900;
+  letter-spacing:.6px;
+  border:2px solid #4a2a00;
+  background:#161600;
+  color:#111;
+  box-shadow:0 0 12px rgba(0,0,0,.65);
+}
+.stepBtn.yellow{background:linear-gradient(#F2F500,#C7C900)}
+.stepBtn.red{background:linear-gradient(#FF1E1E,#B00000)}
+.stepBtn.lit{
+  box-shadow:0 0 14px rgba(255,255,0,.42), 0 0 24px rgba(255,255,0,.18);
+}
+.stepBtn.red.lit{
+  box-shadow:0 0 16px rgba(255,0,0,.50), 0 0 26px rgba(255,0,0,.22);
+}
+
+/* 左右燈靠近中間 */
+.graphCluster{
+  width:100%;
+  display:grid;
+  grid-template-columns: 78px minmax(150px,220px) 78px;
+  gap:8px;
+  align-items:center;
+}
+.sideCol{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  align-items:center;
+}
+.sideBtn{
+  width:68px;
+  height:58px;
+  border-radius:14px;
+  border:2px solid #3a3a00;
+  background:linear-gradient(#F2F500,#BFBF00);
+  color:#111;
+  font-weight:900;
+  font-size:11px;
+  line-height:1.02;
+  text-align:center;
+  cursor:pointer;
+  box-shadow:0 0 10px rgba(0,0,0,.55);
+}
+.sideBtn.red{
+  border-color:#4a0000;
+  background:linear-gradient(#FF1E1E,#B00000);
+}
+.sideBtn.lit.yellowGlow{
+  box-shadow:0 0 14px rgba(255,255,0,.40), 0 0 24px rgba(255,255,0,.15);
+}
+.sideBtn.lit.redGlow{
+  box-shadow:0 0 16px rgba(255,0,0,.50), 0 0 26px rgba(255,0,0,.20);
+}
+
+.centerCore{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
+}
+
+/* 中間圖案區：整塊可點 m，但造型像附圖 */
+.bigModeZone{
+  width:100%;
+  max-width:210px;
+  min-height:332px;
+  border-radius:18px;
+  border:2px solid #1f1f1f;
+  background:linear-gradient(180deg,#0c0c0c,#050505 70%,#000);
+  cursor:pointer;
+  padding:12px 10px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  box-shadow: inset 0 0 18px rgba(255,255,255,.02);
+}
+.bigModeZone.active{
+  box-shadow:
+    0 0 18px rgba(255,0,0,.28),
+    inset 0 0 18px rgba(255,255,255,.03);
+}
+
+.barsWrap{
+  width:100%;
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap:14px;
+  align-items:center;
+  justify-items:center;
+}
+.barColumn{
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  align-items:center;
+}
+.barSeg{
+  width:100%;
+  border-radius:3px;
+  border:1px solid rgba(80,20,10,.8);
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,.35);
+}
+.barColumn.side .barSeg{
+  height:22px;
+  max-width:64px;
+}
+.barColumn.center .barSeg{
+  height:22px;
+  max-width:70px;
+}
+
+/* 附圖那種細直條發光感 */
+.barSeg.glow{
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,220,150,.38) 0 2px,
+      rgba(255,120,60,.0) 2px 6px
+    ),
+    linear-gradient(180deg,#ffb76b 0%, #ff8a3d 48%, #ff5821 100%);
+}
+.barSeg.cap{
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(210,140,100,.16) 0 2px,
+      rgba(120,60,40,.0) 2px 6px
+    ),
+    linear-gradient(180deg,#8e5445 0%, #71382e 100%);
+}
+.barSpacer{
+  width:100%;
+  height:22px;
+  max-width:64px;
+  visibility:hidden;
+}
+
+/* 左下黃燈加寬 1 倍 */
+.bottomModes{
+  display:grid;
+  grid-template-columns: 30px 126px;
+  gap:12px;
+  align-items:start;
+}
+.leftIndicators{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.smallYellow{
+  width:28px;
+  height:48px;
+  border-radius:4px;
+  border:1px solid #5a5500;
+  background:linear-gradient(#F2F500,#B5B700);
+  box-shadow:0 0 8px rgba(255,255,0,.15);
+}
+.modeLamps{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.modeLamp{
+  width:126px;
+  height:48px;
+  border-radius:6px;
+  border:2px solid #003800;
+  background:#023202;
+  color:#011;
+  font-weight:900;
+  font-size:12px;
+  line-height:1.02;
+  text-align:center;
+  cursor:pointer;
+}
+.modeLamp.yellow{
+  border-color:#5a5500;
+  background:linear-gradient(#F2F500,#BFBF00);
+  color:#111;
+}
+.modeLamp.red{
+  border-color:#4a0000;
+  background:linear-gradient(#FF1E1E,#B00000);
+  color:#111;
+}
+.modeLamp.active{
+  box-shadow:0 0 14px rgba(0,255,0,.35), 0 0 24px rgba(0,255,0,.15);
+}
+
+/* ===== 原 MODE SELECT 按鈕區 ===== */
 .modeShell{
   width:100%;
   max-width:780px;
   border:1.8px solid var(--gold2);
   border-radius:22px;
   padding:14px 12px 16px;
-  box-shadow: var(--shadow1), var(--shadow2);
+  box-shadow:var(--shadow1), var(--shadow2);
+}
+.modeTitleHead{
+  font-size:22px;
+  letter-spacing:3px;
+  color:var(--gold);
+  font-weight:900;
+}
+.modeSubHead{
+  margin-top:8px;
+  font-size:16px;
+  letter-spacing:2px;
+  color:var(--gold2);
+  font-weight:800;
 }
 .modeGrid{
   display:grid;
@@ -251,14 +482,14 @@ body{min-width:320px;}
   grid-column:1 / span 2;
   min-height:118px;
 }
-.modeTitle{
+.modeCardTitle{
   font-size:18px;
   font-weight:900;
   line-height:1.05;
   letter-spacing:1px;
   text-align:center;
 }
-.modeSub{
+.modeCardSub{
   margin-top:4px;
   font-size:10px;
   font-weight:900;
@@ -272,177 +503,6 @@ body{min-width:320px;}
   margin-bottom:8px;
 }
 
-/* tactical block */
-.kittWrap{
-  width:100%;
-  display:flex;
-  justify-content:center;
-  align-items:flex-start;
-  overflow-x:hidden;
-}
-.kittPanel{
-  width:min(100%, 720px);
-  background:#000;
-  padding:10px 4px 14px;
-  border-radius:16px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:14px;
-  transform:scale(var(--scale));
-  transform-origin: top center;
-  margin-bottom: calc((1 - var(--scale)) * -120px);
-}
-
-.stepStack{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-  align-items:center;
-}
-.stepBtn{
-  width:176px;
-  height:40px;
-  border-radius:16px;
-  font-size:11px;
-  font-weight:900;
-  letter-spacing:.6px;
-  border:2px solid #4a2a00;
-  background:#161600;
-  color:#111;
-  box-shadow:0 0 12px rgba(0,0,0,.65);
-}
-.stepBtn.yellow{ background:linear-gradient(#F2F500,#C7C900); }
-.stepBtn.red{ background:linear-gradient(#FF1E1E,#B00000); }
-.stepBtn.lit{
-  box-shadow:0 0 14px rgba(255,255,0,.42), 0 0 24px rgba(255,255,0,.18);
-}
-.stepBtn.red.lit{
-  box-shadow:0 0 16px rgba(255,0,0,.50), 0 0 26px rgba(255,0,0,.22);
-}
-
-/* 拉近左右燈和中間大區塊 */
-.cluster{
-  width:100%;
-  display:grid;
-  grid-template-columns: 80px auto 80px;
-  gap:6px;
-  align-items:center;
-}
-.sideCol{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-  align-items:center;
-}
-.sideBtn{
-  width:68px;
-  height:56px;
-  border-radius:14px;
-  border:2px solid #3a3a00;
-  background:linear-gradient(#F2F500,#BFBF00);
-  color:#111;
-  font-weight:900;
-  font-size:10px;
-  line-height:1.02;
-  text-align:center;
-  cursor:pointer;
-  box-shadow:0 0 10px rgba(0,0,0,.55);
-}
-.sideBtn.red{
-  border-color:#4a0000;
-  background:linear-gradient(#FF1E1E,#B00000);
-}
-.sideBtn.lit.yellowGlow{
-  box-shadow:0 0 14px rgba(255,255,0,.40), 0 0 24px rgba(255,255,0,.15);
-}
-.sideBtn.lit.redGlow{
-  box-shadow:0 0 16px rgba(255,0,0,.50), 0 0 26px rgba(255,0,0,.20);
-}
-
-.centerCore{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:12px;
-}
-
-/* 一整個大紅區塊 */
-.bigModeZone{
-  width:120px;
-  height:240px;
-  border-radius:10px;
-  border:2px solid #5a0000;
-  background:
-    repeating-linear-gradient(
-      to bottom,
-      #ff1e1e 0px,
-      #ff1e1e 18px,
-      #970000 18px,
-      #970000 22px
-    );
-  cursor:pointer;
-  box-shadow:0 0 18px rgba(255,0,0,.28);
-}
-.bigModeZone:active{
-  transform:translateY(1px);
-}
-.bigModeZone.active{
-  box-shadow:0 0 18px rgba(255,0,0,.48), 0 0 30px rgba(255,0,0,.20);
-}
-
-.bottomModes{
-  display:grid;
-  grid-template-columns: 30px 120px;
-  gap:12px;
-  align-items:start;
-}
-/* 左側黃燈加寬 1 倍 */
-.leftIndicators{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
-.smallYellow{
-  width:28px;
-  height:46px;
-  border-radius:4px;
-  border:1px solid #5a5500;
-  background:linear-gradient(#F2F500,#B5B700);
-  box-shadow:0 0 8px rgba(255,255,0,.15);
-}
-.modeLamps{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
-.modeLamp{
-  width:120px;
-  height:46px;
-  border-radius:6px;
-  border:2px solid #003800;
-  background:#023202;
-  color:#011;
-  font-weight:900;
-  font-size:11px;
-  line-height:1.02;
-  text-align:center;
-  cursor:pointer;
-}
-.modeLamp.yellow{
-  border-color:#5a5500;
-  background:linear-gradient(#F2F500,#BFBF00);
-  color:#111;
-}
-.modeLamp.red{
-  border-color:#4a0000;
-  background:linear-gradient(#FF1E1E,#B00000);
-  color:#111;
-}
-.modeLamp.active{
-  box-shadow:0 0 14px rgba(0,255,0,.35), 0 0 24px rgba(0,255,0,.15);
-}
-
 .toolsGrid{
   width:100%;
   display:grid;
@@ -453,17 +513,9 @@ body{min-width:320px;}
   height:48px;
   font-size:12px;
 }
-.toolBtn.redTone{
-  border-color:#6A0000;
-  color:#ff9a9a;
-}
-.toolBtn.greenTone{
-  border-color:#1d5b1d;
-  color:#a7ffb1;
-}
-.toolBtn.yellowTone{
-  color:var(--gold);
-}
+.toolBtn.redTone{border-color:#6A0000;color:#ff9a9a}
+.toolBtn.greenTone{border-color:#1d5b1d;color:#a7ffb1}
+.toolBtn.yellowTone{color:var(--gold)}
 .toolInputRow{
   width:100%;
   display:flex;
@@ -494,26 +546,41 @@ body{min-width:320px;}
   margin-top:16px;
 }
 
-@media (max-width:440px){
-  :root{ --scale: 0.78; }
-  .app{padding:8px;}
-  .frame{padding:9px;}
-  .btnSmall{width:98px;font-size:11px;}
-  .modeGrid{gap:10px;}
-  .modeCard{min-height:108px;}
-  .modeCard.big{min-height:112px;}
-  .modeTitle{font-size:16px;}
-  .cluster{grid-template-columns:72px auto 72px; gap:4px;}
-  .sideBtn{width:60px;height:52px;font-size:9px;}
-  .stepBtn{width:160px;height:36px;font-size:10px;}
-  .bigModeZone{width:102px;height:220px;}
-  .bottomModes{grid-template-columns:26px 110px;}
-  .smallYellow{width:24px;height:44px;}
-  .modeLamp{width:110px;height:44px;}
-}
-
-@media (min-width:441px) and (max-width:520px){
-  :root{ --scale: 0.82; }
+@media (max-width:480px){
+  .app{padding:8px}
+  .frame{padding:9px}
+  .btnSmall{width:98px;font-size:11px}
+  .graphCluster{
+    grid-template-columns: 68px minmax(132px,190px) 68px;
+    gap:6px;
+  }
+  .sideBtn{
+    width:58px;
+    height:52px;
+    font-size:10px;
+  }
+  .stepBtn{
+    width:166px;
+    height:38px;
+    font-size:12px;
+  }
+  .bigModeZone{
+    min-height:300px;
+    padding:10px 8px;
+  }
+  .barsWrap{gap:10px}
+  .barColumn.side .barSeg{max-width:56px;height:20px}
+  .barColumn.center .barSeg{max-width:62px;height:20px}
+  .barSpacer{max-width:56px;height:20px}
+  .bottomModes{grid-template-columns: 26px 114px; gap:10px}
+  .smallYellow{width:24px;height:44px}
+  .modeLamp{width:114px;height:44px;font-size:11px}
+  .modeGrid{gap:10px}
+  .modeCard{min-height:106px}
+  .modeCard.big{min-height:110px}
+  .modeCardTitle{font-size:16px}
+  .modeTitleHead{font-size:19px}
+  .modeSubHead{font-size:13px}
 }
 </style>
 </head>
@@ -571,84 +638,14 @@ body{min-width:320px;}
     </div>
   </div>
 
-  <!-- 原本 MODE SELECT 加回 -->
-  <div class="frame col">
-    <div class="modeShell">
-      <div class="h2 center" style="font-size:22px; letter-spacing:3px;">MODE SELECT</div>
-      <div class="sub center" style="font-size:16px; letter-spacing:2px; margin-top:8px;">PUSH BUTTON TO SWITCH</div>
-
-      <div class="modeGrid">
-        <button class="modeCard" data-mode="1">
-          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 .001 18.001A9 9 0 0 0 12 3Zm0 2a7 7 0 1 1-.001 14.001A7 7 0 0 1 12 5Zm-1 3h2v6h-2V8Zm0 7h2v2h-2v-2Z"/></svg>
-          <div class="modeTitle">KITT</div>
-          <div class="modeSub">MODE 1</div>
-        </button>
-
-        <button class="modeCard" data-mode="2">
-          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6Zm0 5h18v2H3v-2Zm0 5h18v2H3v-2Z"/></svg>
-          <div class="modeTitle">KARR</div>
-          <div class="modeSub">MODE 2</div>
-        </button>
-
-        <button class="modeCard" data-mode="3">
-          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M12 2 1 7l11 5 9-4.09V17h2V7L12 2Z"/></svg>
-          <div class="modeTitle">PILOT<br>KITT</div>
-          <div class="modeSub">MODE 3</div>
-        </button>
-
-        <button class="modeCard" data-mode="4">
-          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M12 4a8 8 0 1 0 .001 16.001A8 8 0 0 0 12 4Zm0 2a6 6 0 1 1-.001 12.001A6 6 0 0 1 12 6Z"/></svg>
-          <div class="modeTitle">PILOT<br>KARR</div>
-          <div class="modeSub">MODE 4</div>
-        </button>
-
-        <button class="modeCard" data-mode="6">
-          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M12 6a6 6 0 0 0-6 6v7h12v-7a6 6 0 0 0-6-6Z"/></svg>
-          <div class="modeTitle">BLUE<br>KITT</div>
-          <div class="modeSub">MODE 6</div>
-        </button>
-
-        <button class="modeCard" data-mode="7">
-          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M12 2C8 6 6 9 6 12a6 6 0 0 0 12 0c0-3-2-6-6-10Z"/></svg>
-          <div class="modeTitle">GREEN<br>KARR</div>
-          <div class="modeSub">MODE 7</div>
-        </button>
-
-        <button class="modeCard" data-mode="5">
-          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M12 2 3 9h3v11h12V9h3L12 2Z"/></svg>
-          <div class="modeTitle">DAMAGE<br>KITT</div>
-          <div class="modeSub">MODE 5</div>
-        </button>
-
-        <button class="modeCard" data-mode="8">
-          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M12 2s4 4 4 8a4 4 0 0 1-8 0c0-4 4-8 4-8Z"/></svg>
-          <div class="modeTitle">FLAME<br>KITT</div>
-          <div class="modeSub">MODE 8</div>
-        </button>
-
-        <button class="modeCard big" data-mode="9">
-          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M3 17h2v-7H3v7Zm4 0h2V7H7v10Zm4 0h2v-4h-2v4Zm4 0h2V5h-2v12Zm4 0h2V9h-2v8Z"/></svg>
-          <div class="modeTitle">SPECTRUM</div>
-          <div class="modeSub">MODE 9</div>
-        </button>
-
-        <button class="modeCard big" data-mode="10">
-          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M3 3h18v2H3V3Zm2 5h14v2H5V8Zm-2 5h18v2H3v-2Zm2 5h14v2H5v-2Z"/></svg>
-          <div class="modeTitle">ANALYSIS</div>
-          <div class="modeSub">MODE 10</div>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- 下面保留圖案模式 -->
+  <!-- 圖案區先放上面 -->
   <div class="frame col">
     <div class="h2">TACTICAL LAMP CONTROL</div>
     <div class="sub">STEP • BOX • MODE • DISPLAY</div>
     <div style="height:12px;"></div>
 
-    <div class="kittWrap">
-      <div class="kittPanel">
+    <div class="graphWrap">
+      <div class="graphPanel">
 
         <div class="stepStack">
           <button class="stepBtn yellow" id="step1Btn">POWER</button>
@@ -657,7 +654,7 @@ body{min-width:320px;}
           <button class="stepBtn red"    id="step4Btn">IGNITORS</button>
         </div>
 
-        <div class="cluster">
+        <div class="graphCluster">
           <div class="sideCol">
             <button class="sideBtn"     data-box="1" data-side="L">ALT</button>
             <button class="sideBtn"     data-box="2" data-side="L">OIL<br>PRESS</button>
@@ -667,7 +664,57 @@ body{min-width:320px;}
           </div>
 
           <div class="centerCore">
-            <div id="bigModeZone" class="bigModeZone" title="Next Mode"></div>
+            <button id="bigModeZone" class="bigModeZone" title="Next Mode">
+              <div class="barsWrap">
+                <!-- 左 -->
+                <div class="barColumn side">
+                  <div class="barSpacer"></div>
+                  <div class="barSeg cap"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg cap"></div>
+                  <div class="barSpacer"></div>
+                </div>
+
+                <!-- 中 -->
+                <div class="barColumn center">
+                  <div class="barSeg cap"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg cap"></div>
+                </div>
+
+                <!-- 右 -->
+                <div class="barColumn side">
+                  <div class="barSpacer"></div>
+                  <div class="barSeg cap"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg cap"></div>
+                  <div class="barSpacer"></div>
+                </div>
+              </div>
+            </button>
 
             <div class="bottomModes">
               <div class="leftIndicators">
@@ -692,6 +739,76 @@ body{min-width:320px;}
             <button class="sideBtn red" data-box="5" data-side="R">MPI</button>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 按鈕區移到下面 -->
+  <div class="frame col">
+    <div class="modeShell">
+      <div class="center"><div class="modeTitleHead">MODE SELECT</div></div>
+      <div class="center"><div class="modeSubHead">PUSH BUTTON TO SWITCH</div></div>
+
+      <div class="modeGrid">
+        <button class="modeCard" data-mode="1">
+          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 .001 18.001A9 9 0 0 0 12 3Zm0 2a7 7 0 1 1-.001 14.001A7 7 0 0 1 12 5Zm-1 3h2v6h-2V8Zm0 7h2v2h-2v-2Z"/></svg>
+          <div class="modeCardTitle">KITT</div>
+          <div class="modeCardSub">MODE 1</div>
+        </button>
+
+        <button class="modeCard" data-mode="2">
+          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6Zm0 5h18v2H3v-2Zm0 5h18v2H3v-2Z"/></svg>
+          <div class="modeCardTitle">KARR</div>
+          <div class="modeCardSub">MODE 2</div>
+        </button>
+
+        <button class="modeCard" data-mode="3">
+          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M12 2 1 7l11 5 9-4.09V17h2V7L12 2Z"/></svg>
+          <div class="modeCardTitle">PILOT<br>KITT</div>
+          <div class="modeCardSub">MODE 3</div>
+        </button>
+
+        <button class="modeCard" data-mode="4">
+          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M12 4a8 8 0 1 0 .001 16.001A8 8 0 0 0 12 4Zm0 2a6 6 0 1 1-.001 12.001A6 6 0 0 1 12 6Z"/></svg>
+          <div class="modeCardTitle">PILOT<br>KARR</div>
+          <div class="modeCardSub">MODE 4</div>
+        </button>
+
+        <button class="modeCard" data-mode="6">
+          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M12 6a6 6 0 0 0-6 6v7h12v-7a6 6 0 0 0-6-6Z"/></svg>
+          <div class="modeCardTitle">BLUE<br>KITT</div>
+          <div class="modeCardSub">MODE 6</div>
+        </button>
+
+        <button class="modeCard" data-mode="7">
+          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M12 2C8 6 6 9 6 12a6 6 0 0 0 12 0c0-3-2-6-6-10Z"/></svg>
+          <div class="modeCardTitle">GREEN<br>KARR</div>
+          <div class="modeCardSub">MODE 7</div>
+        </button>
+
+        <button class="modeCard" data-mode="5">
+          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M12 2 3 9h3v11h12V9h3L12 2Z"/></svg>
+          <div class="modeCardTitle">DAMAGE<br>KITT</div>
+          <div class="modeCardSub">MODE 5</div>
+        </button>
+
+        <button class="modeCard" data-mode="8">
+          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M12 2s4 4 4 8a4 4 0 0 1-8 0c0-4 4-8 4-8Z"/></svg>
+          <div class="modeCardTitle">FLAME<br>KITT</div>
+          <div class="modeCardSub">MODE 8</div>
+        </button>
+
+        <button class="modeCard big" data-mode="9">
+          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M3 17h2v-7H3v7Zm4 0h2V7H7v10Zm4 0h2v-4h-2v4Zm4 0h2V5h-2v12Zm4 0h2V9h-2v8Z"/></svg>
+          <div class="modeCardTitle">SPECTRUM</div>
+          <div class="modeCardSub">MODE 9</div>
+        </button>
+
+        <button class="modeCard big" data-mode="10">
+          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M3 3h18v2H3V3Zm2 5h14v2H5V8Zm-2 5h18v2H3v-2Zm2 5h14v2H5v-2Z"/></svg>
+          <div class="modeCardTitle">ANALYSIS</div>
+          <div class="modeCardSub">MODE 10</div>
+        </button>
       </div>
     </div>
   </div>
@@ -851,7 +968,7 @@ body{min-width:320px;}
 
   async function writeLine(line){
     if (!ui.connected || !rxChar) return;
-    const text = line.endsWith("\n") ? line : line + "\n";
+    const text = line.endsWith("\\n") ? line : line + "\\n";
     const data = new TextEncoder().encode(text);
     try{
       if (typeof rxChar.writeValueWithoutResponse === "function"){
@@ -863,8 +980,8 @@ body{min-width:320px;}
   }
 
   function parseNotify(text){
-    const m = text.match(/MODE\s*=\s*(\d+)/i);
-    const g = text.match(/G\s*=\s*(\d+)/i);
+    const m = text.match(/MODE\\s*=\\s*(\\d+)/i);
+    const g = text.match(/G\\s*=\\s*(\\d+)/i);
     if (m){
       ui.mode = parseInt(m[1],10);
       renderModeCards();
@@ -903,6 +1020,7 @@ body{min-width:320px;}
       "btnStartup","btnShutdown","btnAllOff","btnModeOff","btnDTMF7","btnDTMF8","btnSendCustom"
     ].forEach(id => $(id).disabled = !isConn);
 
+    $("bigModeZone").disabled = !isConn;
     $("bigModeZone").style.pointerEvents = isConn ? "auto" : "none";
     $("bigModeZone").style.filter = isConn ? "none" : "grayscale(.45) brightness(.75)";
 
@@ -956,7 +1074,7 @@ body{min-width:320px;}
   async function doScanPickDevice(){
     if (!navigator.bluetooth){
       bleText.textContent = "BLE: NOT SUPPORTED (Use Chrome/Edge)";
-      alert("This browser does not support Web Bluetooth.\nPlease use Android Chrome / PC Chrome / Edge.");
+      alert("This browser does not support Web Bluetooth.\\nPlease use Android Chrome / PC Chrome / Edge.");
       return;
     }
 
@@ -999,7 +1117,7 @@ body{min-width:320px;}
       setConnectedUI(true);
       audioOnce(sConn);
     } catch(e){
-      alert("CONNECT FAILED\nPlease re-SCAN and select the correct device.\n\n" + (e?.message || e));
+      alert("CONNECT FAILED\\nPlease re-SCAN and select the correct device.\\n\\n" + (e?.message || e));
       onDisconnected();
     }
   }
@@ -1141,7 +1259,6 @@ body{min-width:320px;}
     await writeLine(v);
   });
 
-  // 原 mode select cards
   document.querySelectorAll(".modeCard").forEach(card=>{
     card.addEventListener("click", async ()=>{
       if (!ui.connected) return;
@@ -1154,16 +1271,17 @@ body{min-width:320px;}
     });
   });
 
-  // 大紅區：下一個 mode
   $("bigModeZone").addEventListener("click", async ()=>{
     if (!ui.connected) return;
     audioOnce(sBtn);
     await writeChar("m");
     if (typeof ui.mode === "number"){
       ui.mode = (ui.mode % 10) + 1;
-      renderModeCards();
-      modeStatus.textContent = "MODE: " + ui.mode;
+    } else {
+      ui.mode = 1;
     }
+    renderModeCards();
+    modeStatus.textContent = "MODE: " + ui.mode;
   });
 
   btnScan.addEventListener("click", async ()=>{
