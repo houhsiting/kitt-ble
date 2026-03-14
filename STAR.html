@@ -14,7 +14,7 @@
   --gold2:#B8933A;
   --red:#FF0000;
   --dim:#666666;
-  --green:#00FF00;
+  --greenBright:#19ff19;
   --yellow:#F2F500;
   --shadow1: 0 10px 18px rgba(0,0,0,.85);
   --shadow2: 0 0 24px rgba(184,147,58,.25);
@@ -213,227 +213,7 @@ body{min-width:320px}
   border-color:#5A2A2A;
 }
 
-/* ===== 圖案區 ===== */
-.graphWrap{
-  width:100%;
-  display:flex;
-  justify-content:center;
-}
-.graphPanel{
-  width:min(100%, 700px);
-  background:#000;
-  border-radius:16px;
-  padding:12px 8px 14px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:14px;
-}
-
-/* 文字大一號 */
-.stepStack{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-  align-items:center;
-}
-.stepBtn{
-  width:190px;
-  height:42px;
-  border-radius:16px;
-  font-size:13px;
-  font-weight:900;
-  letter-spacing:.6px;
-  border:2px solid #4a2a00;
-  background:#161600;
-  color:#111;
-  box-shadow:0 0 12px rgba(0,0,0,.65);
-}
-.stepBtn.yellow{background:linear-gradient(#F2F500,#C7C900)}
-.stepBtn.red{background:linear-gradient(#FF1E1E,#B00000)}
-.stepBtn.lit{
-  box-shadow:0 0 14px rgba(255,255,0,.42), 0 0 24px rgba(255,255,0,.18);
-}
-.stepBtn.red.lit{
-  box-shadow:0 0 16px rgba(255,0,0,.50), 0 0 26px rgba(255,0,0,.22);
-}
-
-/* 左右燈靠近中間 */
-.graphCluster{
-  width:100%;
-  display:grid;
-  grid-template-columns: 78px minmax(150px,220px) 78px;
-  gap:8px;
-  align-items:center;
-}
-.sideCol{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-  align-items:center;
-}
-.sideBtn{
-  width:68px;
-  height:58px;
-  border-radius:14px;
-  border:2px solid #3a3a00;
-  background:linear-gradient(#F2F500,#BFBF00);
-  color:#111;
-  font-weight:900;
-  font-size:11px;
-  line-height:1.02;
-  text-align:center;
-  cursor:pointer;
-  box-shadow:0 0 10px rgba(0,0,0,.55);
-}
-.sideBtn.red{
-  border-color:#4a0000;
-  background:linear-gradient(#FF1E1E,#B00000);
-}
-.sideBtn.lit.yellowGlow{
-  box-shadow:0 0 14px rgba(255,255,0,.40), 0 0 24px rgba(255,255,0,.15);
-}
-.sideBtn.lit.redGlow{
-  box-shadow:0 0 16px rgba(255,0,0,.50), 0 0 26px rgba(255,0,0,.20);
-}
-
-.centerCore{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:12px;
-}
-
-/* 中間圖案區：整塊可點 m，但造型像附圖 */
-.bigModeZone{
-  width:100%;
-  max-width:210px;
-  min-height:332px;
-  border-radius:18px;
-  border:2px solid #1f1f1f;
-  background:linear-gradient(180deg,#0c0c0c,#050505 70%,#000);
-  cursor:pointer;
-  padding:12px 10px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  box-shadow: inset 0 0 18px rgba(255,255,255,.02);
-}
-.bigModeZone.active{
-  box-shadow:
-    0 0 18px rgba(255,0,0,.28),
-    inset 0 0 18px rgba(255,255,255,.03);
-}
-
-.barsWrap{
-  width:100%;
-  display:grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap:14px;
-  align-items:center;
-  justify-items:center;
-}
-.barColumn{
-  width:100%;
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-  align-items:center;
-}
-.barSeg{
-  width:100%;
-  border-radius:3px;
-  border:1px solid rgba(80,20,10,.8);
-  box-shadow: inset 0 -1px 0 rgba(0,0,0,.35);
-}
-.barColumn.side .barSeg{
-  height:22px;
-  max-width:64px;
-}
-.barColumn.center .barSeg{
-  height:22px;
-  max-width:70px;
-}
-
-/* 附圖那種細直條發光感 */
-.barSeg.glow{
-  background:
-    repeating-linear-gradient(
-      90deg,
-      rgba(255,220,150,.38) 0 2px,
-      rgba(255,120,60,.0) 2px 6px
-    ),
-    linear-gradient(180deg,#ffb76b 0%, #ff8a3d 48%, #ff5821 100%);
-}
-.barSeg.cap{
-  background:
-    repeating-linear-gradient(
-      90deg,
-      rgba(210,140,100,.16) 0 2px,
-      rgba(120,60,40,.0) 2px 6px
-    ),
-    linear-gradient(180deg,#8e5445 0%, #71382e 100%);
-}
-.barSpacer{
-  width:100%;
-  height:22px;
-  max-width:64px;
-  visibility:hidden;
-}
-
-/* 左下黃燈加寬 1 倍 */
-.bottomModes{
-  display:grid;
-  grid-template-columns: 30px 126px;
-  gap:12px;
-  align-items:start;
-}
-.leftIndicators{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
-.smallYellow{
-  width:28px;
-  height:48px;
-  border-radius:4px;
-  border:1px solid #5a5500;
-  background:linear-gradient(#F2F500,#B5B700);
-  box-shadow:0 0 8px rgba(255,255,0,.15);
-}
-.modeLamps{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
-.modeLamp{
-  width:126px;
-  height:48px;
-  border-radius:6px;
-  border:2px solid #003800;
-  background:#023202;
-  color:#011;
-  font-weight:900;
-  font-size:12px;
-  line-height:1.02;
-  text-align:center;
-  cursor:pointer;
-}
-.modeLamp.yellow{
-  border-color:#5a5500;
-  background:linear-gradient(#F2F500,#BFBF00);
-  color:#111;
-}
-.modeLamp.red{
-  border-color:#4a0000;
-  background:linear-gradient(#FF1E1E,#B00000);
-  color:#111;
-}
-.modeLamp.active{
-  box-shadow:0 0 14px rgba(0,255,0,.35), 0 0 24px rgba(0,255,0,.15);
-}
-
-/* ===== 原 MODE SELECT 按鈕區 ===== */
+/* ===== MODE SELECT ===== */
 .modeShell{
   width:100%;
   max-width:780px;
@@ -503,6 +283,239 @@ body{min-width:320px}
   margin-bottom:8px;
 }
 
+/* ===== 圖案控制區：照圖片比例重做 ===== */
+.tacticalWrap{
+  width:100%;
+  display:flex;
+  justify-content:center;
+}
+.tacticalPanel{
+  width:min(100%, 760px);
+  background:#000;
+  border-radius:12px;
+  padding:8px 2px 10px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:14px;
+}
+
+/* 上方 step */
+.stepStack{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  align-items:center;
+}
+.stepBtn{
+  width:228px;
+  height:42px;
+  border-radius:16px;
+  font-size:14px;
+  font-weight:900;
+  letter-spacing:.4px;
+  border:2px solid #545400;
+  background:#1c1c00;
+  color:#111;
+  box-shadow:0 0 10px rgba(0,0,0,.55);
+}
+.stepBtn.yellow{
+  background:linear-gradient(#F2F500,#D3D700);
+}
+.stepBtn.red{
+  background:linear-gradient(#ff2222,#c00000);
+  border-color:#660000;
+}
+.stepBtn.lit{
+  box-shadow:0 0 14px rgba(255,255,0,.35), 0 0 24px rgba(255,255,0,.16);
+}
+.stepBtn.red.lit{
+  box-shadow:0 0 16px rgba(255,0,0,.40), 0 0 26px rgba(255,0,0,.18);
+}
+
+/* 主體三欄 */
+.tacticalBody{
+  width:100%;
+  display:grid;
+  grid-template-columns: 92px 228px 92px;
+  justify-content:center;
+  align-items:center;
+  column-gap:8px;
+}
+
+/* 左右燈 */
+.sideCol{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  align-items:center;
+}
+.sideBtn{
+  width:74px;
+  height:58px;
+  border-radius:14px;
+  border:2px solid #606000;
+  background:linear-gradient(#F2F500,#cfd300);
+  color:#111;
+  font-weight:900;
+  font-size:11px;
+  line-height:1.02;
+  text-align:center;
+  cursor:pointer;
+  box-shadow:0 0 10px rgba(0,0,0,.45);
+}
+.sideBtn.red{
+  border-color:#710000;
+  background:linear-gradient(#ff1c1c,#c00000);
+}
+.sideBtn.lit.yellowGlow{
+  box-shadow:0 0 14px rgba(255,255,0,.30), 0 0 20px rgba(255,255,0,.12);
+}
+.sideBtn.lit.redGlow{
+  box-shadow:0 0 14px rgba(255,0,0,.34), 0 0 20px rgba(255,0,0,.12);
+}
+
+/* 中央區 */
+.centerZone{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
+}
+
+/* 中央紅條區：像圖 */
+.bigModeZone{
+  width:228px;
+  min-height:360px;
+  border:none;
+  background:#000;
+  cursor:pointer;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+}
+.bigModeZone.active{
+  filter:brightness(1.02);
+}
+
+.barsArea{
+  width:100%;
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items:end;
+  justify-items:center;
+  column-gap:10px;
+  padding-top:8px;
+}
+
+.barColumn{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+  align-items:center;
+}
+
+.barSeg{
+  border-radius:2px;
+  border:1px solid rgba(100,25,10,.72);
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,.35);
+}
+
+/* 左右短柱 */
+.barColumn.side .barSeg{
+  width:58px;
+  height:24px;
+}
+
+/* 中間高柱 */
+.barColumn.center .barSeg{
+  width:62px;
+  height:24px;
+}
+
+/* 亮段 */
+.barSeg.glow{
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,227,170,.34) 0 2px,
+      rgba(255,120,60,0) 2px 6px
+    ),
+    linear-gradient(180deg,#ffb062 0%, #ff7b33 48%, #ff2d12 100%);
+}
+
+/* 端帽暗一點 */
+.barSeg.cap{
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(210,140,100,.14) 0 2px,
+      rgba(120,60,40,0) 2px 6px
+    ),
+    linear-gradient(180deg,#84473a 0%, #6a2d26 100%);
+}
+
+/* 下方模式區 */
+.bottomModes{
+  display:grid;
+  grid-template-columns: 30px 146px;
+  gap:12px;
+  align-items:start;
+}
+.leftIndicators{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.smallYellow{
+  width:28px;
+  height:50px;
+  border-radius:3px;
+  border:1px solid #5a5500;
+  background:linear-gradient(#F2F500,#BFC300);
+  box-shadow:0 0 8px rgba(255,255,0,.15);
+}
+.modeLamps{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.modeLamp{
+  width:146px;
+  height:50px;
+  border-radius:4px;
+  border:2px solid #004900;
+  background:#0b4f0b;
+  color:#011;
+  font-weight:900;
+  font-size:12px;
+  line-height:1.02;
+  text-align:center;
+  cursor:pointer;
+}
+.modeLamp.yellow{
+  border-color:#636000;
+  background:linear-gradient(#F2F500,#d4d700);
+  color:#111;
+}
+.modeLamp.red{
+  border-color:#700000;
+  background:linear-gradient(#ff1f1f,#c00000);
+  color:#111;
+}
+.modeLamp.greenBright{
+  border-color:#00b400;
+  background:linear-gradient(#3cff3c,#07d807);
+  color:#001d00;
+  box-shadow:0 0 16px rgba(25,255,25,.22);
+}
+.modeLamp.active{
+  box-shadow:0 0 14px rgba(0,255,0,.25), 0 0 22px rgba(0,255,0,.10);
+}
+
+/* tools */
 .toolsGrid{
   width:100%;
   display:grid;
@@ -550,37 +563,55 @@ body{min-width:320px}
   .app{padding:8px}
   .frame{padding:9px}
   .btnSmall{width:98px;font-size:11px}
-  .graphCluster{
-    grid-template-columns: 68px minmax(132px,190px) 68px;
-    gap:6px;
-  }
-  .sideBtn{
-    width:58px;
-    height:52px;
-    font-size:10px;
-  }
-  .stepBtn{
-    width:166px;
-    height:38px;
-    font-size:12px;
-  }
-  .bigModeZone{
-    min-height:300px;
-    padding:10px 8px;
-  }
-  .barsWrap{gap:10px}
-  .barColumn.side .barSeg{max-width:56px;height:20px}
-  .barColumn.center .barSeg{max-width:62px;height:20px}
-  .barSpacer{max-width:56px;height:20px}
-  .bottomModes{grid-template-columns: 26px 114px; gap:10px}
-  .smallYellow{width:24px;height:44px}
-  .modeLamp{width:114px;height:44px;font-size:11px}
   .modeGrid{gap:10px}
   .modeCard{min-height:106px}
   .modeCard.big{min-height:110px}
   .modeCardTitle{font-size:16px}
   .modeTitleHead{font-size:19px}
   .modeSubHead{font-size:13px}
+
+  .stepBtn{
+    width:184px;
+    height:38px;
+    font-size:13px;
+  }
+  .tacticalBody{
+    grid-template-columns: 74px 184px 74px;
+    column-gap:5px;
+  }
+  .sideBtn{
+    width:58px;
+    height:52px;
+    font-size:10px;
+  }
+  .bigModeZone{
+    width:184px;
+    min-height:322px;
+  }
+  .barColumn.side .barSeg{
+    width:48px;
+    height:22px;
+  }
+  .barColumn.center .barSeg{
+    width:52px;
+    height:22px;
+  }
+  .barsArea{
+    column-gap:8px;
+  }
+  .bottomModes{
+    grid-template-columns: 26px 122px;
+    gap:10px;
+  }
+  .smallYellow{
+    width:24px;
+    height:44px;
+  }
+  .modeLamp{
+    width:122px;
+    height:44px;
+    font-size:11px;
+  }
 }
 </style>
 </head>
@@ -638,112 +669,7 @@ body{min-width:320px}
     </div>
   </div>
 
-  <!-- 圖案區先放上面 -->
-  <div class="frame col">
-    <div class="h2">TACTICAL LAMP CONTROL</div>
-    <div class="sub">STEP • BOX • MODE • DISPLAY</div>
-    <div style="height:12px;"></div>
-
-    <div class="graphWrap">
-      <div class="graphPanel">
-
-        <div class="stepStack">
-          <button class="stepBtn yellow" id="step1Btn">POWER</button>
-          <button class="stepBtn yellow" id="step2Btn">FUEL ON</button>
-          <button class="stepBtn yellow" id="step3Btn">MIN RPM</button>
-          <button class="stepBtn red"    id="step4Btn">IGNITORS</button>
-        </div>
-
-        <div class="graphCluster">
-          <div class="sideCol">
-            <button class="sideBtn"     data-box="1" data-side="L">ALT</button>
-            <button class="sideBtn"     data-box="2" data-side="L">OIL<br>PRESS</button>
-            <button class="sideBtn red" data-box="3" data-side="L">OIL<br>TEMP</button>
-            <button class="sideBtn red" data-box="4" data-side="L">EGT</button>
-            <button class="sideBtn red" data-box="5" data-side="L">FUEL</button>
-          </div>
-
-          <div class="centerCore">
-            <button id="bigModeZone" class="bigModeZone" title="Next Mode">
-              <div class="barsWrap">
-                <!-- 左 -->
-                <div class="barColumn side">
-                  <div class="barSpacer"></div>
-                  <div class="barSeg cap"></div>
-                  <div class="barSeg glow"></div>
-                  <div class="barSeg glow"></div>
-                  <div class="barSeg glow"></div>
-                  <div class="barSeg glow"></div>
-                  <div class="barSeg glow"></div>
-                  <div class="barSeg glow"></div>
-                  <div class="barSeg glow"></div>
-                  <div class="barSeg glow"></div>
-                  <div class="barSeg cap"></div>
-                  <div class="barSpacer"></div>
-                </div>
-
-                <!-- 中 -->
-                <div class="barColumn center">
-                  <div class="barSeg cap"></div>
-                  <div class="barSeg glow"></div>
-                  <div class="barSeg glow"></div>
-                  <div class="barSeg glow"></div>
-                  <div class="barSeg glow"></div>
-                  <div class="barSeg glow"></div>
-                  <div class="barSeg glow"></div>
-                  <div class="barSeg glow"></div>
-                  <div class="barSeg glow"></div>
-                  <div class="barSeg glow"></div>
-                  <div class="barSeg glow"></div>
-                  <div class="barSeg cap"></div>
-                </div>
-
-                <!-- 右 -->
-                <div class="barColumn side">
-                  <div class="barSpacer"></div>
-                  <div class="barSeg cap"></div>
-                  <div class="barSeg glow"></div>
-                  <div class="barSeg glow"></div>
-                  <div class="barSeg glow"></div>
-                  <div class="barSeg glow"></div>
-                  <div class="barSeg glow"></div>
-                  <div class="barSeg glow"></div>
-                  <div class="barSeg glow"></div>
-                  <div class="barSeg glow"></div>
-                  <div class="barSeg cap"></div>
-                  <div class="barSpacer"></div>
-                </div>
-              </div>
-            </button>
-
-            <div class="bottomModes">
-              <div class="leftIndicators">
-                <div class="smallYellow"></div>
-                <div class="smallYellow"></div>
-                <div class="smallYellow"></div>
-              </div>
-
-              <div class="modeLamps">
-                <button class="modeLamp"        id="nanoNorBtn">NORMAL</button>
-                <button class="modeLamp yellow" id="nanoAutoBtn">AUTO<br>CRUISE</button>
-                <button class="modeLamp red"    id="nanoSpmBtn">PURSUIT</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="sideCol">
-            <button class="sideBtn"     data-box="1" data-side="R">AUX</button>
-            <button class="sideBtn"     data-box="2" data-side="R">SAT<br>COMM</button>
-            <button class="sideBtn red" data-box="3" data-side="R">ACC</button>
-            <button class="sideBtn red" data-box="4" data-side="R">RADAR</button>
-            <button class="sideBtn red" data-box="5" data-side="R">MPI</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 按鈕區移到下面 -->
+  <!-- 上半部 MODE SELECT -->
   <div class="frame col">
     <div class="modeShell">
       <div class="center"><div class="modeTitleHead">MODE SELECT</div></div>
@@ -809,6 +735,107 @@ body{min-width:320px}
           <div class="modeCardTitle">ANALYSIS</div>
           <div class="modeCardSub">MODE 10</div>
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 下半部圖案控制區 -->
+  <div class="frame col">
+    <div class="h2">TACTICAL LAMP CONTROL</div>
+    <div class="sub">STEP • BOX • MODE • DISPLAY</div>
+    <div style="height:12px;"></div>
+
+    <div class="tacticalWrap">
+      <div class="tacticalPanel">
+
+        <div class="stepStack">
+          <button class="stepBtn yellow" id="step1Btn">POWER</button>
+          <button class="stepBtn yellow" id="step2Btn">FUEL ON</button>
+          <button class="stepBtn yellow" id="step3Btn">MIN RPM</button>
+          <button class="stepBtn red"    id="step4Btn">IGNITORS</button>
+        </div>
+
+        <div class="tacticalBody">
+          <div class="sideCol">
+            <button class="sideBtn"     data-box="1" data-side="L">ALT</button>
+            <button class="sideBtn"     data-box="2" data-side="L">OIL<br>PRESS</button>
+            <button class="sideBtn red" data-box="3" data-side="L">OIL<br>TEMP</button>
+            <button class="sideBtn red" data-box="4" data-side="L">EGT</button>
+            <button class="sideBtn red" data-box="5" data-side="L">FUEL</button>
+          </div>
+
+          <div class="centerZone">
+            <button id="bigModeZone" class="bigModeZone" title="Next Mode">
+              <div class="barsArea">
+                <div class="barColumn side">
+                  <div class="barSeg cap"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg cap"></div>
+                </div>
+
+                <div class="barColumn center">
+                  <div class="barSeg cap"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg cap"></div>
+                </div>
+
+                <div class="barColumn side">
+                  <div class="barSeg cap"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg glow"></div>
+                  <div class="barSeg cap"></div>
+                </div>
+              </div>
+            </button>
+
+            <div class="bottomModes">
+              <div class="leftIndicators">
+                <div class="smallYellow"></div>
+                <div class="smallYellow"></div>
+                <div class="smallYellow"></div>
+              </div>
+
+              <div class="modeLamps">
+                <button class="modeLamp greenBright" id="nanoNorBtn">NORMAL</button>
+                <button class="modeLamp yellow"      id="nanoAutoBtn">AUTO<br>CRUISE</button>
+                <button class="modeLamp red"         id="nanoSpmBtn">PURSUIT</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="sideCol">
+            <button class="sideBtn"     data-box="1" data-side="R">AUX</button>
+            <button class="sideBtn"     data-box="2" data-side="R">SAT<br>COMM</button>
+            <button class="sideBtn red" data-box="3" data-side="R">ACC</button>
+            <button class="sideBtn red" data-box="4" data-side="R">RADAR</button>
+            <button class="sideBtn red" data-box="5" data-side="R">MPI</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -909,6 +936,7 @@ body{min-width:320px}
     }catch(_){}
   }
 
+  // scanner
   const scanbar = $("scanbar");
   let scanPos = 0;
   let scanDir = 1;
@@ -962,26 +990,30 @@ body{min-width:320px}
         await rxChar.writeValueWithoutResponse(data);
         return;
       }
-    }catch(_){}
-    try{ await rxChar.writeValue(data); }catch(_){}
+    } catch(_) {}
+    try{
+      await rxChar.writeValue(data);
+    } catch(_) {}
   }
 
   async function writeLine(line){
     if (!ui.connected || !rxChar) return;
-    const text = line.endsWith("\\n") ? line : line + "\\n";
+    const text = line.endsWith("\n") ? line : line + "\n";
     const data = new TextEncoder().encode(text);
     try{
       if (typeof rxChar.writeValueWithoutResponse === "function"){
         await rxChar.writeValueWithoutResponse(data);
         return;
       }
-    }catch(_){}
-    try{ await rxChar.writeValue(data); }catch(_){}
+    } catch(_) {}
+    try{
+      await rxChar.writeValue(data);
+    } catch(_) {}
   }
 
   function parseNotify(text){
-    const m = text.match(/MODE\\s*=\\s*(\\d+)/i);
-    const g = text.match(/G\\s*=\\s*(\\d+)/i);
+    const m = text.match(/MODE\s*=\s*(\d+)/i);
+    const g = text.match(/G\s*=\s*(\d+)/i);
     if (m){
       ui.mode = parseInt(m[1],10);
       renderModeCards();
@@ -997,7 +1029,28 @@ body{min-width:320px}
     document.querySelectorAll(".modeCard").forEach(card=>{
       card.classList.toggle("active", Number(card.dataset.mode) === ui.mode);
     });
-    $("bigModeZone").classList.toggle("active", ui.connected);
+  }
+
+  function renderSteps(){
+    ["step1Btn","step2Btn","step3Btn","step4Btn"].forEach((id, idx)=>{
+      $(id).classList.toggle("lit", ui.step[idx]);
+    });
+  }
+
+  function renderBoxes(){
+    document.querySelectorAll(".sideBtn").forEach(btn=>{
+      const idx = Number(btn.dataset.box) - 1;
+      const isOn = ui.box[idx];
+      btn.classList.toggle("lit", isOn);
+      if (btn.classList.contains("red")) btn.classList.toggle("redGlow", isOn);
+      else btn.classList.toggle("yellowGlow", isOn);
+    });
+  }
+
+  function renderNanoMode(){
+    $("nanoNorBtn").classList.toggle("active", ui.nanoMode === "NOR");
+    $("nanoAutoBtn").classList.toggle("active", ui.nanoMode === "AUTO");
+    $("nanoSpmBtn").classList.toggle("active", ui.nanoMode === "SPM");
   }
 
   function setConnectedUI(isConn){
@@ -1050,31 +1103,10 @@ body{min-width:320px}
     renderNanoMode();
   }
 
-  function renderSteps(){
-    const ids = ["step1Btn","step2Btn","step3Btn","step4Btn"];
-    ids.forEach((id, idx)=>$(id).classList.toggle("lit", ui.step[idx]));
-  }
-
-  function renderBoxes(){
-    document.querySelectorAll(".sideBtn").forEach(btn=>{
-      const boxIdx = Number(btn.dataset.box) - 1;
-      const isOn = ui.box[boxIdx];
-      btn.classList.toggle("lit", isOn);
-      if (btn.classList.contains("red")) btn.classList.toggle("redGlow", isOn);
-      else btn.classList.toggle("yellowGlow", isOn);
-    });
-  }
-
-  function renderNanoMode(){
-    $("nanoNorBtn").classList.toggle("active",  ui.nanoMode === "NOR");
-    $("nanoAutoBtn").classList.toggle("active", ui.nanoMode === "AUTO");
-    $("nanoSpmBtn").classList.toggle("active",  ui.nanoMode === "SPM");
-  }
-
   async function doScanPickDevice(){
     if (!navigator.bluetooth){
       bleText.textContent = "BLE: NOT SUPPORTED (Use Chrome/Edge)";
-      alert("This browser does not support Web Bluetooth.\\nPlease use Android Chrome / PC Chrome / Edge.");
+      alert("This browser does not support Web Bluetooth.\nPlease use Android Chrome / PC Chrome / Edge.");
       return;
     }
 
@@ -1112,12 +1144,12 @@ body{min-width:320px}
             parseNotify(txt);
           });
         }
-      }catch(_){}
+      } catch(_) {}
 
       setConnectedUI(true);
       audioOnce(sConn);
     } catch(e){
-      alert("CONNECT FAILED\\nPlease re-SCAN and select the correct device.\\n\\n" + (e?.message || e));
+      alert("CONNECT FAILED\nPlease re-SCAN and select the correct device.\n\n" + (e?.message || e));
       onDisconnected();
     }
   }
@@ -1126,12 +1158,12 @@ body{min-width:320px}
     audioOnce(sBtn);
     try{
       if (txChar){
-        try{ txChar.stopNotifications(); }catch(_){}
+        try{ txChar.stopNotifications(); } catch(_) {}
       }
       if (device?.gatt?.connected){
         device.gatt.disconnect();
       }
-    }catch(_){}
+    } catch(_) {}
     onDisconnected();
   }
 
@@ -1142,6 +1174,31 @@ body{min-width:320px}
     setConnectedUI(false);
   }
 
+  // MODE SELECT 上半部
+  document.querySelectorAll(".modeCard").forEach(card=>{
+    card.addEventListener("click", async ()=>{
+      if (!ui.connected) return;
+      const m = Number(card.dataset.mode);
+      ui.mode = m;
+      renderModeCards();
+      modeStatus.textContent = "MODE: " + m;
+      audioOnce(sBtn);
+      await writeChar(cmdForMode(m));
+    });
+  });
+
+  // 中間紅條區：下一個模式 m
+  $("bigModeZone").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    audioOnce(sBtn);
+    await writeChar("m");
+    if (typeof ui.mode === "number") ui.mode = (ui.mode % 10) + 1;
+    else ui.mode = 1;
+    renderModeCards();
+    modeStatus.textContent = "MODE: " + ui.mode;
+  });
+
+  // STEP
   async function toggleStep(idx){
     if (!ui.connected) return;
     ui.step[idx] = !ui.step[idx];
@@ -1150,15 +1207,14 @@ body{min-width:320px}
     const n = idx + 1;
     await writeLine(`STEP${n}${ui.step[idx] ? "ON" : "OFF"}`);
   }
-
   $("step1Btn").addEventListener("click", ()=>toggleStep(0));
   $("step2Btn").addEventListener("click", ()=>toggleStep(1));
   $("step3Btn").addEventListener("click", ()=>toggleStep(2));
   $("step4Btn").addEventListener("click", ()=>toggleStep(3));
 
+  // BOX
   const boxCmdOn  = ["BOX1ON","BOX2ON","B3ON","B4ON","B5ON"];
   const boxCmdOff = ["BOX1OFF","BOX2OFF","B3OFF","B4OFF","B5OFF"];
-
   async function toggleBox(idx){
     if (!ui.connected) return;
     ui.box[idx] = !ui.box[idx];
@@ -1166,11 +1222,11 @@ body{min-width:320px}
     audioOnce(sBtn);
     await writeLine(ui.box[idx] ? boxCmdOn[idx] : boxCmdOff[idx]);
   }
-
   document.querySelectorAll(".sideBtn").forEach(btn=>{
     btn.addEventListener("click", ()=>toggleBox(Number(btn.dataset.box)-1));
   });
 
+  // 下方模式燈
   $("nanoNorBtn").addEventListener("click", async ()=>{
     if (!ui.connected) return;
     audioOnce(sBtn);
@@ -1195,6 +1251,7 @@ body{min-width:320px}
     await writeLine(ui.nanoMode === "SPM" ? "MODE=SPM" : "MODE=OFF");
   });
 
+  // Gain
   btnGainUp.addEventListener("click", async ()=>{
     if (!ui.connected) return;
     audioOnce(sBtn);
@@ -1207,6 +1264,7 @@ body{min-width:320px}
     await writeChar("-");
   });
 
+  // 外部命令
   $("btnStartup").addEventListener("click", async ()=>{
     if (!ui.connected) return;
     audioOnce(sBtn);
@@ -1259,33 +1317,8 @@ body{min-width:320px}
     await writeLine(v);
   });
 
-  document.querySelectorAll(".modeCard").forEach(card=>{
-    card.addEventListener("click", async ()=>{
-      if (!ui.connected) return;
-      const m = Number(card.dataset.mode);
-      ui.mode = m;
-      renderModeCards();
-      modeStatus.textContent = "MODE: " + m;
-      audioOnce(sBtn);
-      await writeChar(cmdForMode(m));
-    });
-  });
-
-  $("bigModeZone").addEventListener("click", async ()=>{
-    if (!ui.connected) return;
-    audioOnce(sBtn);
-    await writeChar("m");
-    if (typeof ui.mode === "number"){
-      ui.mode = (ui.mode % 10) + 1;
-    } else {
-      ui.mode = 1;
-    }
-    renderModeCards();
-    modeStatus.textContent = "MODE: " + ui.mode;
-  });
-
   btnScan.addEventListener("click", async ()=>{
-    try{ await doScanPickDevice(); }catch(_){}
+    try{ await doScanPickDevice(); } catch(_) {}
   });
 
   btnConnect.addEventListener("click", async ()=>{
