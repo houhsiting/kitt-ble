@@ -229,7 +229,7 @@ body{min-width:320px}
   gap:16px;
 }
 
-/* 上方 STEP */
+/* STEP：未亮白灰，亮了才變亮黃/亮紅 */
 .stepStack{
   display:flex;
   flex-direction:column;
@@ -243,39 +243,39 @@ body{min-width:320px}
   font-size:14px;
   font-weight:900;
   letter-spacing:.4px;
-  border:2px solid #5d5a00;
+  border:2px solid #7b7b7b;
   color:#111;
-  background:linear-gradient(180deg,#f8f92a 0%, #d9d400 100%);
+  background:linear-gradient(180deg,#fbfbfb 0%, #ededed 55%, #d6d6d6 100%);
   box-shadow:
-    0 0 10px rgba(255,255,0,.12),
-    inset 0 1px 0 rgba(255,255,255,.25);
+    inset 0 1px 0 rgba(255,255,255,.35),
+    0 0 6px rgba(0,0,0,.12);
 }
-.stepBtn.red{
-  border-color:#6f0000;
-  background:linear-gradient(180deg,#ff2a2a 0%, #c00000 100%);
-}
-.stepBtn.lit{
+.stepBtn.yellow.lit{
+  border-color:#8a8100;
+  background:linear-gradient(180deg,#fff77e 0%, #f4ec2f 48%, #d7c900 100%);
   box-shadow:
-    0 0 14px rgba(255,255,0,.26),
-    0 0 24px rgba(255,255,0,.08),
-    inset 0 1px 0 rgba(255,255,255,.25);
+    0 0 14px rgba(255,236,40,.35),
+    0 0 28px rgba(255,236,40,.14),
+    inset 0 1px 0 rgba(255,255,255,.28);
 }
 .stepBtn.red.lit{
+  border-color:#7a0000;
+  background:linear-gradient(180deg,#ff7878 0%, #ff3030 46%, #cb1010 100%);
   box-shadow:
-    0 0 14px rgba(255,0,0,.28),
-    0 0 24px rgba(255,0,0,.10),
+    0 0 14px rgba(255,0,0,.35),
+    0 0 28px rgba(255,0,0,.14),
     inset 0 1px 0 rgba(255,255,255,.18);
 }
 
-/* 主體：左右塔更寬，中間更接近實體 */
+/* 主體比例 */
 .tacticalBody{
   width:100%;
   display:grid;
-  grid-template-columns: 138px 330px 138px;
+  grid-template-columns: 124px 286px 124px;
   column-gap:4px;
   align-items:stretch;
   justify-content:center;
-  max-width:620px;
+  max-width:542px;
 }
 
 /* 左右塔 */
@@ -295,12 +295,13 @@ body{min-width:320px}
     inset 0 -2px 0 rgba(0,0,0,.22);
 }
 
+/* BOX：未亮暗黃/暗紅，亮了才發光 */
 .sideBtn{
   width:84px;
   height:74px;
   border-radius:12px;
-  border:2px solid #6e5a16;
-  background:linear-gradient(180deg,#efbc41 0%, #d29b21 100%);
+  border:2px solid #6d5410;
+  background:linear-gradient(180deg,#a17613 0%, #7f5907 100%);
   color:#111;
   font-weight:900;
   font-size:11px;
@@ -308,22 +309,28 @@ body{min-width:320px}
   text-align:center;
   cursor:pointer;
   box-shadow:
-    inset 0 0 16px rgba(255,245,180,.16),
-    0 0 10px rgba(0,0,0,.25);
+    inset 0 0 12px rgba(255,220,140,.06),
+    0 0 8px rgba(0,0,0,.22);
 }
 .sideBtn.red{
-  border-color:#6f0000;
-  background:linear-gradient(180deg,#ff3333 0%, #cc1010 100%);
+  border-color:#631010;
+  background:linear-gradient(180deg,#8c1b1b 0%, #5f0909 100%);
 }
 .sideBtn.lit.yellowGlow{
+  border-color:#8a8100;
+  background:linear-gradient(180deg,#fff77e 0%, #f3ea2f 48%, #d7c900 100%);
   box-shadow:
-    0 0 14px rgba(255,210,40,.20),
-    inset 0 0 16px rgba(255,245,180,.18);
+    0 0 14px rgba(255,236,40,.30),
+    0 0 24px rgba(255,236,40,.10),
+    inset 0 0 10px rgba(255,255,255,.12);
 }
-.sideBtn.lit.redGlow{
+.sideBtn.red.lit.redGlow{
+  border-color:#7a0000;
+  background:linear-gradient(180deg,#ff7878 0%, #ff3131 46%, #ca1010 100%);
   box-shadow:
-    0 0 14px rgba(255,0,0,.18),
-    inset 0 0 14px rgba(255,170,170,.12);
+    0 0 14px rgba(255,0,0,.28),
+    0 0 24px rgba(255,0,0,.10),
+    inset 0 0 10px rgba(255,255,255,.08);
 }
 
 /* 中央機身 */
@@ -343,11 +350,11 @@ body{min-width:320px}
     inset 0 -2px 0 rgba(0,0,0,.22);
 }
 
-/* 上半黑色紅條視窗 */
+/* 上半紅條視窗 */
 .bigModeZone{
   width:100%;
-  max-width:250px;
-  height:310px;
+  max-width:214px;
+  height:302px;
   border:2px solid #2b2b2b;
   border-radius:12px;
   background:#0a0a0a;
@@ -364,7 +371,7 @@ body{min-width:320px}
   box-shadow:
     inset 0 0 0 2px rgba(0,0,0,.35),
     inset 0 0 12px rgba(255,255,255,.02),
-    0 0 14px rgba(255,0,0,.08);
+    0 0 12px rgba(255,0,0,.08);
 }
 
 .barsArea{
@@ -376,7 +383,6 @@ body{min-width:320px}
   align-items:end;
   column-gap:10px;
 }
-
 .barColumn{
   display:flex;
   flex-direction:column;
@@ -385,19 +391,14 @@ body{min-width:320px}
   justify-content:flex-end;
   height:100%;
 }
-
-/* 左右柱比中柱短 */
 .barColumn.side .barSeg{
-  width:42px;
+  width:36px;
   height:16px;
 }
-
-/* 中柱略寬 */
 .barColumn.center .barSeg{
-  width:46px;
+  width:40px;
   height:16px;
 }
-
 .barSeg{
   border-radius:2px;
   border:1px solid rgba(90,20,10,.72);
@@ -407,25 +408,28 @@ body{min-width:320px}
 .barSeg.dim{
   opacity:.32;
 }
-
-/* 下半模式區：預設都是白灰 */
-.bottomModes{
-  width:100%;
-  max-width:250px;
-  display:grid;
-  grid-template-columns: 26px 1fr;
-  gap:12px;
-  align-items:stretch;
+/* 左右柱底下少 2 段 */
+.barColumn.side .barSeg:nth-last-child(-n+2){
+  display:none;
 }
 
+/* 下方模式區 */
+.bottomModes{
+  width:100%;
+  max-width:214px;
+  display:grid;
+  grid-template-columns: 30px 1fr;
+  gap:10px;
+  align-items:stretch;
+}
 .leftIndicators{
   display:flex;
   flex-direction:column;
-  gap:6px;
+  gap:4px;
   justify-content:flex-end;
 }
 .smallIndicator{
-  width:22px;
+  width:28px;
   height:56px;
   border-radius:2px;
   border:1px solid #7c7c7c;
@@ -439,6 +443,7 @@ body{min-width:320px}
   background:linear-gradient(180deg,#fff68a 0%, #f2eb2d 45%, #d7c900 100%);
   box-shadow:
     0 0 12px rgba(255,235,40,.18),
+    0 0 22px rgba(255,235,40,.08),
     inset 0 0 8px rgba(255,255,255,.10);
 }
 
@@ -449,7 +454,7 @@ body{min-width:320px}
 }
 .modeLamp{
   width:100%;
-  height:60px;
+  height:56px;
   border-radius:2px;
   border:2px solid #2a2a2a;
   background:linear-gradient(180deg,#ffffff 0%, #f0f0f0 58%, #dddddd 100%);
@@ -461,24 +466,18 @@ body{min-width:320px}
   cursor:pointer;
   box-shadow: inset 0 0 8px rgba(255,255,255,.10);
 }
-
-/* NORMAL 亮綠 */
 .modeLamp.activeNor{
   border-color:#0b7e48;
   background:linear-gradient(180deg,#6dffd0 0%, #27eba0 48%, #14c47f 100%);
   color:#002b16;
   box-shadow:0 0 14px rgba(36,231,154,.18);
 }
-
-/* AUTO 亮黃 */
 .modeLamp.activeAuto{
   border-color:#7b7300;
   background:linear-gradient(180deg,#fff68a 0%, #f3eb31 48%, #d7c900 100%);
   color:#1f1a00;
   box-shadow:0 0 14px rgba(255,235,40,.18);
 }
-
-/* PURSUIT 亮紅 */
 .modeLamp.activeSpm{
   border-color:#7a0000;
   background:linear-gradient(180deg,#ff7b7b 0%, #ff3434 45%, #cf1111 100%);
@@ -556,6 +555,7 @@ body{min-width:320px}
   margin-bottom:8px;
 }
 
+/* tools */
 .toolsGrid{
   width:100%;
   display:grid;
@@ -599,10 +599,12 @@ body{min-width:320px}
   margin-top:16px;
 }
 
+/* 手機版 */
 @media (max-width:480px){
   .app{padding:8px}
   .frame{padding:9px}
   .btnSmall{width:98px;font-size:11px}
+
   .modeGrid{gap:10px}
   .modeCard{min-height:106px}
   .modeCard.big{min-height:110px}
@@ -617,24 +619,24 @@ body{min-width:320px}
   }
 
   .tacticalBody{
-    grid-template-columns: 104px 232px 104px;
+    grid-template-columns: 90px 196px 90px;
     column-gap:3px;
-    max-width:448px;
+    max-width:382px;
   }
 
   .sideCol{
-    padding:10px 6px;
+    padding:10px 5px;
   }
 
   .sideBtn{
-    width:74px;
-    height:62px;
+    width:68px;
+    height:58px;
     font-size:10px;
   }
 
   .bigModeZone{
-    max-width:180px;
-    height:248px;
+    max-width:164px;
+    height:244px;
     padding:8px 6px;
   }
 
@@ -643,28 +645,28 @@ body{min-width:320px}
   }
 
   .barColumn.side .barSeg{
-    width:30px;
+    width:28px;
     height:12px;
   }
 
   .barColumn.center .barSeg{
-    width:34px;
+    width:32px;
     height:12px;
   }
 
   .bottomModes{
-    max-width:180px;
-    grid-template-columns: 20px 1fr;
+    max-width:164px;
+    grid-template-columns: 22px 1fr;
     gap:8px;
   }
 
   .smallIndicator{
-    width:16px;
+    width:20px;
     height:46px;
   }
 
   .modeLamp{
-    height:50px;
+    height:46px;
     font-size:11px;
   }
 }
@@ -734,9 +736,9 @@ body{min-width:320px}
       <div class="tacticalPanel">
 
         <div class="stepStack">
-          <button class="stepBtn" id="step1Btn">POWER</button>
-          <button class="stepBtn" id="step2Btn">FUEL ON</button>
-          <button class="stepBtn" id="step3Btn">MIN RPM</button>
+          <button class="stepBtn yellow" id="step1Btn">POWER</button>
+          <button class="stepBtn yellow" id="step2Btn">FUEL ON</button>
+          <button class="stepBtn yellow" id="step3Btn">MIN RPM</button>
           <button class="stepBtn red" id="step4Btn">IGNITORS</button>
         </div>
 
@@ -826,7 +828,7 @@ body{min-width:320px}
     </div>
   </div>
 
-  <!-- 按鈕模式區在下 -->
+  <!-- 模式按鈕區在下 -->
   <div class="frame col">
     <div class="modeShell">
       <div class="center"><div class="modeTitleHead">MODE SELECT</div></div>
@@ -1072,7 +1074,7 @@ body{min-width:320px}
     } catch(_) {}
   }
 
-  // 支援現在 MODE/G 與未來完整狀態同步
+  // 已支援未來 ESP32 狀態回傳
   function parseNotify(text){
     const m = text.match(/MODE\s*=\s*(\d+)/i);
     const g = text.match(/G\s*=\s*(\d+)/i);
@@ -1363,7 +1365,7 @@ body{min-width:320px}
     await writeLine(ui.nanoMode === "SPM" ? "MODE=SPM" : "MODE=OFF");
   });
 
-  // Gain
+  // GAIN
   btnGainUp.addEventListener("click", async ()=>{
     if (!ui.connected) return;
     audioOnce(sBtn);
