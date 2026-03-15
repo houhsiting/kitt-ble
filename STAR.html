@@ -352,7 +352,7 @@ body{min-width:320px}
     inset 0 -2px 0 rgba(0,0,0,.22);
 }
 
-/* ===== 顯示區：固定16格 ===== */
+/* ===== 顯示區：固定16格，完全照你描述 ===== */
 .bigModeZone{
   width:100%;
   max-width:176px;
@@ -361,7 +361,7 @@ body{min-width:320px}
   border-radius:12px;
   background:#0a0a0a;
   cursor:pointer;
-  padding:8px 0;
+  padding:8px 6px;
   display:flex;
   justify-content:center;
   align-items:center;
@@ -377,26 +377,20 @@ body{min-width:320px}
 }
 
 .barsArea{
-  --edge: 7px;      /* 約 1/4 紅條寬 */
-  --sideW: 28px;
-  --centerW: 32px;
-  --gapX: 28px;     /* 約一個紅條寬 */
-  --slotH: 12px;
-  --slotGap: 6px;   /* 約紅條高度的1/2 */
+  --sideW: 27px;
+  --centerW: 31px;
+  --edgePad: 7px;    /* 約 1/4 紅條寬 */
+  --gapX: 28px;      /* 約一個紅條寬 */
+  --slotH: 11px;
+  --slotGap: 5px;    /* 約紅條高度的1/2 */
 
   width:100%;
   height:100%;
-  display:grid;
-  grid-template-columns:
-    var(--edge)
-    var(--sideW)
-    var(--gapX)
-    var(--centerW)
-    var(--gapX)
-    var(--sideW)
-    var(--edge);
-  align-items:stretch;
+  display:flex;
   justify-content:center;
+  align-items:flex-start;
+  gap:var(--gapX);
+  padding:0 var(--edgePad);
 }
 
 .barCol{
@@ -407,7 +401,6 @@ body{min-width:320px}
   justify-items:stretch;
   align-items:stretch;
 }
-
 .barCol.side{ width:var(--sideW); }
 .barCol.center{ width:var(--centerW); }
 
@@ -655,16 +648,16 @@ body{min-width:320px}
   .bigModeZone{
     max-width:128px;
     height:214px;
-    padding:7px 0;
+    padding:7px 4px;
   }
 
   .barsArea{
-    --edge: 6px;
-    --sideW: 22px;
-    --centerW: 25px;
-    --gapX: 22px;
-    --slotH: 10px;
-    --slotGap: 5px;
+    --sideW: 21px;
+    --centerW: 24px;
+    --edgePad: 5px;
+    --gapX: 21px;
+    --slotH: 9px;
+    --slotGap: 4px;
   }
 
   .bottomModes{
@@ -766,8 +759,6 @@ body{min-width:320px}
           <div class="centerZone">
             <button id="bigModeZone" class="bigModeZone" title="Next Mode">
               <div class="barsArea">
-                <div></div>
-
                 <!-- 第一柱 -->
                 <div class="barCol side">
                   <div class="slot off"></div>
@@ -787,8 +778,6 @@ body{min-width:320px}
                   <div class="slot off"></div>
                   <div class="slot off"></div>
                 </div>
-
-                <div></div>
 
                 <!-- 第二柱 -->
                 <div class="barCol center">
@@ -810,8 +799,6 @@ body{min-width:320px}
                   <div class="slot off"></div>
                 </div>
 
-                <div></div>
-
                 <!-- 第三柱 -->
                 <div class="barCol side">
                   <div class="slot off"></div>
@@ -831,8 +818,6 @@ body{min-width:320px}
                   <div class="slot off"></div>
                   <div class="slot off"></div>
                 </div>
-
-                <div></div>
               </div>
             </button>
 
@@ -1511,4 +1496,4 @@ body{min-width:320px}
 })();
 </script>
 </body>
-  </html>
+</html>
