@@ -231,7 +231,7 @@ body{min-width:320px}
   gap:16px;
 }
 
-/* STEP：未亮白灰，亮了才變亮黃/亮紅；改長方形 */
+/* STEP：長方形 */
 .stepStack{
   display:flex;
   flex-direction:column;
@@ -352,7 +352,7 @@ body{min-width:320px}
     inset 0 -2px 0 rgba(0,0,0,.22);
 }
 
-/* 上半紅條視窗 */
+/* ===== 顯示區：固定16格 ===== */
 .bigModeZone{
   width:100%;
   max-width:176px;
@@ -361,7 +361,7 @@ body{min-width:320px}
   border-radius:12px;
   background:#0a0a0a;
   cursor:pointer;
-  padding:10px 8px;
+  padding:8px 0;
   display:flex;
   justify-content:center;
   align-items:center;
@@ -377,38 +377,57 @@ body{min-width:320px}
 }
 
 .barsArea{
+  --edge: 7px;      /* 約 1/4 紅條寬 */
+  --sideW: 28px;
+  --centerW: 32px;
+  --gapX: 28px;     /* 約一個紅條寬 */
+  --slotH: 12px;
+  --slotGap: 6px;   /* 約紅條高度的1/2 */
+
   width:100%;
   height:100%;
   display:grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  justify-items:center;
-  align-items:end;
-  column-gap:8px;
+  grid-template-columns:
+    var(--edge)
+    var(--sideW)
+    var(--gapX)
+    var(--centerW)
+    var(--gapX)
+    var(--sideW)
+    var(--edge);
+  align-items:stretch;
+  justify-content:center;
 }
-.barColumn{
-  display:flex;
-  flex-direction:column;
-  gap:6px;
-  align-items:center;
-  justify-content:flex-end;
+
+.barCol{
+  display:grid;
+  grid-template-rows:repeat(16, var(--slotH));
+  row-gap:var(--slotGap);
+  align-content:start;
+  justify-items:stretch;
+  align-items:stretch;
+}
+
+.barCol.side{ width:var(--sideW); }
+.barCol.center{ width:var(--centerW); }
+
+.slot{
+  width:100%;
   height:100%;
-}
-.barColumn.side .barSeg{
-  width:28px;
-  height:15px;
-}
-.barColumn.center .barSeg{
-  width:32px;
-  height:15px;
-}
-.barSeg{
   border-radius:2px;
+}
+.slot.off{
+  background:transparent;
+}
+.slot.red{
   border:1px solid rgba(90,20,10,.72);
   box-shadow: inset 0 -1px 0 rgba(0,0,0,.32);
   background:linear-gradient(180deg,#ff8d8d 0%, #ff5555 40%, #f23333 100%);
 }
-.barSeg.dim{
-  opacity:.32;
+.slot.dim{
+  border:1px solid rgba(70,20,20,.60);
+  background:linear-gradient(180deg,#5e1e25 0%, #45141a 100%);
+  opacity:.95;
 }
 
 /* 下方模式區 */
@@ -636,21 +655,16 @@ body{min-width:320px}
   .bigModeZone{
     max-width:128px;
     height:214px;
-    padding:7px 5px;
+    padding:7px 0;
   }
 
   .barsArea{
-    column-gap:5px;
-  }
-
-  .barColumn.side .barSeg{
-    width:22px;
-    height:11px;
-  }
-
-  .barColumn.center .barSeg{
-    width:25px;
-    height:11px;
+    --edge: 6px;
+    --sideW: 22px;
+    --centerW: 25px;
+    --gapX: 22px;
+    --slotH: 10px;
+    --slotGap: 5px;
   }
 
   .bottomModes{
@@ -725,7 +739,6 @@ body{min-width:320px}
     </div>
   </div>
 
-  <!-- 圖案控制區在上 -->
   <div class="frame col">
     <div class="h2">TACTICAL LAMP CONTROL</div>
     <div class="sub">STEP • BOX • MODE • DISPLAY</div>
@@ -753,48 +766,73 @@ body{min-width:320px}
           <div class="centerZone">
             <button id="bigModeZone" class="bigModeZone" title="Next Mode">
               <div class="barsArea">
-                <!-- 左柱：餘輝直接接在最後紅燈下方，底部少 2 段 -->
-                <div class="barColumn side">
-                  <div class="barSeg dim"></div>
-                  <div class="barSeg"></div>
-                  <div class="barSeg"></div>
-                  <div class="barSeg"></div>
-                  <div class="barSeg"></div>
-                  <div class="barSeg"></div>
-                  <div class="barSeg"></div>
-                  <div class="barSeg"></div>
-                  <div class="barSeg dim"></div>
+                <div></div>
+
+                <!-- 第一柱 -->
+                <div class="barCol side">
+                  <div class="slot off"></div>
+                  <div class="slot off"></div>
+                  <div class="slot off"></div>
+                  <div class="slot off"></div>
+                  <div class="slot dim"></div>
+                  <div class="slot red"></div>
+                  <div class="slot red"></div>
+                  <div class="slot red"></div>
+                  <div class="slot red"></div>
+                  <div class="slot red"></div>
+                  <div class="slot red"></div>
+                  <div class="slot dim"></div>
+                  <div class="slot off"></div>
+                  <div class="slot off"></div>
+                  <div class="slot off"></div>
+                  <div class="slot off"></div>
                 </div>
 
-                <!-- 中柱 -->
-                <div class="barColumn center">
-                  <div class="barSeg dim"></div>
-                  <div class="barSeg"></div>
-                  <div class="barSeg"></div>
-                  <div class="barSeg"></div>
-                  <div class="barSeg"></div>
-                  <div class="barSeg"></div>
-                  <div class="barSeg"></div>
-                  <div class="barSeg"></div>
-                  <div class="barSeg"></div>
-                  <div class="barSeg"></div>
-                  <div class="barSeg"></div>
-                  <div class="barSeg"></div>
-                  <div class="barSeg dim"></div>
+                <div></div>
+
+                <!-- 第二柱 -->
+                <div class="barCol center">
+                  <div class="slot off"></div>
+                  <div class="slot off"></div>
+                  <div class="slot dim"></div>
+                  <div class="slot red"></div>
+                  <div class="slot red"></div>
+                  <div class="slot red"></div>
+                  <div class="slot red"></div>
+                  <div class="slot red"></div>
+                  <div class="slot red"></div>
+                  <div class="slot red"></div>
+                  <div class="slot red"></div>
+                  <div class="slot red"></div>
+                  <div class="slot red"></div>
+                  <div class="slot dim"></div>
+                  <div class="slot off"></div>
+                  <div class="slot off"></div>
                 </div>
 
-                <!-- 右柱：餘輝直接接在最後紅燈下方，底部少 2 段 -->
-                <div class="barColumn side">
-                  <div class="barSeg dim"></div>
-                  <div class="barSeg"></div>
-                  <div class="barSeg"></div>
-                  <div class="barSeg"></div>
-                  <div class="barSeg"></div>
-                  <div class="barSeg"></div>
-                  <div class="barSeg"></div>
-                  <div class="barSeg"></div>
-                  <div class="barSeg dim"></div>
+                <div></div>
+
+                <!-- 第三柱 -->
+                <div class="barCol side">
+                  <div class="slot off"></div>
+                  <div class="slot off"></div>
+                  <div class="slot off"></div>
+                  <div class="slot off"></div>
+                  <div class="slot dim"></div>
+                  <div class="slot red"></div>
+                  <div class="slot red"></div>
+                  <div class="slot red"></div>
+                  <div class="slot red"></div>
+                  <div class="slot red"></div>
+                  <div class="slot red"></div>
+                  <div class="slot dim"></div>
+                  <div class="slot off"></div>
+                  <div class="slot off"></div>
+                  <div class="slot off"></div>
+                  <div class="slot off"></div>
                 </div>
+
+                <div></div>
               </div>
             </button>
 
@@ -826,7 +864,6 @@ body{min-width:320px}
     </div>
   </div>
 
-  <!-- 模式按鈕區在下 -->
   <div class="frame col">
     <div class="modeShell">
       <div class="center"><div class="modeTitleHead">MODE SELECT</div></div>
@@ -985,7 +1022,6 @@ body{min-width:320px}
     nanoMode: null
   };
 
-  // 左右 BOX 獨立命令，後端可再對應
   const boxCmd = {
     L: [
       {on:"BOXL1ON", off:"BOXL1OFF"},
@@ -1012,7 +1048,6 @@ body{min-width:320px}
     }catch(_){}
   }
 
-  // Scanner animation
   const scanbar = $("scanbar");
   let scanPos = 0;
   let scanDir = 1;
@@ -1317,7 +1352,6 @@ body{min-width:320px}
     setConnectedUI(false);
   }
 
-  // MODE SELECT
   document.querySelectorAll(".modeCard").forEach(card=>{
     card.addEventListener("click", async ()=>{
       if (!ui.connected) return;
@@ -1330,7 +1364,6 @@ body{min-width:320px}
     });
   });
 
-  // 中間紅條：下一模式
   $("bigModeZone").addEventListener("click", async ()=>{
     if (!ui.connected) return;
     audioOnce(sBtn);
@@ -1341,7 +1374,6 @@ body{min-width:320px}
     modeStatus.textContent = "MODE: " + ui.mode;
   });
 
-  // STEP
   async function toggleStep(idx){
     if (!ui.connected) return;
     ui.step[idx] = !ui.step[idx];
@@ -1356,7 +1388,6 @@ body{min-width:320px}
   $("step3Btn").addEventListener("click", ()=>toggleStep(2));
   $("step4Btn").addEventListener("click", ()=>toggleStep(3));
 
-  // BOX 左右獨立
   async function toggleBox(side, idx){
     if (!ui.connected) return;
     const arr = side === "L" ? ui.boxL : ui.boxR;
@@ -1375,7 +1406,6 @@ body{min-width:320px}
     });
   });
 
-  // 下方模式燈
   $("nanoNorBtn").addEventListener("click", async ()=>{
     if (!ui.connected) return;
     audioOnce(sBtn);
@@ -1400,7 +1430,6 @@ body{min-width:320px}
     await writeLine(ui.nanoMode === "SPM" ? "MODE=SPM" : "MODE=OFF");
   });
 
-  // GAIN
   btnGainUp.addEventListener("click", async ()=>{
     if (!ui.connected) return;
     audioOnce(sBtn);
@@ -1413,7 +1442,6 @@ body{min-width:320px}
     await writeChar("-");
   });
 
-  // 外部指令
   $("btnStartup").addEventListener("click", async ()=>{
     if (!ui.connected) return;
     audioOnce(sBtn);
