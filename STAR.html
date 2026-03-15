@@ -43,8 +43,20 @@ body{min-width:320px}
   overflow:hidden;
 }
 
-.center{display:flex;justify-content:center;align-items:center;text-align:center}
-.col{display:flex;flex-direction:column;justify-content:center;align-items:center}
+.center{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+
+.col{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+
 .row{
   width:100%;
   display:flex;
@@ -67,6 +79,7 @@ body{min-width:320px}
   letter-spacing:1px;
   font-size:11px;
 }
+
 .appIcon{
   width:30px;
   height:30px;
@@ -85,6 +98,7 @@ body{min-width:320px}
   color:var(--gold);
   font-weight:900;
 }
+
 .sub{
   margin-top:4px;
   font-size:10px;
@@ -92,6 +106,7 @@ body{min-width:320px}
   letter-spacing:1px;
   font-weight:700;
 }
+
 .mini{
   margin-top:4px;
   font-size:9px;
@@ -99,6 +114,7 @@ body{min-width:320px}
   letter-spacing:.8px;
   font-weight:700;
 }
+
 .kv{
   width:100%;
   display:flex;
@@ -106,6 +122,7 @@ body{min-width:320px}
   align-items:center;
   gap:4px;
 }
+
 .kv .line{
   width:100%;
   max-width:900px;
@@ -118,7 +135,11 @@ body{min-width:320px}
   overflow:hidden;
   text-overflow:ellipsis;
 }
-.kv .line.dim{color:var(--dim);font-size:9px}
+
+.kv .line.dim{
+  color:var(--dim);
+  font-size:9px;
+}
 
 .btn{
   border-radius:14px;
@@ -138,6 +159,7 @@ body{min-width:320px}
   position:relative;
   transition:.12s;
 }
+
 .btn:disabled{
   border-color:#2E2E2E;
   color:var(--dim);
@@ -145,6 +167,7 @@ body{min-width:320px}
   filter:saturate(.7);
   box-shadow:none;
 }
+
 .btn.active{
   border:2.2px solid var(--red);
   box-shadow:
@@ -152,6 +175,7 @@ body{min-width:320px}
     0 0 36px rgba(255,0,0,.28),
     0 8px 10px rgba(0,0,0,.8);
 }
+
 .btnSmall{
   width:108px;
   height:38px;
@@ -162,8 +186,10 @@ body{min-width:320px}
   letter-spacing:.8px;
   font-size:12px;
 }
-.icon{width:16px;height:16px;display:block;fill:currentColor;opacity:.95}
-.iconSmall{width:14px;height:14px}
+
+.icon{width:16px;height:16px;display:block;fill:currentColor;opacity:.95;}
+.iconSmall{width:14px;height:14px;}
+
 .label{
   line-height:1.02;
   font-size:12px;
@@ -171,6 +197,7 @@ body{min-width:320px}
   color:var(--gold);
   text-align:center;
 }
+
 .label small{
   display:block;
   margin-top:2px;
@@ -189,6 +216,7 @@ body{min-width:320px}
   margin-top:10px;
   margin-bottom:8px;
 }
+
 .led{
   width:22px;
   height:10px;
@@ -197,16 +225,19 @@ body{min-width:320px}
   background:#140000;
   transition:all .12s ease;
 }
+
 .led.on{
   background:linear-gradient(#FF3A3A,#7A0000);
   border-color:#FF8A8A;
   box-shadow:0 0 16px rgba(255,0,0,.85);
 }
+
 .led.tail1{
   background:linear-gradient(#D02A2A,#4A0000);
   border-color:#C06060;
   box-shadow:0 0 8px rgba(255,0,0,.35);
 }
+
 .led.tail2{
   background:linear-gradient(#5A1010,#240000);
   border-color:#5A2A2A;
@@ -219,6 +250,7 @@ body{min-width:320px}
   justify-content:center;
   overflow:hidden;
 }
+
 .tacticalPanel{
   width:100%;
   max-width:660px;
@@ -238,6 +270,7 @@ body{min-width:320px}
   gap:10px;
   align-items:center;
 }
+
 .stepBtn{
   width:210px;
   height:42px;
@@ -252,6 +285,7 @@ body{min-width:320px}
     inset 0 1px 0 rgba(255,255,255,.35),
     0 0 6px rgba(0,0,0,.12);
 }
+
 .stepBtn.yellow.lit{
   border-color:#8a8100;
   background:linear-gradient(180deg,#fff77e 0%, #f4ec2f 48%, #d7c900 100%);
@@ -260,6 +294,7 @@ body{min-width:320px}
     0 0 28px rgba(255,236,40,.14),
     inset 0 1px 0 rgba(255,255,255,.28);
 }
+
 .stepBtn.red.lit{
   border-color:#7a0000;
   background:linear-gradient(180deg,#ff7878 0%, #ff3030 46%, #cb1010 100%);
@@ -273,7 +308,7 @@ body{min-width:320px}
 .tacticalBody{
   width:100%;
   display:grid;
-  grid-template-columns: 108px 236px 108px;
+  grid-template-columns:108px 236px 108px;
   column-gap:4px;
   align-items:stretch;
   justify-content:center;
@@ -282,8 +317,7 @@ body{min-width:320px}
 
 /* 左右塔 */
 .sideCol{
-  background:
-    linear-gradient(180deg,#8d8d8d 0%, #737373 18%, #666 50%, #5d5d5d 82%, #707070 100%);
+  background:linear-gradient(180deg,#8d8d8d 0%, #737373 18%, #666 50%, #5d5d5d 82%, #707070 100%);
   border:2px solid #4d4d4d;
   border-radius:3px;
   padding:10px 8px;
@@ -314,10 +348,12 @@ body{min-width:320px}
     inset 0 0 12px rgba(255,220,140,.06),
     0 0 8px rgba(0,0,0,.22);
 }
+
 .sideBtn.red{
   border-color:#631010;
   background:linear-gradient(180deg,#8c1b1b 0%, #5f0909 100%);
 }
+
 .sideBtn.lit.yellowGlow{
   border-color:#8a8100;
   background:linear-gradient(180deg,#fff77e 0%, #f3ea2f 48%, #d7c900 100%);
@@ -326,6 +362,7 @@ body{min-width:320px}
     0 0 24px rgba(255,236,40,.10),
     inset 0 0 10px rgba(255,255,255,.12);
 }
+
 .sideBtn.red.lit.redGlow{
   border-color:#7a0000;
   background:linear-gradient(180deg,#ff7878 0%, #ff3131 46%, #ca1010 100%);
@@ -337,8 +374,7 @@ body{min-width:320px}
 
 /* 中央機身 */
 .centerZone{
-  background:
-    linear-gradient(180deg,#6f6f6f 0%, #606060 18%, #565656 50%, #4f4f4f 80%, #636363 100%);
+  background:linear-gradient(180deg,#6f6f6f 0%, #606060 18%, #565656 50%, #4f4f4f 80%, #636363 100%);
   border:2px solid #4b4b4b;
   border-radius:3px;
   padding:10px 8px 12px;
@@ -369,6 +405,7 @@ body{min-width:320px}
     inset 0 0 0 2px rgba(0,0,0,.35),
     inset 0 0 12px rgba(255,255,255,.02);
 }
+
 .bigModeZone.active{
   box-shadow:
     inset 0 0 0 2px rgba(0,0,0,.35),
@@ -378,11 +415,11 @@ body{min-width:320px}
 
 .barsArea{
   --sideW: 27px;
-  --centerW: 31px;
-  --edgePad: 7px;    /* 約 1/4 紅條寬 */
-  --gapX: 28px;      /* 約一個紅條寬 */
+  --midW: 31px;
+  --edgePad: 7px;
+  --gapX: 28px;
   --slotH: 11px;
-  --slotGap: 5px;    /* 約紅條高度的1/2 */
+  --slotGap: 5px;
 
   width:100%;
   height:100%;
@@ -401,22 +438,26 @@ body{min-width:320px}
   justify-items:stretch;
   align-items:stretch;
 }
+
 .barCol.side{ width:var(--sideW); }
-.barCol.center{ width:var(--centerW); }
+.barCol.mid{ width:var(--midW); }
 
 .slot{
   width:100%;
   height:100%;
   border-radius:2px;
 }
+
 .slot.off{
   background:transparent;
 }
+
 .slot.red{
   border:1px solid rgba(90,20,10,.72);
   box-shadow: inset 0 -1px 0 rgba(0,0,0,.32);
   background:linear-gradient(180deg,#ff8d8d 0%, #ff5555 40%, #f23333 100%);
 }
+
 .slot.dim{
   border:1px solid rgba(70,20,20,.60);
   background:linear-gradient(180deg,#5e1e25 0%, #45141a 100%);
@@ -428,16 +469,18 @@ body{min-width:320px}
   width:100%;
   max-width:176px;
   display:grid;
-  grid-template-columns: 42px 1fr;
+  grid-template-columns:42px 1fr;
   gap:15px;
   align-items:stretch;
 }
+
 .leftIndicators{
   display:flex;
   flex-direction:column;
   gap:6px;
   justify-content:flex-end;
 }
+
 .smallIndicator{
   width:40px;
   height:50px;
@@ -448,6 +491,7 @@ body{min-width:320px}
     inset 0 0 8px rgba(255,255,255,.12),
     0 0 4px rgba(0,0,0,.08);
 }
+
 .smallIndicator.active{
   border-color:#111;
   background:linear-gradient(180deg,#fff68a 0%, #f2eb2d 45%, #d7c900 100%);
@@ -462,6 +506,7 @@ body{min-width:320px}
   flex-direction:column;
   gap:6px;
 }
+
 .modeLamp{
   width:100%;
   height:50px;
@@ -476,18 +521,21 @@ body{min-width:320px}
   cursor:pointer;
   box-shadow: inset 0 0 8px rgba(255,255,255,.10);
 }
+
 .modeLamp.activeNor{
   border-color:#111;
   background:linear-gradient(180deg,#6dffd0 0%, #27eba0 48%, #14c47f 100%);
   color:#002b16;
   box-shadow:0 0 14px rgba(36,231,154,.18);
 }
+
 .modeLamp.activeAuto{
   border-color:#111;
   background:linear-gradient(180deg,#fff68a 0%, #f3eb31 48%, #d7c900 100%);
   color:#1f1a00;
   box-shadow:0 0 14px rgba(255,235,40,.18);
 }
+
 .modeLamp.activeSpm{
   border-color:#111;
   background:linear-gradient(180deg,#ff7b7b 0%, #ff3434 45%, #cf1111 100%);
@@ -504,12 +552,14 @@ body{min-width:320px}
   padding:14px 12px 16px;
   box-shadow:var(--shadow1), var(--shadow2);
 }
+
 .modeTitleHead{
   font-size:22px;
   letter-spacing:3px;
   color:var(--gold);
   font-weight:900;
 }
+
 .modeSubHead{
   margin-top:8px;
   font-size:16px;
@@ -517,12 +567,14 @@ body{min-width:320px}
   color:var(--gold2);
   font-weight:800;
 }
+
 .modeGrid{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:12px;
   margin-top:12px;
 }
+
 .modeCard{
   min-height:116px;
   border-radius:22px;
@@ -536,14 +588,17 @@ body{min-width:320px}
   cursor:pointer;
   padding:8px;
 }
+
 .modeCard.active{
   border:2.4px solid var(--red);
   box-shadow:0 0 18px rgba(255,0,0,.45), 0 0 28px rgba(255,0,0,.16);
 }
+
 .modeCard.big{
   grid-column:1 / span 2;
   min-height:118px;
 }
+
 .modeCardTitle{
   font-size:18px;
   font-weight:900;
@@ -551,6 +606,7 @@ body{min-width:320px}
   letter-spacing:1px;
   text-align:center;
 }
+
 .modeCardSub{
   margin-top:4px;
   font-size:10px;
@@ -558,6 +614,7 @@ body{min-width:320px}
   color:var(--gold2);
   letter-spacing:1px;
 }
+
 .modeIcon{
   width:18px;
   height:18px;
@@ -572,13 +629,16 @@ body{min-width:320px}
   grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
   gap:10px;
 }
+
 .toolBtn{
   height:48px;
   font-size:12px;
 }
+
 .toolBtn.redTone{border-color:#6A0000;color:#ff9a9a}
 .toolBtn.greenTone{border-color:#1d5b1d;color:#a7ffb1}
 .toolBtn.yellowTone{color:var(--gold)}
+
 .toolInputRow{
   width:100%;
   display:flex;
@@ -586,6 +646,7 @@ body{min-width:320px}
   flex-wrap:wrap;
   justify-content:center;
 }
+
 .toolInput{
   width:min(320px,100%);
   height:44px;
@@ -599,6 +660,7 @@ body{min-width:320px}
   letter-spacing:.5px;
   outline:none;
 }
+
 .footer{
   width:100%;
   text-align:center;
@@ -629,7 +691,7 @@ body{min-width:320px}
   }
 
   .tacticalBody{
-    grid-template-columns: 72px 148px 72px;
+    grid-template-columns:72px 148px 72px;
     column-gap:2px;
     max-width:296px;
   }
@@ -653,7 +715,7 @@ body{min-width:320px}
 
   .barsArea{
     --sideW: 21px;
-    --centerW: 24px;
+    --midW: 24px;
     --edgePad: 5px;
     --gapX: 21px;
     --slotH: 9px;
@@ -662,7 +724,7 @@ body{min-width:320px}
 
   .bottomModes{
     max-width:128px;
-    grid-template-columns: 34px 1fr;
+    grid-template-columns:34px 1fr;
     gap:12px;
   }
 
@@ -759,7 +821,6 @@ body{min-width:320px}
           <div class="centerZone">
             <button id="bigModeZone" class="bigModeZone" title="Next Mode">
               <div class="barsArea">
-                <!-- 第一柱 -->
                 <div class="barCol side">
                   <div class="slot off"></div>
                   <div class="slot off"></div>
@@ -779,8 +840,7 @@ body{min-width:320px}
                   <div class="slot off"></div>
                 </div>
 
-                <!-- 第二柱 -->
-                <div class="barCol center">
+                <div class="barCol mid">
                   <div class="slot off"></div>
                   <div class="slot off"></div>
                   <div class="slot dim"></div>
@@ -799,7 +859,6 @@ body{min-width:320px}
                   <div class="slot off"></div>
                 </div>
 
-                <!-- 第三柱 -->
                 <div class="barCol side">
                   <div class="slot off"></div>
                   <div class="slot off"></div>
@@ -1098,7 +1157,7 @@ body{min-width:320px}
 
   async function writeLine(line){
     if (!ui.connected || !rxChar) return;
-    const text = line.endsWith("\n") ? line : line + "\n";
+    const text = line.endsWith("\\n") ? line : line + "\\n";
     const data = new TextEncoder().encode(text);
     try{
       if (typeof rxChar.writeValueWithoutResponse === "function"){
@@ -1112,13 +1171,13 @@ body{min-width:320px}
   }
 
   function parseNotify(text){
-    const m = text.match(/MODE\s*=\s*(\d+)/i);
-    const g = text.match(/G\s*=\s*(\d+)/i);
-    const nano = text.match(/NANO\s*=\s*(NOR|AUTO|SPM|OFF)/i);
-    const step = text.match(/STEP\s*=\s*([01]{4})/i);
-    const boxL = text.match(/BOXL\s*=\s*([01]{5})/i);
-    const boxR = text.match(/BOXR\s*=\s*([01]{5})/i);
-    const boxMirror = text.match(/BOX\s*=\s*([01]{5})/i);
+    const m = text.match(/MODE\\s*=\\s*(\\d+)/i);
+    const g = text.match(/G\\s*=\\s*(\\d+)/i);
+    const nano = text.match(/NANO\\s*=\\s*(NOR|AUTO|SPM|OFF)/i);
+    const step = text.match(/STEP\\s*=\\s*([01]{4})/i);
+    const boxL = text.match(/BOXL\\s*=\\s*([01]{5})/i);
+    const boxR = text.match(/BOXR\\s*=\\s*([01]{5})/i);
+    const boxMirror = text.match(/BOX\\s*=\\s*([01]{5})/i);
 
     if (m){
       ui.mode = parseInt(m[1],10);
@@ -1269,7 +1328,7 @@ body{min-width:320px}
   async function doScanPickDevice(){
     if (!navigator.bluetooth){
       bleText.textContent = "BLE: NOT SUPPORTED (Use Chrome/Edge)";
-      alert("This browser does not support Web Bluetooth。\n請使用 Android Chrome / PC Chrome / Edge。");
+      alert("This browser does not support Web Bluetooth。\\n請使用 Android Chrome / PC Chrome / Edge。");
       return;
     }
 
@@ -1312,7 +1371,7 @@ body{min-width:320px}
       setConnectedUI(true);
       audioOnce(sConn);
     } catch(e){
-      alert("CONNECT FAILED\nPlease re-SCAN and select the correct device.\n\n" + (e?.message || e));
+      alert("CONNECT FAILED\\nPlease re-SCAN and select the correct device.\\n\\n" + (e?.message || e));
       onDisconnected();
     }
   }
