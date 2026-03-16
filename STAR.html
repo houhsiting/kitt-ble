@@ -1070,22 +1070,10 @@ body{min-width:320px}
     nanoMode: null
   };
 
-  const boxCmd = {
-    L: [
-      {on:"BOXL1ON", off:"BOXL1OFF"},
-      {on:"BOXL2ON", off:"BOXL2OFF"},
-      {on:"BOXL3ON", off:"BOXL3OFF"},
-      {on:"BOXL4ON", off:"BOXL4OFF"},
-      {on:"BOXL5ON", off:"BOXL5OFF"},
-    ],
-    R: [
-      {on:"BOXR1ON", off:"BOXR1OFF"},
-      {on:"BOXR2ON", off:"BOXR2OFF"},
-      {on:"BOXR3ON", off:"BOXR3OFF"},
-      {on:"BOXR4ON", off:"BOXR4OFF"},
-      {on:"BOXR5ON", off:"BOXR5OFF"},
-    ]
-  };
+  function boxCommand(side, idx, isOn){
+    const n = idx + 1;
+    return `BOX${n}${side}${isOn ? "ON" : "OFF"}`;
+  }
 
   function audioOnce(a){
     try{
@@ -1175,13 +1163,14 @@ body{min-width:320px}
   }
 
   function parseNotify(text){
-    const m = text.match(/MODE\s*=\s*(\d+)/i);
-    const g = text.match(/G\s*=\s*(\d+)/i);
-    const nano = text.match(/NANO\s*=\s*(NOR|AUTO|SPM|OFF)/i);
-    const step = text.match(/STEP\s*=\s*([01]{4})/i);
-    const boxL = text.match(/BOXL\s*=\s*([01]{5})/i);
-    const boxR = text.match(/BOXR\s*=\s*([01]{5})/i);
-    const boxMirror = text.match(/BOX\s*=\s*([01]{5})/i);
+    const raw = String(text || "").trim();
+    const stateText = raw.startsWith("STATE:") ? raw.slice(6) : raw;
+
+    const m = stateText.match(/\bMODE\s*=\s*(\d+)/i);
+    const g = stateText.match(/\bG\s*=\s*(\d+)/i);
+    const nano = stateText.match(/\bNANO\s*=\s*(NOR|AUTO|SPM|OFF)\b/i);
+    const step = stateText.match(/\bSTEP\s*=\s*([01]{4})\b/i);
+    const box = stateText.match(/\bBOX\s*=\s*([01]{10})\b/i);
 
     if (m){
       ui.mode = parseInt(m[1],10);
@@ -1205,20 +1194,10 @@ body{min-width:320px}
       renderSteps();
     }
 
-    if (boxL){
-      ui.boxL = boxL[1].split("").map(ch => ch === "1");
-      renderBoxes();
-    }
-
-    if (boxR){
-      ui.boxR = boxR[1].split("").map(ch => ch === "1");
-      renderBoxes();
-    }
-
-    if (boxMirror && !boxL && !boxR){
-      const arr = boxMirror[1].split("").map(ch => ch === "1");
-      ui.boxL = [...arr];
-      ui.boxR = [...arr];
+    if (box){
+      const bits = box[1].split("").map(ch => ch === "1");
+      ui.boxL = [bits[0], bits[2], bits[4], bits[6], bits[8]];
+      ui.boxR = [bits[1], bits[3], bits[5], bits[7], bits[9]];
       renderBoxes();
     }
   }
@@ -1241,8 +1220,12 @@ body{min-width:320px}
       const side = btn.dataset.side;
       const isOn = side === "L" ? ui.boxL[idx] : ui.boxR[idx];
       btn.classList.toggle("lit", isOn);
-      if (btn.classList.contains("red")) btn.classList.toggle("redGlow", isOn);
-      else btn.classList.toggle("yellowGlow", isOn);
+
+      if (btn.classList.contains("red")) {
+        btn.classList.toggle("redGlow", isOn);
+      } else {
+        btn.classList.toggle("yellowGlow", isOn);
+      }
     });
   }
 
@@ -1310,8 +1293,9 @@ body{min-width:320px}
     scannerState.style.color = isConn ? "var(--red)" : "var(--dim)";
     scanText.textContent = isConn ? "CONNECTED — SCAN SEQUENCE RUNNING" : "CONNECT TO ENABLE SCAN SEQUENCE";
 
-    if (isConn) startScanner();
-    else {
+    if (isConn) {
+      startScanner();
+    } else {
       stopScanner();
       ui.mode = null;
       ui.gain = null;
@@ -1416,8 +1400,11 @@ body{min-width:320px}
     if (!ui.connected) return;
     audioOnce(sBtn);
     await writeChar("m");
-    if (typeof ui.mode === "number") ui.mode = (ui.mode % 10) + 1;
-    else ui.mode = 1;
+    if (typeof ui.mode === "number") {
+      ui.mode = (ui.mode % 10) + 1;
+    } else {
+      ui.mode = 1;
+    }
     renderModeCards();
     modeStatus.textContent = "MODE: " + ui.mode;
   });
@@ -1442,7 +1429,8 @@ body{min-width:320px}
     arr[idx] = !arr[idx];
     renderBoxes();
     audioOnce(sBtn);
-    const cmd = arr[idx] ? boxCmd[side][idx].on : boxCmd[side][idx].off;
+
+    const cmd = boxCommand(side, idx, arr[idx]);
     await writeLine(cmd);
   }
 
