@@ -275,7 +275,7 @@ body{min-width:320px}
   width:210px;
   height:42px;
   border-radius:6px;
-  font-size:13px;
+  font-size:15px;
   font-weight:900;
   letter-spacing:.4px;
   border:2px solid #7b7b7b;
@@ -340,7 +340,7 @@ body{min-width:320px}
   background:linear-gradient(180deg,#a17613 0%, #7f5907 100%);
   color:#111;
   font-weight:900;
-  font-size:11px;
+  font-size:13px;
   line-height:1.02;
   text-align:center;
   cursor:pointer;
@@ -372,12 +372,12 @@ body{min-width:320px}
     inset 0 0 10px rgba(255,255,255,.08);
 }
 
-/* 中央機身 */
+/* 中央機身：左右灰色區縮窄 */
 .centerZone{
   background:linear-gradient(180deg,#6f6f6f 0%, #606060 18%, #565656 50%, #4f4f4f 80%, #636363 100%);
   border:2px solid #4b4b4b;
   border-radius:3px;
-  padding:10px 8px 12px;
+  padding:10px 4px 12px;
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -388,10 +388,10 @@ body{min-width:320px}
     inset 0 -2px 0 rgba(0,0,0,.22);
 }
 
-/* ===== 顯示區：固定16格，完全照你描述 ===== */
+/* ===== 顯示區 ===== */
 .bigModeZone{
   width:100%;
-  max-width:176px;
+  max-width:198px;
   height:270px;
   border:2px solid #2b2b2b;
   border-radius:12px;
@@ -464,10 +464,10 @@ body{min-width:320px}
   opacity:.95;
 }
 
-/* 下方模式區 */
+/* 下方模式區：放大文字 */
 .bottomModes{
   width:100%;
-  max-width:176px;
+  max-width:198px;
   display:grid;
   grid-template-columns:42px 1fr;
   gap:15px;
@@ -515,7 +515,7 @@ body{min-width:320px}
   background:linear-gradient(180deg,#ffffff 0%, #f0f0f0 58%, #dddddd 100%);
   color:#111;
   font-weight:900;
-  font-size:11px;
+  font-size:13px;
   line-height:1.02;
   text-align:center;
   cursor:pointer;
@@ -687,13 +687,13 @@ body{min-width:320px}
   .stepBtn{
     width:162px;
     height:36px;
-    font-size:12px;
+    font-size:13px;
   }
 
   .tacticalBody{
-    grid-template-columns:72px 148px 72px;
+    grid-template-columns:72px 152px 72px;
     column-gap:2px;
-    max-width:296px;
+    max-width:300px;
   }
 
   .sideCol{
@@ -704,11 +704,15 @@ body{min-width:320px}
   .sideBtn{
     width:54px;
     height:46px;
-    font-size:9px;
+    font-size:10px;
+  }
+
+  .centerZone{
+    padding:8px 3px 10px;
   }
 
   .bigModeZone{
-    max-width:128px;
+    max-width:140px;
     height:214px;
     padding:7px 4px;
   }
@@ -723,7 +727,7 @@ body{min-width:320px}
   }
 
   .bottomModes{
-    max-width:128px;
+    max-width:140px;
     grid-template-columns:34px 1fr;
     gap:12px;
   }
@@ -735,7 +739,7 @@ body{min-width:320px}
 
   .modeLamp{
     height:40px;
-    font-size:10px;
+    font-size:11px;
   }
 }
 </style>
@@ -1157,7 +1161,7 @@ body{min-width:320px}
 
   async function writeLine(line){
     if (!ui.connected || !rxChar) return;
-    const text = line.endsWith("\\n") ? line : line + "\\n";
+    const text = line.endsWith("\n") ? line : line + "\n";
     const data = new TextEncoder().encode(text);
     try{
       if (typeof rxChar.writeValueWithoutResponse === "function"){
@@ -1171,13 +1175,13 @@ body{min-width:320px}
   }
 
   function parseNotify(text){
-    const m = text.match(/MODE\\s*=\\s*(\\d+)/i);
-    const g = text.match(/G\\s*=\\s*(\\d+)/i);
-    const nano = text.match(/NANO\\s*=\\s*(NOR|AUTO|SPM|OFF)/i);
-    const step = text.match(/STEP\\s*=\\s*([01]{4})/i);
-    const boxL = text.match(/BOXL\\s*=\\s*([01]{5})/i);
-    const boxR = text.match(/BOXR\\s*=\\s*([01]{5})/i);
-    const boxMirror = text.match(/BOX\\s*=\\s*([01]{5})/i);
+    const m = text.match(/MODE\s*=\s*(\d+)/i);
+    const g = text.match(/G\s*=\s*(\d+)/i);
+    const nano = text.match(/NANO\s*=\s*(NOR|AUTO|SPM|OFF)/i);
+    const step = text.match(/STEP\s*=\s*([01]{4})/i);
+    const boxL = text.match(/BOXL\s*=\s*([01]{5})/i);
+    const boxR = text.match(/BOXR\s*=\s*([01]{5})/i);
+    const boxMirror = text.match(/BOX\s*=\s*([01]{5})/i);
 
     if (m){
       ui.mode = parseInt(m[1],10);
@@ -1328,7 +1332,7 @@ body{min-width:320px}
   async function doScanPickDevice(){
     if (!navigator.bluetooth){
       bleText.textContent = "BLE: NOT SUPPORTED (Use Chrome/Edge)";
-      alert("This browser does not support Web Bluetooth。\\n請使用 Android Chrome / PC Chrome / Edge。");
+      alert("This browser does not support Web Bluetooth。\n請使用 Android Chrome / PC Chrome / Edge。");
       return;
     }
 
@@ -1371,7 +1375,7 @@ body{min-width:320px}
       setConnectedUI(true);
       audioOnce(sConn);
     } catch(e){
-      alert("CONNECT FAILED\\nPlease re-SCAN and select the correct device.\\n\\n" + (e?.message || e));
+      alert("CONNECT FAILED\nPlease re-SCAN and select the correct device.\n\n" + (e?.message || e));
       onDisconnected();
     }
   }
