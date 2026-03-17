@@ -460,6 +460,11 @@ body{min-width:320px}
   background:linear-gradient(180deg,#5e1e25 0%, #45141a 100%);
 }
 
+.slot.dim-blue{
+  border-color:rgba(20,35,90,.60);
+  background:linear-gradient(180deg,#1c2f68 0%, #14224a 100%);
+}
+
 .slot.red{
   border-color:rgba(90,20,10,.72);
   background:linear-gradient(180deg,#ff8d8d 0%, #ff5555 40%, #f23333 100%);
@@ -866,7 +871,6 @@ body{min-width:320px}
             <button id="bigModeZone" class="bigModeZone" title="Next Display Mode">
               <div class="barsArea">
                 <div class="barCol side" id="vuColL">
-                  ${''}
                   <div class="slot off"></div><div class="slot off"></div><div class="slot off"></div><div class="slot off"></div>
                   <div class="slot off"></div><div class="slot off"></div><div class="slot off"></div><div class="slot off"></div>
                   <div class="slot off"></div><div class="slot off"></div><div class="slot off"></div><div class="slot off"></div>
@@ -1258,14 +1262,20 @@ body{min-width:320px}
     colEl.children[idx].className = "slot " + cls;
   }
 
-  function paintSymmetricSingleColor(colEl, level, colorClass, dimClass = "dim-red"){
+  function clearColumn(colEl){
+    for (let i = 0; i < 16; i++){
+      colEl.children[i].className = "slot off";
+    }
+  }
+
+  function paintKittColumn(colEl, level, colorClass, dimClass = "dim-red"){
+    clearColumn(colEl);
+
     const lv = Math.max(0, Math.min(16, Number(level) || 0));
-    for (let i = 0; i < 16; i++) colEl.children[i].className = "slot off";
     if (lv <= 0) return;
 
     const centerTop = 7;
     const centerBottom = 8;
-
     const pairs = Math.floor(lv / 2);
     const hasExtra = lv % 2;
 
@@ -1284,14 +1294,99 @@ body{min-width:320px}
     const topMost = slots.findIndex(el => !el.classList.contains("off"));
     let bottomMost = -1;
     for (let i = 15; i >= 0; i--){
-      if (!slots[i].classList.contains("off")) {
+      if (!slots[i].classList.contains("off")){
         bottomMost = i;
         break;
       }
     }
 
-    if (topMost > 0 && slots[topMost - 1].classList.contains("off")) setSlot(colEl, topMost - 1, dimClass);
-    if (bottomMost >= 0 && bottomMost < 15 && slots[bottomMost + 1].classList.contains("off")) setSlot(colEl, bottomMost + 1, dimClass);
+    if (topMost > 0 && slots[topMost - 1].classList.contains("off")){
+      setSlot(colEl, topMost - 1, dimClass);
+    }
+    if (bottomMost >= 0 && bottomMost < 15 && slots[bottomMost + 1].classList.contains("off")){
+      setSlot(colEl, bottomMost + 1, dimClass);
+    }
+  }
+
+  function paintKarrColumn(colEl, level, colorClass, dimClass = "dim-red"){
+    clearColumn(colEl);
+
+    const lv = Math.max(0, Math.min(16, Number(level) || 0));
+    if (lv <= 0) return;
+
+    const half = Math.ceil(lv / 2);
+
+    for (let i = 0; i < half; i++){
+      const idx = 7 - i;
+      if (idx >= 0) setSlot(colEl, idx, colorClass);
+    }
+
+    for (let i = 0; i < half; i++){
+      const idx = 8 + i;
+      if (idx < 16) setSlot(colEl, idx, colorClass);
+    }
+
+    if (lv >= 6){
+      const topDim = 7 - half;
+      const botDim = 8 + half;
+      if (topDim >= 0) setSlot(colEl, topDim, dimClass);
+      if (botDim < 16) setSlot(colEl, botDim, dimClass);
+    } else {
+      const topMost = 7 - (half - 1);
+      const botMost = 8 + (half - 1);
+      if (topMost > 0) setSlot(colEl, topMost - 1, dimClass);
+      if (botMost < 15) setSlot(colEl, botMost + 1, dimClass);
+    }
+  }
+
+  function paintKarrFlippedColumn(colEl, level, colorClass, dimClass = "dim-red", flip=false){
+    clearColumn(colEl);
+
+    const lv = Math.max(0, Math.min(16, Number(level) || 0));
+    if (lv <= 0) return;
+
+    const pairs = Math.floor(lv / 2);
+    const hasExtra = lv % 2;
+
+    if (!flip){
+      for (let p = 0; p < pairs; p++){
+        const up = 7 - p;
+        const dn = 8 + p;
+        setSlot(colEl, up, colorClass);
+        setSlot(colEl, dn, colorClass);
+      }
+      if (hasExtra){
+        setSlot(colEl, 7 - pairs, colorClass);
+      }
+    } else {
+      for (let p = 0; p < pairs; p++){
+        const up = p;
+        const dn = 15 - p;
+        setSlot(colEl, up, colorClass);
+        setSlot(colEl, dn, colorClass);
+      }
+      if (hasExtra){
+        const idx = pairs;
+        if (idx >= 0 && idx < 16) setSlot(colEl, idx, colorClass);
+      }
+    }
+
+    const slots = [...colEl.children];
+    const topMost = slots.findIndex(el => !el.classList.contains("off"));
+    let bottomMost = -1;
+    for (let i = 15; i >= 0; i--){
+      if (!slots[i].classList.contains("off")){
+        bottomMost = i;
+        break;
+      }
+    }
+
+    if (topMost > 0 && slots[topMost - 1].classList.contains("off")){
+      setSlot(colEl, topMost - 1, dimClass);
+    }
+    if (bottomMost >= 0 && bottomMost < 15 && slots[bottomMost + 1].classList.contains("off")){
+      setSlot(colEl, bottomMost + 1, dimClass);
+    }
   }
 
   function paintMode8Flame(colEl, level){
@@ -1342,39 +1437,37 @@ body{min-width:320px}
   }
 
   function renderMode1(m){
-    const L = clamp16(m - 4);
-    const C = clamp16(m);
-    const R = clamp16(m - 4);
-    paintSymmetricSingleColor($("vuColL"), L, "red");
-    paintSymmetricSingleColor($("vuColM"), C, "red");
-    paintSymmetricSingleColor($("vuColR"), R, "red");
+    const side = clamp16(m - 4);
+    const mid  = clamp16(m);
+    paintKittColumn($("vuColL"), side, "red", "dim-red");
+    paintKittColumn($("vuColM"), mid,  "red", "dim-red");
+    paintKittColumn($("vuColR"), side, "red", "dim-red");
   }
 
   function renderMode2(m){
-    const L = clamp16(m - 4);
-    const C = clamp16(m);
-    const R = clamp16(m - 4);
-    paintSymmetricSingleColor($("vuColL"), L, "yellow");
-    paintSymmetricSingleColor($("vuColM"), C, "yellow");
-    paintSymmetricSingleColor($("vuColR"), R, "yellow");
+    const side = clamp16(m - 4);
+    const mid  = clamp16(m);
+    paintKarrFlippedColumn($("vuColL"), side, "yellow", "dim-red", false);
+    paintKarrColumn       ($("vuColM"), mid,  "yellow", "dim-red");
+    paintKarrFlippedColumn($("vuColR"), side, "yellow", "dim-red", true);
   }
 
   function renderMode3(m){
     const L = clamp16(m - 3);
     const C = clamp16(m);
     const R = clamp16(m - 3);
-    paintSymmetricSingleColor($("vuColL"), L, "red");
-    paintSymmetricSingleColor($("vuColM"), C, "whitehot");
-    paintSymmetricSingleColor($("vuColR"), R, "red");
+    paintKittColumn($("vuColL"), L, "red", "dim-red");
+    paintKittColumn($("vuColM"), C, "whitehot", "dim-red");
+    paintKittColumn($("vuColR"), R, "red", "dim-red");
   }
 
   function renderMode4(m){
     const L = clamp16(m - 3);
     const C = clamp16(m);
     const R = clamp16(m - 3);
-    paintSymmetricSingleColor($("vuColL"), L, "yellow");
-    paintSymmetricSingleColor($("vuColM"), C, "whitehot");
-    paintSymmetricSingleColor($("vuColR"), R, "yellow");
+    paintKittColumn($("vuColL"), L, "yellow", "dim-red");
+    paintKittColumn($("vuColM"), C, "whitehot", "dim-red");
+    paintKittColumn($("vuColR"), R, "yellow", "dim-red");
   }
 
   function renderMode5(m){
@@ -1384,31 +1477,30 @@ body{min-width:320px}
 
     const jitter = (base, seed) => {
       if (base <= 0) return 0;
-      const n = ((Date.now() >> 5) + seed) % 3; // 0,1,2
+      const n = ((Date.now() >> 5) + seed) % 3;
       return clamp16(base - (n === 0 ? 1 : 0));
     };
 
-    paintSymmetricSingleColor($("vuColL"), jitter(L,1), "red");
-    paintSymmetricSingleColor($("vuColM"), jitter(C,2), "red");
-    paintSymmetricSingleColor($("vuColR"), jitter(R,3), "red");
+    paintKittColumn($("vuColL"), jitter(L,1), "red", "dim-red");
+    paintKittColumn($("vuColM"), jitter(C,2), "red", "dim-red");
+    paintKittColumn($("vuColR"), jitter(R,3), "red", "dim-red");
   }
 
   function renderMode6(m){
-    const L = clamp16(m - 4);
-    const C = clamp16(m);
-    const R = clamp16(m - 4);
-    paintSymmetricSingleColor($("vuColL"), L, "blue");
-    paintSymmetricSingleColor($("vuColM"), C, "blue");
-    paintSymmetricSingleColor($("vuColR"), R, "blue");
+    const side = clamp16(m - 4);
+    const mid  = clamp16(m);
+    paintKittColumn($("vuColL"), side, "blue", "dim-blue");
+    paintKittColumn($("vuColM"), mid,  "blue", "dim-blue");
+    paintKittColumn($("vuColR"), side, "blue", "dim-blue");
   }
 
   function renderMode7(m){
     const L = clamp16(m - 4);
     const C = clamp16(m);
     const R = clamp16(m - 4);
-    paintSymmetricSingleColor($("vuColL"), L, "green");
-    paintSymmetricSingleColor($("vuColM"), C, "green");
-    paintSymmetricSingleColor($("vuColR"), R, "green");
+    paintKittColumn($("vuColL"), L, "green", "dim-red");
+    paintKittColumn($("vuColM"), C, "green", "dim-red");
+    paintKittColumn($("vuColR"), R, "green", "dim-red");
   }
 
   function renderMode8(vl, vm, vr){
@@ -1418,18 +1510,18 @@ body{min-width:320px}
   }
 
   function renderMode9(vl, vm, vr){
-    paintSymmetricSingleColor($("vuColL"), clamp16(vl), "blue");
-    paintSymmetricSingleColor($("vuColM"), clamp16(vm), "green");
-    paintSymmetricSingleColor($("vuColR"), clamp16(vr), "yellow");
+    paintKittColumn($("vuColL"), clamp16(vl), "blue", "dim-blue");
+    paintKittColumn($("vuColM"), clamp16(vm), "green", "dim-red");
+    paintKittColumn($("vuColR"), clamp16(vr), "yellow", "dim-red");
   }
 
   function renderMode10(vl, vm, vr){
     const L = clamp16(vl);
     const M = clamp16(vm);
     const R = clamp16(vr);
-    paintSymmetricSingleColor($("vuColL"), L, "cyan");
-    paintSymmetricSingleColor($("vuColM"), M, "whitehot");
-    paintSymmetricSingleColor($("vuColR"), R, "cyan");
+    paintKittColumn($("vuColL"), L, "cyan", "dim-blue");
+    paintKittColumn($("vuColM"), M, "whitehot", "dim-red");
+    paintKittColumn($("vuColR"), R, "cyan", "dim-blue");
   }
 
   function renderDisplayByMode(mode, vuL, vuM, vuR){
