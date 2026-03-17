@@ -446,22 +446,60 @@ body{min-width:320px}
   width:100%;
   height:100%;
   border-radius:2px;
+  border:1px solid transparent;
 }
 
 .slot.off{
   background:transparent;
+  border-color:transparent;
+  box-shadow:none;
+}
+
+.slot.dim-red{
+  border-color:rgba(70,20,20,.60);
+  background:linear-gradient(180deg,#5e1e25 0%, #45141a 100%);
 }
 
 .slot.red{
-  border:1px solid rgba(90,20,10,.72);
-  box-shadow: inset 0 -1px 0 rgba(0,0,0,.32);
+  border-color:rgba(90,20,10,.72);
   background:linear-gradient(180deg,#ff8d8d 0%, #ff5555 40%, #f23333 100%);
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(255,70,70,.18);
 }
 
-.slot.dim{
-  border:1px solid rgba(70,20,20,.60);
-  background:linear-gradient(180deg,#5e1e25 0%, #45141a 100%);
-  opacity:.95;
+.slot.orange{
+  border-color:rgba(120,55,10,.72);
+  background:linear-gradient(180deg,#ffbf73 0%, #ff9538 42%, #ea6d08 100%);
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(255,140,50,.18);
+}
+
+.slot.yellow{
+  border-color:rgba(140,120,10,.72);
+  background:linear-gradient(180deg,#fff79b 0%, #ffe75a 42%, #d6b800 100%);
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(255,235,80,.18);
+}
+
+.slot.green{
+  border-color:rgba(30,110,25,.72);
+  background:linear-gradient(180deg,#97ff9f 0%, #4aea52 42%, #18b821 100%);
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(70,255,90,.16);
+}
+
+.slot.blue{
+  border-color:rgba(25,65,130,.72);
+  background:linear-gradient(180deg,#9fd1ff 0%, #55a0ff 42%, #1f61db 100%);
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(90,160,255,.18);
+}
+
+.slot.cyan{
+  border-color:rgba(20,120,130,.72);
+  background:linear-gradient(180deg,#9bffff 0%, #54e8ff 42%, #16a9d2 100%);
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(80,240,255,.16);
+}
+
+.slot.whitehot{
+  border-color:rgba(190,190,190,.72);
+  background:linear-gradient(180deg,#ffffff 0%, #ffe8e8 32%, #ff8d8d 100%);
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,.26), 0 0 5px rgba(255,255,255,.14);
 }
 
 /* 下方模式區 */
@@ -828,23 +866,24 @@ body{min-width:320px}
             <button id="bigModeZone" class="bigModeZone" title="Next Display Mode">
               <div class="barsArea">
                 <div class="barCol side" id="vuColL">
+                  ${''}
                   <div class="slot off"></div><div class="slot off"></div><div class="slot off"></div><div class="slot off"></div>
-                  <div class="slot dim"></div><div class="slot red"></div><div class="slot red"></div><div class="slot red"></div>
-                  <div class="slot red"></div><div class="slot red"></div><div class="slot red"></div><div class="slot dim"></div>
+                  <div class="slot off"></div><div class="slot off"></div><div class="slot off"></div><div class="slot off"></div>
+                  <div class="slot off"></div><div class="slot off"></div><div class="slot off"></div><div class="slot off"></div>
                   <div class="slot off"></div><div class="slot off"></div><div class="slot off"></div><div class="slot off"></div>
                 </div>
 
                 <div class="barCol mid" id="vuColM">
-                  <div class="slot off"></div><div class="slot off"></div><div class="slot dim"></div><div class="slot red"></div>
-                  <div class="slot red"></div><div class="slot red"></div><div class="slot red"></div><div class="slot red"></div>
-                  <div class="slot red"></div><div class="slot red"></div><div class="slot red"></div><div class="slot red"></div>
-                  <div class="slot red"></div><div class="slot dim"></div><div class="slot off"></div><div class="slot off"></div>
+                  <div class="slot off"></div><div class="slot off"></div><div class="slot off"></div><div class="slot off"></div>
+                  <div class="slot off"></div><div class="slot off"></div><div class="slot off"></div><div class="slot off"></div>
+                  <div class="slot off"></div><div class="slot off"></div><div class="slot off"></div><div class="slot off"></div>
+                  <div class="slot off"></div><div class="slot off"></div><div class="slot off"></div><div class="slot off"></div>
                 </div>
 
                 <div class="barCol side" id="vuColR">
                   <div class="slot off"></div><div class="slot off"></div><div class="slot off"></div><div class="slot off"></div>
-                  <div class="slot dim"></div><div class="slot red"></div><div class="slot red"></div><div class="slot red"></div>
-                  <div class="slot red"></div><div class="slot red"></div><div class="slot red"></div><div class="slot dim"></div>
+                  <div class="slot off"></div><div class="slot off"></div><div class="slot off"></div><div class="slot off"></div>
+                  <div class="slot off"></div><div class="slot off"></div><div class="slot off"></div><div class="slot off"></div>
                   <div class="slot off"></div><div class="slot off"></div><div class="slot off"></div><div class="slot off"></div>
                 </div>
               </div>
@@ -1208,57 +1247,207 @@ body{min-width:320px}
     ui.boxR = [bits10[1], bits10[3], bits10[5], bits10[7], bits10[9]];
   }
 
-  function setColumnVisual(colEl, level){
-    const slots = [...colEl.children];
+  function clearAllSlots(){
+    ["vuColL","vuColM","vuColR"].forEach(id=>{
+      [...$(id).children].forEach(el => el.className = "slot off");
+    });
+  }
+
+  function setSlot(colEl, idx, cls){
+    if (idx < 0 || idx > 15) return;
+    colEl.children[idx].className = "slot " + cls;
+  }
+
+  function paintSymmetricSingleColor(colEl, level, colorClass, dimClass = "dim-red"){
     const lv = Math.max(0, Math.min(16, Number(level) || 0));
-
-    for (let i = 0; i < 16; i++){
-      slots[i].className = "slot off";
-    }
-
+    for (let i = 0; i < 16; i++) colEl.children[i].className = "slot off";
     if (lv <= 0) return;
 
     const centerTop = 7;
     const centerBottom = 8;
 
-    const redPairs = Math.floor(lv / 2);
-    const hasExtra = (lv % 2) !== 0;
+    const pairs = Math.floor(lv / 2);
+    const hasExtra = lv % 2;
 
-    for (let p = 0; p < redPairs; p++){
+    for (let p = 0; p < pairs; p++){
       const up = centerTop - p;
       const dn = centerBottom + p;
-      if (up >= 0) slots[up].className = "slot red";
-      if (dn < 16) slots[dn].className = "slot red";
+      setSlot(colEl, up, colorClass);
+      setSlot(colEl, dn, colorClass);
     }
 
     if (hasExtra){
-      const extraUp = centerTop - redPairs;
-      if (extraUp >= 0) {
-        slots[extraUp].className = "slot red";
-      }
+      setSlot(colEl, centerTop - pairs, colorClass);
     }
 
-    const topMost = slots.findIndex(el => el.classList.contains("red"));
+    const slots = [...colEl.children];
+    const topMost = slots.findIndex(el => !el.classList.contains("off"));
     let bottomMost = -1;
     for (let i = 15; i >= 0; i--){
-      if (slots[i].classList.contains("red")) {
+      if (!slots[i].classList.contains("off")) {
         bottomMost = i;
         break;
       }
     }
 
-    if (topMost > 0) {
-      slots[topMost - 1].className = "slot dim";
-    }
-    if (bottomMost >= 0 && bottomMost < 15) {
-      slots[bottomMost + 1].className = "slot dim";
-    }
+    if (topMost > 0 && slots[topMost - 1].classList.contains("off")) setSlot(colEl, topMost - 1, dimClass);
+    if (bottomMost >= 0 && bottomMost < 15 && slots[bottomMost + 1].classList.contains("off")) setSlot(colEl, bottomMost + 1, dimClass);
   }
 
-  function renderRealVu(){
-    setColumnVisual($("vuColL"), ui.vuL);
-    setColumnVisual($("vuColM"), ui.vuM);
-    setColumnVisual($("vuColR"), ui.vuR);
+  function paintMode8Flame(colEl, level){
+    const lv = Math.max(0, Math.min(16, Number(level) || 0));
+    for (let i = 0; i < 16; i++) colEl.children[i].className = "slot off";
+    if (lv <= 0) return;
+
+    const centerTop = 7;
+    const centerBottom = 8;
+    const pairs = Math.floor(lv / 2);
+    const hasExtra = lv % 2;
+
+    function flameClass(stepFromCenter){
+      if (stepFromCenter === 1) return "red";
+      if (stepFromCenter === 2) return "orange";
+      if (stepFromCenter === 3) return "yellow";
+      return "green";
+    }
+
+    for (let p = 0; p < pairs; p++){
+      const step = p + 1;
+      const cls = flameClass(step);
+      setSlot(colEl, centerTop - p, cls);
+      setSlot(colEl, centerBottom + p, cls);
+    }
+
+    if (hasExtra){
+      const step = pairs + 1;
+      setSlot(colEl, centerTop - pairs, flameClass(step));
+    }
+
+    const slots = [...colEl.children];
+    const topMost = slots.findIndex(el => !el.classList.contains("off"));
+    let bottomMost = -1;
+    for (let i = 15; i >= 0; i--){
+      if (!slots[i].classList.contains("off")) {
+        bottomMost = i;
+        break;
+      }
+    }
+
+    if (topMost > 0 && slots[topMost - 1].classList.contains("off")) setSlot(colEl, topMost - 1, "dim-red");
+    if (bottomMost >= 0 && bottomMost < 15 && slots[bottomMost + 1].classList.contains("off")) setSlot(colEl, bottomMost + 1, "dim-red");
+  }
+
+  function clamp16(v){
+    return Math.max(0, Math.min(16, Math.round(v || 0)));
+  }
+
+  function renderMode1(m){
+    const L = clamp16(m - 4);
+    const C = clamp16(m);
+    const R = clamp16(m - 4);
+    paintSymmetricSingleColor($("vuColL"), L, "red");
+    paintSymmetricSingleColor($("vuColM"), C, "red");
+    paintSymmetricSingleColor($("vuColR"), R, "red");
+  }
+
+  function renderMode2(m){
+    const L = clamp16(m - 4);
+    const C = clamp16(m);
+    const R = clamp16(m - 4);
+    paintSymmetricSingleColor($("vuColL"), L, "yellow");
+    paintSymmetricSingleColor($("vuColM"), C, "yellow");
+    paintSymmetricSingleColor($("vuColR"), R, "yellow");
+  }
+
+  function renderMode3(m){
+    const L = clamp16(m - 3);
+    const C = clamp16(m);
+    const R = clamp16(m - 3);
+    paintSymmetricSingleColor($("vuColL"), L, "red");
+    paintSymmetricSingleColor($("vuColM"), C, "whitehot");
+    paintSymmetricSingleColor($("vuColR"), R, "red");
+  }
+
+  function renderMode4(m){
+    const L = clamp16(m - 3);
+    const C = clamp16(m);
+    const R = clamp16(m - 3);
+    paintSymmetricSingleColor($("vuColL"), L, "yellow");
+    paintSymmetricSingleColor($("vuColM"), C, "whitehot");
+    paintSymmetricSingleColor($("vuColR"), R, "yellow");
+  }
+
+  function renderMode5(m){
+    const L = clamp16(m - 4);
+    const C = clamp16(m);
+    const R = clamp16(m - 4);
+
+    const jitter = (base, seed) => {
+      if (base <= 0) return 0;
+      const n = ((Date.now() >> 5) + seed) % 3; // 0,1,2
+      return clamp16(base - (n === 0 ? 1 : 0));
+    };
+
+    paintSymmetricSingleColor($("vuColL"), jitter(L,1), "red");
+    paintSymmetricSingleColor($("vuColM"), jitter(C,2), "red");
+    paintSymmetricSingleColor($("vuColR"), jitter(R,3), "red");
+  }
+
+  function renderMode6(m){
+    const L = clamp16(m - 4);
+    const C = clamp16(m);
+    const R = clamp16(m - 4);
+    paintSymmetricSingleColor($("vuColL"), L, "blue");
+    paintSymmetricSingleColor($("vuColM"), C, "blue");
+    paintSymmetricSingleColor($("vuColR"), R, "blue");
+  }
+
+  function renderMode7(m){
+    const L = clamp16(m - 4);
+    const C = clamp16(m);
+    const R = clamp16(m - 4);
+    paintSymmetricSingleColor($("vuColL"), L, "green");
+    paintSymmetricSingleColor($("vuColM"), C, "green");
+    paintSymmetricSingleColor($("vuColR"), R, "green");
+  }
+
+  function renderMode8(vl, vm, vr){
+    paintMode8Flame($("vuColL"), clamp16(vl));
+    paintMode8Flame($("vuColM"), clamp16(vm));
+    paintMode8Flame($("vuColR"), clamp16(vr));
+  }
+
+  function renderMode9(vl, vm, vr){
+    paintSymmetricSingleColor($("vuColL"), clamp16(vl), "blue");
+    paintSymmetricSingleColor($("vuColM"), clamp16(vm), "green");
+    paintSymmetricSingleColor($("vuColR"), clamp16(vr), "yellow");
+  }
+
+  function renderMode10(vl, vm, vr){
+    const L = clamp16(vl);
+    const M = clamp16(vm);
+    const R = clamp16(vr);
+    paintSymmetricSingleColor($("vuColL"), L, "cyan");
+    paintSymmetricSingleColor($("vuColM"), M, "whitehot");
+    paintSymmetricSingleColor($("vuColR"), R, "cyan");
+  }
+
+  function renderDisplayByMode(mode, vuL, vuM, vuR){
+    clearAllSlots();
+
+    switch(Number(mode || 1)){
+      case 1: return renderMode1(vuM);
+      case 2: return renderMode2(vuM);
+      case 3: return renderMode3(vuM);
+      case 4: return renderMode4(vuM);
+      case 5: return renderMode5(vuM);
+      case 6: return renderMode6(vuM);
+      case 7: return renderMode7(vuM);
+      case 8: return renderMode8(vuL, vuM, vuR);
+      case 9: return renderMode9(vuL, vuM, vuR);
+      case 10:return renderMode10(vuL, vuM, vuR);
+      default:return renderMode1(vuM);
+    }
   }
 
   function parseNotify(text){
@@ -1304,11 +1493,12 @@ body{min-width:320px}
     }
 
     if (vu){
-      ui.vuL = Math.max(0, Math.min(16, parseInt(vu[1], 10) || 0));
-      ui.vuM = Math.max(0, Math.min(16, parseInt(vu[2], 10) || 0));
-      ui.vuR = Math.max(0, Math.min(16, parseInt(vu[3], 10) || 0));
-      renderRealVu();
+      ui.vuL = clamp16(parseInt(vu[1], 10) || 0);
+      ui.vuM = clamp16(parseInt(vu[2], 10) || 0);
+      ui.vuR = clamp16(parseInt(vu[3], 10) || 0);
     }
+
+    renderDisplayByMode(ui.displayMode, ui.vuL, ui.vuM, ui.vuR);
   }
 
   function resetUiStates(){
@@ -1331,7 +1521,7 @@ body{min-width:320px}
     renderSteps();
     renderBoxes();
     renderVehicleMode();
-    renderRealVu();
+    renderDisplayByMode(1, 0, 0, 0);
   }
 
   function setConnectedUI(isConn){
@@ -1608,4 +1798,4 @@ body{min-width:320px}
 })();
 </script>
 </body>
-  </html>
+</html>
