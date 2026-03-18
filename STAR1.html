@@ -187,9 +187,6 @@ body{min-width:320px}
   font-size:12px;
 }
 
-.icon{width:16px;height:16px;display:block;fill:currentColor;opacity:.95;}
-.iconSmall{width:14px;height:14px;}
-
 .label{
   line-height:1.02;
   font-size:12px;
@@ -198,16 +195,6 @@ body{min-width:320px}
   text-align:center;
 }
 
-.label small{
-  display:block;
-  margin-top:2px;
-  font-size:9px;
-  font-weight:900;
-  color:var(--gold2);
-  letter-spacing:.8px;
-}
-
-/* scanner */
 .scanbar{
   display:flex;
   justify-content:center;
@@ -243,7 +230,6 @@ body{min-width:320px}
   border-color:#5A2A2A;
 }
 
-/* tactical */
 .tacticalWrap{
   width:100%;
   display:flex;
@@ -400,13 +386,6 @@ body{min-width:320px}
     inset 0 0 12px rgba(255,255,255,.02);
 }
 
-.bigModeZone.active{
-  box-shadow:
-    inset 0 0 0 2px rgba(0,0,0,.35),
-    inset 0 0 12px rgba(255,255,255,.02),
-    0 0 12px rgba(255,0,0,.08);
-}
-
 .barsArea{
   --sideW: 27px;
   --midW: 31px;
@@ -440,11 +419,7 @@ body{min-width:320px}
   height:100%;
   border-radius:2px;
   border:1px solid transparent;
-  transition:
-    background .22s ease,
-    box-shadow .28s ease,
-    border-color .22s ease,
-    opacity .28s ease;
+  transition:background .18s ease, box-shadow .22s ease, border-color .18s ease, opacity .22s ease;
 }
 
 .slot.off{
@@ -455,27 +430,24 @@ body{min-width:320px}
 }
 
 .slot.dim-red{
-  border-color:rgba(70,20,20,.60);
-  background:linear-gradient(180deg,#5e1e25 0%, #45141a 100%);
-  opacity:.65;
+  border-color:rgba(90,20,20,.7);
+  background:linear-gradient(180deg,#662222 0%, #4d1717 100%);
+  opacity:.78;
 }
-
-.slot.dim-blue{
-  border-color:rgba(20,35,90,.60);
-  background:linear-gradient(180deg,#1c2f68 0%, #14224a 100%);
-  opacity:.65;
-}
-
 .slot.dim-yellow{
-  border-color:rgba(110,95,20,.60);
-  background:linear-gradient(180deg,#6a5a16 0%, #4d4010 100%);
-  opacity:.65;
+  border-color:rgba(110,95,20,.7);
+  background:linear-gradient(180deg,#6f6018 0%, #4f4210 100%);
+  opacity:.78;
 }
-
 .slot.dim-green{
-  border-color:rgba(25,85,28,.60);
-  background:linear-gradient(180deg,#295d25 0%, #1b4218 100%);
-  opacity:.65;
+  border-color:rgba(25,95,28,.7);
+  background:linear-gradient(180deg,#2d6a2d 0%, #1d481d 100%);
+  opacity:.78;
+}
+.slot.dim-blue{
+  border-color:rgba(25,55,120,.7);
+  background:linear-gradient(180deg,#244a88 0%, #162d55 100%);
+  opacity:.78;
 }
 
 .slot.red{
@@ -484,42 +456,30 @@ body{min-width:320px}
   box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(255,70,70,.18);
   opacity:1;
 }
-
 .slot.orange{
   border-color:rgba(120,55,10,.72);
   background:linear-gradient(180deg,#ffbf73 0%, #ff9538 42%, #ea6d08 100%);
   box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(255,140,50,.18);
   opacity:1;
 }
-
 .slot.yellow{
   border-color:rgba(140,120,10,.72);
   background:linear-gradient(180deg,#fff79b 0%, #ffe75a 42%, #d6b800 100%);
   box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(255,235,80,.18);
   opacity:1;
 }
-
 .slot.green{
   border-color:rgba(30,110,25,.72);
   background:linear-gradient(180deg,#97ff9f 0%, #4aea52 42%, #18b821 100%);
   box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(70,255,90,.16);
   opacity:1;
 }
-
 .slot.blue{
   border-color:rgba(25,65,130,.72);
   background:linear-gradient(180deg,#9fd1ff 0%, #55a0ff 42%, #1f61db 100%);
   box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(90,160,255,.18);
   opacity:1;
 }
-
-.slot.cyan{
-  border-color:rgba(20,120,130,.72);
-  background:linear-gradient(180deg,#9bffff 0%, #54e8ff 42%, #16a9d2 100%);
-  box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(80,240,255,.16);
-  opacity:1;
-}
-
 .slot.whitehot{
   border-color:rgba(190,190,190,.72);
   background:linear-gradient(180deg,#ffffff 0%, #ffe8e8 32%, #ff8d8d 100%);
@@ -527,58 +487,54 @@ body{min-width:320px}
   opacity:1;
 }
 
-/* matrix */
-.matrixZone{
+/* MODE3 / 4 大面板 */
+.panelLampWrap{
   width:100%;
   height:100%;
-  display:grid;
-  grid-template-columns:repeat(6, 1fr);
-  grid-template-rows:repeat(8, 1fr);
-  gap:5px;
-  padding:6px;
+  padding:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
-
-.matrixLamp{
-  border-radius:4px;
-  border:1px solid #161616;
-  background:linear-gradient(180deg,#050505 0%, #0d0d0d 100%);
+.panelLamp{
+  width:100%;
+  height:100%;
+  border-radius:16px;
+  border:2px solid #181818;
+  background:linear-gradient(180deg,#070707 0%, #111 100%);
   box-shadow:
-    inset 0 0 5px rgba(255,255,255,.01),
-    inset 0 -1px 2px rgba(0,0,0,.45);
+    inset 0 0 12px rgba(255,255,255,.02),
+    inset 0 -4px 10px rgba(0,0,0,.45);
+  opacity:.18;
   transition:
-    background .26s ease,
-    box-shadow .42s ease,
-    border-color .26s ease,
-    opacity .38s ease,
-    transform .22s ease;
-  opacity:.22;
+    opacity .35s ease,
+    background .25s ease,
+    border-color .25s ease,
+    box-shadow .45s ease;
 }
-
-.matrixLamp.redOn{
-  border-color:#7a1515;
-  background:linear-gradient(180deg,#ff9b9b 0%, #ff4a4a 48%, #dd1c1c 100%);
+.panelLamp.redOn{
+  border-color:#7e1d1d;
+  background:linear-gradient(180deg,#ff9d9d 0%, #ff4a4a 48%, #d91d1d 100%);
   box-shadow:
-    0 0 7px rgba(255,60,60,.32),
-    0 0 16px rgba(255,40,40,.18),
-    inset 0 0 8px rgba(255,255,255,.10);
+    0 0 14px rgba(255,55,55,.35),
+    0 0 42px rgba(255,35,35,.18),
+    inset 0 0 18px rgba(255,255,255,.10);
   opacity:1;
 }
-
-.matrixLamp.yellowOn{
+.panelLamp.yellowOn{
   border-color:#8a7600;
-  background:linear-gradient(180deg,#fff7a2 0%, #ffe95d 48%, #d2b400 100%);
+  background:linear-gradient(180deg,#fff8ad 0%, #ffe85f 48%, #d3b300 100%);
   box-shadow:
-    0 0 7px rgba(255,232,70,.30),
-    0 0 16px rgba(255,225,40,.16),
-    inset 0 0 8px rgba(255,255,255,.10);
+    0 0 14px rgba(255,228,55,.35),
+    0 0 42px rgba(255,220,35,.16),
+    inset 0 0 18px rgba(255,255,255,.10);
   opacity:1;
 }
-
-.matrixLamp.cooling{
-  opacity:.38;
+.panelLamp.cooling{
+  opacity:.28;
 }
 
-/* vehicle mode */
+/* vehicle */
 .bottomModes{
   width:100%;
   max-width:198px;
@@ -601,18 +557,12 @@ body{min-width:320px}
   border-radius:2px;
   border:2px solid #111;
   background:linear-gradient(180deg,#ffffff 0%, #eeeeee 58%, #d8d8d8 100%);
-  box-shadow:
-    inset 0 0 8px rgba(255,255,255,.12),
-    0 0 4px rgba(0,0,0,.08);
 }
 
 .smallIndicator.active{
   border-color:#111;
   background:linear-gradient(180deg,#fff68a 0%, #f2eb2d 45%, #d7c900 100%);
-  box-shadow:
-    0 0 12px rgba(255,235,40,.18),
-    0 0 22px rgba(255,235,40,.08),
-    inset 0 0 8px rgba(255,255,255,.10);
+  box-shadow:0 0 12px rgba(255,235,40,.18);
 }
 
 .modeLamps{
@@ -633,31 +583,21 @@ body{min-width:320px}
   line-height:1.02;
   text-align:center;
   cursor:pointer;
-  box-shadow: inset 0 0 8px rgba(255,255,255,.10);
 }
 
 .modeLamp.activeNor{
-  border-color:#111;
   background:linear-gradient(180deg,#6dffd0 0%, #27eba0 48%, #14c47f 100%);
   color:#002b16;
-  box-shadow:0 0 14px rgba(36,231,154,.18);
 }
-
 .modeLamp.activeAuto{
-  border-color:#111;
   background:linear-gradient(180deg,#fff68a 0%, #f3eb31 48%, #d7c900 100%);
   color:#1f1a00;
-  box-shadow:0 0 14px rgba(255,235,40,.18);
 }
-
 .modeLamp.activeSpm{
-  border-color:#111;
   background:linear-gradient(180deg,#ff7b7b 0%, #ff3434 45%, #cf1111 100%);
   color:#2b0000;
-  box-shadow:0 0 14px rgba(255,0,0,.16);
 }
 
-/* mode grid */
 .modeShell{
   width:100%;
   max-width:780px;
@@ -729,7 +669,6 @@ body{min-width:320px}
   letter-spacing:1px;
 }
 
-/* tools */
 .toolsGrid{
   width:100%;
   display:grid;
@@ -782,7 +721,6 @@ body{min-width:320px}
   .app{padding:8px}
   .frame{padding:8px}
   .btnSmall{width:96px;font-size:11px}
-
   .modeGrid{gap:10px}
   .modeCard{min-height:100px}
   .modeCard.big{min-height:104px}
@@ -830,11 +768,6 @@ body{min-width:320px}
     --gapX: 21px;
     --slotH: 9px;
     --slotGap: 4px;
-  }
-
-  .matrixZone{
-    gap:4px;
-    padding:4px;
   }
 
   .bottomModes{
@@ -1062,7 +995,7 @@ body{min-width:320px}
     vuM: 0,
     vuR: 0,
     hasVu: false,
-    matrixCooling: false
+    panelCooling: false
   };
 
   function playOnce(audio){
@@ -1226,7 +1159,7 @@ body{min-width:320px}
     ui.boxR = [bits10[1], bits10[3], bits10[5], bits10[7], bits10[9]];
   }
 
-  function setBigModeBarsHtml(){
+  function setBarsHtml(){
     bigModeZone.innerHTML = `
       <div class="barsArea">
         <div class="barCol side" id="vuColL">${Array.from({length:16}, ()=>'<div class="slot off"></div>').join('')}</div>
@@ -1237,18 +1170,24 @@ body{min-width:320px}
     bigModeZone.dataset.render = "bars";
   }
 
-  function setBigModeMatrixHtml(){
+  function setPanelLampHtml(){
     bigModeZone.innerHTML = `
-      <div class="matrixZone" id="matrixZone">
-        ${Array.from({length:48}, ()=>'<div class="matrixLamp"></div>').join('')}
+      <div class="panelLampWrap">
+        <div class="panelLamp" id="panelLamp"></div>
       </div>
     `;
-    bigModeZone.dataset.render = "matrix";
+    bigModeZone.dataset.render = "panel";
   }
 
-  function getCol(id){
-    return $(id);
+  function ensureBars(){
+    if (bigModeZone.dataset.render !== "bars") setBarsHtml();
   }
+
+  function ensurePanel(){
+    if (bigModeZone.dataset.render !== "panel") setPanelLampHtml();
+  }
+
+  function getCol(id){ return $(id); }
 
   function clearColumn(colEl){
     if (!colEl) return;
@@ -1265,7 +1204,7 @@ body{min-width:320px}
     return Math.max(0, Math.min(16, Math.round(v || 0)));
   }
 
-  function paintKittColumn(colEl, level, colorClass, dimClass = "dim-red"){
+  function paintKittColumn(colEl, level, colorClass, dimClass){
     clearColumn(colEl);
     const lv = Math.max(0, Math.min(16, Number(level) || 0));
     if (lv <= 0) return;
@@ -1290,7 +1229,6 @@ body{min-width:320px}
         break;
       }
     }
-
     if (topMost > 0 && slots[topMost - 1].classList.contains("off")) setSlot(colEl, topMost - 1, dimClass);
     if (bottomMost >= 0 && bottomMost < 15 && slots[bottomMost + 1].classList.contains("off")) setSlot(colEl, bottomMost + 1, dimClass);
   }
@@ -1314,6 +1252,7 @@ body{min-width:320px}
     if (botDim < 16) setSlot(colEl, botDim, dimClass);
   }
 
+  /* 修正：MODE2 / 7 左右柱尾暈改成和 MODE1 同型的暗原色尾端 */
   function paintKarrFlippedColumn(colEl, level, colorClass, dimClass){
     clearColumn(colEl);
     const lv = Math.max(0, Math.min(16, Number(level) || 0));
@@ -1326,14 +1265,13 @@ body{min-width:320px}
       setSlot(colEl, p, colorClass);
       setSlot(colEl, 15 - p, colorClass);
     }
-
     if (hasExtra){
       const idx = pairs;
       if (idx >= 0 && idx < 16) setSlot(colEl, idx, colorClass);
     }
 
-    const slots = [...colEl.children];
     const litIdx = [];
+    const slots = [...colEl.children];
     for (let i = 0; i < 16; i++){
       if (!slots[i].classList.contains("off")) litIdx.push(i);
     }
@@ -1383,39 +1321,29 @@ body{min-width:320px}
     if (bottomMost >= 0 && bottomMost < 15 && slots[bottomMost + 1].classList.contains("off")) setSlot(colEl, bottomMost + 1, "dim-red");
   }
 
-  function ensureBars(){
-    if (bigModeZone.dataset.render !== "bars") setBigModeBarsHtml();
+  function renderPanelLamp(color, isOn){
+    ensurePanel();
+    const p = $("panelLamp");
+    if (!p) return;
+
+    p.className = "panelLamp";
+    if (isOn){
+      p.classList.add(color === "red" ? "redOn" : "yellowOn");
+      ui.panelCooling = false;
+    } else if (ui.panelCooling){
+      p.classList.add("cooling");
+      p.classList.add(color === "red" ? "redOn" : "yellowOn");
+    }
   }
 
-  function ensureMatrix(){
-    if (bigModeZone.dataset.render !== "matrix") setBigModeMatrixHtml();
-  }
-
-  function renderMatrix(color, isOn){
-    ensureMatrix();
-    const zone = $("matrixZone");
-    if (!zone) return;
-    const lamps = [...zone.children];
-
-    lamps.forEach(lamp=>{
-      lamp.className = "matrixLamp";
-      if (isOn){
-        lamp.classList.add(color === "red" ? "redOn" : "yellowOn");
-      } else if (ui.matrixCooling){
-        lamp.classList.add("cooling");
-        lamp.classList.add(color === "red" ? "redOn" : "yellowOn");
-      }
-    });
-  }
-
-  function triggerMatrixCooling(color){
-    ui.matrixCooling = true;
-    renderMatrix(color, false);
-    clearTimeout(triggerMatrixCooling._t);
-    triggerMatrixCooling._t = setTimeout(()=>{
-      ui.matrixCooling = false;
-      renderMatrix(color, false);
-    }, 320);
+  function triggerPanelCooling(color){
+    ui.panelCooling = true;
+    renderPanelLamp(color, false);
+    clearTimeout(triggerPanelCooling._t);
+    triggerPanelCooling._t = setTimeout(()=>{
+      ui.panelCooling = false;
+      renderPanelLamp(color, false);
+    }, 220);
   }
 
   function renderMode1(m){
@@ -1438,53 +1366,62 @@ body{min-width:320px}
 
   function renderMode3(m){
     const active = m > 3 || (!ui.hasVu && ui.displayMode === 3);
-    if (active){
-      ui.matrixCooling = false;
-      renderMatrix("red", true);
-    } else {
-      triggerMatrixCooling("red");
-    }
+    if (active) renderPanelLamp("red", true);
+    else triggerPanelCooling("red");
   }
 
   function renderMode4(m){
     const active = m > 3 || (!ui.hasVu && ui.displayMode === 4);
-    if (active){
-      ui.matrixCooling = false;
-      renderMatrix("yellow", true);
-    } else {
-      triggerMatrixCooling("yellow");
-    }
+    if (active) renderPanelLamp("yellow", true);
+    else triggerPanelCooling("yellow");
   }
 
+  /* 修正：MODE5 更接近原 bkittFrames 味道 */
   function renderMode5(m){
     ensureBars();
 
-    const sideBase = clamp16(m - 4);
-    const midBase  = clamp16(m);
-
-    const t = Math.floor(Date.now() / 90);
-    const flickerA = (t % 3 === 0) ? 1 : 0;
-    const flickerB = (t % 4 === 0) ? 1 : 0;
-    const flickerC = (t % 5 === 0) ? 2 : 0;
-
-    const L = Math.max(0, sideBase - flickerA);
-    const M = Math.max(0, midBase  - flickerC);
-    const R = Math.max(0, sideBase - flickerB);
+    const L = clamp16(m - 4);
+    const C = clamp16(m);
+    const R = clamp16(m - 4);
 
     paintKittColumn(getCol("vuColL"), L, "red", "dim-red");
-    paintKittColumn(getCol("vuColM"), M, "whitehot", "dim-red");
+    paintKittColumn(getCol("vuColM"), C, "red", "dim-red");
     paintKittColumn(getCol("vuColR"), R, "red", "dim-red");
 
-    if (L > 0 && getCol("vuColL")) {
-      const c = getCol("vuColL");
-      if (L > 5) setSlot(c, 6, "dim-red");
-      if (L > 6) setSlot(c, 9, "off");
+    const t = Math.floor(Date.now() / 120) % 8;
+
+    const colL = getCol("vuColL");
+    const colM = getCol("vuColM");
+    const colR = getCol("vuColR");
+
+    if (colL && L > 3) {
+      const damageMapL = [
+        [6, "dim-red"], [7, "off"], [8, "red"],
+        [5, "off"], [9, "dim-red"], [4, "red"],
+        [6, "off"], [8, "dim-red"]
+      ];
+      const [idx, cls] = damageMapL[t];
+      setSlot(colL, idx, cls);
     }
 
-    if (R > 0 && getCol("vuColR")) {
-      const c = getCol("vuColR");
-      if (R > 5) setSlot(c, 8, "dim-red");
-      if (R > 6) setSlot(c, 5, "off");
+    if (colM && C > 4) {
+      const damageMapM = [
+        [7, "whitehot"], [8, "off"], [6, "dim-red"],
+        [9, "red"], [7, "off"], [8, "whitehot"],
+        [6, "off"], [9, "dim-red"]
+      ];
+      const [idx, cls] = damageMapM[t];
+      setSlot(colM, idx, cls);
+    }
+
+    if (colR && R > 3) {
+      const damageMapR = [
+        [8, "dim-red"], [7, "off"], [6, "red"],
+        [9, "off"], [5, "dim-red"], [8, "red"],
+        [7, "off"], [6, "dim-red"]
+      ];
+      const [idx, cls] = damageMapR[t];
+      setSlot(colR, idx, cls);
     }
   }
 
@@ -1522,9 +1459,9 @@ body{min-width:320px}
 
   function renderMode10(vl, vm, vr){
     ensureBars();
-    paintKittColumn(getCol("vuColL"), clamp16(vl), "cyan", "dim-blue");
+    paintKittColumn(getCol("vuColL"), clamp16(vl), "blue", "dim-blue");
     paintKittColumn(getCol("vuColM"), clamp16(vm), "whitehot", "dim-red");
-    paintKittColumn(getCol("vuColR"), clamp16(vr), "cyan", "dim-blue");
+    paintKittColumn(getCol("vuColR"), clamp16(vr), "blue", "dim-blue");
   }
 
   function renderDisplayByMode(mode, vuL, vuM, vuR){
@@ -1606,7 +1543,7 @@ body{min-width:320px}
     ui.vuM = 0;
     ui.vuR = 0;
     ui.hasVu = false;
-    ui.matrixCooling = false;
+    ui.panelCooling = false;
 
     displayModeStatus.textContent = "DISPLAY MODE: -";
     vehicleModeStatus.textContent = "VEHICLE MODE: -";
@@ -1617,7 +1554,7 @@ body{min-width:320px}
     renderSteps();
     renderBoxes();
     renderVehicleMode();
-    setBigModeBarsHtml();
+    setBarsHtml();
     renderMode1(0);
   }
 
@@ -1643,12 +1580,10 @@ body{min-width:320px}
 
     bigModeZone.disabled = !isConn;
     bigModeZone.style.pointerEvents = isConn ? "auto" : "none";
-    bigModeZone.style.filter = isConn ? "none" : "grayscale(.45) brightness(.75)";
 
     document.querySelectorAll(".sideBtn").forEach(btn=>{
       btn.disabled = !isConn;
       btn.style.pointerEvents = isConn ? "auto" : "none";
-      btn.style.filter = isConn ? "none" : "grayscale(.45) brightness(.8)";
     });
 
     statusText.textContent = isConn ? "LINK: ESTABLISHED" : "LINK: NOT CONNECTED";
@@ -1666,7 +1601,7 @@ body{min-width:320px}
   async function doScanPickDevice(){
     if (!navigator.bluetooth){
       bleText.textContent = "BLE: NOT SUPPORTED (Use Chrome/Edge)";
-      alert("This browser does not support Web Bluetooth。\n請使用 Android Chrome / PC Chrome / Edge。");
+      alert("This browser does not support Web Bluetooth。");
       return;
     }
 
@@ -1707,7 +1642,7 @@ body{min-width:320px}
       setConnectedUI(true);
       playOnce(sConn);
     } catch(e){
-      alert("CONNECT FAILED\nPlease re-SCAN and select the correct device.\n\n" + (e?.message || e));
+      alert("CONNECT FAILED\n" + (e?.message || e));
       onDisconnected();
     }
   }
@@ -1873,4 +1808,4 @@ body{min-width:320px}
 })();
 </script>
 </body>
-                                                     </html>
+                </html>
