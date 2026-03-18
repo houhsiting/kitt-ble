@@ -432,22 +432,45 @@ body{min-width:320px}
 .slot.dim-red{
   border-color:rgba(90,20,20,.7);
   background:linear-gradient(180deg,#662222 0%, #4d1717 100%);
-  opacity:.78;
+  opacity:.82;
 }
+.slot.dim-red2{
+  border-color:rgba(70,16,16,.55);
+  background:linear-gradient(180deg,#451616 0%, #321010 100%);
+  opacity:.62;
+}
+
 .slot.dim-yellow{
   border-color:rgba(110,95,20,.7);
   background:linear-gradient(180deg,#6f6018 0%, #4f4210 100%);
-  opacity:.78;
+  opacity:.82;
 }
+.slot.dim-yellow2{
+  border-color:rgba(80,70,16,.55);
+  background:linear-gradient(180deg,#4f4514 0%, #352d0d 100%);
+  opacity:.62;
+}
+
 .slot.dim-green{
   border-color:rgba(25,95,28,.7);
   background:linear-gradient(180deg,#2d6a2d 0%, #1d481d 100%);
-  opacity:.78;
+  opacity:.82;
 }
+.slot.dim-green2{
+  border-color:rgba(20,68,22,.55);
+  background:linear-gradient(180deg,#214a21 0%, #163316 100%);
+  opacity:.62;
+}
+
 .slot.dim-blue{
   border-color:rgba(25,55,120,.7);
   background:linear-gradient(180deg,#244a88 0%, #162d55 100%);
-  opacity:.78;
+  opacity:.82;
+}
+.slot.dim-blue2{
+  border-color:rgba(18,40,88,.55);
+  background:linear-gradient(180deg,#18355f 0%, #10213c 100%);
+  opacity:.62;
 }
 
 .slot.red{
@@ -487,54 +510,40 @@ body{min-width:320px}
   opacity:1;
 }
 
-/* MODE3 / 4 大面板 */
-.panelLampWrap{
+/* MODE3 / 4 */
+.matrixZone{
   width:100%;
   height:100%;
-  padding:8px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  display:grid;
+  grid-template-columns:repeat(6, 1fr);
+  grid-template-rows:repeat(8, 1fr);
+  gap:5px;
+  padding:6px;
 }
-.panelLamp{
-  width:100%;
-  height:100%;
-  border-radius:16px;
-  border:2px solid #181818;
-  background:linear-gradient(180deg,#070707 0%, #111 100%);
-  box-shadow:
-    inset 0 0 12px rgba(255,255,255,.02),
-    inset 0 -4px 10px rgba(0,0,0,.45);
-  opacity:.18;
-  transition:
-    opacity .35s ease,
-    background .25s ease,
-    border-color .25s ease,
-    box-shadow .45s ease;
+.matrixLamp{
+  border-radius:4px;
+  border:1px solid #161616;
+  background:linear-gradient(180deg,#050505 0%, #0d0d0d 100%);
+  box-shadow: inset 0 0 5px rgba(255,255,255,.01), inset 0 -1px 2px rgba(0,0,0,.45);
+  transition: background .20s ease, box-shadow .24s ease, border-color .20s ease, opacity .24s ease;
+  opacity:.16;
 }
-.panelLamp.redOn{
-  border-color:#7e1d1d;
-  background:linear-gradient(180deg,#ff9d9d 0%, #ff4a4a 48%, #d91d1d 100%);
-  box-shadow:
-    0 0 14px rgba(255,55,55,.35),
-    0 0 42px rgba(255,35,35,.18),
-    inset 0 0 18px rgba(255,255,255,.10);
+.matrixLamp.redOn{
+  border-color:#7a1515;
+  background:linear-gradient(180deg,#ff9b9b 0%, #ff4a4a 48%, #dd1c1c 100%);
+  box-shadow: 0 0 7px rgba(255,60,60,.32), 0 0 16px rgba(255,40,40,.18), inset 0 0 8px rgba(255,255,255,.10);
   opacity:1;
 }
-.panelLamp.yellowOn{
+.matrixLamp.yellowOn{
   border-color:#8a7600;
-  background:linear-gradient(180deg,#fff8ad 0%, #ffe85f 48%, #d3b300 100%);
-  box-shadow:
-    0 0 14px rgba(255,228,55,.35),
-    0 0 42px rgba(255,220,35,.16),
-    inset 0 0 18px rgba(255,255,255,.10);
+  background:linear-gradient(180deg,#fff7a2 0%, #ffe95d 48%, #d2b400 100%);
+  box-shadow: 0 0 7px rgba(255,232,70,.30), 0 0 16px rgba(255,225,40,.16), inset 0 0 8px rgba(255,255,255,.10);
   opacity:1;
 }
-.panelLamp.cooling{
-  opacity:.28;
+.matrixLamp.cooling{
+  opacity:.26;
 }
 
-/* vehicle */
 .bottomModes{
   width:100%;
   max-width:198px;
@@ -728,11 +737,7 @@ body{min-width:320px}
   .modeTitleHead{font-size:18px}
   .modeSubHead{font-size:12px}
 
-  .stepBtn{
-    width:162px;
-    height:36px;
-    font-size:13px;
-  }
+  .stepBtn{width:162px;height:36px;font-size:13px;}
 
   .tacticalBody{
     grid-template-columns:72px 152px 72px;
@@ -740,26 +745,10 @@ body{min-width:320px}
     max-width:300px;
   }
 
-  .sideCol{
-    padding:8px 4px;
-    gap:8px;
-  }
-
-  .sideBtn{
-    width:54px;
-    height:46px;
-    font-size:10px;
-  }
-
-  .centerZone{
-    padding:8px 3px 10px;
-  }
-
-  .bigModeZone{
-    max-width:140px;
-    height:214px;
-    padding:7px 4px;
-  }
+  .sideCol{padding:8px 4px;gap:8px;}
+  .sideBtn{width:54px;height:46px;font-size:10px;}
+  .centerZone{padding:8px 3px 10px;}
+  .bigModeZone{max-width:140px;height:214px;padding:7px 4px;}
 
   .barsArea{
     --sideW: 21px;
@@ -776,15 +765,8 @@ body{min-width:320px}
     gap:12px;
   }
 
-  .smallIndicator{
-    width:32px;
-    height:40px;
-  }
-
-  .modeLamp{
-    height:40px;
-    font-size:11px;
-  }
+  .smallIndicator{width:32px;height:40px;}
+  .modeLamp{height:40px;font-size:11px;}
 }
 </style>
 </head>
@@ -995,7 +977,7 @@ body{min-width:320px}
     vuM: 0,
     vuR: 0,
     hasVu: false,
-    panelCooling: false
+    matrixCooling: false
   };
 
   function playOnce(audio){
@@ -1060,7 +1042,6 @@ body{min-width:320px}
     const leds = [...scanbar.children];
     leds.forEach(d => d.className = "led");
     if (!ui.connected) return;
-
     for (let i = 0; i < 8; i++){
       const dist = Math.abs(i - scanPos);
       if (dist === 0) leds[i].classList.add("on");
@@ -1076,22 +1057,14 @@ body{min-width:320px}
     renderScanner();
     scanTimer = setInterval(() => {
       scanPos += scanDir;
-      if (scanPos >= 7){
-        scanPos = 7;
-        scanDir = -1;
-      } else if (scanPos <= 0){
-        scanPos = 0;
-        scanDir = 1;
-      }
+      if (scanPos >= 7){ scanPos = 7; scanDir = -1; }
+      else if (scanPos <= 0){ scanPos = 0; scanDir = 1; }
       renderScanner();
     }, 150);
   }
 
   function stopScanner(){
-    if (scanTimer){
-      clearInterval(scanTimer);
-      scanTimer = null;
-    }
+    if (scanTimer){ clearInterval(scanTimer); scanTimer = null; }
     [...scanbar.children].forEach(d => d.className = "led");
   }
 
@@ -1170,21 +1143,21 @@ body{min-width:320px}
     bigModeZone.dataset.render = "bars";
   }
 
-  function setPanelLampHtml(){
+  function setMatrixHtml(){
     bigModeZone.innerHTML = `
-      <div class="panelLampWrap">
-        <div class="panelLamp" id="panelLamp"></div>
+      <div class="matrixZone" id="matrixZone">
+        ${Array.from({length:48}, ()=>'<div class="matrixLamp"></div>').join('')}
       </div>
     `;
-    bigModeZone.dataset.render = "panel";
+    bigModeZone.dataset.render = "matrix";
   }
 
   function ensureBars(){
     if (bigModeZone.dataset.render !== "bars") setBarsHtml();
   }
 
-  function ensurePanel(){
-    if (bigModeZone.dataset.render !== "panel") setPanelLampHtml();
+  function ensureMatrix(){
+    if (bigModeZone.dataset.render !== "matrix") setMatrixHtml();
   }
 
   function getCol(id){ return $(id); }
@@ -1204,9 +1177,17 @@ body{min-width:320px}
     return Math.max(0, Math.min(16, Math.round(v || 0)));
   }
 
-  function paintKittColumn(colEl, level, colorClass, dimClass){
+  function addTwoStepTail(slots, topMost, bottomMost, dim1, dim2){
+    if (topMost > 0 && slots[topMost - 1].classList.contains("off")) slots[topMost - 1].className = "slot " + dim1;
+    if (topMost > 1 && slots[topMost - 2].classList.contains("off")) slots[topMost - 2].className = "slot " + dim2;
+
+    if (bottomMost < 15 && slots[bottomMost + 1].classList.contains("off")) slots[bottomMost + 1].className = "slot " + dim1;
+    if (bottomMost < 14 && slots[bottomMost + 2].classList.contains("off")) slots[bottomMost + 2].className = "slot " + dim2;
+  }
+
+  function paintKittColumn(colEl, level, colorClass, dimClass, dimClass2){
     clearColumn(colEl);
-    const lv = Math.max(0, Math.min(16, Number(level) || 0));
+    const lv = clamp16(level);
     if (lv <= 0) return;
 
     const centerTop = 7;
@@ -1229,13 +1210,12 @@ body{min-width:320px}
         break;
       }
     }
-    if (topMost > 0 && slots[topMost - 1].classList.contains("off")) setSlot(colEl, topMost - 1, dimClass);
-    if (bottomMost >= 0 && bottomMost < 15 && slots[bottomMost + 1].classList.contains("off")) setSlot(colEl, bottomMost + 1, dimClass);
+    addTwoStepTail(slots, topMost, bottomMost, dimClass, dimClass2);
   }
 
-  function paintKarrCenterColumn(colEl, level, colorClass, dimClass){
+  function paintKarrCenterColumn(colEl, level, colorClass, dimClass, dimClass2){
     clearColumn(colEl);
-    const lv = Math.max(0, Math.min(16, Number(level) || 0));
+    const lv = clamp16(level);
     if (lv <= 0) return;
 
     const half = Math.ceil(lv / 2);
@@ -1246,16 +1226,18 @@ body{min-width:320px}
       if (dn < 16) setSlot(colEl, dn, colorClass);
     }
 
-    const topDim = 7 - half;
-    const botDim = 8 + half;
-    if (topDim >= 0) setSlot(colEl, topDim, dimClass);
-    if (botDim < 16) setSlot(colEl, botDim, dimClass);
+    const slots = [...colEl.children];
+    const litIdx = [];
+    for (let i = 0; i < 16; i++){
+      if (!slots[i].classList.contains("off")) litIdx.push(i);
+    }
+    if (!litIdx.length) return;
+    addTwoStepTail(slots, litIdx[0], litIdx[litIdx.length - 1], dimClass, dimClass2);
   }
 
-  /* 修正：MODE2 / 7 左右柱尾暈改成和 MODE1 同型的暗原色尾端 */
-  function paintKarrFlippedColumn(colEl, level, colorClass, dimClass){
+  function paintKarrFlippedColumn(colEl, level, colorClass, dimClass, dimClass2){
     clearColumn(colEl);
-    const lv = Math.max(0, Math.min(16, Number(level) || 0));
+    const lv = clamp16(level);
     if (lv <= 0) return;
 
     const pairs = Math.floor(lv / 2);
@@ -1270,23 +1252,18 @@ body{min-width:320px}
       if (idx >= 0 && idx < 16) setSlot(colEl, idx, colorClass);
     }
 
-    const litIdx = [];
     const slots = [...colEl.children];
+    const litIdx = [];
     for (let i = 0; i < 16; i++){
       if (!slots[i].classList.contains("off")) litIdx.push(i);
     }
     if (!litIdx.length) return;
-
-    const topMost = litIdx[0];
-    const bottomMost = litIdx[litIdx.length - 1];
-
-    if (topMost > 0 && slots[topMost - 1].classList.contains("off")) setSlot(colEl, topMost - 1, dimClass);
-    if (bottomMost < 15 && slots[bottomMost + 1].classList.contains("off")) setSlot(colEl, bottomMost + 1, dimClass);
+    addTwoStepTail(slots, litIdx[0], litIdx[litIdx.length - 1], dimClass, dimClass2);
   }
 
   function paintMode8Flame(colEl, level){
     clearColumn(colEl);
-    const lv = Math.max(0, Math.min(16, Number(level) || 0));
+    const lv = clamp16(level);
     if (lv <= 0) return;
 
     const centerTop = 7;
@@ -1309,119 +1286,120 @@ body{min-width:320px}
     if (hasExtra) setSlot(colEl, centerTop - pairs, flame(pairs + 1));
 
     const slots = [...colEl.children];
-    const topMost = slots.findIndex(el => !el.classList.contains("off"));
-    let bottomMost = -1;
-    for (let i = 15; i >= 0; i--){
-      if (!slots[i].classList.contains("off")){
-        bottomMost = i;
-        break;
+    const litIdx = [];
+    for (let i = 0; i < 16; i++){
+      if (!slots[i].classList.contains("off")) litIdx.push(i);
+    }
+    if (!litIdx.length) return;
+    addTwoStepTail(slots, litIdx[0], litIdx[litIdx.length - 1], "dim-red", "dim-red2");
+  }
+
+  function renderMatrix(color, on){
+    ensureMatrix();
+    const zone = $("matrixZone");
+    if (!zone) return;
+    const lamps = [...zone.children];
+    lamps.forEach(lamp=>{
+      lamp.className = "matrixLamp";
+      if (on) {
+        lamp.classList.add(color === "red" ? "redOn" : "yellowOn");
+      } else if (ui.matrixCooling) {
+        lamp.classList.add("cooling");
+        lamp.classList.add(color === "red" ? "redOn" : "yellowOn");
       }
-    }
-    if (topMost > 0 && slots[topMost - 1].classList.contains("off")) setSlot(colEl, topMost - 1, "dim-red");
-    if (bottomMost >= 0 && bottomMost < 15 && slots[bottomMost + 1].classList.contains("off")) setSlot(colEl, bottomMost + 1, "dim-red");
+    });
   }
 
-  function renderPanelLamp(color, isOn){
-    ensurePanel();
-    const p = $("panelLamp");
-    if (!p) return;
-
-    p.className = "panelLamp";
-    if (isOn){
-      p.classList.add(color === "red" ? "redOn" : "yellowOn");
-      ui.panelCooling = false;
-    } else if (ui.panelCooling){
-      p.classList.add("cooling");
-      p.classList.add(color === "red" ? "redOn" : "yellowOn");
-    }
-  }
-
-  function triggerPanelCooling(color){
-    ui.panelCooling = true;
-    renderPanelLamp(color, false);
-    clearTimeout(triggerPanelCooling._t);
-    triggerPanelCooling._t = setTimeout(()=>{
-      ui.panelCooling = false;
-      renderPanelLamp(color, false);
-    }, 220);
+  function triggerMatrixCooling(color){
+    ui.matrixCooling = true;
+    renderMatrix(color, false);
+    clearTimeout(triggerMatrixCooling._t);
+    triggerMatrixCooling._t = setTimeout(()=>{
+      ui.matrixCooling = false;
+      renderMatrix(color, false);
+    }, 140);
   }
 
   function renderMode1(m){
     ensureBars();
     const side = clamp16(m - 4);
     const mid  = clamp16(m);
-    paintKittColumn(getCol("vuColL"), side, "red", "dim-red");
-    paintKittColumn(getCol("vuColM"), mid,  "red", "dim-red");
-    paintKittColumn(getCol("vuColR"), side, "red", "dim-red");
+    paintKittColumn(getCol("vuColL"), side, "red", "dim-red", "dim-red2");
+    paintKittColumn(getCol("vuColM"), mid,  "red", "dim-red", "dim-red2");
+    paintKittColumn(getCol("vuColR"), side, "red", "dim-red", "dim-red2");
   }
 
   function renderMode2(m){
     ensureBars();
     const side = clamp16(m - 4);
     const mid  = clamp16(m);
-    paintKarrFlippedColumn(getCol("vuColL"), side, "yellow", "dim-yellow");
-    paintKarrCenterColumn (getCol("vuColM"), mid,  "yellow", "dim-yellow");
-    paintKarrFlippedColumn(getCol("vuColR"), side, "yellow", "dim-yellow");
+    paintKarrFlippedColumn(getCol("vuColL"), side, "yellow", "dim-yellow", "dim-yellow2");
+    paintKarrCenterColumn (getCol("vuColM"), mid,  "yellow", "dim-yellow", "dim-yellow2");
+    paintKarrFlippedColumn(getCol("vuColR"), side, "yellow", "dim-yellow", "dim-yellow2");
   }
 
   function renderMode3(m){
-    const active = m > 3 || (!ui.hasVu && ui.displayMode === 3);
-    if (active) renderPanelLamp("red", true);
-    else triggerPanelCooling("red");
+    const active = m > 5 || (!ui.hasVu && ui.displayMode === 3);
+    if (active){
+      ui.matrixCooling = false;
+      renderMatrix("red", true);
+    } else {
+      triggerMatrixCooling("red");
+    }
   }
 
   function renderMode4(m){
-    const active = m > 3 || (!ui.hasVu && ui.displayMode === 4);
-    if (active) renderPanelLamp("yellow", true);
-    else triggerPanelCooling("yellow");
+    const active = m > 5 || (!ui.hasVu && ui.displayMode === 4);
+    if (active){
+      ui.matrixCooling = false;
+      renderMatrix("yellow", true);
+    } else {
+      triggerMatrixCooling("yellow");
+    }
   }
 
-  /* 修正：MODE5 更接近原 bkittFrames 味道 */
+  /* 改成固定 damage sequence，模擬 bkittFrames 的連續感 */
   function renderMode5(m){
     ensureBars();
 
-    const L = clamp16(m - 4);
-    const C = clamp16(m);
-    const R = clamp16(m - 4);
+    const side = clamp16(m - 4);
+    const mid  = clamp16(m);
 
-    paintKittColumn(getCol("vuColL"), L, "red", "dim-red");
-    paintKittColumn(getCol("vuColM"), C, "red", "dim-red");
-    paintKittColumn(getCol("vuColR"), R, "red", "dim-red");
-
-    const t = Math.floor(Date.now() / 120) % 8;
+    paintKittColumn(getCol("vuColL"), side, "red", "dim-red", "dim-red2");
+    paintKittColumn(getCol("vuColM"), mid,  "red", "dim-red", "dim-red2");
+    paintKittColumn(getCol("vuColR"), side, "red", "dim-red", "dim-red2");
 
     const colL = getCol("vuColL");
     const colM = getCol("vuColM");
     const colR = getCol("vuColR");
 
-    if (colL && L > 3) {
-      const damageMapL = [
-        [6, "dim-red"], [7, "off"], [8, "red"],
-        [5, "off"], [9, "dim-red"], [4, "red"],
-        [6, "off"], [8, "dim-red"]
-      ];
-      const [idx, cls] = damageMapL[t];
-      setSlot(colL, idx, cls);
-    }
+    const seq = Math.floor(Date.now() / 110) % 8;
 
-    if (colM && C > 4) {
-      const damageMapM = [
-        [7, "whitehot"], [8, "off"], [6, "dim-red"],
-        [9, "red"], [7, "off"], [8, "whitehot"],
-        [6, "off"], [9, "dim-red"]
-      ];
-      const [idx, cls] = damageMapM[t];
-      setSlot(colM, idx, cls);
-    }
+    const damageFrames = [
+      [[6,"off"],      [7,"dim-red"], [8,"red"],      [7,"off"],      [6,"red"],      [8,"dim-red"]],
+      [[5,"dim-red"],  [7,"off"],     [9,"red"],      [6,"dim-red"],  [8,"off"],      [9,"red"]],
+      [[6,"red"],      [8,"off"],     [9,"dim-red"],  [7,"red"],      [6,"off"],      [8,"dim-red"]],
+      [[4,"off"],      [6,"dim-red"], [8,"red"],      [8,"off"],      [7,"dim-red"],  [9,"red"]],
+      [[5,"red"],      [7,"dim-red"], [8,"off"],      [6,"red"],      [8,"dim-red"],  [9,"off"]],
+      [[6,"off"],      [7,"red"],     [9,"dim-red"],  [5,"off"],      [7,"red"],      [8,"dim-red"]],
+      [[4,"dim-red"],  [6,"off"],     [8,"red"],      [7,"dim-red"],  [8,"off"],      [9,"red"]],
+      [[5,"off"],      [7,"dim-red"], [9,"red"],      [6,"off"],      [8,"red"],      [9,"dim-red"]],
+    ];
 
-    if (colR && R > 3) {
-      const damageMapR = [
-        [8, "dim-red"], [7, "off"], [6, "red"],
-        [9, "off"], [5, "dim-red"], [8, "red"],
-        [7, "off"], [6, "dim-red"]
-      ];
-      const [idx, cls] = damageMapR[t];
-      setSlot(colR, idx, cls);
+    const f = damageFrames[seq];
+
+    if (colL && side > 0){
+      setSlot(colL, f[0][0], f[0][1]);
+      setSlot(colL, f[1][0], f[1][1]);
+    }
+    if (colM && mid > 0){
+      setSlot(colM, f[2][0], f[2][1]);
+      if (mid > 4) setSlot(colM, 7, seq % 2 ? "whitehot" : "red");
+    }
+    if (colR && side > 0){
+      setSlot(colR, f[3][0], f[3][1]);
+      setSlot(colR, f[4][0], f[4][1]);
+      if (side > 2) setSlot(colR, f[5][0], f[5][1]);
     }
   }
 
@@ -1429,18 +1407,18 @@ body{min-width:320px}
     ensureBars();
     const side = clamp16(m - 4);
     const mid  = clamp16(m);
-    paintKittColumn(getCol("vuColL"), side, "blue", "dim-blue");
-    paintKittColumn(getCol("vuColM"), mid,  "blue", "dim-blue");
-    paintKittColumn(getCol("vuColR"), side, "blue", "dim-blue");
+    paintKittColumn(getCol("vuColL"), side, "blue", "dim-blue", "dim-blue2");
+    paintKittColumn(getCol("vuColM"), mid,  "blue", "dim-blue", "dim-blue2");
+    paintKittColumn(getCol("vuColR"), side, "blue", "dim-blue", "dim-blue2");
   }
 
   function renderMode7(m){
     ensureBars();
     const side = clamp16(m - 4);
     const mid  = clamp16(m);
-    paintKarrFlippedColumn(getCol("vuColL"), side, "green", "dim-green");
-    paintKarrCenterColumn (getCol("vuColM"), mid,  "green", "dim-green");
-    paintKarrFlippedColumn(getCol("vuColR"), side, "green", "dim-green");
+    paintKarrFlippedColumn(getCol("vuColL"), side, "green", "dim-green", "dim-green2");
+    paintKarrCenterColumn (getCol("vuColM"), mid,  "green", "dim-green", "dim-green2");
+    paintKarrFlippedColumn(getCol("vuColR"), side, "green", "dim-green", "dim-green2");
   }
 
   function renderMode8(vl, vm, vr){
@@ -1452,16 +1430,16 @@ body{min-width:320px}
 
   function renderMode9(vl, vm, vr){
     ensureBars();
-    paintKittColumn(getCol("vuColL"), clamp16(vl), "blue", "dim-blue");
-    paintKittColumn(getCol("vuColM"), clamp16(vm), "green", "dim-green");
-    paintKittColumn(getCol("vuColR"), clamp16(vr), "yellow", "dim-yellow");
+    paintKittColumn(getCol("vuColL"), clamp16(vl), "blue", "dim-blue", "dim-blue2");
+    paintKittColumn(getCol("vuColM"), clamp16(vm), "green", "dim-green", "dim-green2");
+    paintKittColumn(getCol("vuColR"), clamp16(vr), "yellow", "dim-yellow", "dim-yellow2");
   }
 
   function renderMode10(vl, vm, vr){
     ensureBars();
-    paintKittColumn(getCol("vuColL"), clamp16(vl), "blue", "dim-blue");
-    paintKittColumn(getCol("vuColM"), clamp16(vm), "whitehot", "dim-red");
-    paintKittColumn(getCol("vuColR"), clamp16(vr), "blue", "dim-blue");
+    paintKittColumn(getCol("vuColL"), clamp16(vl), "blue", "dim-blue", "dim-blue2");
+    paintKittColumn(getCol("vuColM"), clamp16(vm), "whitehot", "dim-red", "dim-red2");
+    paintKittColumn(getCol("vuColR"), clamp16(vr), "blue", "dim-blue", "dim-blue2");
   }
 
   function renderDisplayByMode(mode, vuL, vuM, vuR){
@@ -1498,30 +1476,25 @@ body{min-width:320px}
       displayModeStatus.textContent = "DISPLAY MODE: " + ui.displayMode;
       renderDisplayModeCards();
     }
-
     if (g){
       ui.gain = parseInt(g[1], 10);
       gainStatus.textContent = "GAIN: " + ui.gain;
     }
-
     if (nano){
       const v = nano[1].toUpperCase();
       ui.vehicleMode = (v === "OFF") ? null : v;
       vehicleModeStatus.textContent = "VEHICLE MODE: " + (ui.vehicleMode ?? "OFF");
       renderVehicleMode();
     }
-
     if (step){
       ui.step = step[1].split("").map(ch => ch === "1");
       renderSteps();
     }
-
     if (box){
       const bits10 = box[1].split("").map(ch => ch === "1");
       syncBoxBits(bits10);
       renderBoxes();
     }
-
     if (vu){
       ui.hasVu = true;
       ui.vuL = clamp16(parseInt(vu[1], 10) || 0);
@@ -1543,7 +1516,7 @@ body{min-width:320px}
     ui.vuM = 0;
     ui.vuR = 0;
     ui.hasVu = false;
-    ui.panelCooling = false;
+    ui.matrixCooling = false;
 
     displayModeStatus.textContent = "DISPLAY MODE: -";
     vehicleModeStatus.textContent = "VEHICLE MODE: -";
@@ -1808,4 +1781,4 @@ body{min-width:320px}
 })();
 </script>
 </body>
-                </html>
+                                                 </html>
