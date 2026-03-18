@@ -447,64 +447,142 @@ body{min-width:320px}
   height:100%;
   border-radius:2px;
   border:1px solid transparent;
+  transition:
+    background .22s ease,
+    box-shadow .28s ease,
+    border-color .22s ease,
+    opacity .28s ease;
 }
 
 .slot.off{
   background:transparent;
   border-color:transparent;
   box-shadow:none;
+  opacity:0;
 }
 
 .slot.dim-red{
   border-color:rgba(70,20,20,.60);
   background:linear-gradient(180deg,#5e1e25 0%, #45141a 100%);
+  opacity:.65;
 }
 
 .slot.dim-blue{
   border-color:rgba(20,35,90,.60);
   background:linear-gradient(180deg,#1c2f68 0%, #14224a 100%);
+  opacity:.65;
+}
+
+.slot.dim-yellow{
+  border-color:rgba(110,95,20,.60);
+  background:linear-gradient(180deg,#6a5a16 0%, #4d4010 100%);
+  opacity:.65;
+}
+
+.slot.dim-green{
+  border-color:rgba(25,85,28,.60);
+  background:linear-gradient(180deg,#295d25 0%, #1b4218 100%);
+  opacity:.65;
 }
 
 .slot.red{
   border-color:rgba(90,20,10,.72);
   background:linear-gradient(180deg,#ff8d8d 0%, #ff5555 40%, #f23333 100%);
   box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(255,70,70,.18);
+  opacity:1;
 }
 
 .slot.orange{
   border-color:rgba(120,55,10,.72);
   background:linear-gradient(180deg,#ffbf73 0%, #ff9538 42%, #ea6d08 100%);
   box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(255,140,50,.18);
+  opacity:1;
 }
 
 .slot.yellow{
   border-color:rgba(140,120,10,.72);
   background:linear-gradient(180deg,#fff79b 0%, #ffe75a 42%, #d6b800 100%);
   box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(255,235,80,.18);
+  opacity:1;
 }
 
 .slot.green{
   border-color:rgba(30,110,25,.72);
   background:linear-gradient(180deg,#97ff9f 0%, #4aea52 42%, #18b821 100%);
   box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(70,255,90,.16);
+  opacity:1;
 }
 
 .slot.blue{
   border-color:rgba(25,65,130,.72);
   background:linear-gradient(180deg,#9fd1ff 0%, #55a0ff 42%, #1f61db 100%);
   box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(90,160,255,.18);
+  opacity:1;
 }
 
 .slot.cyan{
   border-color:rgba(20,120,130,.72);
   background:linear-gradient(180deg,#9bffff 0%, #54e8ff 42%, #16a9d2 100%);
   box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(80,240,255,.16);
+  opacity:1;
 }
 
 .slot.whitehot{
   border-color:rgba(190,190,190,.72);
   background:linear-gradient(180deg,#ffffff 0%, #ffe8e8 32%, #ff8d8d 100%);
   box-shadow: inset 0 -1px 0 rgba(0,0,0,.26), 0 0 5px rgba(255,255,255,.14);
+  opacity:1;
+}
+
+/* MODE3/4 矩陣燈 */
+.matrixZone{
+  width:100%;
+  height:100%;
+  display:grid;
+  grid-template-columns:repeat(6, 1fr);
+  grid-template-rows:repeat(8, 1fr);
+  gap:5px;
+  padding:6px;
+}
+
+.matrixLamp{
+  border-radius:4px;
+  border:1px solid #161616;
+  background:linear-gradient(180deg,#050505 0%, #0d0d0d 100%);
+  box-shadow:
+    inset 0 0 5px rgba(255,255,255,.01),
+    inset 0 -1px 2px rgba(0,0,0,.45);
+  transition:
+    background .26s ease,
+    box-shadow .42s ease,
+    border-color .26s ease,
+    opacity .38s ease,
+    transform .22s ease;
+  opacity:.22;
+}
+
+.matrixLamp.redOn{
+  border-color:#7a1515;
+  background:linear-gradient(180deg,#ff9b9b 0%, #ff4a4a 48%, #dd1c1c 100%);
+  box-shadow:
+    0 0 7px rgba(255,60,60,.32),
+    0 0 16px rgba(255,40,40,.18),
+    inset 0 0 8px rgba(255,255,255,.10);
+  opacity:1;
+}
+
+.matrixLamp.yellowOn{
+  border-color:#8a7600;
+  background:linear-gradient(180deg,#fff7a2 0%, #ffe95d 48%, #d2b400 100%);
+  box-shadow:
+    0 0 7px rgba(255,232,70,.30),
+    0 0 16px rgba(255,225,40,.16),
+    inset 0 0 8px rgba(255,255,255,.10);
+  opacity:1;
+}
+
+.matrixLamp.cooling{
+  opacity:.38;
 }
 
 /* 下方模式區 */
@@ -714,7 +792,6 @@ body{min-width:320px}
   margin-top:16px;
 }
 
-/* 手機版 */
 @media (max-width:480px){
   .app{padding:8px}
   .frame{padding:8px}
@@ -767,6 +844,11 @@ body{min-width:320px}
     --gapX: 21px;
     --slotH: 9px;
     --slotGap: 4px;
+  }
+
+  .matrixZone{
+    gap:4px;
+    padding:4px;
   }
 
   .bottomModes{
@@ -860,38 +942,15 @@ body{min-width:320px}
 
         <div class="tacticalBody">
           <div class="sideCol">
-            <button class="sideBtn"     data-box="1" data-side="L">ALT</button>
-            <button class="sideBtn"     data-box="2" data-side="L">OIL<br>PRESS</button>
+            <button class="sideBtn" data-box="1" data-side="L">ALT</button>
+            <button class="sideBtn" data-box="2" data-side="L">OIL<br>PRESS</button>
             <button class="sideBtn red" data-box="3" data-side="L">OIL<br>TEMP</button>
             <button class="sideBtn red" data-box="4" data-side="L">EGT</button>
             <button class="sideBtn red" data-box="5" data-side="L">FUEL</button>
           </div>
 
           <div class="centerZone">
-            <button id="bigModeZone" class="bigModeZone" title="Next Display Mode">
-              <div class="barsArea">
-                <div class="barCol side" id="vuColL">
-                  <div class="slot off"></div><div class="slot off"></div><div class="slot off"></div><div class="slot off"></div>
-                  <div class="slot off"></div><div class="slot off"></div><div class="slot off"></div><div class="slot off"></div>
-                  <div class="slot off"></div><div class="slot off"></div><div class="slot off"></div><div class="slot off"></div>
-                  <div class="slot off"></div><div class="slot off"></div><div class="slot off"></div><div class="slot off"></div>
-                </div>
-
-                <div class="barCol mid" id="vuColM">
-                  <div class="slot off"></div><div class="slot off"></div><div class="slot off"></div><div class="slot off"></div>
-                  <div class="slot off"></div><div class="slot off"></div><div class="slot off"></div><div class="slot off"></div>
-                  <div class="slot off"></div><div class="slot off"></div><div class="slot off"></div><div class="slot off"></div>
-                  <div class="slot off"></div><div class="slot off"></div><div class="slot off"></div><div class="slot off"></div>
-                </div>
-
-                <div class="barCol side" id="vuColR">
-                  <div class="slot off"></div><div class="slot off"></div><div class="slot off"></div><div class="slot off"></div>
-                  <div class="slot off"></div><div class="slot off"></div><div class="slot off"></div><div class="slot off"></div>
-                  <div class="slot off"></div><div class="slot off"></div><div class="slot off"></div><div class="slot off"></div>
-                  <div class="slot off"></div><div class="slot off"></div><div class="slot off"></div><div class="slot off"></div>
-                </div>
-              </div>
-            </button>
+            <button id="bigModeZone" class="bigModeZone" title="Next Display Mode"></button>
 
             <div class="bottomModes">
               <div class="leftIndicators">
@@ -909,8 +968,8 @@ body{min-width:320px}
           </div>
 
           <div class="sideCol">
-            <button class="sideBtn"     data-box="1" data-side="R">AUX</button>
-            <button class="sideBtn"     data-box="2" data-side="R">SAT<br>COMM</button>
+            <button class="sideBtn" data-box="1" data-side="R">AUX</button>
+            <button class="sideBtn" data-box="2" data-side="R">SAT<br>COMM</button>
             <button class="sideBtn red" data-box="3" data-side="R">ACC</button>
             <button class="sideBtn red" data-box="4" data-side="R">RADAR</button>
             <button class="sideBtn red" data-box="5" data-side="R">MPI</button>
@@ -927,65 +986,16 @@ body{min-width:320px}
       <div class="center"><div class="modeSubHead">PUSH BUTTON TO SWITCH</div></div>
 
       <div class="modeGrid">
-        <button class="modeCard" data-mode="1">
-          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 .001 18.001A9 9 0 0 0 12 3Zm0 2a7 7 0 1 1-.001 14.001A7 7 0 0 1 12 5Zm-1 3h2v6h-2V8Zm0 7h2v2h-2v-2Z"/></svg>
-          <div class="modeCardTitle">KITT</div>
-          <div class="modeCardSub">MODE 1</div>
-        </button>
-
-        <button class="modeCard" data-mode="2">
-          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6Zm0 5h18v2H3v-2Zm0 5h18v2H3v-2Z"/></svg>
-          <div class="modeCardTitle">KARR</div>
-          <div class="modeCardSub">MODE 2</div>
-        </button>
-
-        <button class="modeCard" data-mode="3">
-          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M12 2 1 7l11 5 9-4.09V17h2V7L12 2Z"/></svg>
-          <div class="modeCardTitle">PILOT<br>KITT</div>
-          <div class="modeCardSub">MODE 3</div>
-        </button>
-
-        <button class="modeCard" data-mode="4">
-          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M12 4a8 8 0 1 0 .001 16.001A8 8 0 0 0 12 4Zm0 2a6 6 0 1 1-.001 12.001A6 6 0 0 1 12 6Z"/></svg>
-          <div class="modeCardTitle">PILOT<br>KARR</div>
-          <div class="modeCardSub">MODE 4</div>
-        </button>
-
-        <button class="modeCard" data-mode="6">
-          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M12 6a6 6 0 0 0-6 6v7h12v-7a6 6 0 0 0-6-6Z"/></svg>
-          <div class="modeCardTitle">BLUE<br>KITT</div>
-          <div class="modeCardSub">MODE 6</div>
-        </button>
-
-        <button class="modeCard" data-mode="7">
-          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M12 2C8 6 6 9 6 12a6 6 0 0 0 12 0c0-3-2-6-6-10Z"/></svg>
-          <div class="modeCardTitle">GREEN<br>KARR</div>
-          <div class="modeCardSub">MODE 7</div>
-        </button>
-
-        <button class="modeCard" data-mode="5">
-          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M12 2 3 9h3v11h12V9h3L12 2Z"/></svg>
-          <div class="modeCardTitle">DAMAGE<br>KITT</div>
-          <div class="modeCardSub">MODE 5</div>
-        </button>
-
-        <button class="modeCard" data-mode="8">
-          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M12 2s4 4 4 8a4 4 0 0 1-8 0c0-4 4-8 4-8Z"/></svg>
-          <div class="modeCardTitle">FLAME<br>KITT</div>
-          <div class="modeCardSub">MODE 8</div>
-        </button>
-
-        <button class="modeCard big" data-mode="9">
-          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M3 17h2v-7H3v7Zm4 0h2V7H7v10Zm4 0h2v-4h-2v4Zm4 0h2V5h-2v12Zm4 0h2V9h-2v8Z"/></svg>
-          <div class="modeCardTitle">SPECTRUM</div>
-          <div class="modeCardSub">MODE 9</div>
-        </button>
-
-        <button class="modeCard big" data-mode="10">
-          <svg class="modeIcon" viewBox="0 0 24 24"><path d="M3 3h18v2H3V3Zm2 5h14v2H5V8Zm-2 5h18v2H3v-2Zm2 5h14v2H5v-2Z"/></svg>
-          <div class="modeCardTitle">ANALYSIS</div>
-          <div class="modeCardSub">MODE 10</div>
-        </button>
+        <button class="modeCard" data-mode="1"><div class="modeCardTitle">KITT</div><div class="modeCardSub">MODE 1</div></button>
+        <button class="modeCard" data-mode="2"><div class="modeCardTitle">KARR</div><div class="modeCardSub">MODE 2</div></button>
+        <button class="modeCard" data-mode="3"><div class="modeCardTitle">PILOT<br>KITT</div><div class="modeCardSub">MODE 3</div></button>
+        <button class="modeCard" data-mode="4"><div class="modeCardTitle">PILOT<br>KARR</div><div class="modeCardSub">MODE 4</div></button>
+        <button class="modeCard" data-mode="6"><div class="modeCardTitle">BLUE<br>KITT</div><div class="modeCardSub">MODE 6</div></button>
+        <button class="modeCard" data-mode="7"><div class="modeCardTitle">GREEN<br>KARR</div><div class="modeCardSub">MODE 7</div></button>
+        <button class="modeCard" data-mode="5"><div class="modeCardTitle">DAMAGE<br>KITT</div><div class="modeCardSub">MODE 5</div></button>
+        <button class="modeCard" data-mode="8"><div class="modeCardTitle">FLAME<br>KITT</div><div class="modeCardSub">MODE 8</div></button>
+        <button class="modeCard big" data-mode="9"><div class="modeCardTitle">SPECTRUM</div><div class="modeCardSub">MODE 9</div></button>
+        <button class="modeCard big" data-mode="10"><div class="modeCardTitle">ANALYSIS</div><div class="modeCardSub">MODE 10</div></button>
       </div>
     </div>
   </div>
@@ -997,12 +1007,10 @@ body{min-width:320px}
 
     <div class="row" style="max-width:920px;">
       <button id="btnGainDown" class="btn" style="max-width:420px; width:min(420px,100%);" disabled>
-        <svg class="icon" viewBox="0 0 24 24"><path d="M19 13H5v-2h14v2Z"/></svg>
         <div class="label">GAIN −</div>
       </button>
 
       <button id="btnGainUp" class="btn" style="max-width:420px; width:min(420px,100%);" disabled>
-        <svg class="icon" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2Z"/></svg>
         <div class="label">GAIN ＋</div>
       </button>
     </div>
@@ -1062,6 +1070,8 @@ body{min-width:320px}
   const gainStatus         = $("gainStatus");
   const notifyStatus       = $("notifyStatus");
 
+  const bigModeZone = $("bigModeZone");
+
   const sScan = $("sScan");
   const sConn = $("sConn");
   const sBtn  = $("sBtn");
@@ -1081,7 +1091,9 @@ body{min-width:320px}
     vehicleMode: null,
     vuL: 0,
     vuM: 0,
-    vuR: 0
+    vuR: 0,
+    matrixCooling: false,
+    matrixColor: "red"
   };
 
   function playOnce(audio){
@@ -1105,14 +1117,12 @@ body{min-width:320px}
   async function writeChar(c){
     if (!ui.connected || !rxChar) return;
     const data = new TextEncoder().encode(c);
-
     try{
       if (typeof rxChar.writeValueWithoutResponse === "function"){
         await rxChar.writeValueWithoutResponse(data);
         return;
       }
     } catch(_) {}
-
     try{
       await rxChar.writeValue(data);
     } catch(_) {}
@@ -1122,14 +1132,12 @@ body{min-width:320px}
     if (!ui.connected || !rxChar) return;
     const text = line.endsWith("\n") ? line : line + "\n";
     const data = new TextEncoder().encode(text);
-
     try{
       if (typeof rxChar.writeValueWithoutResponse === "function"){
         await rxChar.writeValueWithoutResponse(data);
         return;
       }
     } catch(_) {}
-
     try{
       await rxChar.writeValue(data);
     } catch(_) {}
@@ -1164,7 +1172,6 @@ body{min-width:320px}
     scanPos = 0;
     scanDir = 1;
     renderScanner();
-
     scanTimer = setInterval(() => {
       scanPos += scanDir;
       if (scanPos >= 7){
@@ -1228,7 +1235,6 @@ body{min-width:320px}
     norBtn.classList.remove("activeNor");
     autoBtn.classList.remove("activeAuto");
     spmBtn.classList.remove("activeSpm");
-
     indNor.classList.remove("active");
     indAuto.classList.remove("active");
     indSpm.classList.remove("active");
@@ -1251,26 +1257,55 @@ body{min-width:320px}
     ui.boxR = [bits10[1], bits10[3], bits10[5], bits10[7], bits10[9]];
   }
 
+  function setBigModeBarsHtml(){
+    bigModeZone.innerHTML = `
+      <div class="barsArea">
+        <div class="barCol side" id="vuColL">
+          ${Array.from({length:16}, ()=>'<div class="slot off"></div>').join('')}
+        </div>
+        <div class="barCol mid" id="vuColM">
+          ${Array.from({length:16}, ()=>'<div class="slot off"></div>').join('')}
+        </div>
+        <div class="barCol side" id="vuColR">
+          ${Array.from({length:16}, ()=>'<div class="slot off"></div>').join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  function setBigModeMatrixHtml(){
+    bigModeZone.innerHTML = `
+      <div class="matrixZone" id="matrixZone">
+        ${Array.from({length:48}, ()=>'<div class="matrixLamp"></div>').join('')}
+      </div>
+    `;
+  }
+
+  function getCol(id){
+    return $(id);
+  }
+
   function clearAllSlots(){
     ["vuColL","vuColM","vuColR"].forEach(id=>{
-      [...$(id).children].forEach(el => el.className = "slot off");
+      const el = $(id);
+      if (!el) return;
+      [...el.children].forEach(s => s.className = "slot off");
     });
   }
 
   function setSlot(colEl, idx, cls){
+    if (!colEl) return;
     if (idx < 0 || idx > 15) return;
     colEl.children[idx].className = "slot " + cls;
   }
 
   function clearColumn(colEl){
-    for (let i = 0; i < 16; i++){
-      colEl.children[i].className = "slot off";
-    }
+    if (!colEl) return;
+    for (let i = 0; i < 16; i++) colEl.children[i].className = "slot off";
   }
 
   function paintKittColumn(colEl, level, colorClass, dimClass = "dim-red"){
     clearColumn(colEl);
-
     const lv = Math.max(0, Math.min(16, Number(level) || 0));
     if (lv <= 0) return;
 
@@ -1280,15 +1315,11 @@ body{min-width:320px}
     const hasExtra = lv % 2;
 
     for (let p = 0; p < pairs; p++){
-      const up = centerTop - p;
-      const dn = centerBottom + p;
-      setSlot(colEl, up, colorClass);
-      setSlot(colEl, dn, colorClass);
+      setSlot(colEl, centerTop - p, colorClass);
+      setSlot(colEl, centerBottom + p, colorClass);
     }
 
-    if (hasExtra){
-      setSlot(colEl, centerTop - pairs, colorClass);
-    }
+    if (hasExtra) setSlot(colEl, centerTop - pairs, colorClass);
 
     const slots = [...colEl.children];
     const topMost = slots.findIndex(el => !el.classList.contains("off"));
@@ -1300,75 +1331,46 @@ body{min-width:320px}
       }
     }
 
-    if (topMost > 0 && slots[topMost - 1].classList.contains("off")){
-      setSlot(colEl, topMost - 1, dimClass);
-    }
-    if (bottomMost >= 0 && bottomMost < 15 && slots[bottomMost + 1].classList.contains("off")){
-      setSlot(colEl, bottomMost + 1, dimClass);
-    }
+    if (topMost > 0 && slots[topMost - 1].classList.contains("off")) setSlot(colEl, topMost - 1, dimClass);
+    if (bottomMost >= 0 && bottomMost < 15 && slots[bottomMost + 1].classList.contains("off")) setSlot(colEl, bottomMost + 1, dimClass);
   }
 
-  function paintKarrColumn(colEl, level, colorClass, dimClass = "dim-red"){
+  function paintKarrColumn(colEl, level, colorClass, dimClass){
     clearColumn(colEl);
-
     const lv = Math.max(0, Math.min(16, Number(level) || 0));
     if (lv <= 0) return;
 
     const half = Math.ceil(lv / 2);
 
     for (let i = 0; i < half; i++){
-      const idx = 7 - i;
-      if (idx >= 0) setSlot(colEl, idx, colorClass);
+      const up = 7 - i;
+      const dn = 8 + i;
+      if (up >= 0) setSlot(colEl, up, colorClass);
+      if (dn < 16) setSlot(colEl, dn, colorClass);
     }
 
-    for (let i = 0; i < half; i++){
-      const idx = 8 + i;
-      if (idx < 16) setSlot(colEl, idx, colorClass);
-    }
-
-    if (lv >= 6){
-      const topDim = 7 - half;
-      const botDim = 8 + half;
-      if (topDim >= 0) setSlot(colEl, topDim, dimClass);
-      if (botDim < 16) setSlot(colEl, botDim, dimClass);
-    } else {
-      const topMost = 7 - (half - 1);
-      const botMost = 8 + (half - 1);
-      if (topMost > 0) setSlot(colEl, topMost - 1, dimClass);
-      if (botMost < 15) setSlot(colEl, botMost + 1, dimClass);
-    }
+    const topDim = 7 - half;
+    const botDim = 8 + half;
+    if (topDim >= 0) setSlot(colEl, topDim, dimClass);
+    if (botDim < 16) setSlot(colEl, botDim, dimClass);
   }
 
-  function paintKarrFlippedColumn(colEl, level, colorClass, dimClass = "dim-red", flip=false){
+  function paintKarrFlippedColumn(colEl, level, colorClass, dimClass){
     clearColumn(colEl);
-
     const lv = Math.max(0, Math.min(16, Number(level) || 0));
     if (lv <= 0) return;
 
     const pairs = Math.floor(lv / 2);
     const hasExtra = lv % 2;
 
-    if (!flip){
-      for (let p = 0; p < pairs; p++){
-        const up = 7 - p;
-        const dn = 8 + p;
-        setSlot(colEl, up, colorClass);
-        setSlot(colEl, dn, colorClass);
-      }
-      if (hasExtra){
-        setSlot(colEl, 7 - pairs, colorClass);
-      }
-    } else {
-      for (let p = 0; p < pairs; p++){
-        const up = p;
-        const dn = 15 - p;
-        setSlot(colEl, up, colorClass);
-        setSlot(colEl, dn, colorClass);
-      }
-      if (hasExtra){
-        const idx = pairs;
-        if (idx >= 0 && idx < 16) setSlot(colEl, idx, colorClass);
-      }
+    for (let p = 0; p < pairs; p++){
+      setSlot(colEl, p, colorClass);
+      setSlot(colEl, 15 - p, colorClass);
+    }
+
+    if (hasExtra){
+      const idx = pairs;
+      if (idx >= 0 && idx < 16) setSlot(colEl, idx, colorClass);
     }
 
     const slots = [...colEl.children];
@@ -1381,17 +1383,13 @@ body{min-width:320px}
       }
     }
 
-    if (topMost > 0 && slots[topMost - 1].classList.contains("off")){
-      setSlot(colEl, topMost - 1, dimClass);
-    }
-    if (bottomMost >= 0 && bottomMost < 15 && slots[bottomMost + 1].classList.contains("off")){
-      setSlot(colEl, bottomMost + 1, dimClass);
-    }
+    if (topMost > 0 && slots[topMost - 1].classList.contains("off")) setSlot(colEl, topMost - 1, dimClass);
+    if (bottomMost >= 0 && bottomMost < 15 && slots[bottomMost + 1].classList.contains("off")) setSlot(colEl, bottomMost + 1, dimClass);
   }
 
   function paintMode8Flame(colEl, level){
+    clearColumn(colEl);
     const lv = Math.max(0, Math.min(16, Number(level) || 0));
-    for (let i = 0; i < 16; i++) colEl.children[i].className = "slot off";
     if (lv <= 0) return;
 
     const centerTop = 7;
@@ -1399,37 +1397,59 @@ body{min-width:320px}
     const pairs = Math.floor(lv / 2);
     const hasExtra = lv % 2;
 
-    function flameClass(stepFromCenter){
-      if (stepFromCenter === 1) return "red";
-      if (stepFromCenter === 2) return "orange";
-      if (stepFromCenter === 3) return "yellow";
+    function flame(step){
+      if (step === 1) return "red";
+      if (step === 2) return "orange";
+      if (step === 3) return "yellow";
       return "green";
     }
 
     for (let p = 0; p < pairs; p++){
-      const step = p + 1;
-      const cls = flameClass(step);
+      const cls = flame(p + 1);
       setSlot(colEl, centerTop - p, cls);
       setSlot(colEl, centerBottom + p, cls);
     }
-
-    if (hasExtra){
-      const step = pairs + 1;
-      setSlot(colEl, centerTop - pairs, flameClass(step));
-    }
+    if (hasExtra) setSlot(colEl, centerTop - pairs, flame(pairs + 1));
 
     const slots = [...colEl.children];
     const topMost = slots.findIndex(el => !el.classList.contains("off"));
     let bottomMost = -1;
     for (let i = 15; i >= 0; i--){
-      if (!slots[i].classList.contains("off")) {
+      if (!slots[i].classList.contains("off")){
         bottomMost = i;
         break;
       }
     }
-
     if (topMost > 0 && slots[topMost - 1].classList.contains("off")) setSlot(colEl, topMost - 1, "dim-red");
     if (bottomMost >= 0 && bottomMost < 15 && slots[bottomMost + 1].classList.contains("off")) setSlot(colEl, bottomMost + 1, "dim-red");
+  }
+
+  function renderMatrix(color){
+    if (!$("#matrixZone")) setBigModeMatrixHtml();
+    const lamps = [...$("#matrixZone").children];
+    const on = ui.vuM > 3;
+
+    lamps.forEach((lamp, i)=>{
+      lamp.className = "matrixLamp";
+      if (on){
+        lamp.classList.add(color === "red" ? "redOn" : "yellowOn");
+      } else if (ui.matrixCooling){
+        lamp.classList.add("cooling");
+      }
+    });
+  }
+
+  function triggerMatrixCooling(color){
+    ui.matrixCooling = true;
+    ui.matrixColor = color;
+    renderMatrix(color);
+    clearTimeout(triggerMatrixCooling._t);
+    triggerMatrixCooling._t = setTimeout(()=>{
+      ui.matrixCooling = false;
+      if (ui.displayMode === 3 || ui.displayMode === 4){
+        renderMatrix(ui.displayMode === 3 ? "red" : "yellow");
+      }
+    }, 260);
   }
 
   function clamp16(v){
@@ -1437,96 +1457,110 @@ body{min-width:320px}
   }
 
   function renderMode1(m){
+    setBigModeBarsHtml();
     const side = clamp16(m - 4);
     const mid  = clamp16(m);
-    paintKittColumn($("vuColL"), side, "red", "dim-red");
-    paintKittColumn($("vuColM"), mid,  "red", "dim-red");
-    paintKittColumn($("vuColR"), side, "red", "dim-red");
+    paintKittColumn(getCol("vuColL"), side, "red", "dim-red");
+    paintKittColumn(getCol("vuColM"), mid,  "red", "dim-red");
+    paintKittColumn(getCol("vuColR"), side, "red", "dim-red");
   }
 
   function renderMode2(m){
+    setBigModeBarsHtml();
     const side = clamp16(m - 4);
     const mid  = clamp16(m);
-    paintKarrFlippedColumn($("vuColL"), side, "yellow", "dim-red", false);
-    paintKarrColumn       ($("vuColM"), mid,  "yellow", "dim-red");
-    paintKarrFlippedColumn($("vuColR"), side, "yellow", "dim-red", true);
+    paintKarrFlippedColumn(getCol("vuColL"), side, "yellow", "dim-yellow");
+    paintKarrColumn       (getCol("vuColM"), mid,  "yellow", "dim-yellow");
+    paintKarrFlippedColumn(getCol("vuColR"), side, "yellow", "dim-yellow");
   }
 
   function renderMode3(m){
-    const L = clamp16(m - 3);
-    const C = clamp16(m);
-    const R = clamp16(m - 3);
-    paintKittColumn($("vuColL"), L, "red", "dim-red");
-    paintKittColumn($("vuColM"), C, "whitehot", "dim-red");
-    paintKittColumn($("vuColR"), R, "red", "dim-red");
+    if (bigModeZone.dataset.render !== "matrix-red"){
+      setBigModeMatrixHtml();
+      bigModeZone.dataset.render = "matrix-red";
+    }
+    if (m > 3){
+      ui.matrixCooling = false;
+      renderMatrix("red");
+    } else {
+      triggerMatrixCooling("red");
+    }
   }
 
   function renderMode4(m){
-    const L = clamp16(m - 3);
-    const C = clamp16(m);
-    const R = clamp16(m - 3);
-    paintKittColumn($("vuColL"), L, "yellow", "dim-red");
-    paintKittColumn($("vuColM"), C, "whitehot", "dim-red");
-    paintKittColumn($("vuColR"), R, "yellow", "dim-red");
+    if (bigModeZone.dataset.render !== "matrix-yellow"){
+      setBigModeMatrixHtml();
+      bigModeZone.dataset.render = "matrix-yellow";
+    }
+    if (m > 3){
+      ui.matrixCooling = false;
+      renderMatrix("yellow");
+    } else {
+      triggerMatrixCooling("yellow");
+    }
   }
 
   function renderMode5(m){
+    setBigModeBarsHtml();
+    bigModeZone.dataset.render = "bars";
     const L = clamp16(m - 4);
     const C = clamp16(m);
     const R = clamp16(m - 4);
-
     const jitter = (base, seed) => {
       if (base <= 0) return 0;
       const n = ((Date.now() >> 5) + seed) % 3;
       return clamp16(base - (n === 0 ? 1 : 0));
     };
-
-    paintKittColumn($("vuColL"), jitter(L,1), "red", "dim-red");
-    paintKittColumn($("vuColM"), jitter(C,2), "red", "dim-red");
-    paintKittColumn($("vuColR"), jitter(R,3), "red", "dim-red");
+    paintKittColumn(getCol("vuColL"), jitter(L,1), "red", "dim-red");
+    paintKittColumn(getCol("vuColM"), jitter(C,2), "red", "dim-red");
+    paintKittColumn(getCol("vuColR"), jitter(R,3), "red", "dim-red");
   }
 
   function renderMode6(m){
+    setBigModeBarsHtml();
+    bigModeZone.dataset.render = "bars";
     const side = clamp16(m - 4);
     const mid  = clamp16(m);
-    paintKittColumn($("vuColL"), side, "blue", "dim-blue");
-    paintKittColumn($("vuColM"), mid,  "blue", "dim-blue");
-    paintKittColumn($("vuColR"), side, "blue", "dim-blue");
+    paintKittColumn(getCol("vuColL"), side, "blue", "dim-blue");
+    paintKittColumn(getCol("vuColM"), mid,  "blue", "dim-blue");
+    paintKittColumn(getCol("vuColR"), side, "blue", "dim-blue");
   }
 
   function renderMode7(m){
-    const L = clamp16(m - 4);
-    const C = clamp16(m);
-    const R = clamp16(m - 4);
-    paintKittColumn($("vuColL"), L, "green", "dim-red");
-    paintKittColumn($("vuColM"), C, "green", "dim-red");
-    paintKittColumn($("vuColR"), R, "green", "dim-red");
+    setBigModeBarsHtml();
+    bigModeZone.dataset.render = "bars";
+    const side = clamp16(m - 4);
+    const mid  = clamp16(m);
+    paintKarrFlippedColumn(getCol("vuColL"), side, "green", "dim-green");
+    paintKarrColumn       (getCol("vuColM"), mid,  "green", "dim-green");
+    paintKarrFlippedColumn(getCol("vuColR"), side, "green", "dim-green");
   }
 
   function renderMode8(vl, vm, vr){
-    paintMode8Flame($("vuColL"), clamp16(vl));
-    paintMode8Flame($("vuColM"), clamp16(vm));
-    paintMode8Flame($("vuColR"), clamp16(vr));
+    setBigModeBarsHtml();
+    bigModeZone.dataset.render = "bars";
+    paintMode8Flame(getCol("vuColL"), clamp16(vl));
+    paintMode8Flame(getCol("vuColM"), clamp16(vm));
+    paintMode8Flame(getCol("vuColR"), clamp16(vr));
   }
 
   function renderMode9(vl, vm, vr){
-    paintKittColumn($("vuColL"), clamp16(vl), "blue", "dim-blue");
-    paintKittColumn($("vuColM"), clamp16(vm), "green", "dim-red");
-    paintKittColumn($("vuColR"), clamp16(vr), "yellow", "dim-red");
+    setBigModeBarsHtml();
+    bigModeZone.dataset.render = "bars";
+    paintKittColumn(getCol("vuColL"), clamp16(vl), "blue", "dim-blue");
+    paintKittColumn(getCol("vuColM"), clamp16(vm), "green", "dim-green");
+    paintKittColumn(getCol("vuColR"), clamp16(vr), "yellow", "dim-yellow");
   }
 
   function renderMode10(vl, vm, vr){
-    const L = clamp16(vl);
-    const M = clamp16(vm);
-    const R = clamp16(vr);
-    paintKittColumn($("vuColL"), L, "cyan", "dim-blue");
-    paintKittColumn($("vuColM"), M, "whitehot", "dim-red");
-    paintKittColumn($("vuColR"), R, "cyan", "dim-blue");
+    setBigModeBarsHtml();
+    bigModeZone.dataset.render = "bars";
+    paintKittColumn(getCol("vuColL"), clamp16(vl), "cyan", "dim-blue");
+    paintKittColumn(getCol("vuColM"), clamp16(vm), "whitehot", "dim-red");
+    paintKittColumn(getCol("vuColR"), clamp16(vr), "cyan", "dim-blue");
   }
 
   function renderDisplayByMode(mode, vuL, vuM, vuR){
-    clearAllSlots();
-
     switch(Number(mode || 1)){
       case 1: return renderMode1(vuM);
       case 2: return renderMode2(vuM);
@@ -1603,6 +1637,7 @@ body{min-width:320px}
     ui.vuL = 0;
     ui.vuM = 0;
     ui.vuR = 0;
+    ui.matrixCooling = false;
 
     displayModeStatus.textContent = "DISPLAY MODE: -";
     vehicleModeStatus.textContent = "VEHICLE MODE: -";
@@ -1613,7 +1648,9 @@ body{min-width:320px}
     renderSteps();
     renderBoxes();
     renderVehicleMode();
-    renderDisplayByMode(1, 0, 0, 0);
+    setBigModeBarsHtml();
+    bigModeZone.dataset.render = "bars";
+    renderMode1(0);
   }
 
   function setConnectedUI(isConn){
@@ -1636,9 +1673,9 @@ body{min-width:320px}
       "btnStartup","btnShutdown","btnAllOff","btnModeOff","btnDTMF7","btnDTMF8","btnSendCustom"
     ].forEach(id => $(id).disabled = !isConn);
 
-    $("bigModeZone").disabled = !isConn;
-    $("bigModeZone").style.pointerEvents = isConn ? "auto" : "none";
-    $("bigModeZone").style.filter = isConn ? "none" : "grayscale(.45) brightness(.75)";
+    bigModeZone.disabled = !isConn;
+    bigModeZone.style.pointerEvents = isConn ? "auto" : "none";
+    bigModeZone.style.filter = isConn ? "none" : "grayscale(.45) brightness(.75)";
 
     document.querySelectorAll(".sideBtn").forEach(btn=>{
       btn.disabled = !isConn;
@@ -1649,13 +1686,10 @@ body{min-width:320px}
     statusText.textContent = isConn ? "LINK: ESTABLISHED" : "LINK: NOT CONNECTED";
     scannerState.textContent = isConn ? "ACTIVE" : "OFFLINE";
     scannerState.style.color = isConn ? "var(--red)" : "var(--dim)";
-    scanText.textContent = isConn
-      ? "CONNECTED — SCAN SEQUENCE RUNNING"
-      : "CONNECT TO ENABLE SCAN SEQUENCE";
+    scanText.textContent = isConn ? "CONNECTED — SCAN SEQUENCE RUNNING" : "CONNECT TO ENABLE SCAN SEQUENCE";
 
-    if (isConn){
-      startScanner();
-    } else {
+    if (isConn) startScanner();
+    else {
       stopScanner();
       resetUiStates();
     }
@@ -1683,19 +1717,17 @@ body{min-width:320px}
 
   async function doConnect(){
     if (!device) return;
-
     playOnce(sBtn);
 
     try{
       device.addEventListener("gattserverdisconnected", onDisconnected);
-
       server = await device.gatt.connect();
       const svc = await server.getPrimaryService(SVC_UUID);
       rxChar = await svc.getCharacteristic(RX_UUID);
 
       try{
         txChar = await svc.getCharacteristic(TX_UUID);
-        if (txChar && txChar.properties && txChar.properties.notify){
+        if (txChar?.properties?.notify){
           await txChar.startNotifications();
           txChar.addEventListener("characteristicvaluechanged", (ev)=>{
             const txt = new TextDecoder().decode(ev.target.value);
@@ -1718,9 +1750,7 @@ body{min-width:320px}
       if (txChar){
         try{ txChar.stopNotifications(); } catch(_){}
       }
-      if (device?.gatt?.connected){
-        device.gatt.disconnect();
-      }
+      if (device?.gatt?.connected) device.gatt.disconnect();
     } catch(_){}
     onDisconnected();
   }
@@ -1744,14 +1774,11 @@ body{min-width:320px}
     });
   });
 
-  $("bigModeZone").addEventListener("click", async ()=>{
+  bigModeZone.addEventListener("click", async ()=>{
     if (!ui.connected) return;
     playOnce(sBtn);
     await writeChar("m");
-
-    if (typeof ui.displayMode === "number") ui.displayMode = (ui.displayMode % 10) + 1;
-    else ui.displayMode = 1;
-
+    ui.displayMode = typeof ui.displayMode === "number" ? (ui.displayMode % 10) + 1 : 1;
     renderDisplayModeCards();
     displayModeStatus.textContent = "DISPLAY MODE: " + ui.displayMode;
   });
@@ -1761,8 +1788,7 @@ body{min-width:320px}
     ui.step[idx] = !ui.step[idx];
     renderSteps();
     playOnce(sBtn);
-    const n = idx + 1;
-    await writeLine(`STEP${n}${ui.step[idx] ? "ON" : "OFF"}`);
+    await writeLine(`STEP${idx + 1}${ui.step[idx] ? "ON" : "OFF"}`);
   }
 
   $("step1Btn").addEventListener("click", ()=>toggleStep(0));
@@ -1772,21 +1798,16 @@ body{min-width:320px}
 
   async function toggleBox(side, idx){
     if (!ui.connected) return;
-
     const arr = side === "L" ? ui.boxL : ui.boxR;
     arr[idx] = !arr[idx];
     renderBoxes();
-
     playOnce(sBtn);
-    const cmd = buildBoxHalfCmd(side, idx, arr[idx]);
-    await writeLine(cmd);
+    await writeLine(buildBoxHalfCmd(side, idx, arr[idx]));
   }
 
   document.querySelectorAll(".sideBtn").forEach(btn=>{
     btn.addEventListener("click", ()=>{
-      const side = btn.dataset.side;
-      const idx = Number(btn.dataset.box) - 1;
-      toggleBox(side, idx);
+      toggleBox(btn.dataset.side, Number(btn.dataset.box) - 1);
     });
   });
 
@@ -1873,17 +1894,9 @@ body{min-width:320px}
     await writeLine(v);
   });
 
-  btnScan.addEventListener("click", async ()=>{
-    try{ await doScanPickDevice(); } catch(_){}
-  });
-
-  btnConnect.addEventListener("click", async ()=>{
-    await doConnect();
-  });
-
-  btnDisconnect.addEventListener("click", ()=>{
-    doDisconnect();
-  });
+  btnScan.addEventListener("click", async ()=>{ try{ await doScanPickDevice(); } catch(_){} });
+  btnConnect.addEventListener("click", async ()=>{ await doConnect(); });
+  btnDisconnect.addEventListener("click", ()=>{ doDisconnect(); });
 
   resetUiStates();
   setConnectedUI(false);
