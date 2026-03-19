@@ -1,10 +1,11 @@
 <!doctype html>
-
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>VOICEBOX REMOTE CONTROLER</title><style>
+<title>VOICEBOX REMOTE CONTROLER</title>
+
+<style>
 :root{
   --bg:#000000;
   --panel:#070707;
@@ -16,163 +17,1663 @@
   --shadow1: 0 10px 18px rgba(0,0,0,.85);
   --shadow2: 0 0 24px rgba(184,147,58,.25);
 }
+
 *{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans-serif;}
+html,body{
+  margin:0;
+  background:var(--bg);
+  color:#fff;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans-serif;
+}
 body{min-width:320px}
-.app{max-width:920px;margin:auto;padding:10px}
-.frame{background:var(--panel);border:1.6px solid var(--gold2);border-radius:16px;padding:10px;margin-bottom:10px;box-shadow:var(--shadow1), var(--shadow2);overflow:hidden}
-.center{display:flex;justify-content:center;align-items:center;text-align:center}
-.col{display:flex;flex-direction:column;justify-content:center;align-items:center}
-.row{width:100%;display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap}
-.pill{display:inline-flex;align-items:center;justify-content:center;padding:7px 12px;border-radius:999px;border:1.2px solid var(--gold);background:var(--panel2);color:var(--gold);font-weight:900;letter-spacing:1px;font-size:11px}
-.appIcon{width:30px;height:30px;border-radius:8px;margin-right:10px;border:1px solid var(--gold2);box-shadow:0 0 10px rgba(184,147,58,.20);object-fit:cover;flex:0 0 auto}
-.h2{margin:0;font-size:12px;letter-spacing:1.5px;color:var(--gold);font-weight:900}
-.sub{margin-top:4px;font-size:10px;color:var(--gold2);letter-spacing:1px;font-weight:700}
-.mini{margin-top:4px;font-size:9px;color:var(--dim);letter-spacing:.8px;font-weight:700}
-.kv{width:100%;display:flex;flex-direction:column;align-items:center;gap:4px}
-.kv .line{width:100%;max-width:900px;text-align:center;color:var(--gold2);font-weight:700;font-size:10px;letter-spacing:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.kv .line.dim{color:var(--dim);font-size:9px}
-.btn{border-radius:14px;border:1.6px solid var(--gold2);background:linear-gradient(135deg,#1B1200,#0A0A0A);color:var(--gold);font-weight:900;letter-spacing:.7px;cursor:pointer;user-select:none;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;padding:8px 8px;position:relative;transition:.12s}
-.btn:disabled{border-color:#2E2E2E;color:var(--dim);cursor:default;filter:saturate(.7);box-shadow:none}
-.btn.active{border:2.2px solid var(--red);box-shadow:0 0 18px rgba(255,0,0,.55),0 0 36px rgba(255,0,0,.28),0 8px 10px rgba(0,0,0,.8)}
-.btnSmall{width:108px;height:38px;border-radius:12px;padding:0 8px;flex-direction:row;gap:6px;letter-spacing:.8px;font-size:12px}
-.label{line-height:1.02;font-size:12px;font-weight:900;color:var(--gold);text-align:center}
-.scanbar{display:flex;justify-content:center;align-items:center;gap:3px;margin-top:10px;margin-bottom:8px}
-.led{width:22px;height:10px;border-radius:4px;border:1px solid #2A0A0A;background:#140000;transition:all .12s ease}
-.led.on{background:linear-gradient(#FF3A3A,#7A0000);border-color:#FF8A8A;box-shadow:0 0 16px rgba(255,0,0,.85)}
-.led.tail1{background:linear-gradient(#D02A2A,#4A0000);border-color:#C06060;box-shadow:0 0 8px rgba(255,0,0,.35)}
-.led.tail2{background:linear-gradient(#5A1010,#240000);border-color:#5A2A2A}
-.tacticalWrap{width:100%;display:flex;justify-content:center;overflow:hidden}
-.tacticalPanel{width:100%;max-width:660px;background:#000;border-radius:10px;padding:12px 4px 14px;display:flex;flex-direction:column;align-items:center;gap:16px}
-.stepStack{display:flex;flex-direction:column;gap:10px;align-items:center}
-.stepBtn{width:210px;height:42px;border-radius:6px;font-size:15px;font-weight:900;letter-spacing:.4px;border:2px solid #7b7b7b;color:#111;background:linear-gradient(180deg,#fbfbfb 0%, #ededed 55%, #d6d6d6 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 0 6px rgba(0,0,0,.12)}
-.stepBtn.yellow.lit{border-color:#8a8100;background:linear-gradient(180deg,#fff77e 0%, #f4ec2f 48%, #d7c900 100%);box-shadow:0 0 14px rgba(255,236,40,.35),0 0 28px rgba(255,236,40,.14),inset 0 1px 0 rgba(255,255,255,.28)}
-.stepBtn.red.lit{border-color:#7a0000;background:linear-gradient(180deg,#ff7878 0%, #ff3030 46%, #cb1010 100%);box-shadow:0 0 14px rgba(255,0,0,.35),0 0 28px rgba(255,0,0,.14),inset 0 1px 0 rgba(255,255,255,.18)}
-.tacticalBody{width:100%;display:grid;grid-template-columns:108px 236px 108px;column-gap:4px;align-items:stretch;justify-content:center;max-width:460px}
-.sideCol{background:linear-gradient(180deg,#8d8d8d 0%, #737373 18%, #666 50%, #5d5d5d 82%, #707070 100%);border:2px solid #4d4d4d;border-radius:3px;padding:10px 8px;display:flex;flex-direction:column;justify-content:space-between;align-items:center;gap:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.25),inset 0 -2px 0 rgba(0,0,0,.22)}
-.sideBtn{width:74px;height:66px;border-radius:12px;border:2px solid #6d5410;background:linear-gradient(180deg,#a17613 0%, #7f5907 100%);color:#111;font-weight:900;font-size:13px;line-height:1.02;text-align:center;cursor:pointer;box-shadow:inset 0 0 12px rgba(255,220,140,.06),0 0 8px rgba(0,0,0,.22)}
-.sideBtn.red{border-color:#631010;background:linear-gradient(180deg,#8c1b1b 0%, #5f0909 100%)}
-.sideBtn.lit.yellowGlow{border-color:#8a8100;background:linear-gradient(180deg,#fff77e 0%, #f3ea2f 48%, #d7c900 100%);box-shadow:0 0 14px rgba(255,236,40,.30),0 0 24px rgba(255,236,40,.10),inset 0 0 10px rgba(255,255,255,.12)}
-.sideBtn.red.lit.redGlow{border-color:#7a0000;background:linear-gradient(180deg,#ff7878 0%, #ff3131 46%, #ca1010 100%);box-shadow:0 0 14px rgba(255,0,0,.28),0 0 24px rgba(255,0,0,.10),inset 0 0 10px rgba(255,255,255,.08)}
-.centerZone{background:linear-gradient(180deg,#6f6f6f 0%, #606060 18%, #565656 50%, #4f4f4f 80%, #636363 100%);border:2px solid #4b4b4b;border-radius:3px;padding:10px 4px 12px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:12px;box-shadow:inset 0 1px 0 rgba(255,255,255,.20),inset 0 -2px 0 rgba(0,0,0,.22)}
-.bigModeZone{width:100%;max-width:198px;height:270px;border:2px solid #2b2b2b;border-radius:12px;background:#0a0a0a;cursor:pointer;padding:8px 6px;display:flex;justify-content:center;align-items:center;box-shadow:inset 0 0 0 2px rgba(0,0,0,.35),inset 0 0 12px rgba(255,255,255,.02)}
-.barsArea{--sideW: 27px;--midW: 31px;--edgePad: 7px;--gapX: 28px;--slotH: 11px;--slotGap: 5px;width:100%;height:100%;display:flex;justify-content:center;align-items:flex-start;gap:var(--gapX);padding:0 var(--edgePad)}
-.barCol{display:grid;grid-template-rows:repeat(16, var(--slotH));row-gap:var(--slotGap);align-content:start;justify-items:stretch;align-items:stretch}
-.barCol.side{width:var(--sideW)}
-.barCol.mid{width:var(--midW)}
-.slot{width:100%;height:100%;border-radius:2px;border:1px solid transparent;transition:background .18s ease, box-shadow .22s ease, border-color .18s ease, opacity .22s ease}
-.slot.off{background:transparent;border-color:transparent;box-shadow:none;opacity:0}
-.slot.dim-red{border-color:rgba(90,20,20,.7);background:linear-gradient(180deg,#662222 0%, #4d1717 100%);opacity:.82}
-.slot.dim-red2{border-color:rgba(70,16,16,.55);background:linear-gradient(180deg,#451616 0%, #321010 100%);opacity:.62}
-.slot.dim-yellow{border-color:rgba(110,95,20,.7);background:linear-gradient(180deg,#6f6018 0%, #4f4210 100%);opacity:.82}
-.slot.dim-yellow2{border-color:rgba(80,70,16,.55);background:linear-gradient(180deg,#4f4514 0%, #352d0d 100%);opacity:.62}
-.slot.dim-green{border-color:rgba(25,95,28,.7);background:linear-gradient(180deg,#2d6a2d 0%, #1d481d 100%);opacity:.82}
-.slot.dim-green2{border-color:rgba(20,68,22,.55);background:linear-gradient(180deg,#214a21 0%, #163316 100%);opacity:.62}
-.slot.dim-blue{border-color:rgba(25,55,120,.7);background:linear-gradient(180deg,#244a88 0%, #162d55 100%);opacity:.82}
-.slot.dim-blue2{border-color:rgba(18,40,88,.55);background:linear-gradient(180deg,#18355f 0%, #10213c 100%);opacity:.62}
-.slot.red{border-color:rgba(90,20,10,.72);background:linear-gradient(180deg,#ff8d8d 0%, #ff5555 40%, #f23333 100%);box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(255,70,70,.18);opacity:1}
-.slot.orange{border-color:rgba(120,55,10,.72);background:linear-gradient(180deg,#ffbf73 0%, #ff9538 42%, #ea6d08 100%);box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(255,140,50,.18);opacity:1}
-.slot.yellow{border-color:rgba(140,120,10,.72);background:linear-gradient(180deg,#fff79b 0%, #ffe75a 42%, #d6b800 100%);box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(255,235,80,.18);opacity:1}
-.slot.green{border-color:rgba(30,110,25,.72);background:linear-gradient(180deg,#97ff9f 0%, #4aea52 42%, #18b821 100%);box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(70,255,90,.16);opacity:1}
-.slot.blue{border-color:rgba(25,65,130,.72);background:linear-gradient(180deg,#9fd1ff 0%, #55a0ff 42%, #1f61db 100%);box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(90,160,255,.18);opacity:1}
-.slot.whitehot{border-color:rgba(190,190,190,.72);background:linear-gradient(180deg,#ffffff 0%, #ffe8e8 32%, #ff8d8d 100%);box-shadow: inset 0 -1px 0 rgba(0,0,0,.26), 0 0 5px rgba(255,255,255,.14);opacity:1}
-.panelLampWrap{width:100%;height:100%;padding:8px;display:flex;align-items:center;justify-content:center}
-.panelLamp{width:100%;height:100%;border-radius:16px;border:2px solid #181818;background:linear-gradient(180deg,#070707 0%, #111 100%);box-shadow:inset 0 0 12px rgba(255,255,255,.02), inset 0 -4px 10px rgba(0,0,0,.45);opacity:.14;transition:opacity .16s ease, background .16s ease, border-color .16s ease, box-shadow .20s ease}
-.panelLamp.redOn{border-color:#7e1d1d;background:linear-gradient(180deg,#ff9d9d 0%, #ff4a4a 48%, #d91d1d 100%);box-shadow:0 0 14px rgba(255,55,55,.35),0 0 42px rgba(255,35,35,.18),inset 0 0 18px rgba(255,255,255,.10);opacity:1}
-.panelLamp.yellowOn{border-color:#8a7600;background:linear-gradient(180deg,#fff8ad 0%, #ffe85f 48%, #d3b300 100%);box-shadow:0 0 14px rgba(255,228,55,.35),0 0 42px rgba(255,220,35,.16),inset 0 0 18px rgba(255,255,255,.10);opacity:1}
-.panelLamp.cooling{opacity:.18}
-.bottomModes{width:100%;max-width:198px;display:grid;grid-template-columns:42px 1fr;gap:15px;align-items:stretch}
-.leftIndicators{display:flex;flex-direction:column;gap:6px;justify-content:flex-end}
-.smallIndicator{width:40px;height:50px;border-radius:2px;border:2px solid #111;background:linear-gradient(180deg,#ffffff 0%, #eeeeee 58%, #d8d8d8 100%)}
-.smallIndicator.active{border-color:#111;background:linear-gradient(180deg,#fff68a 0%, #f2eb2d 45%, #d7c900 100%);box-shadow:0 0 12px rgba(255,235,40,.18)}
-.modeLamps{display:flex;flex-direction:column;gap:6px}
-.modeLamp{width:100%;height:50px;border-radius:2px;border:2px solid #111;background:linear-gradient(180deg,#ffffff 0%, #f0f0f0 58%, #dddddd 100%);color:#111;font-weight:900;font-size:13px;line-height:1.02;text-align:center;cursor:pointer}
-.modeLamp.activeNor{background:linear-gradient(180deg,#6dffd0 0%, #27eba0 48%, #14c47f 100%);color:#002b16}
-.modeLamp.activeAuto{background:linear-gradient(180deg,#fff68a 0%, #f3eb31 48%, #d7c900 100%);color:#1f1a00}
-.modeLamp.activeSpm{background:linear-gradient(180deg,#ff7b7b 0%, #ff3434 45%, #cf1111 100%);color:#2b0000}
-.modeShell{width:100%;max-width:780px;border:1.8px solid var(--gold2);border-radius:22px;padding:14px 12px 16px;box-shadow:var(--shadow1), var(--shadow2)}
-.modeTitleHead{font-size:22px;letter-spacing:3px;color:var(--gold);font-weight:900}
-.modeSubHead{margin-top:8px;font-size:16px;letter-spacing:2px;color:var(--gold2);font-weight:800}
-.modeGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
-.modeCard{min-height:116px;border-radius:22px;border:2px solid #262626;background:linear-gradient(135deg,#140b00,#000000 72%);color:var(--gold);display:flex;flex-direction:column;justify-content:center;align-items:center;cursor:pointer;padding:8px}
-.modeCard.active{border:2.4px solid var(--red);box-shadow:0 0 18px rgba(255,0,0,.45), 0 0 28px rgba(255,0,0,.16)}
-.modeCard.big{grid-column:1 / span 2;min-height:118px}
-.modeCardTitle{font-size:18px;font-weight:900;line-height:1.05;letter-spacing:1px;text-align:center}
-.modeCardSub{margin-top:4px;font-size:10px;font-weight:900;color:var(--gold2);letter-spacing:1px}
-.toolsGrid{width:100%;display:grid;grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));gap:10px}
-.toolBtn{height:48px;font-size:12px}.toolBtn.redTone{border-color:#6A0000;color:#ff9a9a}.toolBtn.greenTone{border-color:#1d5b1d;color:#a7ffb1}.toolBtn.yellowTone{color:var(--gold)}
-.toolInputRow{width:100%;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-.toolInput{width:min(320px,100%);height:44px;border-radius:12px;border:1.8px solid var(--gold2);background:#0a0a0a;color:var(--gold);padding:0 12px;font-size:13px;font-weight:800;letter-spacing:.5px;outline:none}
-.footer{width:100%;text-align:center;font-size:10px;color:var(--dim);letter-spacing:1.2px;font-weight:600;margin-top:16px}
-@media (max-width:480px){.app{padding:8px}.frame{padding:8px}.btnSmall{width:96px;font-size:11px}.modeGrid{gap:10px}.modeCard{min-height:100px}.modeCard.big{min-height:104px}.modeCardTitle{font-size:15px}.modeTitleHead{font-size:18px}.modeSubHead{font-size:12px}.stepBtn{width:162px;height:36px;font-size:13px}.tacticalBody{grid-template-columns:72px 152px 72px;column-gap:2px;max-width:300px}.sideCol{padding:8px 4px;gap:8px}.sideBtn{width:54px;height:46px;font-size:10px}.centerZone{padding:8px 3px 10px}.bigModeZone{max-width:140px;height:214px;padding:7px 4px}.barsArea{--sideW: 21px;--midW: 24px;--edgePad: 5px;--gapX: 21px;--slotH: 9px;--slotGap: 4px}.bottomModes{max-width:140px;grid-template-columns:34px 1fr;gap:12px}.smallIndicator{width:32px;height:40px}.modeLamp{height:40px;font-size:11px}}
-</style></head>
+
+.app{
+  max-width:920px;
+  margin:auto;
+  padding:10px;
+}
+
+.frame{
+  background:var(--panel);
+  border:1.6px solid var(--gold2);
+  border-radius:16px;
+  padding:10px;
+  margin-bottom:10px;
+  box-shadow:var(--shadow1), var(--shadow2);
+  overflow:hidden;
+}
+
+.center{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+
+.col{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+
+.row{
+  width:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.pill{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:7px 12px;
+  border-radius:999px;
+  border:1.2px solid var(--gold);
+  background:var(--panel2);
+  color:var(--gold);
+  font-weight:900;
+  letter-spacing:1px;
+  font-size:11px;
+}
+
+.appIcon{
+  width:30px;
+  height:30px;
+  border-radius:8px;
+  margin-right:10px;
+  border:1px solid var(--gold2);
+  box-shadow:0 0 10px rgba(184,147,58,.20);
+  object-fit:cover;
+  flex:0 0 auto;
+}
+
+.h2{
+  margin:0;
+  font-size:12px;
+  letter-spacing:1.5px;
+  color:var(--gold);
+  font-weight:900;
+}
+
+.sub{
+  margin-top:4px;
+  font-size:10px;
+  color:var(--gold2);
+  letter-spacing:1px;
+  font-weight:700;
+}
+
+.mini{
+  margin-top:4px;
+  font-size:9px;
+  color:var(--dim);
+  letter-spacing:.8px;
+  font-weight:700;
+}
+
+.kv{
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+}
+
+.kv .line{
+  width:100%;
+  max-width:900px;
+  text-align:center;
+  color:var(--gold2);
+  font-weight:700;
+  font-size:10px;
+  letter-spacing:1px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.kv .line.dim{
+  color:var(--dim);
+  font-size:9px;
+}
+
+.btn{
+  border-radius:14px;
+  border:1.6px solid var(--gold2);
+  background:linear-gradient(135deg,#1B1200,#0A0A0A);
+  color:var(--gold);
+  font-weight:900;
+  letter-spacing:.7px;
+  cursor:pointer;
+  user-select:none;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:4px;
+  padding:8px 8px;
+  position:relative;
+  transition:.12s;
+}
+
+.btn:disabled{
+  border-color:#2E2E2E;
+  color:var(--dim);
+  cursor:default;
+  filter:saturate(.7);
+  box-shadow:none;
+}
+
+.btn.active{
+  border:2.2px solid var(--red);
+  box-shadow:
+    0 0 18px rgba(255,0,0,.55),
+    0 0 36px rgba(255,0,0,.28),
+    0 8px 10px rgba(0,0,0,.8);
+}
+
+.btnSmall{
+  width:108px;
+  height:38px;
+  border-radius:12px;
+  padding:0 8px;
+  flex-direction:row;
+  gap:6px;
+  letter-spacing:.8px;
+  font-size:12px;
+}
+
+.label{
+  line-height:1.02;
+  font-size:12px;
+  font-weight:900;
+  color:var(--gold);
+  text-align:center;
+}
+
+.scanbar{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:3px;
+  margin-top:10px;
+  margin-bottom:8px;
+}
+
+.led{
+  width:22px;
+  height:10px;
+  border-radius:4px;
+  border:1px solid #2A0A0A;
+  background:#140000;
+  transition:all .12s ease;
+}
+
+.led.on{
+  background:linear-gradient(#FF3A3A,#7A0000);
+  border-color:#FF8A8A;
+  box-shadow:0 0 16px rgba(255,0,0,.85);
+}
+
+.led.tail1{
+  background:linear-gradient(#D02A2A,#4A0000);
+  border-color:#C06060;
+  box-shadow:0 0 8px rgba(255,0,0,.35);
+}
+
+.led.tail2{
+  background:linear-gradient(#5A1010,#240000);
+  border-color:#5A2A2A;
+}
+
+.tacticalWrap{
+  width:100%;
+  display:flex;
+  justify-content:center;
+  overflow:hidden;
+}
+
+.tacticalPanel{
+  width:100%;
+  max-width:660px;
+  background:#000;
+  border-radius:10px;
+  padding:12px 4px 14px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:16px;
+}
+
+.stepStack{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  align-items:center;
+}
+
+.stepBtn{
+  width:210px;
+  height:42px;
+  border-radius:6px;
+  font-size:15px;
+  font-weight:900;
+  letter-spacing:.4px;
+  border:2px solid #7b7b7b;
+  color:#111;
+  background:linear-gradient(180deg,#fbfbfb 0%, #ededed 55%, #d6d6d6 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.35),
+    0 0 6px rgba(0,0,0,.12);
+}
+
+.stepBtn.yellow.lit{
+  border-color:#8a8100;
+  background:linear-gradient(180deg,#fff77e 0%, #f4ec2f 48%, #d7c900 100%);
+  box-shadow:
+    0 0 14px rgba(255,236,40,.35),
+    0 0 28px rgba(255,236,40,.14),
+    inset 0 1px 0 rgba(255,255,255,.28);
+}
+
+.stepBtn.red.lit{
+  border-color:#7a0000;
+  background:linear-gradient(180deg,#ff7878 0%, #ff3030 46%, #cb1010 100%);
+  box-shadow:
+    0 0 14px rgba(255,0,0,.35),
+    0 0 28px rgba(255,0,0,.14),
+    inset 0 1px 0 rgba(255,255,255,.18);
+}
+
+.tacticalBody{
+  width:100%;
+  display:grid;
+  grid-template-columns:108px 236px 108px;
+  column-gap:4px;
+  align-items:stretch;
+  justify-content:center;
+  max-width:460px;
+}
+
+.sideCol{
+  background:linear-gradient(180deg,#8d8d8d 0%, #737373 18%, #666 50%, #5d5d5d 82%, #707070 100%);
+  border:2px solid #4d4d4d;
+  border-radius:3px;
+  padding:10px 8px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.25),
+    inset 0 -2px 0 rgba(0,0,0,.22);
+}
+
+.sideBtn{
+  width:74px;
+  height:66px;
+  border-radius:12px;
+  border:2px solid #6d5410;
+  background:linear-gradient(180deg,#a17613 0%, #7f5907 100%);
+  color:#111;
+  font-weight:900;
+  font-size:13px;
+  line-height:1.02;
+  text-align:center;
+  cursor:pointer;
+  box-shadow:
+    inset 0 0 12px rgba(255,220,140,.06),
+    0 0 8px rgba(0,0,0,.22);
+}
+
+.sideBtn.red{
+  border-color:#631010;
+  background:linear-gradient(180deg,#8c1b1b 0%, #5f0909 100%);
+}
+
+.sideBtn.lit.yellowGlow{
+  border-color:#8a8100;
+  background:linear-gradient(180deg,#fff77e 0%, #f3ea2f 48%, #d7c900 100%);
+  box-shadow:
+    0 0 14px rgba(255,236,40,.30),
+    0 0 24px rgba(255,236,40,.10),
+    inset 0 0 10px rgba(255,255,255,.12);
+}
+
+.sideBtn.red.lit.redGlow{
+  border-color:#7a0000;
+  background:linear-gradient(180deg,#ff7878 0%, #ff3131 46%, #ca1010 100%);
+  box-shadow:
+    0 0 14px rgba(255,0,0,.28),
+    0 0 24px rgba(255,0,0,.10),
+    inset 0 0 10px rgba(255,255,255,.08);
+}
+
+.centerZone{
+  background:linear-gradient(180deg,#6f6f6f 0%, #606060 18%, #565656 50%, #4f4f4f 80%, #636363 100%);
+  border:2px solid #4b4b4b;
+  border-radius:3px;
+  padding:10px 4px 12px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  gap:12px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.20),
+    inset 0 -2px 0 rgba(0,0,0,.22);
+}
+
+.bigModeZone{
+  width:100%;
+  max-width:198px;
+  height:270px;
+  border:2px solid #2b2b2b;
+  border-radius:12px;
+  background:#0a0a0a;
+  cursor:pointer;
+  padding:8px 6px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  box-shadow:
+    inset 0 0 0 2px rgba(0,0,0,.35),
+    inset 0 0 12px rgba(255,255,255,.02);
+}
+
+.barsArea{
+  --sideW: 27px;
+  --midW: 31px;
+  --edgePad: 7px;
+  --gapX: 28px;
+  --slotH: 11px;
+  --slotGap: 5px;
+  width:100%;
+  height:100%;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  gap:var(--gapX);
+  padding:0 var(--edgePad);
+}
+
+.barCol{
+  display:grid;
+  grid-template-rows:repeat(16, var(--slotH));
+  row-gap:var(--slotGap);
+  align-content:start;
+  justify-items:stretch;
+  align-items:stretch;
+}
+
+.barCol.side{ width:var(--sideW); }
+.barCol.mid{ width:var(--midW); }
+
+.slot{
+  width:100%;
+  height:100%;
+  border-radius:2px;
+  border:1px solid transparent;
+  transition:background .18s ease, box-shadow .22s ease, border-color .18s ease, opacity .22s ease;
+}
+
+.slot.off{
+  background:transparent;
+  border-color:transparent;
+  box-shadow:none;
+  opacity:0;
+}
+
+.slot.dim-red{border-color:rgba(90,20,20,.7);background:linear-gradient(180deg,#662222 0%, #4d1717 100%);opacity:.82;}
+.slot.dim-red2{border-color:rgba(70,16,16,.55);background:linear-gradient(180deg,#451616 0%, #321010 100%);opacity:.62;}
+.slot.dim-yellow{border-color:rgba(110,95,20,.7);background:linear-gradient(180deg,#6f6018 0%, #4f4210 100%);opacity:.82;}
+.slot.dim-yellow2{border-color:rgba(80,70,16,.55);background:linear-gradient(180deg,#4f4514 0%, #352d0d 100%);opacity:.62;}
+.slot.dim-green{border-color:rgba(25,95,28,.7);background:linear-gradient(180deg,#2d6a2d 0%, #1d481d 100%);opacity:.82;}
+.slot.dim-green2{border-color:rgba(20,68,22,.55);background:linear-gradient(180deg,#214a21 0%, #163316 100%);opacity:.62;}
+.slot.dim-blue{border-color:rgba(25,55,120,.7);background:linear-gradient(180deg,#244a88 0%, #162d55 100%);opacity:.82;}
+.slot.dim-blue2{border-color:rgba(18,40,88,.55);background:linear-gradient(180deg,#18355f 0%, #10213c 100%);opacity:.62;}
+
+.slot.red{border-color:rgba(90,20,10,.72);background:linear-gradient(180deg,#ff8d8d 0%, #ff5555 40%, #f23333 100%);box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(255,70,70,.18);opacity:1;}
+.slot.orange{border-color:rgba(120,55,10,.72);background:linear-gradient(180deg,#ffbf73 0%, #ff9538 42%, #ea6d08 100%);box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(255,140,50,.18);opacity:1;}
+.slot.yellow{border-color:rgba(140,120,10,.72);background:linear-gradient(180deg,#fff79b 0%, #ffe75a 42%, #d6b800 100%);box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(255,235,80,.18);opacity:1;}
+.slot.green{border-color:rgba(30,110,25,.72);background:linear-gradient(180deg,#97ff9f 0%, #4aea52 42%, #18b821 100%);box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(70,255,90,.16);opacity:1;}
+.slot.blue{border-color:rgba(25,65,130,.72);background:linear-gradient(180deg,#9fd1ff 0%, #55a0ff 42%, #1f61db 100%);box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(90,160,255,.18);opacity:1;}
+.slot.whitehot{border-color:rgba(190,190,190,.72);background:linear-gradient(180deg,#ffffff 0%, #ffe8e8 32%, #ff8d8d 100%);box-shadow: inset 0 -1px 0 rgba(0,0,0,.26), 0 0 5px rgba(255,255,255,.14);opacity:1;}
+
+/* matrix */
+.panelLampWrap{
+  width:100%;
+  height:100%;
+  padding:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.panelLamp{
+  width:100%;
+  height:100%;
+  border-radius:16px;
+  border:2px solid #181818;
+  background:linear-gradient(180deg,#070707 0%, #111 100%);
+  box-shadow: inset 0 0 12px rgba(255,255,255,.02), inset 0 -4px 10px rgba(0,0,0,.45);
+  opacity:.14;
+  transition: opacity .18s ease, background .18s ease, border-color .18s ease, box-shadow .22s ease;
+}
+.panelLamp.redOn{
+  border-color:#7e1d1d;
+  background:linear-gradient(180deg,#ff9d9d 0%, #ff4a4a 48%, #d91d1d 100%);
+  box-shadow: 0 0 14px rgba(255,55,55,.35), 0 0 42px rgba(255,35,35,.18), inset 0 0 18px rgba(255,255,255,.10);
+  opacity:1;
+}
+.panelLamp.yellowOn{
+  border-color:#8a7600;
+  background:linear-gradient(180deg,#fff8ad 0%, #ffe85f 48%, #d3b300 100%);
+  box-shadow: 0 0 14px rgba(255,228,55,.35), 0 0 42px rgba(255,220,35,.16), inset 0 0 18px rgba(255,255,255,.10);
+  opacity:1;
+}
+.panelLamp.cooling{
+  opacity:.22;
+}
+
+/* vehicle */
+.bottomModes{
+  width:100%;
+  max-width:198px;
+  display:grid;
+  grid-template-columns:42px 1fr;
+  gap:15px;
+  align-items:stretch;
+}
+
+.leftIndicators{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  justify-content:flex-end;
+}
+
+.smallIndicator{
+  width:40px;
+  height:50px;
+  border-radius:2px;
+  border:2px solid #111;
+  background:linear-gradient(180deg,#ffffff 0%, #eeeeee 58%, #d8d8d8 100%);
+}
+
+.smallIndicator.active{
+  border-color:#111;
+  background:linear-gradient(180deg,#fff68a 0%, #f2eb2d 45%, #d7c900 100%);
+  box-shadow:0 0 12px rgba(255,235,40,.18);
+}
+
+.modeLamps{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.modeLamp{
+  width:100%;
+  height:50px;
+  border-radius:2px;
+  border:2px solid #111;
+  background:linear-gradient(180deg,#ffffff 0%, #f0f0f0 58%, #dddddd 100%);
+  color:#111;
+  font-weight:900;
+  font-size:13px;
+  line-height:1.02;
+  text-align:center;
+  cursor:pointer;
+}
+
+.modeLamp.activeNor{background:linear-gradient(180deg,#6dffd0 0%, #27eba0 48%, #14c47f 100%);color:#002b16;}
+.modeLamp.activeAuto{background:linear-gradient(180deg,#fff68a 0%, #f3eb31 48%, #d7c900 100%);color:#1f1a00;}
+.modeLamp.activeSpm{background:linear-gradient(180deg,#ff7b7b 0%, #ff3434 45%, #cf1111 100%);color:#2b0000;}
+
+.modeShell{
+  width:100%;
+  max-width:780px;
+  border:1.8px solid var(--gold2);
+  border-radius:22px;
+  padding:14px 12px 16px;
+  box-shadow:var(--shadow1), var(--shadow2);
+}
+
+.modeTitleHead{
+  font-size:22px;
+  letter-spacing:3px;
+  color:var(--gold);
+  font-weight:900;
+}
+
+.modeSubHead{
+  margin-top:8px;
+  font-size:16px;
+  letter-spacing:2px;
+  color:var(--gold2);
+  font-weight:800;
+}
+
+.modeGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:12px;
+}
+
+.modeCard{
+  min-height:116px;
+  border-radius:22px;
+  border:2px solid #262626;
+  background:linear-gradient(135deg,#140b00,#000000 72%);
+  color:var(--gold);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  cursor:pointer;
+  padding:8px;
+}
+
+.modeCard.active{
+  border:2.4px solid var(--red);
+  box-shadow:0 0 18px rgba(255,0,0,.45), 0 0 28px rgba(255,0,0,.16);
+}
+
+.modeCard.big{
+  grid-column:1 / span 2;
+  min-height:118px;
+}
+
+.modeCardTitle{
+  font-size:18px;
+  font-weight:900;
+  line-height:1.05;
+  letter-spacing:1px;
+  text-align:center;
+}
+
+.modeCardSub{
+  margin-top:4px;
+  font-size:10px;
+  font-weight:900;
+  color:var(--gold2);
+  letter-spacing:1px;
+}
+
+.toolsGrid{
+  width:100%;
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap:10px;
+}
+
+.toolBtn{
+  height:48px;
+  font-size:12px;
+}
+
+.toolBtn.redTone{border-color:#6A0000;color:#ff9a9a}
+.toolBtn.greenTone{border-color:#1d5b1d;color:#a7ffb1}
+.toolBtn.yellowTone{color:var(--gold)}
+
+.toolInputRow{
+  width:100%;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+.toolInput{
+  width:min(320px,100%);
+  height:44px;
+  border-radius:12px;
+  border:1.8px solid var(--gold2);
+  background:#0a0a0a;
+  color:var(--gold);
+  padding:0 12px;
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:.5px;
+  outline:none;
+}
+
+.footer{
+  width:100%;
+  text-align:center;
+  font-size:10px;
+  color:var(--dim);
+  letter-spacing:1.2px;
+  font-weight:600;
+  margin-top:16px;
+}
+
+@media (max-width:480px){
+  .app{padding:8px}
+  .frame{padding:8px}
+  .btnSmall{width:96px;font-size:11px}
+  .modeGrid{gap:10px}
+  .modeCard{min-height:100px}
+  .modeCard.big{min-height:104px}
+  .modeCardTitle{font-size:15px}
+  .modeTitleHead{font-size:18px}
+  .modeSubHead{font-size:12px}
+  .stepBtn{width:162px;height:36px;font-size:13px;}
+  .tacticalBody{grid-template-columns:72px 152px 72px;column-gap:2px;max-width:300px;}
+  .sideCol{padding:8px 4px;gap:8px;}
+  .sideBtn{width:54px;height:46px;font-size:10px;}
+  .centerZone{padding:8px 3px 10px;}
+  .bigModeZone{max-width:140px;height:214px;padding:7px 4px;}
+  .barsArea{--sideW: 21px;--midW: 24px;--edgePad: 5px;--gapX: 21px;--slotH: 9px;--slotGap: 4px;}
+  .bottomModes{max-width:140px;grid-template-columns:34px 1fr;gap:12px;}
+  .smallIndicator{width:32px;height:40px;}
+  .modeLamp{height:40px;font-size:11px;}
+}
+</style>
+</head>
+
 <body>
 <div class="app">
-  <div class="frame center"><span class="pill"><img class="appIcon" src="./app_icon.png" alt="app icon"><span>VOICEBOX REMOTE CONTROLER</span></span></div>
-  <div class="frame col"><div class="row" style="justify-content:space-between; max-width:860px;"><div class="h2">SCANNER</div><div class="h2" id="scannerState" style="color:var(--dim)">OFFLINE</div></div><div class="scanbar" id="scanbar"></div><div class="sub center" id="scanText">CONNECT TO ENABLE SCAN SEQUENCE</div></div>
-  <div class="frame col"><div class="kv"><div class="line" id="statusText">LINK: NOT CONNECTED</div><div class="line" id="bleText">BLE: UNKNOWN</div><div class="line" id="deviceText">DEVICE: (none)</div><div class="line dim" id="idText">ID: -</div><div class="line" id="displayModeStatus">DISPLAY MODE: -</div><div class="line" id="vehicleModeStatus">VEHICLE MODE: -</div><div class="line" id="gainStatus">GAIN: -</div><div class="line dim" id="notifyStatus">STATE: -</div></div><div style="height:10px;"></div><div class="row"><button id="btnScan" class="btn btnSmall"><span>SCAN</span></button><button id="btnConnect" class="btn btnSmall" disabled><span>CONNECT</span></button><button id="btnDisconnect" class="btn btnSmall" disabled style="border-color:var(--red);"><span>DISCONNECT</span></button></div><div class="mini center" style="margin-top:10px;">Steps: Press SCAN → Select device (KITT_REMOTE_SYSTEM) → Press CONNECT</div></div>
-  <div class="frame col"><div class="h2">TACTICAL LAMP CONTROL</div><div class="sub">STEP • BOX • VEHICLE MODE • DISPLAY</div><div style="height:12px;"></div><div class="tacticalWrap"><div class="tacticalPanel"><div class="stepStack"><button class="stepBtn yellow" id="step1Btn">POWER</button><button class="stepBtn yellow" id="step2Btn">FUEL ON</button><button class="stepBtn yellow" id="step3Btn">MIN RPM</button><button class="stepBtn red" id="step4Btn">IGNITORS</button></div><div class="tacticalBody"><div class="sideCol"><button class="sideBtn" data-box="1" data-side="L">ALT</button><button class="sideBtn" data-box="2" data-side="L">OIL<br>PRESS</button><button class="sideBtn red" data-box="3" data-side="L">OIL<br>TEMP</button><button class="sideBtn red" data-box="4" data-side="L">EGT</button><button class="sideBtn red" data-box="5" data-side="L">FUEL</button></div><div class="centerZone"><button id="bigModeZone" class="bigModeZone" title="Next Display Mode"></button><div class="bottomModes"><div class="leftIndicators"><div class="smallIndicator" id="indNor"></div><div class="smallIndicator" id="indAuto"></div><div class="smallIndicator" id="indSpm"></div></div><div class="modeLamps"><button class="modeLamp" id="nanoNorBtn">NORMAL</button><button class="modeLamp" id="nanoAutoBtn">AUTO<br>CRUISE</button><button class="modeLamp" id="nanoSpmBtn">PURSUIT</button></div></div></div><div class="sideCol"><button class="sideBtn" data-box="1" data-side="R">AUX</button><button class="sideBtn" data-box="2" data-side="R">SAT<br>COMM</button><button class="sideBtn red" data-box="3" data-side="R">ACC</button><button class="sideBtn red" data-box="4" data-side="R">RADAR</button><button class="sideBtn red" data-box="5" data-side="R">MPI</button></div></div></div></div></div>
-  <div class="frame col"><div class="modeShell"><div class="center"><div class="modeTitleHead">MODE SELECT</div></div><div class="center"><div class="modeSubHead">PUSH BUTTON TO SWITCH</div></div><div class="modeGrid"><button class="modeCard" data-mode="1"><div class="modeCardTitle">KITT</div><div class="modeCardSub">MODE 1</div></button><button class="modeCard" data-mode="2"><div class="modeCardTitle">KARR</div><div class="modeCardSub">MODE 2</div></button><button class="modeCard" data-mode="3"><div class="modeCardTitle">PILOT<br>KITT</div><div class="modeCardSub">MODE 3</div></button><button class="modeCard" data-mode="4"><div class="modeCardTitle">PILOT<br>KARR</div><div class="modeCardSub">MODE 4</div></button><button class="modeCard" data-mode="6"><div class="modeCardTitle">BLUE<br>KITT</div><div class="modeCardSub">MODE 6</div></button><button class="modeCard" data-mode="7"><div class="modeCardTitle">GREEN<br>KARR</div><div class="modeCardSub">MODE 7</div></button><button class="modeCard" data-mode="5"><div class="modeCardTitle">DAMAGE<br>KITT</div><div class="modeCardSub">MODE 5</div></button><button class="modeCard" data-mode="8"><div class="modeCardTitle">FLAME<br>KITT</div><div class="modeCardSub">MODE 8</div></button><button class="modeCard big" data-mode="9"><div class="modeCardTitle">SPECTRUM</div><div class="modeCardSub">MODE 9</div></button><button class="modeCard big" data-mode="10"><div class="modeCardTitle">ANALYSIS</div><div class="modeCardSub">MODE 10</div></button></div></div></div>
-  <div class="frame col"><div class="h2">GAIN CONTROL</div><div class="sub">VOICE DISPLAY SENSITIVITY ＋ or －</div><div style="height:10px;"></div><div class="row" style="max-width:920px;"><button id="btnGainDown" class="btn" style="max-width:420px; width:min(420px,100%);" disabled><div class="label">GAIN −</div></button><button id="btnGainUp" class="btn" style="max-width:420px; width:min(420px,100%);" disabled><div class="label">GAIN ＋</div></button></div></div>
-  <div class="frame col"><div class="h2">EXTERNAL COMMANDS</div><div class="sub">BOOT • SHUTDOWN • MODE OFF • ALL OFF • DTMF</div><div style="height:12px;"></div><div class="toolsGrid"><button id="btnStartup"  class="btn toolBtn greenTone">STARTUP</button><button id="btnShutdown" class="btn toolBtn redTone">SHUTDOWN</button><button id="btnAllOff"   class="btn toolBtn yellowTone">ALL OFF</button><button id="btnModeOff"  class="btn toolBtn yellowTone">MODE OFF</button><button id="btnDTMF7"    class="btn toolBtn yellowTone">DTMF 7 / 400ms</button><button id="btnDTMF8"    class="btn toolBtn yellowTone">DTMF 8 / 400ms</button></div><div style="height:14px;"></div><div class="toolInputRow"><input id="dtmfInput" class="toolInput" type="text" value="DTMF=8,400" placeholder="例如：DTMF=8,400"><button id="btnSendCustom" class="btn btnSmall" style="width:140px;">SEND CMD</button></div></div>
+
+  <div class="frame center">
+    <span class="pill">
+      <img class="appIcon" src="./app_icon.png" alt="app icon">
+      <span>VOICEBOX REMOTE CONTROLER</span>
+    </span>
+  </div>
+
+  <div class="frame col">
+    <div class="row" style="justify-content:space-between; max-width:860px;">
+      <div class="h2">SCANNER</div>
+      <div class="h2" id="scannerState" style="color:var(--dim)">OFFLINE</div>
+    </div>
+    <div class="scanbar" id="scanbar"></div>
+    <div class="sub center" id="scanText">CONNECT TO ENABLE SCAN SEQUENCE</div>
+  </div>
+
+  <div class="frame col">
+    <div class="kv">
+      <div class="line" id="statusText">LINK: NOT CONNECTED</div>
+      <div class="line" id="bleText">BLE: UNKNOWN</div>
+      <div class="line" id="deviceText">DEVICE: (none)</div>
+      <div class="line dim" id="idText">ID: -</div>
+      <div class="line" id="displayModeStatus">DISPLAY MODE: -</div>
+      <div class="line" id="vehicleModeStatus">VEHICLE MODE: -</div>
+      <div class="line" id="gainStatus">GAIN: -</div>
+      <div class="line dim" id="notifyStatus">STATE: -</div>
+    </div>
+
+    <div style="height:10px;"></div>
+
+    <div class="row">
+      <button id="btnScan" class="btn btnSmall"><span>SCAN</span></button>
+      <button id="btnConnect" class="btn btnSmall" disabled><span>CONNECT</span></button>
+      <button id="btnDisconnect" class="btn btnSmall" disabled style="border-color:var(--red);"><span>DISCONNECT</span></button>
+    </div>
+
+    <div class="mini center" style="margin-top:10px;">
+      Steps: Press SCAN → Select device (KITT_REMOTE_SYSTEM) → Press CONNECT
+    </div>
+  </div>
+
+  <div class="frame col">
+    <div class="h2">TACTICAL LAMP CONTROL</div>
+    <div class="sub">STEP • BOX • VEHICLE MODE • DISPLAY</div>
+    <div style="height:12px;"></div>
+
+    <div class="tacticalWrap">
+      <div class="tacticalPanel">
+
+        <div class="stepStack">
+          <button class="stepBtn yellow" id="step1Btn">POWER</button>
+          <button class="stepBtn yellow" id="step2Btn">FUEL ON</button>
+          <button class="stepBtn yellow" id="step3Btn">MIN RPM</button>
+          <button class="stepBtn red" id="step4Btn">IGNITORS</button>
+        </div>
+
+        <div class="tacticalBody">
+          <div class="sideCol">
+            <button class="sideBtn" data-box="1" data-side="L">ALT</button>
+            <button class="sideBtn" data-box="2" data-side="L">OIL<br>PRESS</button>
+            <button class="sideBtn red" data-box="3" data-side="L">OIL<br>TEMP</button>
+            <button class="sideBtn red" data-box="4" data-side="L">EGT</button>
+            <button class="sideBtn red" data-box="5" data-side="L">FUEL</button>
+          </div>
+
+          <div class="centerZone">
+            <button id="bigModeZone" class="bigModeZone" title="Next Display Mode"></button>
+
+            <div class="bottomModes">
+              <div class="leftIndicators">
+                <div class="smallIndicator" id="indNor"></div>
+                <div class="smallIndicator" id="indAuto"></div>
+                <div class="smallIndicator" id="indSpm"></div>
+              </div>
+
+              <div class="modeLamps">
+                <button class="modeLamp" id="nanoNorBtn">NORMAL</button>
+                <button class="modeLamp" id="nanoAutoBtn">AUTO<br>CRUISE</button>
+                <button class="modeLamp" id="nanoSpmBtn">PURSUIT</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="sideCol">
+            <button class="sideBtn" data-box="1" data-side="R">AUX</button>
+            <button class="sideBtn" data-box="2" data-side="R">SAT<br>COMM</button>
+            <button class="sideBtn red" data-box="3" data-side="R">ACC</button>
+            <button class="sideBtn red" data-box="4" data-side="R">RADAR</button>
+            <button class="sideBtn red" data-box="5" data-side="R">MPI</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="frame col">
+    <div class="modeShell">
+      <div class="center"><div class="modeTitleHead">MODE SELECT</div></div>
+      <div class="center"><div class="modeSubHead">PUSH BUTTON TO SWITCH</div></div>
+
+      <div class="modeGrid">
+        <button class="modeCard" data-mode="1"><div class="modeCardTitle">KITT</div><div class="modeCardSub">MODE 1</div></button>
+        <button class="modeCard" data-mode="2"><div class="modeCardTitle">KARR</div><div class="modeCardSub">MODE 2</div></button>
+        <button class="modeCard" data-mode="3"><div class="modeCardTitle">PILOT<br>KITT</div><div class="modeCardSub">MODE 3</div></button>
+        <button class="modeCard" data-mode="4"><div class="modeCardTitle">PILOT<br>KARR</div><div class="modeCardSub">MODE 4</div></button>
+        <button class="modeCard" data-mode="6"><div class="modeCardTitle">BLUE<br>KITT</div><div class="modeCardSub">MODE 6</div></button>
+        <button class="modeCard" data-mode="7"><div class="modeCardTitle">GREEN<br>KARR</div><div class="modeCardSub">MODE 7</div></button>
+        <button class="modeCard" data-mode="5"><div class="modeCardTitle">DAMAGE<br>KITT</div><div class="modeCardSub">MODE 5</div></button>
+        <button class="modeCard" data-mode="8"><div class="modeCardTitle">FLAME<br>KITT</div><div class="modeCardSub">MODE 8</div></button>
+        <button class="modeCard big" data-mode="9"><div class="modeCardTitle">SPECTRUM</div><div class="modeCardSub">MODE 9</div></button>
+        <button class="modeCard big" data-mode="10"><div class="modeCardTitle">ANALYSIS</div><div class="modeCardSub">MODE 10</div></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="frame col">
+    <div class="h2">GAIN CONTROL</div>
+    <div class="sub">VOICE DISPLAY SENSITIVITY ＋ or －</div>
+    <div style="height:10px;"></div>
+
+    <div class="row" style="max-width:920px;">
+      <button id="btnGainDown" class="btn" style="max-width:420px; width:min(420px,100%);" disabled><div class="label">GAIN −</div></button>
+      <button id="btnGainUp" class="btn" style="max-width:420px; width:min(420px,100%);" disabled><div class="label">GAIN ＋</div></button>
+    </div>
+  </div>
+
+  <div class="frame col">
+    <div class="h2">EXTERNAL COMMANDS</div>
+    <div class="sub">BOOT • SHUTDOWN • MODE OFF • ALL OFF • DTMF</div>
+    <div style="height:12px;"></div>
+
+    <div class="toolsGrid">
+      <button id="btnStartup"  class="btn toolBtn greenTone">STARTUP</button>
+      <button id="btnShutdown" class="btn toolBtn redTone">SHUTDOWN</button>
+      <button id="btnAllOff"   class="btn toolBtn yellowTone">ALL OFF</button>
+      <button id="btnModeOff"  class="btn toolBtn yellowTone">MODE OFF</button>
+      <button id="btnDTMF7"    class="btn toolBtn yellowTone">DTMF 7 / 400ms</button>
+      <button id="btnDTMF8"    class="btn toolBtn yellowTone">DTMF 8 / 400ms</button>
+    </div>
+
+    <div style="height:14px;"></div>
+
+    <div class="toolInputRow">
+      <input id="dtmfInput" class="toolInput" type="text" value="DTMF=8,400" placeholder="例如：DTMF=8,400">
+      <button id="btnSendCustom" class="btn btnSmall" style="width:140px;">SEND CMD</button>
+    </div>
+  </div>
+
   <div class="footer">KNIGHT RIDER WEB REMOTE CONTROL SYSTEM</div>
 </div>
-<audio id="sScan" src="./scan.mp3" preload="auto"></audio><audio id="sConn" src="./connect.mp3" preload="auto"></audio><audio id="sBtn"  src="./button.mp3" preload="auto"></audio>
+
+<audio id="sScan" src="./scan.mp3" preload="auto"></audio>
+<audio id="sConn" src="./connect.mp3" preload="auto"></audio>
+<audio id="sBtn"  src="./button.mp3" preload="auto"></audio>
+
 <script>
-(()=>{ const SVC_UUID="6e400001-b5a3-f393-e0a9-e50e24dcca9e", RX_UUID="6e400002-b5a3-f393-e0a9-e50e24dcca9e", TX_UUID="6e400003-b5a3-f393-e0a9-e50e24dcca9e"; const $=(id)=>document.getElementById(id);
-const btnScan=$("btnScan"),btnConnect=$("btnConnect"),btnDisconnect=$("btnDisconnect"),btnGainUp=$("btnGainUp"),btnGainDown=$("btnGainDown"),statusText=$("statusText"),bleText=$("bleText"),deviceText=$("deviceText"),idText=$("idText"),scanText=$("scanText"),scannerState=$("scannerState"),displayModeStatus=$("displayModeStatus"),vehicleModeStatus=$("vehicleModeStatus"),gainStatus=$("gainStatus"),notifyStatus=$("notifyStatus"),bigModeZone=$("bigModeZone"),sScan=$("sScan"),sConn=$("sConn"),sBtn=$("sBtn");
-let device=null,server=null,rxChar=null,txChar=null; const ui={connected:false,displayMode:null,gain:null,step:[false,false,false,false],boxL:[false,false,false,false,false],boxR:[false,false,false,false,false],vehicleMode:null,vuL:0,vuM:0,vuR:0,hasVu:false,panelCooling:false};
-function playOnce(a){try{a.pause();a.currentTime=0;const p=a.play();if(p&&p.catch)p.catch(()=>{});}catch(_){}}
-function cmdForDisplayMode(m){return (m===10)?"0":String(m)}
-function buildBoxHalfCmd(side,idx,isOn){return `BOX${idx+1}${side}${isOn?"ON":"OFF"}`}
-async function writeChar(c){if(!ui.connected||!rxChar)return;const d=new TextEncoder().encode(c);try{if(typeof rxChar.writeValueWithoutResponse==="function"){await rxChar.writeValueWithoutResponse(d);return;}}catch(_){} try{await rxChar.writeValue(d);}catch(_){}}
-async function writeLine(line){if(!ui.connected||!rxChar)return;const d=new TextEncoder().encode(line.endsWith("\n")?line:line+"\n");try{if(typeof rxChar.writeValueWithoutResponse==="function"){await rxChar.writeValueWithoutResponse(d);return;}}catch(_){} try{await rxChar.writeValue(d);}catch(_){}}
-const scanbar=$("scanbar"); let scanPos=0,scanDir=1,scanTimer=null; for(let i=0;i<8;i++){const d=document.createElement("div");d.className="led";scanbar.appendChild(d);} function renderScanner(){const leds=[...scanbar.children];leds.forEach(d=>d.className="led");if(!ui.connected)return;for(let i=0;i<8;i++){const dist=Math.abs(i-scanPos);if(dist===0)leds[i].classList.add("on");else if(dist===1)leds[i].classList.add("tail1");else if(dist===2)leds[i].classList.add("tail2");}} function startScanner(){stopScanner();scanPos=0;scanDir=1;renderScanner();scanTimer=setInterval(()=>{scanPos+=scanDir;if(scanPos>=7){scanPos=7;scanDir=-1;}else if(scanPos<=0){scanPos=0;scanDir=1;}renderScanner();},150)} function stopScanner(){if(scanTimer){clearInterval(scanTimer);scanTimer=null;}[...scanbar.children].forEach(d=>d.className="led")}
-function renderDisplayModeCards(){document.querySelectorAll('.modeCard').forEach(card=>card.classList.toggle('active',Number(card.dataset.mode)===ui.displayMode));}
-function renderSteps(){['step1Btn','step2Btn','step3Btn','step4Btn'].forEach((id,idx)=>$(id).classList.toggle('lit',ui.step[idx]));}
-function renderBoxes(){document.querySelectorAll('.sideBtn').forEach(btn=>{const idx=Number(btn.dataset.box)-1,side=btn.dataset.side,isOn=side==='L'?ui.boxL[idx]:ui.boxR[idx];btn.classList.toggle('lit',isOn);if(btn.classList.contains('red')){btn.classList.toggle('redGlow',isOn);btn.classList.remove('yellowGlow');}else{btn.classList.toggle('yellowGlow',isOn);btn.classList.remove('redGlow');}})}
-function renderVehicleMode(){const norBtn=$("nanoNorBtn"),autoBtn=$("nanoAutoBtn"),spmBtn=$("nanoSpmBtn"),indNor=$("indNor"),indAuto=$("indAuto"),indSpm=$("indSpm");norBtn.classList.remove('activeNor');autoBtn.classList.remove('activeAuto');spmBtn.classList.remove('activeSpm');indNor.classList.remove('active');indAuto.classList.remove('active');indSpm.classList.remove('active');if(ui.vehicleMode==='NOR'){norBtn.classList.add('activeNor');indNor.classList.add('active');}else if(ui.vehicleMode==='AUTO'){autoBtn.classList.add('activeAuto');indAuto.classList.add('active');}else if(ui.vehicleMode==='SPM'){spmBtn.classList.add('activeSpm');indSpm.classList.add('active');}}
-function syncBoxBits(bits10){if(!Array.isArray(bits10)||bits10.length!==10)return;ui.boxL=[bits10[0],bits10[2],bits10[4],bits10[6],bits10[8]];ui.boxR=[bits10[1],bits10[3],bits10[5],bits10[7],bits10[9]];}
-function setBarsHtml(){bigModeZone.innerHTML=`<div class="barsArea"><div class="barCol side" id="vuColL">${Array.from({length:16},()=>'<div class="slot off"></div>').join('')}</div><div class="barCol mid" id="vuColM">${Array.from({length:16},()=>'<div class="slot off"></div>').join('')}</div><div class="barCol side" id="vuColR">${Array.from({length:16},()=>'<div class="slot off"></div>').join('')}</div></div>`;bigModeZone.dataset.render='bars';}
-function setPanelHtml(){bigModeZone.innerHTML=`<div class="panelLampWrap"><div class="panelLamp" id="panelLamp"></div></div>`;bigModeZone.dataset.render='panel';}
-function ensureBars(){if(bigModeZone.dataset.render!=='bars')setBarsHtml();} function ensurePanel(){if(bigModeZone.dataset.render!=='panel')setPanelHtml();}
-function getCol(id){return $(id)} function clearColumn(colEl){if(!colEl)return;for(let i=0;i<16;i++)colEl.children[i].className='slot off';} function setSlot(colEl,idx,cls){if(!colEl||idx<0||idx>15)return;colEl.children[idx].className='slot '+cls;} function clamp16(v){return Math.max(0,Math.min(16,Math.round(v||0)))}
-function addTwoStepOuterTail(slots,topMost,bottomMost,dim1,dim2){if(topMost>0&&slots[topMost-1].classList.contains('off'))slots[topMost-1].className='slot '+dim1; if(topMost>1&&slots[topMost-2].classList.contains('off'))slots[topMost-2].className='slot '+dim2; if(bottomMost<15&&slots[bottomMost+1].classList.contains('off'))slots[bottomMost+1].className='slot '+dim1; if(bottomMost<14&&slots[bottomMost+2].classList.contains('off'))slots[bottomMost+2].className='slot '+dim2;}
-function paintKittColumn(colEl,level,colorClass,dimClass,dimClass2){clearColumn(colEl);const lv=clamp16(level);if(lv<=0)return;const centerTop=7,centerBottom=8,pairs=Math.floor(lv/2),hasExtra=lv%2;for(let p=0;p<pairs;p++){setSlot(colEl,centerTop-p,colorClass);setSlot(colEl,centerBottom+p,colorClass);} if(hasExtra)setSlot(colEl,centerTop-pairs,colorClass); const slots=[...colEl.children]; const topMost=slots.findIndex(el=>!el.classList.contains('off')); let bottomMost=-1; for(let i=15;i>=0;i--){if(!slots[i].classList.contains('off')){bottomMost=i;break;}} addTwoStepOuterTail(slots,topMost,bottomMost,dimClass,dimClass2);}
-function paintKarrCenterColumn(colEl,level,colorClass,dimClass,dimClass2){clearColumn(colEl);const lv=clamp16(level);if(lv<=0)return;const half=Math.ceil(lv/2);for(let i=0;i<half;i++){const up=7-i,dn=8+i;if(up>=0)setSlot(colEl,up,colorClass);if(dn<16)setSlot(colEl,dn,colorClass);} const slots=[...colEl.children],litIdx=[];for(let i=0;i<16;i++)if(!slots[i].classList.contains('off'))litIdx.push(i); if(!litIdx.length)return; addTwoStepOuterTail(slots,litIdx[0],litIdx[litIdx.length-1],dimClass,dimClass2);}
-function paintKarrFlippedColumn(colEl,level,colorClass,dimClass,dimClass2){clearColumn(colEl);const lv=clamp16(level);if(lv<=0)return;const pairs=Math.floor(lv/2),hasExtra=lv%2;for(let p=0;p<pairs;p++){setSlot(colEl,p,colorClass);setSlot(colEl,15-p,colorClass);} if(hasExtra){const idx=pairs;if(idx>=0&&idx<16)setSlot(colEl,idx,colorClass);} const slots=[...colEl.children],litIdx=[];for(let i=0;i<16;i++)if(!slots[i].classList.contains('off'))litIdx.push(i); if(!litIdx.length)return; addTwoStepOuterTail(slots,litIdx[0],litIdx[litIdx.length-1],dimClass,dimClass2);}
-function applyMode2CoreShadow(colEl,dim1,dim2,level){if(!colEl||level<8)return; const slots=[...colEl.children]; if(slots[6].classList.contains('off'))slots[6].className='slot '+dim2; if(slots[7].classList.contains('off'))slots[7].className='slot '+dim1; if(slots[8].classList.contains('off'))slots[8].className='slot '+dim1; if(slots[9].classList.contains('off'))slots[9].className='slot '+dim2;}
-function paintMode8Flame(colEl,level){clearColumn(colEl);const lv=clamp16(level);if(lv<=0)return;const centerTop=7,centerBottom=8,pairs=Math.floor(lv/2),hasExtra=lv%2;const flame=(step)=>step===1?'red':step===2?'orange':step===3?'yellow':'green';for(let p=0;p<pairs;p++){const cls=flame(p+1);setSlot(colEl,centerTop-p,cls);setSlot(colEl,centerBottom+p,cls);} if(hasExtra)setSlot(colEl,centerTop-pairs,flame(pairs+1)); const slots=[...colEl.children],litIdx=[];for(let i=0;i<16;i++)if(!slots[i].classList.contains('off'))litIdx.push(i); if(!litIdx.length)return; addTwoStepOuterTail(slots,litIdx[0],litIdx[litIdx.length-1],'dim-red','dim-red2');}
-function renderPanelLamp(color,on){ensurePanel();const p=$("panelLamp");if(!p)return;p.className='panelLamp';if(on){p.classList.add(color==='red'?'redOn':'yellowOn');ui.panelCooling=false;}else if(ui.panelCooling){p.classList.add('cooling');p.classList.add(color==='red'?'redOn':'yellowOn');}}
-function triggerPanelCooling(color){ui.panelCooling=true;renderPanelLamp(color,false);clearTimeout(triggerPanelCooling._t);triggerPanelCooling._t=setTimeout(()=>{ui.panelCooling=false;renderPanelLamp(color,false);},80);}
-function renderMode1(m){ensureBars();const side=clamp16(m-4),mid=clamp16(m);paintKittColumn(getCol('vuColL'),side,'red','dim-red','dim-red2');paintKittColumn(getCol('vuColM'),mid,'red','dim-red','dim-red2');paintKittColumn(getCol('vuColR'),side,'red','dim-red','dim-red2');}
-function renderMode2(m){ensureBars();const side=clamp16(m-4),mid=clamp16(m);paintKarrFlippedColumn(getCol('vuColL'),side,'yellow','dim-yellow','dim-yellow2');paintKarrCenterColumn(getCol('vuColM'),mid,'yellow','dim-yellow','dim-yellow2');paintKarrFlippedColumn(getCol('vuColR'),side,'yellow','dim-yellow','dim-yellow2');applyMode2CoreShadow(getCol('vuColL'),'dim-yellow','dim-yellow2',m);applyMode2CoreShadow(getCol('vuColR'),'dim-yellow','dim-yellow2',m);}
-function renderMode3(m){const active=m>5||(!ui.hasVu&&ui.displayMode===3); if(active){ui.panelCooling=false;renderPanelLamp('red',true);} else triggerPanelCooling('red');}
-function renderMode4(m){const active=m>5||(!ui.hasVu&&ui.displayMode===4); if(active){ui.panelCooling=false;renderPanelLamp('yellow',true);} else triggerPanelCooling('yellow');}
-function renderMode5(m){ensureBars();const side=clamp16(m-4),mid=clamp16(m);paintKittColumn(getCol('vuColL'),side,'red','dim-red','dim-red2');paintKittColumn(getCol('vuColM'),mid,'red','dim-red','dim-red2');paintKittColumn(getCol('vuColR'),side,'red','dim-red','dim-red2');const colL=getCol('vuColL'),colM=getCol('vuColM'),colR=getCol('vuColR');const seq=Math.floor(Date.now()/220)%8;const frames=[{L:[[6,'off'],[7,'dim-red']],M:[[7,'whitehot'],[8,'red']],R:[[7,'off'],[8,'dim-red']]},{L:[[5,'dim-red'],[7,'off']],M:[[6,'dim-red'],[8,'whitehot']],R:[[8,'off'],[9,'dim-red']]},{L:[[6,'red'],[8,'off']],M:[[7,'off'],[8,'red']],R:[[6,'dim-red'],[8,'red']]},{L:[[4,'off'],[6,'dim-red']],M:[[7,'whitehot'],[9,'dim-red']],R:[[8,'off'],[7,'dim-red']]},{L:[[5,'red'],[7,'dim-red']],M:[[8,'off'],[7,'red']],R:[[6,'red'],[9,'off']]},{L:[[6,'off'],[7,'red']],M:[[6,'dim-red'],[8,'whitehot']],R:[[5,'off'],[7,'red']]},{L:[[4,'dim-red'],[6,'off']],M:[[7,'red'],[8,'off']],R:[[7,'dim-red'],[9,'red']]},{L:[[5,'off'],[7,'dim-red']],M:[[7,'whitehot'],[8,'red']],R:[[6,'off'],[8,'dim-red']]}];const f=frames[seq];if(colL&&side>0)f.L.forEach(([i,c])=>setSlot(colL,i,c));if(colM&&mid>0)f.M.forEach(([i,c])=>setSlot(colM,i,c));if(colR&&side>0)f.R.forEach(([i,c])=>setSlot(colR,i,c));}
-function renderMode6(m){ensureBars();const side=clamp16(m-4),mid=clamp16(m);paintKittColumn(getCol('vuColL'),side,'blue','dim-blue','dim-blue2');paintKittColumn(getCol('vuColM'),mid,'blue','dim-blue','dim-blue2');paintKittColumn(getCol('vuColR'),side,'blue','dim-blue','dim-blue2');}
-function renderMode7(m){ensureBars();const side=clamp16(m-4),mid=clamp16(m);paintKarrFlippedColumn(getCol('vuColL'),side,'green','dim-green','dim-green2');paintKarrCenterColumn(getCol('vuColM'),mid,'green','dim-green','dim-green2');paintKarrFlippedColumn(getCol('vuColR'),side,'green','dim-green','dim-green2');applyMode2CoreShadow(getCol('vuColL'),'dim-green','dim-green2',m);applyMode2CoreShadow(getCol('vuColR'),'dim-green','dim-green2',m);}
-function renderMode8(vl,vm,vr){ensureBars();paintMode8Flame(getCol('vuColL'),clamp16(vl));paintMode8Flame(getCol('vuColM'),clamp16(vm));paintMode8Flame(getCol('vuColR'),clamp16(vr));}
-function renderMode9(vl,vm,vr){ensureBars();paintKittColumn(getCol('vuColL'),clamp16(vl),'blue','dim-blue','dim-blue2');paintKittColumn(getCol('vuColM'),clamp16(vm),'green','dim-green','dim-green2');paintKittColumn(getCol('vuColR'),clamp16(vr),'yellow','dim-yellow','dim-yellow2');}
-function renderMode10(vl,vm,vr){ensureBars();paintKittColumn(getCol('vuColL'),clamp16(vl),'blue','dim-blue','dim-blue2');paintKittColumn(getCol('vuColM'),clamp16(vm),'whitehot','dim-red','dim-red2');paintKittColumn(getCol('vuColR'),clamp16(vr),'blue','dim-blue','dim-blue2');}
-function renderDisplayByMode(mode,vuL,vuM,vuR){switch(Number(mode||1)){case 1:return renderMode1(vuM);case 2:return renderMode2(vuM);case 3:return renderMode3(vuM);case 4:return renderMode4(vuM);case 5:return renderMode5(vuM);case 6:return renderMode6(vuM);case 7:return renderMode7(vuM);case 8:return renderMode8(vuL,vuM,vuR);case 9:return renderMode9(vuL,vuM,vuR);case 10:return renderMode10(vuL,vuM,vuR);default:return renderMode1(vuM);}}
-function parseNotify(text){const raw=String(text||'').trim();notifyStatus.textContent=raw?raw:'STATE: -';const stateText=raw.startsWith('STATE:')?raw.slice(6):raw;const m=stateText.match(/\bMODE\s*=\s*(\d+)/i),g=stateText.match(/\bG\s*=\s*(\d+)/i),nano=stateText.match(/\bNANO\s*=\s*(NOR|AUTO|SPM|OFF)\b/i),step=stateText.match(/\bSTEP\s*=\s*([01]{4})\b/i),box=stateText.match(/\bBOX\s*=\s*([01]{10})\b/i),vu=stateText.match(/\bVU\s*=\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/i);if(m){ui.displayMode=parseInt(m[1],10);displayModeStatus.textContent='DISPLAY MODE: '+ui.displayMode;renderDisplayModeCards();}if(g){ui.gain=parseInt(g[1],10);gainStatus.textContent='GAIN: '+ui.gain;}if(nano){const v=nano[1].toUpperCase();ui.vehicleMode=(v==='OFF')?null:v;vehicleModeStatus.textContent='VEHICLE MODE: '+(ui.vehicleMode??'OFF');renderVehicleMode();}if(step){ui.step=step[1].split('').map(ch=>ch==='1');renderSteps();}if(box){syncBoxBits(box[1].split('').map(ch=>ch==='1'));renderBoxes();}if(vu){ui.hasVu=true;ui.vuL=clamp16(parseInt(vu[1],10)||0);ui.vuM=clamp16(parseInt(vu[2],10)||0);ui.vuR=clamp16(parseInt(vu[3],10)||0);}renderDisplayByMode(ui.displayMode,ui.vuL,ui.vuM,ui.vuR);}
-function resetUiStates(){ui.displayMode=null;ui.gain=null;ui.vehicleMode=null;ui.step=[false,false,false,false];ui.boxL=[false,false,false,false,false];ui.boxR=[false,false,false,false,false];ui.vuL=0;ui.vuM=0;ui.vuR=0;ui.hasVu=false;ui.panelCooling=false;displayModeStatus.textContent='DISPLAY MODE: -';vehicleModeStatus.textContent='VEHICLE MODE: -';gainStatus.textContent='GAIN: -';notifyStatus.textContent='STATE: -';renderDisplayModeCards();renderSteps();renderBoxes();renderVehicleMode();setBarsHtml();renderMode1(0);}
-function setConnectedUI(isConn){ui.connected=isConn;btnDisconnect.disabled=!isConn;btnConnect.disabled=(device==null)||isConn;btnGainUp.disabled=!isConn;btnGainDown.disabled=!isConn;document.querySelectorAll('.modeCard').forEach(card=>{card.disabled=!isConn;card.style.pointerEvents=isConn?'auto':'none';card.style.filter=isConn?'none':'grayscale(.45) brightness(.75)';});['step1Btn','step2Btn','step3Btn','step4Btn','nanoNorBtn','nanoAutoBtn','nanoSpmBtn','btnStartup','btnShutdown','btnAllOff','btnModeOff','btnDTMF7','btnDTMF8','btnSendCustom'].forEach(id=>$(id).disabled=!isConn);bigModeZone.disabled=!isConn;bigModeZone.style.pointerEvents=isConn?'auto':'none';document.querySelectorAll('.sideBtn').forEach(btn=>{btn.disabled=!isConn;btn.style.pointerEvents=isConn?'auto':'none';});statusText.textContent=isConn?'LINK: ESTABLISHED':'LINK: NOT CONNECTED';scannerState.textContent=isConn?'ACTIVE':'OFFLINE';scannerState.style.color=isConn?'var(--red)':'var(--dim)';scanText.textContent=isConn?'CONNECTED — SCAN SEQUENCE RUNNING':'CONNECT TO ENABLE SCAN SEQUENCE';if(isConn)startScanner();else{stopScanner();resetUiStates();}}
-async function doScanPickDevice(){if(!navigator.bluetooth){bleText.textContent='BLE: NOT SUPPORTED (Use Chrome/Edge)';alert('This browser does not support Web Bluetooth。');return;}playOnce(sScan);bleText.textContent='BLE: READY';device=await navigator.bluetooth.requestDevice({acceptAllDevices:true,optionalServices:[SVC_UUID]});deviceText.textContent='DEVICE: '+((device.name&&device.name.trim())?device.name:'(Unnamed)');idText.textContent='ID: '+(device.id||'-');btnConnect.disabled=false;}
-async function doConnect(){if(!device)return;playOnce(sBtn);try{device.addEventListener('gattserverdisconnected',onDisconnected);server=await device.gatt.connect();const svc=await server.getPrimaryService(SVC_UUID);rxChar=await svc.getCharacteristic(RX_UUID);try{txChar=await svc.getCharacteristic(TX_UUID);if(txChar?.properties?.notify){await txChar.startNotifications();txChar.addEventListener('characteristicvaluechanged',(ev)=>{const txt=new TextDecoder().decode(ev.target.value);parseNotify(txt);});}}catch(_){}setConnectedUI(true);playOnce(sConn);}catch(e){alert('CONNECT FAILED\n'+(e?.message||e));onDisconnected();}}
-function doDisconnect(){playOnce(sBtn);try{if(txChar){try{txChar.stopNotifications();}catch(_){}}if(device?.gatt?.connected)device.gatt.disconnect();}catch(_){}onDisconnected();}
-function onDisconnected(){server=null;rxChar=null;txChar=null;setConnectedUI(false)}
-document.querySelectorAll('.modeCard').forEach(card=>{card.addEventListener('click',async()=>{if(!ui.connected)return;const m=Number(card.dataset.mode);ui.displayMode=m;renderDisplayModeCards();displayModeStatus.textContent='DISPLAY MODE: '+m;playOnce(sBtn);await writeChar(cmdForDisplayMode(m));renderDisplayByMode(ui.displayMode,ui.vuL,ui.vuM,ui.vuR);});});
-bigModeZone.addEventListener('click',async()=>{if(!ui.connected)return;playOnce(sBtn);await writeChar('m');ui.displayMode=typeof ui.displayMode==='number'?(ui.displayMode%10)+1:1;renderDisplayModeCards();displayModeStatus.textContent='DISPLAY MODE: '+ui.displayMode;renderDisplayByMode(ui.displayMode,ui.vuL,ui.vuM,ui.vuR);});
-async function toggleStep(idx){if(!ui.connected)return;ui.step[idx]=!ui.step[idx];renderSteps();playOnce(sBtn);await writeLine(`STEP${idx+1}${ui.step[idx]?'ON':'OFF'}`);} $('step1Btn').addEventListener('click',()=>toggleStep(0));$('step2Btn').addEventListener('click',()=>toggleStep(1));$('step3Btn').addEventListener('click',()=>toggleStep(2));$('step4Btn').addEventListener('click',()=>toggleStep(3));
-async function toggleBox(side,idx){if(!ui.connected)return;const arr=side==='L'?ui.boxL:ui.boxR;arr[idx]=!arr[idx];renderBoxes();playOnce(sBtn);await writeLine(buildBoxHalfCmd(side,idx,arr[idx]));} document.querySelectorAll('.sideBtn').forEach(btn=>btn.addEventListener('click',()=>toggleBox(btn.dataset.side,Number(btn.dataset.box)-1)));
-$('nanoNorBtn').addEventListener('click',async()=>{if(!ui.connected)return;playOnce(sBtn);ui.vehicleMode=(ui.vehicleMode==='NOR')?null:'NOR';vehicleModeStatus.textContent='VEHICLE MODE: '+(ui.vehicleMode??'OFF');renderVehicleMode();await writeLine(ui.vehicleMode==='NOR'?'MODE=NOR':'MODE=OFF');});
-$('nanoAutoBtn').addEventListener('click',async()=>{if(!ui.connected)return;playOnce(sBtn);ui.vehicleMode=(ui.vehicleMode==='AUTO')?null:'AUTO';vehicleModeStatus.textContent='VEHICLE MODE: '+(ui.vehicleMode??'OFF');renderVehicleMode();await writeLine(ui.vehicleMode==='AUTO'?'MODE=AUTO':'MODE=OFF');});
-$('nanoSpmBtn').addEventListener('click',async()=>{if(!ui.connected)return;playOnce(sBtn);ui.vehicleMode=(ui.vehicleMode==='SPM')?null:'SPM';vehicleModeStatus.textContent='VEHICLE MODE: '+(ui.vehicleMode??'OFF');renderVehicleMode();await writeLine(ui.vehicleMode==='SPM'?'MODE=SPM':'MODE=OFF');});
-btnGainUp.addEventListener('click',async()=>{if(!ui.connected)return;playOnce(sBtn);await writeChar('+');}); btnGainDown.addEventListener('click',async()=>{if(!ui.connected)return;playOnce(sBtn);await writeChar('-');}); $('btnStartup').addEventListener('click',async()=>{if(!ui.connected)return;playOnce(sBtn);await writeLine('STARTUP');}); $('btnShutdown').addEventListener('click',async()=>{if(!ui.connected)return;playOnce(sBtn);await writeLine('SHUTDOWN');}); $('btnAllOff').addEventListener('click',async()=>{if(!ui.connected)return;playOnce(sBtn);await writeLine('ALLOFF');}); $('btnModeOff').addEventListener('click',async()=>{if(!ui.connected)return;playOnce(sBtn);await writeLine('MODE=OFF');}); $('btnDTMF7').addEventListener('click',async()=>{if(!ui.connected)return;playOnce(sBtn);await writeLine('DTMF=7,400');}); $('btnDTMF8').addEventListener('click',async()=>{if(!ui.connected)return;playOnce(sBtn);await writeLine('DTMF=8,400');}); $('btnSendCustom').addEventListener('click',async()=>{if(!ui.connected)return;const v=$('dtmfInput').value.trim();if(!v)return;playOnce(sBtn);await writeLine(v);});
-btnScan.addEventListener('click',async()=>{try{await doScanPickDevice();}catch(_){}}); btnConnect.addEventListener('click',async()=>{await doConnect();}); btnDisconnect.addEventListener('click',()=>{doDisconnect();}); resetUiStates(); setConnectedUI(false);
+(() => {
+  const SVC_UUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
+  const RX_UUID  = "6e400002-b5a3-f393-e0a9-e50e24dcca9e";
+  const TX_UUID  = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
+
+  const $ = (id)=>document.getElementById(id);
+
+  const btnScan       = $("btnScan");
+  const btnConnect    = $("btnConnect");
+  const btnDisconnect = $("btnDisconnect");
+  const btnGainUp     = $("btnGainUp");
+  const btnGainDown   = $("btnGainDown");
+
+  const statusText         = $("statusText");
+  const bleText            = $("bleText");
+  const deviceText         = $("deviceText");
+  const idText             = $("idText");
+  const scanText           = $("scanText");
+  const scannerState       = $("scannerState");
+  const displayModeStatus  = $("displayModeStatus");
+  const vehicleModeStatus  = $("vehicleModeStatus");
+  const gainStatus         = $("gainStatus");
+  const notifyStatus       = $("notifyStatus");
+  const bigModeZone        = $("bigModeZone");
+
+  const sScan = $("sScan");
+  const sConn = $("sConn");
+  const sBtn  = $("sBtn");
+
+  let device = null;
+  let server = null;
+  let rxChar = null;
+  let txChar = null;
+
+  const ui = {
+    connected: false,
+    displayMode: null,
+    gain: null,
+    step: [false,false,false,false],
+    boxL: [false,false,false,false,false],
+    boxR: [false,false,false,false,false],
+    vehicleMode: null,
+    vuL: 0,
+    vuM: 0,
+    vuR: 0,
+    hasVu: false,
+    panelCooling: false
+  };
+
+  function playOnce(audio){
+    try{
+      audio.pause();
+      audio.currentTime = 0;
+      const p = audio.play();
+      if (p && p.catch) p.catch(()=>{});
+    }catch(_){}
+  }
+
+  function cmdForDisplayMode(m){
+    return (m === 10) ? "0" : String(m);
+  }
+
+  function buildBoxHalfCmd(side, idx, isOn){
+    const n = idx + 1;
+    return `BOX${n}${side}${isOn ? "ON" : "OFF"}`;
+  }
+
+  async function writeChar(c){
+    if (!ui.connected || !rxChar) return;
+    const data = new TextEncoder().encode(c);
+    try{
+      if (typeof rxChar.writeValueWithoutResponse === "function"){
+        await rxChar.writeValueWithoutResponse(data);
+        return;
+      }
+    } catch(_) {}
+    try{
+      await rxChar.writeValue(data);
+    } catch(_) {}
+  }
+
+  async function writeLine(line){
+    if (!ui.connected || !rxChar) return;
+    const text = line.endsWith("\n") ? line : line + "\n";
+    const data = new TextEncoder().encode(text);
+    try{
+      if (typeof rxChar.writeValueWithoutResponse === "function"){
+        await rxChar.writeValueWithoutResponse(data);
+        return;
+      }
+    } catch(_) {}
+    try{
+      await rxChar.writeValue(data);
+    } catch(_) {}
+  }
+
+  const scanbar = $("scanbar");
+  let scanPos = 0;
+  let scanDir = 1;
+  let scanTimer = null;
+
+  for (let i = 0; i < 8; i++){
+    const d = document.createElement("div");
+    d.className = "led";
+    scanbar.appendChild(d);
+  }
+
+  function renderScanner(){
+    const leds = [...scanbar.children];
+    leds.forEach(d => d.className = "led");
+    if (!ui.connected) return;
+    for (let i = 0; i < 8; i++){
+      const dist = Math.abs(i - scanPos);
+      if (dist === 0) leds[i].classList.add("on");
+      else if (dist === 1) leds[i].classList.add("tail1");
+      else if (dist === 2) leds[i].classList.add("tail2");
+    }
+  }
+
+  function startScanner(){
+    stopScanner();
+    scanPos = 0;
+    scanDir = 1;
+    renderScanner();
+    scanTimer = setInterval(() => {
+      scanPos += scanDir;
+      if (scanPos >= 7){ scanPos = 7; scanDir = -1; }
+      else if (scanPos <= 0){ scanPos = 0; scanDir = 1; }
+      renderScanner();
+    }, 150);
+  }
+
+  function stopScanner(){
+    if (scanTimer){ clearInterval(scanTimer); scanTimer = null; }
+    [...scanbar.children].forEach(d => d.className = "led");
+  }
+
+  function renderDisplayModeCards(){
+    document.querySelectorAll(".modeCard").forEach(card=>{
+      card.classList.toggle("active", Number(card.dataset.mode) === ui.displayMode);
+    });
+  }
+
+  function renderSteps(){
+    ["step1Btn","step2Btn","step3Btn","step4Btn"].forEach((id, idx)=>{
+      $(id).classList.toggle("lit", ui.step[idx]);
+    });
+  }
+
+  function renderBoxes(){
+    document.querySelectorAll(".sideBtn").forEach(btn=>{
+      const idx = Number(btn.dataset.box) - 1;
+      const side = btn.dataset.side;
+      const isOn = side === "L" ? ui.boxL[idx] : ui.boxR[idx];
+
+      btn.classList.toggle("lit", isOn);
+
+      if (btn.classList.contains("red")) {
+        btn.classList.toggle("redGlow", isOn);
+        btn.classList.remove("yellowGlow");
+      } else {
+        btn.classList.toggle("yellowGlow", isOn);
+        btn.classList.remove("redGlow");
+      }
+    });
+  }
+
+  function renderVehicleMode(){
+    const norBtn  = $("nanoNorBtn");
+    const autoBtn = $("nanoAutoBtn");
+    const spmBtn  = $("nanoSpmBtn");
+    const indNor  = $("indNor");
+    const indAuto = $("indAuto");
+    const indSpm  = $("indSpm");
+
+    norBtn.classList.remove("activeNor");
+    autoBtn.classList.remove("activeAuto");
+    spmBtn.classList.remove("activeSpm");
+    indNor.classList.remove("active");
+    indAuto.classList.remove("active");
+    indSpm.classList.remove("active");
+
+    if (ui.vehicleMode === "NOR"){
+      norBtn.classList.add("activeNor");
+      indNor.classList.add("active");
+    } else if (ui.vehicleMode === "AUTO"){
+      autoBtn.classList.add("activeAuto");
+      indAuto.classList.add("active");
+    } else if (ui.vehicleMode === "SPM"){
+      spmBtn.classList.add("activeSpm");
+      indSpm.classList.add("active");
+    }
+  }
+
+  function syncBoxBits(bits10){
+    if (!Array.isArray(bits10) || bits10.length !== 10) return;
+    ui.boxL = [bits10[0], bits10[2], bits10[4], bits10[6], bits10[8]];
+    ui.boxR = [bits10[1], bits10[3], bits10[5], bits10[7], bits10[9]];
+  }
+
+  function setBarsHtml(){
+    bigModeZone.innerHTML = `
+      <div class="barsArea">
+        <div class="barCol side" id="vuColL">${Array.from({length:16}, ()=>'<div class="slot off"></div>').join('')}</div>
+        <div class="barCol mid" id="vuColM">${Array.from({length:16}, ()=>'<div class="slot off"></div>').join('')}</div>
+        <div class="barCol side" id="vuColR">${Array.from({length:16}, ()=>'<div class="slot off"></div>').join('')}</div>
+      </div>
+    `;
+    bigModeZone.dataset.render = "bars";
+  }
+
+  function setPanelHtml(){
+    bigModeZone.innerHTML = `
+      <div class="panelLampWrap">
+        <div class="panelLamp" id="panelLamp"></div>
+      </div>
+    `;
+    bigModeZone.dataset.render = "panel";
+  }
+
+  function ensureBars(){
+    if (bigModeZone.dataset.render !== "bars") setBarsHtml();
+  }
+
+  function ensurePanel(){
+    if (bigModeZone.dataset.render !== "panel") setPanelHtml();
+  }
+
+  function getCol(id){ return $(id); }
+
+  function clearColumn(colEl){
+    if (!colEl) return;
+    for (let i = 0; i < 16; i++) colEl.children[i].className = "slot off";
+  }
+
+  function setSlot(colEl, idx, cls){
+    if (!colEl) return;
+    if (idx < 0 || idx > 15) return;
+    colEl.children[idx].className = "slot " + cls;
+  }
+
+  function clamp16(v){
+    return Math.max(0, Math.min(16, Math.round(v || 0)));
+  }
+
+  function addTwoStepOuterTail(slots, topMost, bottomMost, dim1, dim2){
+    if (topMost > 0 && slots[topMost - 1].classList.contains("off")) slots[topMost - 1].className = "slot " + dim1;
+    if (topMost > 1 && slots[topMost - 2].classList.contains("off")) slots[topMost - 2].className = "slot " + dim2;
+    if (bottomMost < 15 && slots[bottomMost + 1].classList.contains("off")) slots[bottomMost + 1].className = "slot " + dim1;
+    if (bottomMost < 14 && slots[bottomMost + 2].classList.contains("off")) slots[bottomMost + 2].className = "slot " + dim2;
+  }
+
+  function paintKittColumn(colEl, level, colorClass, dimClass, dimClass2){
+    clearColumn(colEl);
+    const lv = clamp16(level);
+    if (lv <= 0) return;
+
+    const centerTop = 7;
+    const centerBottom = 8;
+    const pairs = Math.floor(lv / 2);
+    const hasExtra = lv % 2;
+
+    for (let p = 0; p < pairs; p++){
+      setSlot(colEl, centerTop - p, colorClass);
+      setSlot(colEl, centerBottom + p, colorClass);
+    }
+    if (hasExtra) setSlot(colEl, centerTop - pairs, colorClass);
+
+    const slots = [...colEl.children];
+    const litIdx = [];
+    for (let i = 0; i < 16; i++){
+      if (!slots[i].classList.contains("off")) litIdx.push(i);
+    }
+    if (!litIdx.length) return;
+
+    addTwoStepOuterTail(slots, litIdx[0], litIdx[litIdx.length - 1], dimClass, dimClass2);
+  }
+
+  // 依你要求：
+  // 以第8顆與第9顆中間切開（0-based 即 7 / 8 之間）
+  // 上半部 0~7 與下半部 8~15 對調
+  // 不是左右鏡射(15-i)，而是上下半區 swap
+  function paintKittColumnHalfFlip(colEl, level, colorClass, dimClass, dimClass2){
+    clearColumn(colEl);
+    const lv = clamp16(level);
+    if (lv <= 0) return;
+
+    const centerTop = 7;
+    const centerBottom = 8;
+    const pairs = Math.floor(lv / 2);
+    const hasExtra = lv % 2;
+
+    const originalLit = [];
+    for (let p = 0; p < pairs; p++){
+      originalLit.push(centerTop - p);
+      originalLit.push(centerBottom + p);
+    }
+    if (hasExtra) originalLit.push(centerTop - pairs);
+
+    // 上半 0~7 -> +8
+    // 下半 8~15 -> -8
+    const flippedLit = originalLit.map(i => (i <= 7 ? i + 8 : i - 8));
+
+    flippedLit.forEach(i => setSlot(colEl, i, colorClass));
+
+    const slots = [...colEl.children];
+    const litIdx = [];
+    for (let i = 0; i < 16; i++){
+      if (!slots[i].classList.contains("off")) litIdx.push(i);
+    }
+    if (!litIdx.length) return;
+
+    addTwoStepOuterTail(slots, litIdx[0], litIdx[litIdx.length - 1], dimClass, dimClass2);
+  }
+
+  function paintMode8Flame(colEl, level){
+    clearColumn(colEl);
+    const lv = clamp16(level);
+    if (lv <= 0) return;
+
+    const centerTop = 7;
+    const centerBottom = 8;
+    const pairs = Math.floor(lv / 2);
+    const hasExtra = lv % 2;
+
+    function flame(step){
+      if (step === 1) return "red";
+      if (step === 2) return "orange";
+      if (step === 3) return "yellow";
+      return "green";
+    }
+
+    for (let p = 0; p < pairs; p++){
+      const cls = flame(p + 1);
+      setSlot(colEl, centerTop - p, cls);
+      setSlot(colEl, centerBottom + p, cls);
+    }
+    if (hasExtra) setSlot(colEl, centerTop - pairs, flame(pairs + 1));
+
+    const slots = [...colEl.children];
+    const litIdx = [];
+    for (let i = 0; i < 16; i++){
+      if (!slots[i].classList.contains("off")) litIdx.push(i);
+    }
+    if (!litIdx.length) return;
+    addTwoStepOuterTail(slots, litIdx[0], litIdx[litIdx.length - 1], "dim-red", "dim-red2");
+  }
+
+  function renderPanelLamp(color, on){
+    ensurePanel();
+    const p = $("panelLamp");
+    if (!p) return;
+    p.className = "panelLamp";
+    if (on){
+      p.classList.add(color === "red" ? "redOn" : "yellowOn");
+      ui.panelCooling = false;
+    } else if (ui.panelCooling){
+      p.classList.add("cooling");
+      p.classList.add(color === "red" ? "redOn" : "yellowOn");
+    }
+  }
+
+  function triggerPanelCooling(color){
+    ui.panelCooling = true;
+    renderPanelLamp(color, false);
+    clearTimeout(triggerPanelCooling._t);
+    triggerPanelCooling._t = setTimeout(()=>{
+      ui.panelCooling = false;
+      renderPanelLamp(color, false);
+    }, 130);
+  }
+
+  function renderMode1(m){
+    ensureBars();
+    const side = clamp16(m - 4);
+    const mid  = clamp16(m);
+    paintKittColumn(getCol("vuColL"), side, "red", "dim-red", "dim-red2");
+    paintKittColumn(getCol("vuColM"), mid,  "red", "dim-red", "dim-red2");
+    paintKittColumn(getCol("vuColR"), side, "red", "dim-red", "dim-red2");
+  }
+
+  function renderMode2(m){
+    ensureBars();
+    const side = clamp16(m - 4);
+    const mid  = clamp16(m);
+
+    // 左右柱：以 MODE1 結構為底，但從第8/9顆中間切成上下兩半後對調
+    paintKittColumnHalfFlip(getCol("vuColL"), side, "yellow", "dim-yellow", "dim-yellow2");
+
+    // 中柱：維持 MODE1 結構，只改黃色
+    paintKittColumn(getCol("vuColM"), mid, "yellow", "dim-yellow", "dim-yellow2");
+
+    paintKittColumnHalfFlip(getCol("vuColR"), side, "yellow", "dim-yellow", "dim-yellow2");
+  }
+
+  function renderMode3(m){
+    const active = m > 5 || (!ui.hasVu && ui.displayMode === 3);
+    if (active){
+      ui.panelCooling = false;
+      renderPanelLamp("red", true);
+    } else {
+      triggerPanelCooling("red");
+    }
+  }
+
+  function renderMode4(m){
+    const active = m > 5 || (!ui.hasVu && ui.displayMode === 4);
+    if (active){
+      ui.panelCooling = false;
+      renderPanelLamp("yellow", true);
+    } else {
+      triggerPanelCooling("yellow");
+    }
+  }
+
+  function renderMode5(m){
+    ensureBars();
+
+    const side = clamp16(m - 4);
+    const mid  = clamp16(m);
+
+    paintKittColumn(getCol("vuColL"), side, "red", "dim-red", "dim-red2");
+    paintKittColumn(getCol("vuColM"), mid,  "red", "dim-red", "dim-red2");
+    paintKittColumn(getCol("vuColR"), side, "red", "dim-red", "dim-red2");
+
+    const colL = getCol("vuColL");
+    const colM = getCol("vuColM");
+    const colR = getCol("vuColR");
+
+    const seq = Math.floor(Date.now() / 220) % 8;
+
+    const frames = [
+      {L:[[6,"off"],[7,"dim-red"]],      M:[[7,"whitehot"],[8,"red"]],     R:[[7,"off"],[8,"dim-red"]]},
+      {L:[[5,"dim-red"],[7,"off"]],      M:[[6,"dim-red"],[8,"whitehot"]], R:[[8,"off"],[9,"dim-red"]]},
+      {L:[[6,"red"],[8,"off"]],          M:[[7,"off"],[8,"red"]],          R:[[6,"dim-red"],[8,"red"]]},
+      {L:[[4,"off"],[6,"dim-red"]],      M:[[7,"whitehot"],[9,"dim-red"]], R:[[8,"off"],[7,"dim-red"]]},
+      {L:[[5,"red"],[7,"dim-red"]],      M:[[8,"off"],[7,"red"]],          R:[[6,"red"],[9,"off"]]},
+      {L:[[6,"off"],[7,"red"]],          M:[[6,"dim-red"],[8,"whitehot"]], R:[[5,"off"],[7,"red"]]},
+      {L:[[4,"dim-red"],[6,"off"]],      M:[[7,"red"],[8,"off"]],          R:[[7,"dim-red"],[9,"red"]]},
+      {L:[[5,"off"],[7,"dim-red"]],      M:[[7,"whitehot"],[8,"red"]],     R:[[6,"off"],[8,"dim-red"]]},
+    ];
+
+    const f = frames[seq];
+
+    if (colL && side > 0){
+      f.L.forEach(([i,c])=>setSlot(colL,i,c));
+    }
+    if (colM && mid > 0){
+      f.M.forEach(([i,c])=>setSlot(colM,i,c));
+    }
+    if (colR && side > 0){
+      f.R.forEach(([i,c])=>setSlot(colR,i,c));
+    }
+  }
+
+  function renderMode6(m){
+    ensureBars();
+    const side = clamp16(m - 4);
+    const mid  = clamp16(m);
+    paintKittColumn(getCol("vuColL"), side, "blue", "dim-blue", "dim-blue2");
+    paintKittColumn(getCol("vuColM"), mid,  "blue", "dim-blue", "dim-blue2");
+    paintKittColumn(getCol("vuColR"), side, "blue", "dim-blue", "dim-blue2");
+  }
+
+  function renderMode7(m){
+    ensureBars();
+    const side = clamp16(m - 4);
+    const mid  = clamp16(m);
+
+    // 左右柱：MODE2 同邏輯，只改成綠色
+    paintKittColumnHalfFlip(getCol("vuColL"), side, "green", "dim-green", "dim-green2");
+
+    // 中柱：維持 MODE1 結構，只改綠色
+    paintKittColumn(getCol("vuColM"), mid, "green", "dim-green", "dim-green2");
+
+    paintKittColumnHalfFlip(getCol("vuColR"), side, "green", "dim-green", "dim-green2");
+  }
+
+  function renderMode8(vl, vm, vr){
+    ensureBars();
+    paintMode8Flame(getCol("vuColL"), clamp16(vl));
+    paintMode8Flame(getCol("vuColM"), clamp16(vm));
+    paintMode8Flame(getCol("vuColR"), clamp16(vr));
+  }
+
+  function renderMode9(vl, vm, vr){
+    ensureBars();
+    paintKittColumn(getCol("vuColL"), clamp16(vl), "blue", "dim-blue", "dim-blue2");
+    paintKittColumn(getCol("vuColM"), clamp16(vm), "green", "dim-green", "dim-green2");
+    paintKittColumn(getCol("vuColR"), clamp16(vr), "yellow", "dim-yellow", "dim-yellow2");
+  }
+
+  function renderMode10(vl, vm, vr){
+    ensureBars();
+    paintKittColumn(getCol("vuColL"), clamp16(vl), "blue", "dim-blue", "dim-blue2");
+    paintKittColumn(getCol("vuColM"), clamp16(vm), "whitehot", "dim-red", "dim-red2");
+    paintKittColumn(getCol("vuColR"), clamp16(vr), "blue", "dim-blue", "dim-blue2");
+  }
+
+  function renderDisplayByMode(mode, vuL, vuM, vuR){
+    switch(Number(mode || 1)){
+      case 1: return renderMode1(vuM);
+      case 2: return renderMode2(vuM);
+      case 3: return renderMode3(vuM);
+      case 4: return renderMode4(vuM);
+      case 5: return renderMode5(vuM);
+      case 6: return renderMode6(vuM);
+      case 7: return renderMode7(vuM);
+      case 8: return renderMode8(vuL, vuM, vuR);
+      case 9: return renderMode9(vuL, vuM, vuR);
+      case 10:return renderMode10(vuL, vuM, vuR);
+      default:return renderMode1(vuM);
+    }
+  }
+
+  function parseNotify(text){
+    const raw = String(text || "").trim();
+    notifyStatus.textContent = raw ? raw : "STATE: -";
+
+    const stateText = raw.startsWith("STATE:") ? raw.slice(6) : raw;
+
+    const m = stateText.match(/\bMODE\s*=\s*(\d+)/i);
+    const g = stateText.match(/\bG\s*=\s*(\d+)/i);
+    const nano = stateText.match(/\bNANO\s*=\s*(NOR|AUTO|SPM|OFF)\b/i);
+    const step = stateText.match(/\bSTEP\s*=\s*([01]{4})\b/i);
+    const box = stateText.match(/\bBOX\s*=\s*([01]{10})\b/i);
+    const vu = stateText.match(/\bVU\s*=\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/i);
+
+    if (m){
+      ui.displayMode = parseInt(m[1], 10);
+      displayModeStatus.textContent = "DISPLAY MODE: " + ui.displayMode;
+      renderDisplayModeCards();
+    }
+    if (g){
+      ui.gain = parseInt(g[1], 10);
+      gainStatus.textContent = "GAIN: " + ui.gain;
+    }
+    if (nano){
+      const v = nano[1].toUpperCase();
+      ui.vehicleMode = (v === "OFF") ? null : v;
+      vehicleModeStatus.textContent = "VEHICLE MODE: " + (ui.vehicleMode ?? "OFF");
+      renderVehicleMode();
+    }
+    if (step){
+      ui.step = step[1].split("").map(ch => ch === "1");
+      renderSteps();
+    }
+    if (box){
+      const bits10 = box[1].split("").map(ch => ch === "1");
+      syncBoxBits(bits10);
+      renderBoxes();
+    }
+    if (vu){
+      ui.hasVu = true;
+      ui.vuL = clamp16(parseInt(vu[1], 10) || 0);
+      ui.vuM = clamp16(parseInt(vu[2], 10) || 0);
+      ui.vuR = clamp16(parseInt(vu[3], 10) || 0);
+    }
+
+    renderDisplayByMode(ui.displayMode, ui.vuL, ui.vuM, ui.vuR);
+  }
+
+  function resetUiStates(){
+    ui.displayMode = null;
+    ui.gain = null;
+    ui.vehicleMode = null;
+    ui.step = [false,false,false,false];
+    ui.boxL = [false,false,false,false,false];
+    ui.boxR = [false,false,false,false,false];
+    ui.vuL = 0;
+    ui.vuM = 0;
+    ui.vuR = 0;
+    ui.hasVu = false;
+    ui.panelCooling = false;
+
+    displayModeStatus.textContent = "DISPLAY MODE: -";
+    vehicleModeStatus.textContent = "VEHICLE MODE: -";
+    gainStatus.textContent = "GAIN: -";
+    notifyStatus.textContent = "STATE: -";
+
+    renderDisplayModeCards();
+    renderSteps();
+    renderBoxes();
+    renderVehicleMode();
+    setBarsHtml();
+    renderMode1(0);
+  }
+
+  function setConnectedUI(isConn){
+    ui.connected = isConn;
+
+    btnDisconnect.disabled = !isConn;
+    btnConnect.disabled = (device == null) || isConn;
+    btnGainUp.disabled = !isConn;
+    btnGainDown.disabled = !isConn;
+
+    document.querySelectorAll(".modeCard").forEach(card=>{
+      card.disabled = !isConn;
+      card.style.pointerEvents = isConn ? "auto" : "none";
+      card.style.filter = isConn ? "none" : "grayscale(.45) brightness(.75)";
+    });
+
+    [
+      "step1Btn","step2Btn","step3Btn","step4Btn",
+      "nanoNorBtn","nanoAutoBtn","nanoSpmBtn",
+      "btnStartup","btnShutdown","btnAllOff","btnModeOff","btnDTMF7","btnDTMF8","btnSendCustom"
+    ].forEach(id => $(id).disabled = !isConn);
+
+    bigModeZone.disabled = !isConn;
+    bigModeZone.style.pointerEvents = isConn ? "auto" : "none";
+
+    document.querySelectorAll(".sideBtn").forEach(btn=>{
+      btn.disabled = !isConn;
+      btn.style.pointerEvents = isConn ? "auto" : "none";
+    });
+
+    statusText.textContent = isConn ? "LINK: ESTABLISHED" : "LINK: NOT CONNECTED";
+    scannerState.textContent = isConn ? "ACTIVE" : "OFFLINE";
+    scannerState.style.color = isConn ? "var(--red)" : "var(--dim)";
+    scanText.textContent = isConn ? "CONNECTED — SCAN SEQUENCE RUNNING" : "CONNECT TO ENABLE SCAN SEQUENCE";
+
+    if (isConn) startScanner();
+    else {
+      stopScanner();
+      resetUiStates();
+    }
+  }
+
+  async function doScanPickDevice(){
+    if (!navigator.bluetooth){
+      bleText.textContent = "BLE: NOT SUPPORTED (Use Chrome/Edge)";
+      alert("This browser does not support Web Bluetooth。");
+      return;
+    }
+
+    playOnce(sScan);
+    bleText.textContent = "BLE: READY";
+
+    device = await navigator.bluetooth.requestDevice({
+      acceptAllDevices: true,
+      optionalServices: [SVC_UUID],
+    });
+
+    deviceText.textContent = "DEVICE: " + (device.name && device.name.trim() ? device.name : "(Unnamed)");
+    idText.textContent = "ID: " + (device.id || "-");
+    btnConnect.disabled = false;
+  }
+
+  async function doConnect(){
+    if (!device) return;
+    playOnce(sBtn);
+
+    try{
+      device.addEventListener("gattserverdisconnected", onDisconnected);
+      server = await device.gatt.connect();
+      const svc = await server.getPrimaryService(SVC_UUID);
+      rxChar = await svc.getCharacteristic(RX_UUID);
+
+      try{
+        txChar = await svc.getCharacteristic(TX_UUID);
+        if (txChar?.properties?.notify){
+          await txChar.startNotifications();
+          txChar.addEventListener("characteristicvaluechanged", (ev)=>{
+            const txt = new TextDecoder().decode(ev.target.value);
+            parseNotify(txt);
+          });
+        }
+      } catch(_) {}
+
+      setConnectedUI(true);
+      playOnce(sConn);
+    } catch(e){
+      alert("CONNECT FAILED\n" + (e?.message || e));
+      onDisconnected();
+    }
+  }
+
+  function doDisconnect(){
+    playOnce(sBtn);
+    try{
+      if (txChar){
+        try{ txChar.stopNotifications(); } catch(_){}
+      }
+      if (device?.gatt?.connected) device.gatt.disconnect();
+    } catch(_){}
+    onDisconnected();
+  }
+
+  function onDisconnected(){
+    server = null;
+    rxChar = null;
+    txChar = null;
+    setConnectedUI(false);
+  }
+
+  document.querySelectorAll(".modeCard").forEach(card=>{
+    card.addEventListener("click", async ()=>{
+      if (!ui.connected) return;
+      const m = Number(card.dataset.mode);
+      ui.displayMode = m;
+      renderDisplayModeCards();
+      displayModeStatus.textContent = "DISPLAY MODE: " + m;
+      playOnce(sBtn);
+      await writeChar(cmdForDisplayMode(m));
+      renderDisplayByMode(ui.displayMode, ui.vuL, ui.vuM, ui.vuR);
+    });
+  });
+
+  bigModeZone.addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    playOnce(sBtn);
+    await writeChar("m");
+    ui.displayMode = typeof ui.displayMode === "number" ? (ui.displayMode % 10) + 1 : 1;
+    renderDisplayModeCards();
+    displayModeStatus.textContent = "DISPLAY MODE: " + ui.displayMode;
+    renderDisplayByMode(ui.displayMode, ui.vuL, ui.vuM, ui.vuR);
+  });
+
+  async function toggleStep(idx){
+    if (!ui.connected) return;
+    ui.step[idx] = !ui.step[idx];
+    renderSteps();
+    playOnce(sBtn);
+    await writeLine(`STEP${idx + 1}${ui.step[idx] ? "ON" : "OFF"}`);
+  }
+
+  $("step1Btn").addEventListener("click", ()=>toggleStep(0));
+  $("step2Btn").addEventListener("click", ()=>toggleStep(1));
+  $("step3Btn").addEventListener("click", ()=>toggleStep(2));
+  $("step4Btn").addEventListener("click", ()=>toggleStep(3));
+
+  async function toggleBox(side, idx){
+    if (!ui.connected) return;
+    const arr = side === "L" ? ui.boxL : ui.boxR;
+    arr[idx] = !arr[idx];
+    renderBoxes();
+    playOnce(sBtn);
+    await writeLine(buildBoxHalfCmd(side, idx, arr[idx]));
+  }
+
+  document.querySelectorAll(".sideBtn").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      toggleBox(btn.dataset.side, Number(btn.dataset.box) - 1);
+    });
+  });
+
+  $("nanoNorBtn").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    playOnce(sBtn);
+    ui.vehicleMode = (ui.vehicleMode === "NOR") ? null : "NOR";
+    vehicleModeStatus.textContent = "VEHICLE MODE: " + (ui.vehicleMode ?? "OFF");
+    renderVehicleMode();
+    await writeLine(ui.vehicleMode === "NOR" ? "MODE=NOR" : "MODE=OFF");
+  });
+
+  $("nanoAutoBtn").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    playOnce(sBtn);
+    ui.vehicleMode = (ui.vehicleMode === "AUTO") ? null : "AUTO";
+    vehicleModeStatus.textContent = "VEHICLE MODE: " + (ui.vehicleMode ?? "OFF");
+    renderVehicleMode();
+    await writeLine(ui.vehicleMode === "AUTO" ? "MODE=AUTO" : "MODE=OFF");
+  });
+
+  $("nanoSpmBtn").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    playOnce(sBtn);
+    ui.vehicleMode = (ui.vehicleMode === "SPM") ? null : "SPM";
+    vehicleModeStatus.textContent = "VEHICLE MODE: " + (ui.vehicleMode ?? "OFF");
+    renderVehicleMode();
+    await writeLine(ui.vehicleMode === "SPM" ? "MODE=SPM" : "MODE=OFF");
+  });
+
+  btnGainUp.addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    playOnce(sBtn);
+    await writeChar("+");
+  });
+
+  btnGainDown.addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    playOnce(sBtn);
+    await writeChar("-");
+  });
+
+  $("btnStartup").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    playOnce(sBtn);
+    await writeLine("STARTUP");
+  });
+
+  $("btnShutdown").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    playOnce(sBtn);
+    await writeLine("SHUTDOWN");
+  });
+
+  $("btnAllOff").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    playOnce(sBtn);
+    await writeLine("ALLOFF");
+  });
+
+  $("btnModeOff").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    playOnce(sBtn);
+    await writeLine("MODE=OFF");
+  });
+
+  $("btnDTMF7").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    playOnce(sBtn);
+    await writeLine("DTMF=7,400");
+  });
+
+  $("btnDTMF8").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    playOnce(sBtn);
+    await writeLine("DTMF=8,400");
+  });
+
+  $("btnSendCustom").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    const v = $("dtmfInput").value.trim();
+    if (!v) return;
+    playOnce(sBtn);
+    await writeLine(v);
+  });
+
+  btnScan.addEventListener("click", async ()=>{ try{ await doScanPickDevice(); } catch(_){} });
+  btnConnect.addEventListener("click", async ()=>{ await doConnect(); });
+  btnDisconnect.addEventListener("click", ()=>{ doDisconnect(); });
+
+  resetUiStates();
+  setConnectedUI(false);
 })();
 </script>
 </body>
-</html>
+      </html>
