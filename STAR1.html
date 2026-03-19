@@ -1083,74 +1083,64 @@ body{min-width:320px}
     return Math.max(0, Math.min(16, Math.round(v || 0)));
   }
 
-  function addTwoStepOuterTail(slots, topMost, bottomMost, dim1, dim2){
-    if (topMost > 0 && slots[topMost - 1].classList.contains("off")) slots[topMost - 1].className = "slot " + dim1;
-    if (topMost > 1 && slots[topMost - 2].classList.contains("off")) slots[topMost - 2].className = "slot " + dim2;
-    if (bottomMost < 15 && slots[bottomMost + 1].classList.contains("off")) slots[bottomMost + 1].className = "slot " + dim1;
-    if (bottomMost < 14 && slots[bottomMost + 2].classList.contains("off")) slots[bottomMost + 2].className = "slot " + dim2;
+  function buildKittCoreIndices(level){
+    const lv = clamp16(level);
+    const centerTop = 7;
+    const centerBottom = 8;
+    const pairs = Math.floor(lv / 2);
+    const hasExtra = lv % 2;
+
+    const core = [];
+    for (let p = 0; p < pairs; p++){
+      core.push(centerTop - p);
+      core.push(centerBottom + p);
+    }
+    if (hasExtra) core.push(centerTop - pairs);
+    return core.sort((a,b)=>a-b);
+  }
+
+  function buildTailAroundCore(coreIdx){
+    if (!coreIdx.length) return [];
+    const s = new Set(coreIdx);
+    const topMost = coreIdx[0];
+    const bottomMost = coreIdx[coreIdx.length - 1];
+    const tail = [];
+
+    if (topMost > 0 && !s.has(topMost - 1)) tail.push([topMost - 1, 1]);
+    if (topMost > 1 && !s.has(topMost - 2)) tail.push([topMost - 2, 2]);
+    if (bottomMost < 15 && !s.has(bottomMost + 1)) tail.push([bottomMost + 1, 1]);
+    if (bottomMost < 14 && !s.has(bottomMost + 2)) tail.push([bottomMost + 2, 2]);
+
+    return tail;
+  }
+
+  function halfFlipIndex(i){
+    return (i <= 7) ? i + 8 : i - 8;
+  }
+
+  function paintFromCoreAndTail(colEl, coreIdx, tailIdxLv, colorClass, dimClass, dimClass2){
+    clearColumn(colEl);
+    coreIdx.forEach(i => setSlot(colEl, i, colorClass));
+    tailIdxLv.forEach(([i,lv]) => setSlot(colEl, i, lv === 1 ? dimClass : dimClass2));
   }
 
   function paintKittColumn(colEl, level, colorClass, dimClass, dimClass2){
-    clearColumn(colEl);
-    const lv = clamp16(level);
-    if (lv <= 0) return;
-
-    const centerTop = 7;
-    const centerBottom = 8;
-    const pairs = Math.floor(lv / 2);
-    const hasExtra = lv % 2;
-
-    for (let p = 0; p < pairs; p++){
-      setSlot(colEl, centerTop - p, colorClass);
-      setSlot(colEl, centerBottom + p, colorClass);
-    }
-    if (hasExtra) setSlot(colEl, centerTop - pairs, colorClass);
-
-    const slots = [...colEl.children];
-    const litIdx = [];
-    for (let i = 0; i < 16; i++){
-      if (!slots[i].classList.contains("off")) litIdx.push(i);
-    }
-    if (!litIdx.length) return;
-
-    addTwoStepOuterTail(slots, litIdx[0], litIdx[litIdx.length - 1], dimClass, dimClass2);
+    const core = buildKittCoreIndices(level);
+    const tail = buildTailAroundCore(core);
+    paintFromCoreAndTail(colEl, core, tail, colorClass, dimClass, dimClass2);
   }
 
-  // 依你要求：
-  // 以第8顆與第9顆中間切開（0-based 即 7 / 8 之間）
-  // 上半部 0~7 與下半部 8~15 對調
-  // 不是左右鏡射(15-i)，而是上下半區 swap
-  function paintKittColumnHalfFlip(colEl, level, colorClass, dimClass, dimClass2){
-    clearColumn(colEl);
-    const lv = clamp16(level);
-    if (lv <= 0) return;
+  // 先以 MODE1 規則算 core + tail
+  // 再把整組一起做上下半區翻轉
+  // 這樣 MODE2 / MODE7 的尾暈方向會一起被翻過去
+  function paintKittColumnHalfFlipWithTail(colEl, level, colorClass, dimClass, dimClass2){
+    const core = buildKittCoreIndices(level);
+    const tail = buildTailAroundCore(core);
 
-    const centerTop = 7;
-    const centerBottom = 8;
-    const pairs = Math.floor(lv / 2);
-    const hasExtra = lv % 2;
+    const coreFlipped = core.map(halfFlipIndex).sort((a,b)=>a-b);
+    const tailFlipped = tail.map(([i,lv]) => [halfFlipIndex(i), lv]).sort((a,b)=>a[0]-b[0]);
 
-    const originalLit = [];
-    for (let p = 0; p < pairs; p++){
-      originalLit.push(centerTop - p);
-      originalLit.push(centerBottom + p);
-    }
-    if (hasExtra) originalLit.push(centerTop - pairs);
-
-    // 上半 0~7 -> +8
-    // 下半 8~15 -> -8
-    const flippedLit = originalLit.map(i => (i <= 7 ? i + 8 : i - 8));
-
-    flippedLit.forEach(i => setSlot(colEl, i, colorClass));
-
-    const slots = [...colEl.children];
-    const litIdx = [];
-    for (let i = 0; i < 16; i++){
-      if (!slots[i].classList.contains("off")) litIdx.push(i);
-    }
-    if (!litIdx.length) return;
-
-    addTwoStepOuterTail(slots, litIdx[0], litIdx[litIdx.length - 1], dimClass, dimClass2);
+    paintFromCoreAndTail(colEl, coreFlipped, tailFlipped, colorClass, dimClass, dimClass2);
   }
 
   function paintMode8Flame(colEl, level){
@@ -1170,20 +1160,27 @@ body{min-width:320px}
       return "green";
     }
 
-    for (let p = 0; p < pairs; p++){
-      const cls = flame(p + 1);
-      setSlot(colEl, centerTop - p, cls);
-      setSlot(colEl, centerBottom + p, cls);
-    }
-    if (hasExtra) setSlot(colEl, centerTop - pairs, flame(pairs + 1));
-
-    const slots = [...colEl.children];
     const litIdx = [];
-    for (let i = 0; i < 16; i++){
-      if (!slots[i].classList.contains("off")) litIdx.push(i);
+    for (let p = 0; p < pairs; p++){
+      const up = centerTop - p;
+      const dn = centerBottom + p;
+      litIdx.push(up, dn);
+      setSlot(colEl, up, flame(p + 1));
+      setSlot(colEl, dn, flame(p + 1));
     }
-    if (!litIdx.length) return;
-    addTwoStepOuterTail(slots, litIdx[0], litIdx[litIdx.length - 1], "dim-red", "dim-red2");
+    if (hasExtra){
+      const idx = centerTop - pairs;
+      litIdx.push(idx);
+      setSlot(colEl, idx, flame(pairs + 1));
+    }
+
+    litIdx.sort((a,b)=>a-b);
+    const topMost = litIdx[0];
+    const bottomMost = litIdx[litIdx.length - 1];
+    if (topMost > 0) setSlot(colEl, topMost - 1, "dim-red");
+    if (topMost > 1) setSlot(colEl, topMost - 2, "dim-red2");
+    if (bottomMost < 15) setSlot(colEl, bottomMost + 1, "dim-red");
+    if (bottomMost < 14) setSlot(colEl, bottomMost + 2, "dim-red2");
   }
 
   function renderPanelLamp(color, on){
@@ -1224,13 +1221,9 @@ body{min-width:320px}
     const side = clamp16(m - 4);
     const mid  = clamp16(m);
 
-    // 左右柱：以 MODE1 結構為底，但從第8/9顆中間切成上下兩半後對調
-    paintKittColumnHalfFlip(getCol("vuColL"), side, "yellow", "dim-yellow", "dim-yellow2");
-
-    // 中柱：維持 MODE1 結構，只改黃色
+    paintKittColumnHalfFlipWithTail(getCol("vuColL"), side, "yellow", "dim-yellow", "dim-yellow2");
     paintKittColumn(getCol("vuColM"), mid, "yellow", "dim-yellow", "dim-yellow2");
-
-    paintKittColumnHalfFlip(getCol("vuColR"), side, "yellow", "dim-yellow", "dim-yellow2");
+    paintKittColumnHalfFlipWithTail(getCol("vuColR"), side, "yellow", "dim-yellow", "dim-yellow2");
   }
 
   function renderMode3(m){
@@ -1307,13 +1300,9 @@ body{min-width:320px}
     const side = clamp16(m - 4);
     const mid  = clamp16(m);
 
-    // 左右柱：MODE2 同邏輯，只改成綠色
-    paintKittColumnHalfFlip(getCol("vuColL"), side, "green", "dim-green", "dim-green2");
-
-    // 中柱：維持 MODE1 結構，只改綠色
+    paintKittColumnHalfFlipWithTail(getCol("vuColL"), side, "green", "dim-green", "dim-green2");
     paintKittColumn(getCol("vuColM"), mid, "green", "dim-green", "dim-green2");
-
-    paintKittColumnHalfFlip(getCol("vuColR"), side, "green", "dim-green", "dim-green2");
+    paintKittColumnHalfFlipWithTail(getCol("vuColR"), side, "green", "dim-green", "dim-green2");
   }
 
   function renderMode8(vl, vm, vr){
@@ -1676,4 +1665,4 @@ body{min-width:320px}
 })();
 </script>
 </body>
-      </html>
+</html>
