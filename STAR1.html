@@ -17,6 +17,7 @@
   --shadow1: 0 10px 18px rgba(0,0,0,.85);
   --shadow2: 0 0 24px rgba(184,147,58,.25);
 }
+
 *{box-sizing:border-box}
 html,body{
   margin:0;
@@ -25,7 +26,13 @@ html,body{
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans-serif;
 }
 body{min-width:320px}
-.app{max-width:920px;margin:auto;padding:10px;}
+
+.app{
+  max-width:920px;
+  margin:auto;
+  padding:10px;
+}
+
 .frame{
   background:var(--panel);
   border:1.6px solid var(--gold2);
@@ -35,105 +42,393 @@ body{min-width:320px}
   box-shadow:var(--shadow1), var(--shadow2);
   overflow:hidden;
 }
-.center{display:flex;justify-content:center;align-items:center;text-align:center;}
-.col{display:flex;flex-direction:column;justify-content:center;align-items:center;}
-.row{width:100%;display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap;}
+
+.center{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+
+.col{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+
+.row{
+  width:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
 .pill{
-  display:inline-flex;align-items:center;justify-content:center;padding:7px 12px;border-radius:999px;
-  border:1.2px solid var(--gold);background:var(--panel2);color:var(--gold);
-  font-weight:900;letter-spacing:1px;font-size:11px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:7px 12px;
+  border-radius:999px;
+  border:1.2px solid var(--gold);
+  background:var(--panel2);
+  color:var(--gold);
+  font-weight:900;
+  letter-spacing:1px;
+  font-size:11px;
 }
+
 .appIcon{
-  width:30px;height:30px;border-radius:8px;margin-right:10px;border:1px solid var(--gold2);
-  box-shadow:0 0 10px rgba(184,147,58,.20);object-fit:cover;flex:0 0 auto;
+  width:30px;
+  height:30px;
+  border-radius:8px;
+  margin-right:10px;
+  border:1px solid var(--gold2);
+  box-shadow:0 0 10px rgba(184,147,58,.20);
+  object-fit:cover;
+  flex:0 0 auto;
 }
-.h2{margin:0;font-size:12px;letter-spacing:1.5px;color:var(--gold);font-weight:900;}
-.sub{margin-top:4px;font-size:10px;color:var(--gold2);letter-spacing:1px;font-weight:700;}
-.mini{margin-top:4px;font-size:9px;color:var(--dim);letter-spacing:.8px;font-weight:700;}
-.kv{width:100%;display:flex;flex-direction:column;align-items:center;gap:4px;}
+
+.h2{
+  margin:0;
+  font-size:12px;
+  letter-spacing:1.5px;
+  color:var(--gold);
+  font-weight:900;
+}
+
+.sub{
+  margin-top:4px;
+  font-size:10px;
+  color:var(--gold2);
+  letter-spacing:1px;
+  font-weight:700;
+}
+
+.mini{
+  margin-top:4px;
+  font-size:9px;
+  color:var(--dim);
+  letter-spacing:.8px;
+  font-weight:700;
+}
+
+.kv{
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+}
+
 .kv .line{
-  width:100%;max-width:900px;text-align:center;color:var(--gold2);font-weight:700;
-  font-size:10px;letter-spacing:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  width:100%;
+  max-width:900px;
+  text-align:center;
+  color:var(--gold2);
+  font-weight:700;
+  font-size:10px;
+  letter-spacing:1px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
-.kv .line.dim{color:var(--dim);font-size:9px;}
+
+.kv .line.dim{
+  color:var(--dim);
+  font-size:9px;
+}
+
 .btn{
-  border-radius:14px;border:1.6px solid var(--gold2);background:linear-gradient(135deg,#1B1200,#0A0A0A);
-  color:var(--gold);font-weight:900;letter-spacing:.7px;cursor:pointer;user-select:none;display:flex;
-  flex-direction:column;justify-content:center;align-items:center;gap:4px;padding:8px 8px;position:relative;transition:.12s;
+  border-radius:14px;
+  border:1.6px solid var(--gold2);
+  background:linear-gradient(135deg,#1B1200,#0A0A0A);
+  color:var(--gold);
+  font-weight:900;
+  letter-spacing:.7px;
+  cursor:pointer;
+  user-select:none;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:4px;
+  padding:8px 8px;
+  position:relative;
+  transition:.12s;
 }
-.btn:disabled{border-color:#2E2E2E;color:var(--dim);cursor:default;filter:saturate(.7);box-shadow:none;}
+
+.btn:disabled{
+  border-color:#2E2E2E;
+  color:var(--dim);
+  cursor:default;
+  filter:saturate(.7);
+  box-shadow:none;
+}
+
 .btn.active{
   border:2.2px solid var(--red);
-  box-shadow:0 0 18px rgba(255,0,0,.55),0 0 36px rgba(255,0,0,.28),0 8px 10px rgba(0,0,0,.8);
+  box-shadow:
+    0 0 18px rgba(255,0,0,.55),
+    0 0 36px rgba(255,0,0,.28),
+    0 8px 10px rgba(0,0,0,.8);
 }
-.btnSmall{width:108px;height:38px;border-radius:12px;padding:0 8px;flex-direction:row;gap:6px;letter-spacing:.8px;font-size:12px;}
-.label{line-height:1.02;font-size:12px;font-weight:900;color:var(--gold);text-align:center;}
 
-.scanbar{display:flex;justify-content:center;align-items:center;gap:3px;margin-top:10px;margin-bottom:8px;}
-.led{width:22px;height:10px;border-radius:4px;border:1px solid #2A0A0A;background:#140000;transition:all .12s ease;}
-.led.on{background:linear-gradient(#FF3A3A,#7A0000);border-color:#FF8A8A;box-shadow:0 0 16px rgba(255,0,0,.85);}
-.led.tail1{background:linear-gradient(#D02A2A,#4A0000);border-color:#C06060;box-shadow:0 0 8px rgba(255,0,0,.35);}
-.led.tail2{background:linear-gradient(#5A1010,#240000);border-color:#5A2A2A;}
+.btnSmall{
+  width:108px;
+  height:38px;
+  border-radius:12px;
+  padding:0 8px;
+  flex-direction:row;
+  gap:6px;
+  letter-spacing:.8px;
+  font-size:12px;
+}
 
-.tacticalWrap{width:100%;display:flex;justify-content:center;overflow:hidden;}
-.tacticalPanel{width:100%;max-width:660px;background:#000;border-radius:10px;padding:12px 4px 14px;display:flex;flex-direction:column;align-items:center;gap:16px;}
-.stepStack{display:flex;flex-direction:column;gap:10px;align-items:center;}
+.label{
+  line-height:1.02;
+  font-size:12px;
+  font-weight:900;
+  color:var(--gold);
+  text-align:center;
+}
+
+.scanbar{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:3px;
+  margin-top:10px;
+  margin-bottom:8px;
+}
+
+.led{
+  width:22px;
+  height:10px;
+  border-radius:4px;
+  border:1px solid #2A0A0A;
+  background:#140000;
+  transition:all .12s ease;
+}
+
+.led.on{
+  background:linear-gradient(#FF3A3A,#7A0000);
+  border-color:#FF8A8A;
+  box-shadow:0 0 16px rgba(255,0,0,.85);
+}
+
+.led.tail1{
+  background:linear-gradient(#D02A2A,#4A0000);
+  border-color:#C06060;
+  box-shadow:0 0 8px rgba(255,0,0,.35);
+}
+
+.led.tail2{
+  background:linear-gradient(#5A1010,#240000);
+  border-color:#5A2A2A;
+}
+
+.tacticalWrap{
+  width:100%;
+  display:flex;
+  justify-content:center;
+  overflow:hidden;
+}
+
+.tacticalPanel{
+  width:100%;
+  max-width:660px;
+  background:#000;
+  border-radius:10px;
+  padding:12px 4px 14px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:16px;
+}
+
+.stepStack{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  align-items:center;
+}
+
 .stepBtn{
-  width:210px;height:42px;border-radius:6px;font-size:15px;font-weight:900;letter-spacing:.4px;border:2px solid #7b7b7b;
-  color:#111;background:linear-gradient(180deg,#fbfbfb 0%, #ededed 55%, #d6d6d6 100%);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 0 6px rgba(0,0,0,.12);
+  width:210px;
+  height:42px;
+  border-radius:6px;
+  font-size:15px;
+  font-weight:900;
+  letter-spacing:.4px;
+  border:2px solid #7b7b7b;
+  color:#111;
+  background:linear-gradient(180deg,#fbfbfb 0%, #ededed 55%, #d6d6d6 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.35),
+    0 0 6px rgba(0,0,0,.12);
 }
+
 .stepBtn.yellow.lit{
-  border-color:#8a8100;background:linear-gradient(180deg,#fff77e 0%, #f4ec2f 48%, #d7c900 100%);
-  box-shadow:0 0 14px rgba(255,236,40,.35),0 0 28px rgba(255,236,40,.14),inset 0 1px 0 rgba(255,255,255,.28);
+  border-color:#8a8100;
+  background:linear-gradient(180deg,#fff77e 0%, #f4ec2f 48%, #d7c900 100%);
+  box-shadow:
+    0 0 14px rgba(255,236,40,.35),
+    0 0 28px rgba(255,236,40,.14),
+    inset 0 1px 0 rgba(255,255,255,.28);
 }
+
 .stepBtn.red.lit{
-  border-color:#7a0000;background:linear-gradient(180deg,#ff7878 0%, #ff3030 46%, #cb1010 100%);
-  box-shadow:0 0 14px rgba(255,0,0,.35),0 0 28px rgba(255,0,0,.14),inset 0 1px 0 rgba(255,255,255,.18);
+  border-color:#7a0000;
+  background:linear-gradient(180deg,#ff7878 0%, #ff3030 46%, #cb1010 100%);
+  box-shadow:
+    0 0 14px rgba(255,0,0,.35),
+    0 0 28px rgba(255,0,0,.14),
+    inset 0 1px 0 rgba(255,255,255,.18);
 }
+
 .tacticalBody{
-  width:100%;display:grid;grid-template-columns:108px 236px 108px;column-gap:4px;align-items:stretch;justify-content:center;max-width:460px;
+  width:100%;
+  display:grid;
+  grid-template-columns:108px 236px 108px;
+  column-gap:4px;
+  align-items:stretch;
+  justify-content:center;
+  max-width:460px;
 }
+
 .sideCol{
   background:linear-gradient(180deg,#8d8d8d 0%, #737373 18%, #666 50%, #5d5d5d 82%, #707070 100%);
-  border:2px solid #4d4d4d;border-radius:3px;padding:10px 8px;display:flex;flex-direction:column;justify-content:space-between;
-  align-items:center;gap:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.25),inset 0 -2px 0 rgba(0,0,0,.22);
+  border:2px solid #4d4d4d;
+  border-radius:3px;
+  padding:10px 8px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.25),
+    inset 0 -2px 0 rgba(0,0,0,.22);
 }
+
 .sideBtn{
-  width:74px;height:66px;border-radius:12px;border:2px solid #6d5410;background:linear-gradient(180deg,#a17613 0%, #7f5907 100%);
-  color:#111;font-weight:900;font-size:13px;line-height:1.02;text-align:center;cursor:pointer;
-  box-shadow:inset 0 0 12px rgba(255,220,140,.06),0 0 8px rgba(0,0,0,.22);
+  width:74px;
+  height:66px;
+  border-radius:12px;
+  border:2px solid #6d5410;
+  background:linear-gradient(180deg,#a17613 0%, #7f5907 100%);
+  color:#111;
+  font-weight:900;
+  font-size:13px;
+  line-height:1.02;
+  text-align:center;
+  cursor:pointer;
+  box-shadow:
+    inset 0 0 12px rgba(255,220,140,.06),
+    0 0 8px rgba(0,0,0,.22);
 }
-.sideBtn.red{border-color:#631010;background:linear-gradient(180deg,#8c1b1b 0%, #5f0909 100%);}
+
+.sideBtn.red{
+  border-color:#631010;
+  background:linear-gradient(180deg,#8c1b1b 0%, #5f0909 100%);
+}
+
 .sideBtn.lit.yellowGlow{
-  border-color:#8a8100;background:linear-gradient(180deg,#fff77e 0%, #f3ea2f 48%, #d7c900 100%);
-  box-shadow:0 0 14px rgba(255,236,40,.30),0 0 24px rgba(255,236,40,.10),inset 0 0 10px rgba(255,255,255,.12);
+  border-color:#8a8100;
+  background:linear-gradient(180deg,#fff77e 0%, #f3ea2f 48%, #d7c900 100%);
+  box-shadow:
+    0 0 14px rgba(255,236,40,.30),
+    0 0 24px rgba(255,236,40,.10),
+    inset 0 0 10px rgba(255,255,255,.12);
 }
+
 .sideBtn.red.lit.redGlow{
-  border-color:#7a0000;background:linear-gradient(180deg,#ff7878 0%, #ff3131 46%, #ca1010 100%);
-  box-shadow:0 0 14px rgba(255,0,0,.28),0 0 24px rgba(255,0,0,.10),inset 0 0 10px rgba(255,255,255,.08);
+  border-color:#7a0000;
+  background:linear-gradient(180deg,#ff7878 0%, #ff3131 46%, #ca1010 100%);
+  box-shadow:
+    0 0 14px rgba(255,0,0,.28),
+    0 0 24px rgba(255,0,0,.10),
+    inset 0 0 10px rgba(255,255,255,.08);
 }
+
 .centerZone{
   background:linear-gradient(180deg,#6f6f6f 0%, #606060 18%, #565656 50%, #4f4f4f 80%, #636363 100%);
-  border:2px solid #4b4b4b;border-radius:3px;padding:10px 4px 12px;display:flex;flex-direction:column;align-items:center;
-  justify-content:flex-start;gap:12px;box-shadow:inset 0 1px 0 rgba(255,255,255,.20),inset 0 -2px 0 rgba(0,0,0,.22);
+  border:2px solid #4b4b4b;
+  border-radius:3px;
+  padding:10px 4px 12px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  gap:12px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.20),
+    inset 0 -2px 0 rgba(0,0,0,.22);
 }
+
 .bigModeZone{
-  width:100%;max-width:198px;height:270px;border:2px solid #2b2b2b;border-radius:12px;background:#0a0a0a;cursor:pointer;
-  padding:8px 6px;display:flex;justify-content:center;align-items:center;
-  box-shadow:inset 0 0 0 2px rgba(0,0,0,.35),inset 0 0 12px rgba(255,255,255,.02);
+  width:100%;
+  max-width:198px;
+  height:270px;
+  border:2px solid #2b2b2b;
+  border-radius:12px;
+  background:#0a0a0a;
+  cursor:pointer;
+  padding:8px 6px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  box-shadow:
+    inset 0 0 0 2px rgba(0,0,0,.35),
+    inset 0 0 12px rgba(255,255,255,.02);
 }
 
 .barsArea{
-  --sideW: 27px; --midW: 31px; --edgePad: 7px; --gapX: 28px; --slotH: 11px; --slotGap: 5px;
-  width:100%;height:100%;display:flex;justify-content:center;align-items:flex-start;gap:var(--gapX);padding:0 var(--edgePad);
+  --sideW: 27px;
+  --midW: 31px;
+  --edgePad: 7px;
+  --gapX: 28px;
+  --slotH: 11px;
+  --slotGap: 5px;
+  width:100%;
+  height:100%;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  gap:var(--gapX);
+  padding:0 var(--edgePad);
 }
-.barCol{display:grid;grid-template-rows:repeat(16, var(--slotH));row-gap:var(--slotGap);align-content:start;justify-items:stretch;align-items:stretch;}
+
+.barCol{
+  display:grid;
+  grid-template-rows:repeat(16, var(--slotH));
+  row-gap:var(--slotGap);
+  align-content:start;
+  justify-items:stretch;
+  align-items:stretch;
+}
+
 .barCol.side{ width:var(--sideW); }
 .barCol.mid{ width:var(--midW); }
 
-.slot{width:100%;height:100%;border-radius:2px;border:1px solid transparent;transition:background .18s ease, box-shadow .22s ease, border-color .18s ease, opacity .22s ease;}
-.slot.off{background:transparent;border-color:transparent;box-shadow:none;opacity:0;}
+.slot{
+  width:100%;
+  height:100%;
+  border-radius:2px;
+  border:1px solid transparent;
+  transition:background .18s ease, box-shadow .22s ease, border-color .18s ease, opacity .22s ease;
+}
+
+.slot.off{
+  background:transparent;
+  border-color:transparent;
+  box-shadow:none;
+  opacity:0;
+}
+
 .slot.dim-red{border-color:rgba(90,20,20,.7);background:linear-gradient(180deg,#662222 0%, #4d1717 100%);opacity:.82;}
 .slot.dim-red2{border-color:rgba(70,16,16,.55);background:linear-gradient(180deg,#451616 0%, #321010 100%);opacity:.62;}
 .slot.dim-yellow{border-color:rgba(110,95,20,.7);background:linear-gradient(180deg,#6f6018 0%, #4f4210 100%);opacity:.82;}
@@ -142,6 +437,7 @@ body{min-width:320px}
 .slot.dim-green2{border-color:rgba(20,68,22,.55);background:linear-gradient(180deg,#214a21 0%, #163316 100%);opacity:.62;}
 .slot.dim-blue{border-color:rgba(25,55,120,.7);background:linear-gradient(180deg,#244a88 0%, #162d55 100%);opacity:.82;}
 .slot.dim-blue2{border-color:rgba(18,40,88,.55);background:linear-gradient(180deg,#18355f 0%, #10213c 100%);opacity:.62;}
+
 .slot.red{border-color:rgba(90,20,10,.72);background:linear-gradient(180deg,#ff8d8d 0%, #ff5555 40%, #f23333 100%);box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(255,70,70,.18);opacity:1;}
 .slot.orange{border-color:rgba(120,55,10,.72);background:linear-gradient(180deg,#ffbf73 0%, #ff9538 42%, #ea6d08 100%);box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(255,140,50,.18);opacity:1;}
 .slot.yellow{border-color:rgba(140,120,10,.72);background:linear-gradient(180deg,#fff79b 0%, #ffe75a 42%, #d6b800 100%);box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(255,235,80,.18);opacity:1;}
@@ -149,51 +445,212 @@ body{min-width:320px}
 .slot.blue{border-color:rgba(25,65,130,.72);background:linear-gradient(180deg,#9fd1ff 0%, #55a0ff 42%, #1f61db 100%);box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(90,160,255,.18);opacity:1;}
 .slot.whitehot{border-color:rgba(190,190,190,.72);background:linear-gradient(180deg,#ffffff 0%, #ffe8e8 32%, #ff8d8d 100%);box-shadow: inset 0 -1px 0 rgba(0,0,0,.26), 0 0 5px rgba(255,255,255,.14);opacity:1;}
 
-.panelLampWrap{width:100%;height:100%;padding:8px;display:flex;align-items:center;justify-content:center;}
+.panelLampWrap{
+  width:100%;
+  height:100%;
+  padding:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
 .panelLamp{
-  width:100%;height:100%;border-radius:16px;border:2px solid #181818;background:linear-gradient(180deg,#070707 0%, #111 100%);
+  width:100%;
+  height:100%;
+  border-radius:16px;
+  border:2px solid #181818;
+  background:linear-gradient(180deg,#070707 0%, #111 100%);
   box-shadow: inset 0 0 12px rgba(255,255,255,.02), inset 0 -4px 10px rgba(0,0,0,.45);
-  opacity:.14;transition: opacity .10s ease, background .10s ease, border-color .10s ease, box-shadow .12s ease;
+  opacity:.14;
+  transition: opacity .10s ease, background .10s ease, border-color .10s ease, box-shadow .12s ease;
 }
 .panelLamp.redOn{
-  border-color:#7e1d1d;background:linear-gradient(180deg,#ff9d9d 0%, #ff4a4a 48%, #d91d1d 100%);
-  box-shadow: 0 0 14px rgba(255,55,55,.35), 0 0 42px rgba(255,35,35,.18), inset 0 0 18px rgba(255,255,255,.10);opacity:1;
+  border-color:#7e1d1d;
+  background:linear-gradient(180deg,#ff9d9d 0%, #ff4a4a 48%, #d91d1d 100%);
+  box-shadow: 0 0 14px rgba(255,55,55,.35), 0 0 42px rgba(255,35,35,.18), inset 0 0 18px rgba(255,255,255,.10);
+  opacity:1;
 }
 .panelLamp.yellowOn{
-  border-color:#8a7600;background:linear-gradient(180deg,#fff8ad 0%, #ffe85f 48%, #d3b300 100%);
-  box-shadow: 0 0 14px rgba(255,228,55,.35), 0 0 42px rgba(255,220,35,.16), inset 0 0 18px rgba(255,255,255,.10);opacity:1;
+  border-color:#8a7600;
+  background:linear-gradient(180deg,#fff8ad 0%, #ffe85f 48%, #d3b300 100%);
+  box-shadow: 0 0 14px rgba(255,228,55,.35), 0 0 42px rgba(255,220,35,.16), inset 0 0 18px rgba(255,255,255,.10);
+  opacity:1;
 }
-.panelLamp.cooling{opacity:.22;}
+.panelLamp.cooling{
+  opacity:.22;
+}
 
-.bottomModes{width:100%;max-width:198px;display:grid;grid-template-columns:42px 1fr;gap:15px;align-items:stretch;}
-.leftIndicators{display:flex;flex-direction:column;gap:6px;justify-content:flex-end;}
-.smallIndicator{width:40px;height:50px;border-radius:2px;border:2px solid #111;background:linear-gradient(180deg,#ffffff 0%, #eeeeee 58%, #d8d8d8 100%);}
-.smallIndicator.active{border-color:#111;background:linear-gradient(180deg,#fff68a 0%, #f2eb2d 45%, #d7c900 100%);box-shadow:0 0 12px rgba(255,235,40,.18);}
-.modeLamps{display:flex;flex-direction:column;gap:6px;}
-.modeLamp{width:100%;height:50px;border-radius:2px;border:2px solid #111;background:linear-gradient(180deg,#ffffff 0%, #f0f0f0 58%, #dddddd 100%);color:#111;font-weight:900;font-size:13px;line-height:1.02;text-align:center;cursor:pointer;}
+.bottomModes{
+  width:100%;
+  max-width:198px;
+  display:grid;
+  grid-template-columns:42px 1fr;
+  gap:15px;
+  align-items:stretch;
+}
+
+.leftIndicators{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  justify-content:flex-end;
+}
+
+.smallIndicator{
+  width:40px;
+  height:50px;
+  border-radius:2px;
+  border:2px solid #111;
+  background:linear-gradient(180deg,#ffffff 0%, #eeeeee 58%, #d8d8d8 100%);
+}
+
+.smallIndicator.active{
+  border-color:#111;
+  background:linear-gradient(180deg,#fff68a 0%, #f2eb2d 45%, #d7c900 100%);
+  box-shadow:0 0 12px rgba(255,235,40,.18);
+}
+
+.modeLamps{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.modeLamp{
+  width:100%;
+  height:50px;
+  border-radius:2px;
+  border:2px solid #111;
+  background:linear-gradient(180deg,#ffffff 0%, #f0f0f0 58%, #dddddd 100%);
+  color:#111;
+  font-weight:900;
+  font-size:13px;
+  line-height:1.02;
+  text-align:center;
+  cursor:pointer;
+}
+
 .modeLamp.activeNor{background:linear-gradient(180deg,#6dffd0 0%, #27eba0 48%, #14c47f 100%);color:#002b16;}
 .modeLamp.activeAuto{background:linear-gradient(180deg,#fff68a 0%, #f3eb31 48%, #d7c900 100%);color:#1f1a00;}
 .modeLamp.activeSpm{background:linear-gradient(180deg,#ff7b7b 0%, #ff3434 45%, #cf1111 100%);color:#2b0000;}
-.modeShell{width:100%;max-width:780px;border:1.8px solid var(--gold2);border-radius:22px;padding:14px 12px 16px;box-shadow:var(--shadow1), var(--shadow2);}
-.modeTitleHead{font-size:22px;letter-spacing:3px;color:var(--gold);font-weight:900;}
-.modeSubHead{margin-top:8px;font-size:16px;letter-spacing:2px;color:var(--gold2);font-weight:800;}
-.modeGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;}
-.modeCard{
-  min-height:116px;border-radius:22px;border:2px solid #262626;background:linear-gradient(135deg,#140b00,#000000 72%);
-  color:var(--gold);display:flex;flex-direction:column;justify-content:center;align-items:center;cursor:pointer;padding:8px;
+
+.modeShell{
+  width:100%;
+  max-width:780px;
+  border:1.8px solid var(--gold2);
+  border-radius:22px;
+  padding:14px 12px 16px;
+  box-shadow:var(--shadow1), var(--shadow2);
 }
-.modeCard.active{border:2.4px solid var(--red);box-shadow:0 0 18px rgba(255,0,0,.45), 0 0 28px rgba(255,0,0,.16);}
-.modeCard.big{grid-column:1 / span 2;min-height:118px;}
-.modeCardTitle{font-size:18px;font-weight:900;line-height:1.05;letter-spacing:1px;text-align:center;}
-.modeCardSub{margin-top:4px;font-size:10px;font-weight:900;color:var(--gold2);letter-spacing:1px;}
-.toolsGrid{width:100%;display:grid;grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));gap:10px;}
-.toolBtn{height:48px;font-size:12px;}
+
+.modeTitleHead{
+  font-size:22px;
+  letter-spacing:3px;
+  color:var(--gold);
+  font-weight:900;
+}
+
+.modeSubHead{
+  margin-top:8px;
+  font-size:16px;
+  letter-spacing:2px;
+  color:var(--gold2);
+  font-weight:800;
+}
+
+.modeGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:12px;
+}
+
+.modeCard{
+  min-height:116px;
+  border-radius:22px;
+  border:2px solid #262626;
+  background:linear-gradient(135deg,#140b00,#000000 72%);
+  color:var(--gold);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  cursor:pointer;
+  padding:8px;
+}
+
+.modeCard.active{
+  border:2.4px solid var(--red);
+  box-shadow:0 0 18px rgba(255,0,0,.45), 0 0 28px rgba(255,0,0,.16);
+}
+
+.modeCard.big{
+  grid-column:1 / span 2;
+  min-height:118px;
+}
+
+.modeCardTitle{
+  font-size:18px;
+  font-weight:900;
+  line-height:1.05;
+  letter-spacing:1px;
+  text-align:center;
+}
+
+.modeCardSub{
+  margin-top:4px;
+  font-size:10px;
+  font-weight:900;
+  color:var(--gold2);
+  letter-spacing:1px;
+}
+
+.toolsGrid{
+  width:100%;
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap:10px;
+}
+
+.toolBtn{
+  height:48px;
+  font-size:12px;
+}
+
 .toolBtn.redTone{border-color:#6A0000;color:#ff9a9a}
 .toolBtn.greenTone{border-color:#1d5b1d;color:#a7ffb1}
 .toolBtn.yellowTone{color:var(--gold)}
-.toolInputRow{width:100%;display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
-.toolInput{width:min(320px,100%);height:44px;border-radius:12px;border:1.8px solid var(--gold2);background:#0a0a0a;color:var(--gold);padding:0 12px;font-size:13px;font-weight:800;letter-spacing:.5px;outline:none;}
-.footer{width:100%;text-align:center;font-size:10px;color:var(--dim);letter-spacing:1.2px;font-weight:600;margin-top:16px;}
+
+.toolInputRow{
+  width:100%;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+.toolInput{
+  width:min(320px,100%);
+  height:44px;
+  border-radius:12px;
+  border:1.8px solid var(--gold2);
+  background:#0a0a0a;
+  color:var(--gold);
+  padding:0 12px;
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:.5px;
+  outline:none;
+}
+
+.footer{
+  width:100%;
+  text-align:center;
+  font-size:10px;
+  color:var(--dim);
+  letter-spacing:1.2px;
+  font-weight:600;
+  margin-top:16px;
+}
 
 @media (max-width:480px){
   .app{padding:8px}
@@ -218,8 +675,10 @@ body{min-width:320px}
 }
 </style>
 </head>
+
 <body>
 <div class="app">
+
   <div class="frame center">
     <span class="pill">
       <img class="appIcon" src="./app_icon.png" alt="app icon">
@@ -265,8 +724,10 @@ body{min-width:320px}
     <div class="h2">TACTICAL LAMP CONTROL</div>
     <div class="sub">STEP • BOX • VEHICLE MODE • DISPLAY</div>
     <div style="height:12px;"></div>
+
     <div class="tacticalWrap">
       <div class="tacticalPanel">
+
         <div class="stepStack">
           <button class="stepBtn yellow" id="step1Btn">POWER</button>
           <button class="stepBtn yellow" id="step2Btn">FUEL ON</button>
@@ -285,12 +746,14 @@ body{min-width:320px}
 
           <div class="centerZone">
             <button id="bigModeZone" class="bigModeZone" title="Next Display Mode"></button>
+
             <div class="bottomModes">
               <div class="leftIndicators">
                 <div class="smallIndicator" id="indNor"></div>
                 <div class="smallIndicator" id="indAuto"></div>
                 <div class="smallIndicator" id="indSpm"></div>
               </div>
+
               <div class="modeLamps">
                 <button class="modeLamp" id="nanoNorBtn">NORMAL</button>
                 <button class="modeLamp" id="nanoAutoBtn">AUTO<br>CRUISE</button>
@@ -307,6 +770,7 @@ body{min-width:320px}
             <button class="sideBtn red" data-box="5" data-side="R">MPI</button>
           </div>
         </div>
+
       </div>
     </div>
   </div>
@@ -315,6 +779,7 @@ body{min-width:320px}
     <div class="modeShell">
       <div class="center"><div class="modeTitleHead">MODE SELECT</div></div>
       <div class="center"><div class="modeSubHead">PUSH BUTTON TO SWITCH</div></div>
+
       <div class="modeGrid">
         <button class="modeCard" data-mode="1"><div class="modeCardTitle">KITT</div><div class="modeCardSub">MODE 1</div></button>
         <button class="modeCard" data-mode="2"><div class="modeCardTitle">KARR</div><div class="modeCardSub">MODE 2</div></button>
@@ -334,6 +799,7 @@ body{min-width:320px}
     <div class="h2">GAIN CONTROL</div>
     <div class="sub">VOICE DISPLAY SENSITIVITY ＋ or －</div>
     <div style="height:10px;"></div>
+
     <div class="row" style="max-width:920px;">
       <button id="btnGainDown" class="btn" style="max-width:420px; width:min(420px,100%);" disabled><div class="label">GAIN −</div></button>
       <button id="btnGainUp" class="btn" style="max-width:420px; width:min(420px,100%);" disabled><div class="label">GAIN ＋</div></button>
@@ -344,6 +810,7 @@ body{min-width:320px}
     <div class="h2">EXTERNAL COMMANDS</div>
     <div class="sub">BOOT • SHUTDOWN • MODE OFF • ALL OFF • DTMF</div>
     <div style="height:12px;"></div>
+
     <div class="toolsGrid">
       <button id="btnStartup"  class="btn toolBtn greenTone">STARTUP</button>
       <button id="btnShutdown" class="btn toolBtn redTone">SHUTDOWN</button>
@@ -373,6 +840,7 @@ body{min-width:320px}
   const SVC_UUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
   const RX_UUID  = "6e400002-b5a3-f393-e0a9-e50e24dcca9e";
   const TX_UUID  = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
+
   const $ = (id)=>document.getElementById(id);
 
   const btnScan       = $("btnScan");
@@ -426,7 +894,10 @@ body{min-width:320px}
     }catch(_){}
   }
 
-  function cmdForDisplayMode(m){ return (m === 10) ? "0" : String(m); }
+  function cmdForDisplayMode(m){
+    return (m === 10) ? "0" : String(m);
+  }
+
   function buildBoxHalfCmd(side, idx, isOn){
     const n = idx + 1;
     return `BOX${n}${side}${isOn ? "ON" : "OFF"}`;
@@ -441,7 +912,9 @@ body{min-width:320px}
         return;
       }
     } catch(_) {}
-    try{ await rxChar.writeValue(data); } catch(_) {}
+    try{
+      await rxChar.writeValue(data);
+    } catch(_) {}
   }
 
   async function writeLine(line){
@@ -454,7 +927,9 @@ body{min-width:320px}
         return;
       }
     } catch(_) {}
-    try{ await rxChar.writeValue(data); } catch(_) {}
+    try{
+      await rxChar.writeValue(data);
+    } catch(_) {}
   }
 
   const scanbar = $("scanbar");
@@ -515,7 +990,9 @@ body{min-width:320px}
       const idx = Number(btn.dataset.box) - 1;
       const side = btn.dataset.side;
       const isOn = side === "L" ? ui.boxL[idx] : ui.boxR[idx];
+
       btn.classList.toggle("lit", isOn);
+
       if (btn.classList.contains("red")) {
         btn.classList.toggle("redGlow", isOn);
         btn.classList.remove("yellowGlow");
@@ -579,20 +1056,30 @@ body{min-width:320px}
     bigModeZone.dataset.render = "panel";
   }
 
-  function ensureBars(){ if (bigModeZone.dataset.render !== "bars") setBarsHtml(); }
-  function ensurePanel(){ if (bigModeZone.dataset.render !== "panel") setPanelHtml(); }
+  function ensureBars(){
+    if (bigModeZone.dataset.render !== "bars") setBarsHtml();
+  }
+
+  function ensurePanel(){
+    if (bigModeZone.dataset.render !== "panel") setPanelHtml();
+  }
+
   function getCol(id){ return $(id); }
 
   function clearColumn(colEl){
     if (!colEl) return;
     for (let i = 0; i < 16; i++) colEl.children[i].className = "slot off";
   }
+
   function setSlot(colEl, idx, cls){
     if (!colEl) return;
     if (idx < 0 || idx > 15) return;
     colEl.children[idx].className = "slot " + cls;
   }
-  function clamp16(v){ return Math.max(0, Math.min(16, Math.round(v || 0))); }
+
+  function clamp16(v){
+    return Math.max(0, Math.min(16, Math.round(v || 0)));
+  }
 
   function buildKittCoreIndices(level){
     const lv = clamp16(level);
@@ -600,6 +1087,7 @@ body{min-width:320px}
     const centerBottom = 8;
     const pairs = Math.floor(lv / 2);
     const hasExtra = lv % 2;
+
     const core = [];
     for (let p = 0; p < pairs; p++){
       core.push(centerTop - p);
@@ -615,14 +1103,18 @@ body{min-width:320px}
     const topMost = coreIdx[0];
     const bottomMost = coreIdx[coreIdx.length - 1];
     const tail = [];
+
     if (topMost > 0 && !s.has(topMost - 1)) tail.push([topMost - 1, 1]);
     if (topMost > 1 && !s.has(topMost - 2)) tail.push([topMost - 2, 2]);
     if (bottomMost < 15 && !s.has(bottomMost + 1)) tail.push([bottomMost + 1, 1]);
     if (bottomMost < 14 && !s.has(bottomMost + 2)) tail.push([bottomMost + 2, 2]);
+
     return tail;
   }
 
-  function halfFlipIndex(i){ return (i <= 7) ? i + 8 : i - 8; }
+  function halfFlipIndex(i){
+    return (i <= 7) ? i + 8 : i - 8;
+  }
 
   function paintFromCoreAndTail(colEl, coreIdx, tailIdxLv, colorClass, dimClass, dimClass2){
     clearColumn(colEl);
@@ -639,9 +1131,45 @@ body{min-width:320px}
   function paintKittColumnHalfFlipWithTail(colEl, level, colorClass, dimClass, dimClass2){
     const core = buildKittCoreIndices(level);
     const tail = buildTailAroundCore(core);
+
     const coreFlipped = core.map(halfFlipIndex).sort((a,b)=>a-b);
     const tailFlipped = tail.map(([i,lv]) => [halfFlipIndex(i), lv]).sort((a,b)=>a[0]-b[0]);
+
     paintFromCoreAndTail(colEl, coreFlipped, tailFlipped, colorClass, dimClass, dimClass2);
+  }
+
+  // ===== ESP32 原始 DAMAGE_KITT frames =====
+  const BKITT_FRAMES = [
+    [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,1,0],[0,0,0],[0,1,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
+    [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,2,0],[0,1,0],[0,3,0],[0,0,0],[0,1,0],[0,0,0],[0,1,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
+    [[0,0,0],[0,0,0],[0,1,0],[0,2,0],[0,1,0],[0,3,1],[1,3,1],[2,0,1],[3,3,1],[0,1,1],[0,1,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
+    [[0,0,0],[0,0,0],[0,2,0],[0,3,0],[0,2,0],[0,3,1],[2,3,2],[3,1,3],[3,3,3],[2,3,1],[0,1,1],[0,3,0],[0,1,0],[0,1,0],[0,0,0],[0,0,0]],
+    [[0,0,0],[0,0,0],[0,3,0],[0,3,0],[0,3,0],[1,3,3],[2,3,1],[3,1,1],[3,3,3],[2,3,3],[0,1,2],[0,3,1],[1,1,0],[0,1,0],[0,3,0],[0,1,0]],
+    [[0,0,0],[0,0,0],[0,3,0],[0,3,0],[1,3,1],[1,3,2],[2,3,2],[3,1,3],[3,3,3],[3,3,3],[0,1,1],[1,3,2],[1,1,0],[0,1,0],[0,3,0],[0,3,0]],
+    [[0,2,0],[1,1,1],[2,3,0],[1,3,2],[2,2,2],[2,3,3],[3,3,3],[3,1,3],[3,3,3],[3,3,3],[1,1,1],[2,3,2],[2,1,0],[1,1,2],[0,3,0],[0,3,0]],
+    [[0,3,0],[2,1,2],[2,3,0],[1,3,2],[2,2,2],[2,3,3],[3,3,3],[3,1,3],[3,3,3],[3,3,3],[1,1,1],[2,3,2],[2,1,0],[0,1,2],[2,3,1],[0,3,0]]
+  ];
+
+  function paletteIndexToClass(cIdx){
+    // ESP32 pKitt: {0=black, 1=DARKER_RED, 2=DIM_RED, 3=RED}
+    if (cIdx === 0) return "off";
+    if (cIdx === 1) return "dim-red2";
+    if (cIdx === 2) return "dim-red";
+    return "red";
+  }
+
+  function renderFrameMatrix(frame){
+    ensureBars();
+    const colL = getCol("vuColL");
+    const colM = getCol("vuColM");
+    const colR = getCol("vuColR");
+    if (!colL || !colM || !colR) return;
+
+    for (let y = 0; y < 16; y++){
+      setSlot(colL, y, paletteIndexToClass(frame[y][0]));
+      setSlot(colM, y, paletteIndexToClass(frame[y][1]));
+      setSlot(colR, y, paletteIndexToClass(frame[y][2]));
+    }
   }
 
   function paintMode8Flame(colEl, level){
@@ -733,8 +1261,7 @@ body{min-width:320px}
     const period = Math.max(85, 250 - lv * 10);
     const duty   = Math.min(0.84, 0.46 + lv * 0.021);
     const phase  = now % period;
-
-    const notch = (now % 920) < 65;
+    const notch  = (now % 920) < 65;
 
     if (notch){
       triggerPanelCooling(color);
@@ -763,39 +1290,27 @@ body{min-width:320px}
     const side = clamp16(m - 4);
     const mid  = clamp16(m);
     paintKittColumnHalfFlipWithTail(getCol("vuColL"), side, "yellow", "dim-yellow", "dim-yellow2");
-    paintKittColumn(getCol("vuColM"), mid, "yellow", "dim-yellow", "dim-yellow2");
+    paintKittColumn(getCol("vuColM"), mid,  "yellow", "dim-yellow", "dim-yellow2");
     paintKittColumnHalfFlipWithTail(getCol("vuColR"), side, "yellow", "dim-yellow", "dim-yellow2");
   }
 
-  function renderMode3(m){ renderTalkPanelMode("red", m, 3); }
-  function renderMode4(m){ renderTalkPanelMode("yellow", m, 4); }
+  function renderMode3(m){
+    renderTalkPanelMode("red", m, 3);
+  }
+
+  function renderMode4(m){
+    renderTalkPanelMode("yellow", m, 4);
+  }
 
   function renderMode5(m){
-    ensureBars();
-    const side = clamp16(m - 4);
-    const mid  = clamp16(m);
-    paintKittColumn(getCol("vuColL"), side, "red", "dim-red", "dim-red2");
-    paintKittColumn(getCol("vuColM"), mid,  "red", "dim-red", "dim-red2");
-    paintKittColumn(getCol("vuColR"), side, "red", "dim-red", "dim-red2");
-
-    const colL = getCol("vuColL");
-    const colM = getCol("vuColM");
-    const colR = getCol("vuColR");
-    const seq = Math.floor(Date.now() / 220) % 8;
-    const frames = [
-      {L:[[6,"off"],[7,"dim-red"]],      M:[[7,"whitehot"],[8,"red"]],     R:[[7,"off"],[8,"dim-red"]]},
-      {L:[[5,"dim-red"],[7,"off"]],      M:[[6,"dim-red"],[8,"whitehot"]], R:[[8,"off"],[9,"dim-red"]]},
-      {L:[[6,"red"],[8,"off"]],          M:[[7,"off"],[8,"red"]],          R:[[6,"dim-red"],[8,"red"]]},
-      {L:[[4,"off"],[6,"dim-red"]],      M:[[7,"whitehot"],[9,"dim-red"]], R:[[8,"off"],[7,"dim-red"]]},
-      {L:[[5,"red"],[7,"dim-red"]],      M:[[8,"off"],[7,"red"]],          R:[[6,"red"],[9,"off"]]},
-      {L:[[6,"off"],[7,"red"]],          M:[[6,"dim-red"],[8,"whitehot"]], R:[[5,"off"],[7,"red"]]},
-      {L:[[4,"dim-red"],[6,"off"]],      M:[[7,"red"],[8,"off"]],          R:[[7,"dim-red"],[9,"red"]]},
-      {L:[[5,"off"],[7,"dim-red"]],      M:[[7,"whitehot"],[8,"red"]],     R:[[6,"off"],[8,"dim-red"]]},
-    ];
-    const f = frames[seq];
-    if (colL && side > 0) f.L.forEach(([i,c])=>setSlot(colL,i,c));
-    if (colM && mid > 0)  f.M.forEach(([i,c])=>setSlot(colM,i,c));
-    if (colR && side > 0) f.R.forEach(([i,c])=>setSlot(colR,i,c));
+    const lv = clamp16(m);
+    if (lv <= 0){
+      ensureBars();
+      renderFrameMatrix(Array.from({length:16}, ()=>[0,0,0]));
+      return;
+    }
+    const fIdx = Math.max(0, Math.min(7, lv - 1));
+    renderFrameMatrix(BKITT_FRAMES[fIdx]);
   }
 
   function renderMode6(m){
@@ -812,7 +1327,7 @@ body{min-width:320px}
     const side = clamp16(m - 4);
     const mid  = clamp16(m);
     paintKittColumnHalfFlipWithTail(getCol("vuColL"), side, "green", "dim-green", "dim-green2");
-    paintKittColumn(getCol("vuColM"), mid, "green", "dim-green", "dim-green2");
+    paintKittColumn(getCol("vuColM"), mid,  "green", "dim-green", "dim-green2");
     paintKittColumnHalfFlipWithTail(getCol("vuColR"), side, "green", "dim-green", "dim-green2");
   }
 
@@ -856,7 +1371,9 @@ body{min-width:320px}
   function parseNotify(text){
     const raw = String(text || "").trim();
     notifyStatus.textContent = raw ? raw : "STATE: -";
+
     const stateText = raw.startsWith("STATE:") ? raw.slice(6) : raw;
+
     const m = stateText.match(/\bMODE\s*=\s*(\d+)/i);
     const g = stateText.match(/\bG\s*=\s*(\d+)/i);
     const nano = stateText.match(/\bNANO\s*=\s*(NOR|AUTO|SPM|OFF)\b/i);
@@ -894,6 +1411,7 @@ body{min-width:320px}
       ui.vuM = clamp16(parseInt(vu[2], 10) || 0);
       ui.vuR = clamp16(parseInt(vu[3], 10) || 0);
     }
+
     renderDisplayByMode(ui.displayMode, ui.vuL, ui.vuM, ui.vuR);
   }
 
@@ -904,7 +1422,9 @@ body{min-width:320px}
     ui.step = [false,false,false,false];
     ui.boxL = [false,false,false,false,false];
     ui.boxR = [false,false,false,false,false];
-    ui.vuL = 0; ui.vuM = 0; ui.vuR = 0;
+    ui.vuL = 0;
+    ui.vuM = 0;
+    ui.vuR = 0;
     ui.hasVu = false;
     ui.panelCooling = false;
 
@@ -923,6 +1443,7 @@ body{min-width:320px}
 
   function setConnectedUI(isConn){
     ui.connected = isConn;
+
     btnDisconnect.disabled = !isConn;
     btnConnect.disabled = (device == null) || isConn;
     btnGainUp.disabled = !isConn;
@@ -934,8 +1455,11 @@ body{min-width:320px}
       card.style.filter = isConn ? "none" : "grayscale(.45) brightness(.75)";
     });
 
-    ["step1Btn","step2Btn","step3Btn","step4Btn","nanoNorBtn","nanoAutoBtn","nanoSpmBtn","btnStartup","btnShutdown","btnAllOff","btnModeOff","btnDTMF7","btnDTMF8","btnSendCustom"]
-      .forEach(id => $(id).disabled = !isConn);
+    [
+      "step1Btn","step2Btn","step3Btn","step4Btn",
+      "nanoNorBtn","nanoAutoBtn","nanoSpmBtn",
+      "btnStartup","btnShutdown","btnAllOff","btnModeOff","btnDTMF7","btnDTMF8","btnSendCustom"
+    ].forEach(id => $(id).disabled = !isConn);
 
     bigModeZone.disabled = !isConn;
     bigModeZone.style.pointerEvents = isConn ? "auto" : "none";
@@ -963,12 +1487,15 @@ body{min-width:320px}
       alert("This browser does not support Web Bluetooth。");
       return;
     }
+
     playOnce(sScan);
     bleText.textContent = "BLE: READY";
+
     device = await navigator.bluetooth.requestDevice({
       acceptAllDevices: true,
       optionalServices: [SVC_UUID],
     });
+
     deviceText.textContent = "DEVICE: " + (device.name && device.name.trim() ? device.name : "(Unnamed)");
     idText.textContent = "ID: " + (device.id || "-");
     btnConnect.disabled = false;
@@ -977,6 +1504,7 @@ body{min-width:320px}
   async function doConnect(){
     if (!device) return;
     playOnce(sBtn);
+
     try{
       device.addEventListener("gattserverdisconnected", onDisconnected);
       server = await device.gatt.connect();
@@ -1005,7 +1533,9 @@ body{min-width:320px}
   function doDisconnect(){
     playOnce(sBtn);
     try{
-      if (txChar){ try{ txChar.stopNotifications(); } catch(_){} }
+      if (txChar){
+        try{ txChar.stopNotifications(); } catch(_){}
+      }
       if (device?.gatt?.connected) device.gatt.disconnect();
     } catch(_){}
     onDisconnected();
@@ -1096,15 +1626,53 @@ body{min-width:320px}
     await writeLine(ui.vehicleMode === "SPM" ? "MODE=SPM" : "MODE=OFF");
   });
 
-  btnGainUp.addEventListener("click", async ()=>{ if (ui.connected){ playOnce(sBtn); await writeChar("+"); } });
-  btnGainDown.addEventListener("click", async ()=>{ if (ui.connected){ playOnce(sBtn); await writeChar("-"); } });
+  btnGainUp.addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    playOnce(sBtn);
+    await writeChar("+");
+  });
 
-  $("btnStartup").addEventListener("click", async ()=>{ if (ui.connected){ playOnce(sBtn); await writeLine("STARTUP"); } });
-  $("btnShutdown").addEventListener("click", async ()=>{ if (ui.connected){ playOnce(sBtn); await writeLine("SHUTDOWN"); } });
-  $("btnAllOff").addEventListener("click", async ()=>{ if (ui.connected){ playOnce(sBtn); await writeLine("ALLOFF"); } });
-  $("btnModeOff").addEventListener("click", async ()=>{ if (ui.connected){ playOnce(sBtn); await writeLine("MODE=OFF"); } });
-  $("btnDTMF7").addEventListener("click", async ()=>{ if (ui.connected){ playOnce(sBtn); await writeLine("DTMF=7,400"); } });
-  $("btnDTMF8").addEventListener("click", async ()=>{ if (ui.connected){ playOnce(sBtn); await writeLine("DTMF=8,400"); } });
+  btnGainDown.addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    playOnce(sBtn);
+    await writeChar("-");
+  });
+
+  $("btnStartup").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    playOnce(sBtn);
+    await writeLine("STARTUP");
+  });
+
+  $("btnShutdown").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    playOnce(sBtn);
+    await writeLine("SHUTDOWN");
+  });
+
+  $("btnAllOff").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    playOnce(sBtn);
+    await writeLine("ALLOFF");
+  });
+
+  $("btnModeOff").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    playOnce(sBtn);
+    await writeLine("MODE=OFF");
+  });
+
+  $("btnDTMF7").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    playOnce(sBtn);
+    await writeLine("DTMF=7,400");
+  });
+
+  $("btnDTMF8").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    playOnce(sBtn);
+    await writeLine("DTMF=8,400");
+  });
 
   $("btnSendCustom").addEventListener("click", async ()=>{
     if (!ui.connected) return;
