@@ -195,6 +195,24 @@ body{min-width:320px}
   text-align:center;
 }
 
+.btnTopIcon{
+  display:block;
+  font-size:11px;
+  line-height:1;
+  letter-spacing:1px;
+  opacity:.95;
+}
+
+.modeCardIcon{
+  color:#777;
+  font-size:12px;
+  line-height:1;
+  color:var(--gold2);
+  opacity:.95;
+  margin-bottom:6px;
+  letter-spacing:2px;
+}
+
 .scanbar{
   display:flex;
   justify-content:center;
@@ -611,6 +629,42 @@ body{min-width:320px}
   gap:10px;
 }
 
+.dtmfPad{
+  width:100%;
+  max-width:560px;
+  display:grid;
+  grid-template-columns:repeat(4, minmax(72px, 1fr));
+  gap:10px;
+}
+
+.dtmfKey{
+  height:58px;
+  border-radius:14px;
+  border:1.6px solid var(--gold2);
+  background:linear-gradient(135deg,#1B1200,#0A0A0A);
+  color:var(--gold);
+  font-weight:900;
+  font-size:18px;
+  letter-spacing:1px;
+  cursor:pointer;
+}
+
+.dtmfKey:disabled{
+  border-color:#2E2E2E;
+  color:var(--dim);
+  cursor:default;
+  filter:saturate(.7);
+}
+
+.dtmfHint{
+  margin-top:8px;
+  font-size:10px;
+  color:var(--dim);
+  letter-spacing:.8px;
+  font-weight:700;
+  text-align:center;
+}
+
 .toolBtn{
   height:48px;
   font-size:12px;
@@ -702,7 +756,7 @@ body{min-width:320px}
       <div class="line" id="deviceText">DEVICE: (none)</div>
       <div class="line dim" id="idText">ID: -</div>
       <div class="line" id="displayModeStatus">DISPLAY MODE: -</div>
-      <div class="line" id="vehicleModeStatus">VEHICLE MODE: -</div>
+      <div class="line" id="vehicleModeStatus">PANP MODE: -</div>
       <div class="line" id="gainStatus">GAIN: -</div>
       <div class="line dim" id="notifyStatus">STATE: -</div>
     </div>
@@ -710,19 +764,34 @@ body{min-width:320px}
     <div style="height:10px;"></div>
 
     <div class="row">
-      <button id="btnScan" class="btn btnSmall"><span>SCAN</span></button>
-      <button id="btnConnect" class="btn btnSmall" disabled><span>CONNECT</span></button>
-      <button id="btnDisconnect" class="btn btnSmall" disabled style="border-color:var(--red);"><span>DISCONNECT</span></button>
+      <button id="btnScan" class="btn btnSmall"><span class="btnTopIcon">◉</span><span>SCAN</span></button>
+      <button id="btnConnect" class="btn btnSmall" disabled><span class="btnTopIcon">◆</span><span>CONNECT</span></button>
+      <button id="btnDisconnect" class="btn btnSmall" disabled style="border-color:var(--red);"><span class="btnTopIcon">✕</span><span>DISCONNECT</span></button>
     </div>
 
     <div class="mini center" style="margin-top:10px;">
-      Steps: Press SCAN â†’ Select device (KITT_REMOTE_SYSTEM) â†’ Press CONNECT
+      Steps: Press SCAN → Select device (KITT_REMOTE_SYSTEM) → Press CONNECT
+    </div>
+  </div>
+
+  <div class="frame col">
+    <div class="h2">POWER SEQUENCE</div>
+    <div class="sub">STARTUP / SHUTDOWN</div>
+    <div style="height:10px;"></div>
+
+    <div class="row" style="max-width:920px; justify-content:space-between;">
+      <button id="btnStartup" class="btn toolBtn greenTone" style="max-width:420px; width:min(420px,48%);">
+        <div class="label">STARTUP</div>
+      </button>
+      <button id="btnShutdown" class="btn toolBtn redTone" style="max-width:420px; width:min(420px,48%); border-color:var(--red);">
+        <div class="label">SHUTDOWN</div>
+      </button>
     </div>
   </div>
 
   <div class="frame col">
     <div class="h2">TACTICAL LAMP CONTROL</div>
-    <div class="sub">STEP â€¢ BOX â€¢ VEHICLE MODE â€¢ DISPLAY</div>
+    <div class="sub">COUNTDOWN • BOX • PANP MODE • DISPLAY</div>
     <div style="height:12px;"></div>
 
     <div class="tacticalWrap">
@@ -781,51 +850,82 @@ body{min-width:320px}
       <div class="center"><div class="modeSubHead">PUSH BUTTON TO SWITCH</div></div>
 
       <div class="modeGrid">
-        <button class="modeCard" data-mode="1"><div class="modeCardTitle">KITT</div><div class="modeCardSub">MODE 1</div></button>
-        <button class="modeCard" data-mode="2"><div class="modeCardTitle">KARR</div><div class="modeCardSub">MODE 2</div></button>
-        <button class="modeCard" data-mode="3"><div class="modeCardTitle">PILOT<br>KITT</div><div class="modeCardSub">MODE 3</div></button>
-        <button class="modeCard" data-mode="4"><div class="modeCardTitle">PILOT<br>KARR</div><div class="modeCardSub">MODE 4</div></button>
-        <button class="modeCard" data-mode="6"><div class="modeCardTitle">BLUE<br>KITT</div><div class="modeCardSub">MODE 6</div></button>
-        <button class="modeCard" data-mode="7"><div class="modeCardTitle">GREEN<br>KARR</div><div class="modeCardSub">MODE 7</div></button>
-        <button class="modeCard" data-mode="5"><div class="modeCardTitle">DAMAGE<br>KITT</div><div class="modeCardSub">MODE 5</div></button>
-        <button class="modeCard" data-mode="8"><div class="modeCardTitle">FLAME<br>KITT</div><div class="modeCardSub">MODE 8</div></button>
-        <button class="modeCard big" data-mode="9"><div class="modeCardTitle">SPECTRUM</div><div class="modeCardSub">MODE 9</div></button>
-        <button class="modeCard big" data-mode="10"><div class="modeCardTitle">ANALYSIS</div><div class="modeCardSub">MODE 10</div></button>
+        <button class="modeCard" data-mode="1"><div class="modeCardIcon">●</div><div class="modeCardTitle">KITT</div><div class="modeCardSub">MODE 1</div></button>
+        <button class="modeCard" data-mode="2"><div class="modeCardIcon">≡</div><div class="modeCardTitle">KARR</div><div class="modeCardSub">MODE 2</div></button>
+        <button class="modeCard" data-mode="3"><div class="modeCardIcon">▲</div><div class="modeCardTitle">PILOT<br>KITT</div><div class="modeCardSub">MODE 3</div></button>
+        <button class="modeCard" data-mode="4"><div class="modeCardIcon">○</div><div class="modeCardTitle">PILOT<br>KARR</div><div class="modeCardSub">MODE 4</div></button>
+        <button class="modeCard" data-mode="6"><div class="modeCardIcon">■</div><div class="modeCardTitle">BLUE<br>KITT</div><div class="modeCardSub">MODE 6</div></button>
+        <button class="modeCard" data-mode="7"><div class="modeCardIcon">◆</div><div class="modeCardTitle">GREEN<br>KARR</div><div class="modeCardSub">MODE 7</div></button>
+        <button class="modeCard" data-mode="5"><div class="modeCardIcon">⚠</div><div class="modeCardTitle">DAMAGE<br>KITT</div><div class="modeCardSub">MODE 5</div></button>
+        <button class="modeCard" data-mode="8"><div class="modeCardIcon">🔥</div><div class="modeCardTitle">FLAME<br>KITT</div><div class="modeCardSub">MODE 8</div></button>
+        <button class="modeCard big" data-mode="9"><div class="modeCardIcon">▂▅█</div><div class="modeCardTitle">SPECTRUM</div><div class="modeCardSub">MODE 9</div></button>
+        <button class="modeCard big" data-mode="10"><div class="modeCardIcon">≋</div><div class="modeCardTitle">ANALYSIS</div><div class="modeCardSub">MODE 10</div></button>
       </div>
     </div>
   </div>
 
   <div class="frame col">
     <div class="h2">GAIN CONTROL</div>
-    <div class="sub">VOICE DISPLAY SENSITIVITY ï¼‹ or ï¼</div>
+    <div class="sub">VOICE DISPLAY SENSITIVITY ＋ or －</div>
     <div style="height:10px;"></div>
 
     <div class="row" style="max-width:920px;">
-      <button id="btnGainDown" class="btn" style="max-width:420px; width:min(420px,100%);" disabled><div class="label">GAIN âˆ’</div></button>
-      <button id="btnGainUp" class="btn" style="max-width:420px; width:min(420px,100%);" disabled><div class="label">GAIN ï¼‹</div></button>
+      <button id="btnGainUp" class="btn" style="max-width:420px; width:min(420px,100%);" disabled><div class="label">GAIN +</div></button>
+      <button id="btnGainDown" class="btn" style="max-width:420px; width:min(420px,100%);" disabled><div class="label">GAIN -</div></button>
     </div>
   </div>
 
   <div class="frame col">
     <div class="h2">EXTERNAL COMMANDS</div>
-    <div class="sub">BOOT â€¢ SHUTDOWN â€¢ MODE OFF â€¢ ALL OFF â€¢ DTMF</div>
+    <div class="sub">MODE OFF • COUNTDOWN OFF • BOX OFF • ALL OFF • DTMF</div>
     <div style="height:12px;"></div>
 
     <div class="toolsGrid">
-      <button id="btnStartup"  class="btn toolBtn greenTone">STARTUP</button>
-      <button id="btnShutdown" class="btn toolBtn redTone">SHUTDOWN</button>
-      <button id="btnAllOff"   class="btn toolBtn yellowTone">ALL OFF</button>
-      <button id="btnModeOff"  class="btn toolBtn yellowTone">MODE OFF</button>
-      <button id="btnDTMF7"    class="btn toolBtn yellowTone">DTMF 7 / 400ms</button>
-      <button id="btnDTMF8"    class="btn toolBtn yellowTone">DTMF 8 / 400ms</button>
+      <button id="btnModeOff"      class="btn toolBtn yellowTone">MODE OFF</button>
+      <button id="btnCountdownOff" class="btn toolBtn yellowTone">COUNTDOWN OFF</button>
+      <button id="btnBoxOff"       class="btn toolBtn yellowTone">BOX OFF</button>
+      <button id="btnAllOff"       class="btn toolBtn yellowTone">ALL OFF</button>
+      <button id="btnDTMF7"        class="btn toolBtn yellowTone">DTMF 7 / 400ms</button>
+      <button id="btnDTMF8"        class="btn toolBtn yellowTone">DTMF 8 / 400ms</button>
     </div>
 
     <div style="height:14px;"></div>
 
     <div class="toolInputRow">
-      <input id="dtmfInput" class="toolInput" type="text" value="DTMF=8,400" placeholder="ä¾‹å¦‚ï¼šDTMF=8,400">
+      <input id="dtmfInput" class="toolInput" type="text" value="DTMF=8,400" placeholder="例如：DTMF=8,400">
       <button id="btnSendCustom" class="btn btnSmall" style="width:140px;">SEND CMD</button>
     </div>
+  </div>
+
+
+  <div class="frame col">
+    <div class="h2">DTMF KEYPAD</div>
+    <div class="sub">16 TONES / ESP32 AUTO MAP</div>
+    <div style="height:12px;"></div>
+
+    <div class="dtmfPad">
+      <button class="dtmfKey" data-dtmf-key="1">1</button>
+      <button class="dtmfKey" data-dtmf-key="2">2</button>
+      <button class="dtmfKey" data-dtmf-key="3">3</button>
+      <button class="dtmfKey" data-dtmf-key="A">A</button>
+
+      <button class="dtmfKey" data-dtmf-key="4">4</button>
+      <button class="dtmfKey" data-dtmf-key="5">5</button>
+      <button class="dtmfKey" data-dtmf-key="6">6</button>
+      <button class="dtmfKey" data-dtmf-key="B">B</button>
+
+      <button class="dtmfKey" data-dtmf-key="7">7</button>
+      <button class="dtmfKey" data-dtmf-key="8">8</button>
+      <button class="dtmfKey" data-dtmf-key="9">9</button>
+      <button class="dtmfKey" data-dtmf-key="C">C</button>
+
+      <button class="dtmfKey" data-dtmf-key="*">*</button>
+      <button class="dtmfKey" data-dtmf-key="0">0</button>
+      <button class="dtmfKey" data-dtmf-key="#">#</button>
+      <button class="dtmfKey" data-dtmf-key="D">D</button>
+    </div>
+
+    <div class="dtmfHint">WEB KEYS ARE AUTO-MAPPED BY ESP32 TO NANO DTMF INDEX 0 TO 15</div>
   </div>
 
   <div class="footer">KNIGHT RIDER WEB REMOTE CONTROL SYSTEM</div>
@@ -923,6 +1023,21 @@ body{min-width:320px}
     if (!ui.connected || !rxChar) return;
     const text = line.endsWith("\n") ? line : line + "\n";
     const data = new TextEncoder().encode(text);
+    try{
+      if (typeof rxChar.writeValueWithoutResponse === "function"){
+        await rxChar.writeValueWithoutResponse(data);
+        return;
+      }
+    } catch(_) {}
+    try{
+      await rxChar.writeValue(data);
+    } catch(_) {}
+  }
+
+  async function writeLinesBulk(lines){
+    if (!ui.connected || !rxChar || !Array.isArray(lines) || !lines.length) return;
+    const payload = lines.map(line => line.endsWith("\n") ? line : line + "\n").join("");
+    const data = new TextEncoder().encode(payload);
     try{
       if (typeof rxChar.writeValueWithoutResponse === "function"){
         await rxChar.writeValueWithoutResponse(data);
@@ -1166,7 +1281,7 @@ body{min-width:320px}
     paintFromCoreAndTail(colEl, coreFlipped, tailFlipped, colorClass, dimClass, dimClass2);
   }
 
-  // ===== ESP32 åŽŸå§‹ DAMAGE_KITT frames =====
+  // ===== ESP32 原始 DAMAGE_KITT frames =====
   const BKITT_FRAMES = [
     [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,1,0],[0,0,0],[0,1,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
     [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,2,0],[0,1,0],[0,3,0],[0,0,0],[0,1,0],[0,0,0],[0,1,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
@@ -1205,8 +1320,8 @@ body{min-width:320px}
     const lv = clamp16(level);
     if (lv <= 0) return;
 
-    // 16éšŽå°åŠï¼šæ¯åŠå€ç”±ä¸Šè€Œä¸‹ = æš—ç´…ã€ç´…ã€æ©˜ã€é»ƒã€ç¶ ã€ç¶ ã€ç¶ ã€ç¶ 
-    // top half 0..7, bottom half 8..15 å°ç¨±
+    // 16階對半：每半區由上而下 = 暗紅、紅、橘、黃、綠、綠、綠、綠
+    // top half 0..7, bottom half 8..15 對稱
     const paletteTop = ["dim-red", "red", "orange", "yellow", "green", "green", "green", "green"];
     const paletteBottom = ["green", "green", "green", "green", "yellow", "orange", "red", "dim-red"];
 
@@ -1321,7 +1436,7 @@ body{min-width:320px}
   }
 
   function renderMode5(m){
-    // æ¯”ä¾‹ä¸Šä¿®ä¸€éšŽï¼šåŒæ¨£è¼¸å…¥ä¸‹é¡¯ç¤ºå°‘ä¸€éšŽï¼Œé¿å…å¤ªå®¹æ˜“æ»¿æ ¼å¡ä½
+    // 比例上修一階：同樣輸入下顯示少一階，避免太容易滿格卡住
     const lv = clamp16(m);
     if (lv <= 1){
       ensureBars();
@@ -1456,7 +1571,7 @@ body{min-width:320px}
     const W = c.width;
     const H = c.height;
     const centerY = Math.round(H * 0.5);
-    const usableAmp = Math.round(H * 0.46);   // æŽ¥è¿‘ç•«é¢æ¥µé™çš„å¤§æŒ¯å¹…
+    const usableAmp = Math.round(H * 0.46);   // 接近畫面極限的大振幅
 
     if (!Array.isArray(ui.mode10WaveR) || ui.mode10WaveR.length !== W){
       ui.mode10WaveR = Array(W).fill(centerY);
@@ -1475,17 +1590,17 @@ body{min-width:320px}
     const amp = (m / 16) * usableAmp;
     const balance = (r - l) / 16;
 
-    // æ²’è²éŸ³æ™‚é è¿‘ä¸­ç·šï¼›æœ‰è²éŸ³æ™‚æ‰æ”¾å¤§åˆ°ç¾åœ¨çš„å¤§å°
+    // 沒聲音時靠近中線；有聲音時才放大到現在的大小
     const active = Math.min(1, Math.max(0, (m - 1) / 15));
 
-    // çˆ†éŸ³çž¬é–“è¡é ‚ï¼šç•¶ä¸­å¤®éŸ³é‡å¾ˆé«˜æ™‚ï¼Œé¡å¤–çµ¦ä¸€å€‹ attack boost
-    const blast = Math.max(0, (m - 10) / 6);   // m>10 é–‹å§‹æ˜Žé¡¯çˆ†è¡
-    const attackBoost = 1.0 + blast * 2.2;     // æœ€é«˜ç´„ 3.2x é¡å¤–åŠ æˆ
+    // 爆音瞬間衝頂：當中央音量很高時，額外給一個 attack boost
+    const blast = Math.max(0, (m - 10) / 6);   // m>10 開始明顯爆衝
+    const attackBoost = 1.0 + blast * 2.2;     // 最高約 3.2x 額外加成
 
-    // æ­£ç¢ºæ–¹å‘ï¼š
-    // 1. åæ‡‰é€Ÿåº¦å¿«ï¼šæé«˜ scrollStep
-    // 2. æ³¢å½¢ä¸è¦å¤ªå¯†é›†ï¼šç¶­æŒè¼ƒä½Žé »çŽ‡
-    // 3. æ–œçŽ‡ä¸è¦å¤ªé«˜ï¼šå¾Œé¢ç”¨è¼ƒå° stepLimit å£“ä½
+    // 正確方向：
+    // 1. 反應速度快：提高 scrollStep
+    // 2. 波形不要太密集：維持較低頻率
+    // 3. 斜率不要太高：後面用較小 stepLimit 壓住
     const f1 = 0.18 + active * 0.42;
     const f2 = 0.38 + Math.abs(balance) * 0.40 + active * 0.18;
     const scrollStep = 5;
@@ -1495,8 +1610,8 @@ body{min-width:320px}
 
       const baseNoise = (Math.sin(ui.mode10Phase * 3.2) + Math.sin(ui.mode10Phase * 4.9 + 0.8)) * (0.01 + active * 0.05);
 
-      // å®‰éœæ™‚æŒ¯å¹…å¾ˆå°ï¼›æœ‰è²éŸ³æ™‚æ‰æ‹‰åˆ°åŽŸæœ¬å¤§å¹…åº¦
-      // å†ä¹˜ attackBoostï¼Œè®“çˆ†éŸ³çž¬é–“ç›´æŽ¥è¡é ‚
+      // 安靜時振幅很小；有聲音時才拉到原本大幅度
+      // 再乘 attackBoost，讓爆音瞬間直接衝頂
       const a1 = Math.max(0.35, amp * 4.20 * active * 3.0 * attackBoost);
       const a2 = Math.max(0.28, amp * 3.40 * active * 3.0 * attackBoost);
       const a3 = Math.max(0.24, amp * 2.90 * active * 3.0 * attackBoost);
@@ -1528,8 +1643,8 @@ body{min-width:320px}
         yG = centerY + c3 * a3;
       }
 
-      // å®‰éœæ™‚æ›´ç©©ï¼Œé¿å…å¤§æŒ¯å¹…ï¼›æœ‰è²éŸ³æ™‚å†æ”¾é–‹
-      // å£“ä½Žæ–œçŽ‡ï¼Œé¿å…å°–éŠ³å¯†é›†ï¼›ä¿ç•™çˆ†éŸ³æ™‚çš„è¡é ‚ç©ºé–“
+      // 安靜時更穩，避免大振幅；有聲音時再放開
+      // 壓低斜率，避免尖銳密集；保留爆音時的衝頂空間
       const stepLimit = 4 + active * 18 + blast * 16;
       const limR = ui.mode10LastR + Math.max(-stepLimit, Math.min(stepLimit, yR - ui.mode10LastR));
       const limB = ui.mode10LastB + Math.max(-stepLimit, Math.min(stepLimit, yB - ui.mode10LastB));
@@ -1547,7 +1662,7 @@ body{min-width:320px}
     ctx.fillStyle = "#050505";
     ctx.fillRect(0, 0, W, H);
 
-    // Knight Rider è»Šæ©Ÿåˆ†æžå„€é¢¨æ ¼æ ¼ç·š
+    // Knight Rider 車機分析儀風格格線
     ctx.strokeStyle = "rgba(218,166,74,0.08)";
     ctx.lineWidth = 1;
     for (let gy = 0; gy <= 8; gy++){
@@ -1565,7 +1680,7 @@ body{min-width:320px}
       ctx.stroke();
     }
 
-    // ä¸­ç·š
+    // 中線
     ctx.strokeStyle = "rgba(218,166,74,0.22)";
     ctx.lineWidth = 1;
     ctx.beginPath();
@@ -1589,12 +1704,12 @@ body{min-width:320px}
       ctx.stroke();
     }
 
-    // Knight Rider è»Šæ©Ÿåˆ†æžå„€ï¼šç´…ç·šä¸»å°Žï¼Œè—ç¶ åšè¼”åŠ©åˆ†æžè»Œ
+    // Knight Rider 車機分析儀：紅線主導，藍綠做輔助分析軌
     drawWave(ui.mode10WaveB, "rgba(85,160,255,0.16)", "rgba(120,185,255,0.78)", 1.6, 0.55);
     drawWave(ui.mode10WaveG, "rgba(70,255,90,0.15)",  "rgba(120,255,150,0.74)", 1.5, 0.52);
     drawWave(ui.mode10WaveR, "rgba(255,40,40,0.34)",  "rgba(255,120,120,0.98)", 2.8, 0.95);
 
-    // é¡å¤–æ·¡ç´…æŽƒææ®˜å½±ï¼Œæ›´åƒè»Šæ©Ÿåˆ†æžå„€
+    // 額外淡紅掃描殘影，更像車機分析儀
     ctx.strokeStyle = "rgba(255,40,40,0.08)";
     ctx.lineWidth = 5.0;
     ctx.beginPath();
@@ -1648,7 +1763,7 @@ body{min-width:320px}
     if (nano){
       const v = nano[1].toUpperCase();
       ui.vehicleMode = (v === "OFF") ? null : v;
-      vehicleModeStatus.textContent = "VEHICLE MODE: " + (ui.vehicleMode ?? "OFF");
+      vehicleModeStatus.textContent = "PANP MODE: " + (ui.vehicleMode ?? "OFF");
       renderVehicleMode();
     }
     if (step){
@@ -1685,7 +1800,7 @@ body{min-width:320px}
     ui.mode9Hold = Array(12).fill(0);
 
     displayModeStatus.textContent = "DISPLAY MODE: -";
-    vehicleModeStatus.textContent = "VEHICLE MODE: -";
+    vehicleModeStatus.textContent = "PANP MODE: -";
     gainStatus.textContent = "GAIN: -";
     notifyStatus.textContent = "STATE: -";
 
@@ -1714,7 +1829,7 @@ body{min-width:320px}
     [
       "step1Btn","step2Btn","step3Btn","step4Btn",
       "nanoNorBtn","nanoAutoBtn","nanoSpmBtn",
-      "btnStartup","btnShutdown","btnAllOff","btnModeOff","btnDTMF7","btnDTMF8","btnSendCustom"
+      "btnStartup","btnShutdown","btnAllOff","btnModeOff","btnCountdownOff","btnBoxOff","btnDTMF7","btnDTMF8","btnSendCustom"
     ].forEach(id => $(id).disabled = !isConn);
 
     bigModeZone.disabled = !isConn;
@@ -1725,10 +1840,15 @@ body{min-width:320px}
       btn.style.pointerEvents = isConn ? "auto" : "none";
     });
 
+    document.querySelectorAll(".dtmfKey").forEach(btn=>{
+      btn.disabled = !isConn;
+      btn.style.pointerEvents = isConn ? "auto" : "none";
+    });
+
     statusText.textContent = isConn ? "LINK: ESTABLISHED" : "LINK: NOT CONNECTED";
     scannerState.textContent = isConn ? "ACTIVE" : "OFFLINE";
     scannerState.style.color = isConn ? "var(--red)" : "var(--dim)";
-    scanText.textContent = isConn ? "CONNECTED â€” SCAN SEQUENCE RUNNING" : "CONNECT TO ENABLE SCAN SEQUENCE";
+    scanText.textContent = isConn ? "CONNECTED — SCAN SEQUENCE RUNNING" : "CONNECT TO ENABLE SCAN SEQUENCE";
 
     if (isConn) startScanner();
     else {
@@ -1740,7 +1860,7 @@ body{min-width:320px}
   async function doScanPickDevice(){
     if (!navigator.bluetooth){
       bleText.textContent = "BLE: NOT SUPPORTED (Use Chrome/Edge)";
-      alert("This browser does not support Web Bluetoothã€‚");
+      alert("This browser does not support Web Bluetooth。");
       return;
     }
 
@@ -1827,6 +1947,40 @@ body{min-width:320px}
     renderDisplayByMode(ui.displayMode, ui.vuL, ui.vuM, ui.vuR);
   });
 
+
+  async function playDTMF7(){
+    await writeLine("DTMF=7,400");
+  }
+
+  async function playDTMF8(){
+    await writeLine("DTMF=8,400");
+  }
+
+  async function countdownOffAll(sendDtmf = false){
+    ui.step = [false,false,false,false];
+    renderSteps();
+
+    const lines = ["STEP1OFF","STEP2OFF","STEP3OFF","STEP4OFF"];
+    if (sendDtmf) lines.push("DTMF=7,400");
+    await writeLinesBulk(lines);
+  }
+
+  async function boxOffAll(sendDtmf = false){
+    for (let i = 0; i < 5; i++){
+      ui.boxL[i] = false;
+      ui.boxR[i] = false;
+    }
+    renderBoxes();
+
+    const lines = [];
+    for (let i = 0; i < 5; i++){
+      lines.push(buildBoxHalfCmd("L", i, false));
+      lines.push(buildBoxHalfCmd("R", i, false));
+    }
+    if (sendDtmf) lines.push("DTMF=8,400");
+    await writeLinesBulk(lines);
+  }
+
   async function toggleStep(idx){
     if (!ui.connected) return;
     ui.step[idx] = !ui.step[idx];
@@ -1859,7 +2013,7 @@ body{min-width:320px}
     if (!ui.connected) return;
     playOnce(sBtn);
     ui.vehicleMode = (ui.vehicleMode === "NOR") ? null : "NOR";
-    vehicleModeStatus.textContent = "VEHICLE MODE: " + (ui.vehicleMode ?? "OFF");
+    vehicleModeStatus.textContent = "PANP MODE: " + (ui.vehicleMode ?? "OFF");
     renderVehicleMode();
     await writeLine(ui.vehicleMode === "NOR" ? "MODE=NOR" : "MODE=OFF");
   });
@@ -1868,7 +2022,7 @@ body{min-width:320px}
     if (!ui.connected) return;
     playOnce(sBtn);
     ui.vehicleMode = (ui.vehicleMode === "AUTO") ? null : "AUTO";
-    vehicleModeStatus.textContent = "VEHICLE MODE: " + (ui.vehicleMode ?? "OFF");
+    vehicleModeStatus.textContent = "PANP MODE: " + (ui.vehicleMode ?? "OFF");
     renderVehicleMode();
     await writeLine(ui.vehicleMode === "AUTO" ? "MODE=AUTO" : "MODE=OFF");
   });
@@ -1877,7 +2031,7 @@ body{min-width:320px}
     if (!ui.connected) return;
     playOnce(sBtn);
     ui.vehicleMode = (ui.vehicleMode === "SPM") ? null : "SPM";
-    vehicleModeStatus.textContent = "VEHICLE MODE: " + (ui.vehicleMode ?? "OFF");
+    vehicleModeStatus.textContent = "PANP MODE: " + (ui.vehicleMode ?? "OFF");
     renderVehicleMode();
     await writeLine(ui.vehicleMode === "SPM" ? "MODE=SPM" : "MODE=OFF");
   });
@@ -1897,19 +2051,37 @@ body{min-width:320px}
   $("btnStartup").addEventListener("click", async ()=>{
     if (!ui.connected) return;
     playOnce(sBtn);
+    ui.vehicleMode = "NOR";
+    vehicleModeStatus.textContent = "PANP MODE: NOR";
+    renderVehicleMode();
     await writeLine("STARTUP");
   });
 
   $("btnShutdown").addEventListener("click", async ()=>{
     if (!ui.connected) return;
     playOnce(sBtn);
+    ui.vehicleMode = null;
+    vehicleModeStatus.textContent = "PANP MODE: OFF";
+    renderVehicleMode();
     await writeLine("SHUTDOWN");
+  });
+
+  $("btnCountdownOff").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    await writeLine("COUNTDOWNOFF");
+    await writeLine("DTMF=7,400");
+  });
+
+  $("btnBoxOff").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    await writeLine("BOXOFF");
+    await writeLine("DTMF=8,400");
   });
 
   $("btnAllOff").addEventListener("click", async ()=>{
     if (!ui.connected) return;
-    playOnce(sBtn);
     await writeLine("ALLOFF");
+    await writeLine("DTMF=8,400");
   });
 
   $("btnModeOff").addEventListener("click", async ()=>{
@@ -1920,13 +2092,11 @@ body{min-width:320px}
 
   $("btnDTMF7").addEventListener("click", async ()=>{
     if (!ui.connected) return;
-    playOnce(sBtn);
     await writeLine("DTMF=7,400");
   });
 
   $("btnDTMF8").addEventListener("click", async ()=>{
     if (!ui.connected) return;
-    playOnce(sBtn);
     await writeLine("DTMF=8,400");
   });
 
@@ -1937,6 +2107,20 @@ body{min-width:320px}
     playOnce(sBtn);
     await writeLine(v);
   });
+
+
+  async function sendMappedDTMF(key, duration = 400){
+    if (!ui.connected) return;
+    if (!key) return;
+    await writeLine(`DTMF=${key},${duration}`);
+  }
+
+  document.querySelectorAll(".dtmfKey").forEach(btn=>{
+    btn.addEventListener("click", async ()=>{
+      await sendMappedDTMF(btn.dataset.dtmfKey, 400);
+    });
+  });
+
 
   btnScan.addEventListener("click", async ()=>{ try{ await doScanPickDevice(); } catch(_){} });
   btnConnect.addEventListener("click", async ()=>{ await doConnect(); });
