@@ -1,0 +1,20 @@
+L1-FX beep turbo boost.mp3
+L2-Ski Mode.wav
+L3-FX LASER.mp3
+L4-FX in out.mp3
+L5-Auto roof.mp3
+L6-FX shoot grappling hook.mp3
+L7-FX scanner beeps.mp3
+L8-FX compute.39.mp3
+L9-Eject.mp3
+L10-FX scanner beeps microjam.mp3
+R1-Turbo Boost.mp3
+R2-OPEN DOOR.mp3
+R3-Scan area.mp3
+R4-Turbo Turbo Boost.mp3
+R5-Scan area2.mp3
+R6-Auto roof.mp3
+R7-Silent alarm Michael.mp3
+R8-FX radar.mp3
+R9-KKScan.mp3
+R10-Eject.mp3
