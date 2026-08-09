@@ -141,6 +141,46 @@ body{min-width:320px}
   font-size:9px;
 }
 
+.idCopyRow{
+  width:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.idCopyRow .line{
+  width:auto;
+  max-width:min(720px,100%);
+}
+
+.copyIdBtn{
+  min-width:82px;
+  height:28px;
+  padding:0 10px;
+  border-radius:8px;
+  border:1.3px solid var(--gold2);
+  background:linear-gradient(135deg,#1B1200,#0A0A0A);
+  color:var(--gold);
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.7px;
+  cursor:pointer;
+}
+
+.copyIdBtn:disabled{
+  border-color:#2E2E2E;
+  color:var(--dim);
+  cursor:default;
+}
+
+.copyIdBtn.copied{
+  border-color:#4dbb63;
+  color:#9cffad;
+  box-shadow:0 0 10px rgba(80,255,110,.22);
+}
+
 .btn{
   border-radius:0;
   border:1.6px solid var(--gold2);
@@ -1517,7 +1557,10 @@ body{min-width:320px}
       <div class="line" id="statusText">LINK: NOT CONNECTED</div>
       <div class="line" id="bleText">BLE: UNKNOWN</div>
       <div class="line" id="deviceText">DEVICE: (none)</div>
-      <div class="line" id="idText">VOICEBOX ACCESS ID: -</div>
+      <div class="idCopyRow">
+        <div class="line" id="idText">VOICEBOX ACCESS ID: -</div>
+        <button id="btnCopyId" class="copyIdBtn" type="button" disabled>COPY ID</button>
+      </div>
       <div class="line" id="accessText" style="color:var(--dim)">TACTICAL ACCESS: NOT CHECKED</div>
       <div class="line" id="displayModeStatus">DISPLAY MODE: -</div>
       <div class="line" id="vehicleModeStatus">PANP MODE: -</div>
@@ -1796,6 +1839,7 @@ body{min-width:320px}
   const bleText            = $("bleText");
   const deviceText         = $("deviceText");
   const idText             = $("idText");
+  const btnCopyId          = $("btnCopyId");
   const accessText         = $("accessText");
   const scanText           = $("scanText");
   const scannerState       = $("scannerState");
@@ -1919,6 +1963,46 @@ body{min-width:320px}
     else if (kind === "warn") accessText.style.color = "#ff9a74";
     else if (kind === "checking") accessText.style.color = "var(--gold)";
     else accessText.style.color = "var(--dim)";
+  }
+
+  async function copyVoiceBoxId(){
+    const voiceBoxId = device && device.id ? String(device.id) : "";
+    if (!voiceBoxId || !btnCopyId) return;
+
+    let copied = false;
+
+    try{
+      if (navigator.clipboard && window.isSecureContext){
+        await navigator.clipboard.writeText(voiceBoxId);
+        copied = true;
+      }
+    } catch(_) {}
+
+    if (!copied){
+      try{
+        const ta = document.createElement("textarea");
+        ta.value = voiceBoxId;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        ta.style.pointerEvents = "none";
+        document.body.appendChild(ta);
+        ta.select();
+        copied = document.execCommand("copy");
+        ta.remove();
+      } catch(_) {}
+    }
+
+    if (!copied) return;
+
+    playOnce(sBtn);
+    btnCopyId.textContent = "COPIED!";
+    btnCopyId.classList.add("copied");
+    clearTimeout(btnCopyId._copyTimer);
+    btnCopyId._copyTimer = setTimeout(()=>{
+      btnCopyId.textContent = "COPY ID";
+      btnCopyId.classList.remove("copied");
+    }, 1400);
   }
 
   function checkTacticalAccess(voiceBoxId){
@@ -3011,6 +3095,7 @@ body{min-width:320px}
 
     deviceText.textContent = "DEVICE: " + (device.name && device.name.trim() ? device.name : "(Unnamed)");
     idText.textContent = "VOICEBOX ACCESS ID: " + (device.id || "-");
+    if (btnCopyId) btnCopyId.disabled = !(device && device.id);
 
     accessAuthorized = false;
     btnConnect.disabled = true;
@@ -3283,6 +3368,7 @@ body{min-width:320px}
 
 
   btnScan.addEventListener("click", async ()=>{ try{ await doScanPickDevice(); } catch(_){} });
+  if (btnCopyId) btnCopyId.addEventListener("click", copyVoiceBoxId);
   btnConnect.addEventListener("click", async ()=>{ await doConnect(); });
   btnDisconnect.addEventListener("click", ()=>{ doDisconnect(); });
 
