@@ -1,0 +1,3336 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>VOICEBOX REMOTE CONTROLER</title>
+
+<style>
+:root{
+  --bg:#000000;
+  --panel:#070707;
+  --panel2:#0E0E0E;
+  --gold:#DAA64A;
+  --gold2:#B8933A;
+  --red:#FF0000;
+  --dim:#666666;
+  --shadow1: 0 10px 18px rgba(0,0,0,.85);
+  --shadow2: 0 0 24px rgba(184,147,58,.25);
+}
+
+*{box-sizing:border-box}
+html,body{
+  margin:0;
+  background:var(--bg);
+  color:#fff;
+  font-family:"Square721 BT","Square 721 BT","Square721 Cn BT","Eurostile Extended","Arial Black","Helvetica Neue",Arial,sans-serif;
+}
+body{min-width:320px}
+
+.app{
+  max-width:920px;
+  margin:auto;
+  padding:10px;
+}
+
+.frame{
+  background:var(--panel);
+  border:1.6px solid var(--gold2);
+  border-radius:16px;
+  padding:10px;
+  margin-bottom:10px;
+  box-shadow:var(--shadow1), var(--shadow2);
+  overflow:hidden;
+}
+
+.center{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+
+.col{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+
+.row{
+  width:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.pill{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:7px 12px;
+  border-radius:999px;
+  border:1.2px solid var(--gold);
+  background:var(--panel2);
+  color:var(--gold);
+  font-weight:900;
+  letter-spacing:1px;
+  font-size:11px;
+}
+
+.appIcon{
+  width:30px;
+  height:30px;
+  border-radius:8px;
+  margin-right:10px;
+  border:1px solid var(--gold2);
+  box-shadow:0 0 10px rgba(184,147,58,.20);
+  object-fit:cover;
+  flex:0 0 auto;
+}
+
+.h2{
+  margin:0;
+  font-size:12px;
+  letter-spacing:1.5px;
+  color:var(--gold);
+  font-weight:900;
+}
+
+.sub{
+  margin-top:4px;
+  font-size:10px;
+  color:var(--gold2);
+  letter-spacing:1px;
+  font-weight:700;
+}
+
+.mini{
+  margin-top:4px;
+  font-size:9px;
+  color:var(--dim);
+  letter-spacing:.8px;
+  font-weight:700;
+}
+
+.kv{
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+}
+
+.kv .line{
+  width:100%;
+  max-width:900px;
+  text-align:center;
+  color:var(--gold2);
+  font-weight:700;
+  font-size:10px;
+  letter-spacing:1px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.kv .line.dim{
+  color:var(--dim);
+  font-size:9px;
+}
+
+.btn{
+  border-radius:0;
+  border:1.6px solid var(--gold2);
+  background:linear-gradient(135deg,#1B1200,#0A0A0A);
+  color:var(--gold);
+  font-weight:900;
+  letter-spacing:.7px;
+  cursor:pointer;
+  user-select:none;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:4px;
+  padding:8px 8px;
+  position:relative;
+  transition:.12s;
+}
+
+.btn:disabled{
+  border-color:#2E2E2E;
+  color:var(--dim);
+  cursor:default;
+  filter:saturate(.7);
+  box-shadow:none;
+}
+
+.btn.active{
+  border:2.2px solid var(--red);
+  box-shadow:
+    0 0 18px rgba(255,0,0,.55),
+    0 0 36px rgba(255,0,0,.28),
+    0 8px 10px rgba(0,0,0,.8);
+}
+
+.btnSmall{
+  width:108px;
+  height:38px;
+  border-radius:12px;
+  padding:0 8px;
+  flex-direction:row;
+  gap:6px;
+  letter-spacing:.8px;
+  font-size:12px;
+}
+
+.label{
+  line-height:1.02;
+  font-size:13px;
+  font-weight:900;
+  color:var(--gold);
+  text-align:center;
+}
+
+.btnTopIcon{
+  display:block;
+  font-size:11px;
+  line-height:1;
+  letter-spacing:1px;
+  opacity:.95;
+}
+
+.modeCardIcon{
+  color:#777;
+  font-size:12px;
+  line-height:1;
+  color:var(--gold2);
+  opacity:.95;
+  margin-bottom:6px;
+  letter-spacing:2px;
+}
+
+.scanbar{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:3px;
+  margin-top:10px;
+  margin-bottom:8px;
+}
+
+.led{
+  width:22px;
+  height:10px;
+  border-radius:4px;
+  border:1px solid #2A0A0A;
+  background:#140000;
+  transition:all .12s ease;
+}
+
+.led.on{
+  background:linear-gradient(#FF3A3A,#7A0000);
+  border-color:#FF8A8A;
+  box-shadow:0 0 16px rgba(255,0,0,.85);
+}
+
+.led.tail1{
+  background:linear-gradient(#D02A2A,#4A0000);
+  border-color:#C06060;
+  box-shadow:0 0 8px rgba(255,0,0,.35);
+}
+
+.led.tail2{
+  background:linear-gradient(#5A1010,#240000);
+  border-color:#5A2A2A;
+}
+
+
+.tacticalWrap{
+  width:100%;
+  display:flex;
+  justify-content:center;
+  overflow:hidden;
+}
+
+.tacticalPanel{
+  width:100%;
+  max-width:420px;
+  padding:10px 0 12px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:14px;
+  background:transparent;
+}
+
+.stepStack{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  align-items:center;
+}
+
+.stepBtn{
+  width:128px;
+  height:31px;
+  border-radius:1px;
+  font-size:16px;
+  font-weight:900;
+  letter-spacing:.45px;
+  border:1px solid #3e3e3e;
+  color:#000;
+  font-family:"Square721 BT","Square 721 BT","Square721 Cn BT","Eurostile Extended","Arial Black","Helvetica Neue",Arial,sans-serif;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.10),
+    inset 0 -3px 7px rgba(0,0,0,.28),
+    0 0 0 1px rgba(0,0,0,.18);
+  text-transform:uppercase;
+}
+
+.stepBtn.yellow{
+  border-color:#716110;
+  background:linear-gradient(180deg,#6d6118 0%, #8d7c18 42%, #5d520f 100%);
+}
+
+.stepBtn.yellow.lit{
+  border-color:#9a7400;
+  background:linear-gradient(180deg,#fff1a1 0%, #ffe152 40%, #ffd219 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.24),
+    inset 0 -4px 8px rgba(0,0,0,.22),
+    0 0 10px rgba(255,215,70,.24);
+}
+
+.stepBtn.orange{
+  border-color:#7b3c0c;
+  background:linear-gradient(180deg,#6c2f0f 0%, #8b4311 42%, #59260a 100%);
+}
+
+.stepBtn.orange.lit{
+  border-color:#a04b08;
+  background:linear-gradient(180deg,#ffb178 0%, #ff7631 42%, #e54e10 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.20),
+    inset 0 -4px 8px rgba(0,0,0,.22),
+    0 0 10px rgba(255,120,45,.22);
+}
+
+.stepBtn.red{
+  border-color:#6c2424;
+  background:linear-gradient(180deg,#5d0b0b 0%, #7f1515 42%, #4f0a0a 100%);
+}
+
+.stepBtn.red.lit{
+  border-color:#8a2525;
+  background:linear-gradient(180deg,#ff8d8d 0%, #ff3a3a 40%, #ff9898 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.20),
+    inset 0 -4px 8px rgba(0,0,0,.22),
+    0 0 10px rgba(255,55,55,.24);
+}
+
+.tacticalBody{
+  width:100%;
+  display:grid;
+  grid-template-columns:73px 144px 73px;
+  column-gap:0;
+  align-items:end;
+  justify-content:center;
+  max-width:290px;
+  position:relative;
+}
+
+.sideCol,
+.centerZone{
+  position:relative;
+  border:1px solid #3f3f3f;
+  background:
+    linear-gradient(180deg,#565656 0%, #2d2d2d 6%, #111111 22%, #141414 58%, #0a0a0a 86%, #3e3e3e 100%);
+  box-shadow:none;
+}
+
+.sideCol::before,
+.centerZone::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:.22;
+  background:repeating-linear-gradient(180deg, rgba(255,255,255,.06) 0 1px, rgba(0,0,0,0) 1px 4px);
+  mix-blend-mode:screen;
+}
+
+.sideCol::after,
+.centerZone::after{
+  display:none;
+}
+
+.sideCol{
+  height:244px;
+  margin-top:13px;
+  margin-bottom:23px;
+  padding-top:18px;
+  padding-bottom:16px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  overflow:hidden;
+}
+
+.sideCol.left{
+  border-radius:1px 0 0 1px;
+  align-items:flex-end;
+  padding-left:22px;
+  padding-right:6px;
+}
+
+.sideCol.left .sideBtn{
+  transform:translateX(-3px);
+}
+
+.sideCol.right{
+  border-radius:0 1px 1px 0;
+  align-items:flex-start;
+  padding-left:6px;
+  padding-right:22px;
+}
+
+.sideCol.right .sideBtn{
+  transform:translateX(3px);
+}
+
+.sideBtn{
+  width:49px;
+  height:35px;
+  border-radius:999px;
+  border:1.6px solid #6a5315;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.08) 0%, rgba(255,255,255,0) 26%),
+    linear-gradient(180deg,#6c5010 0%, #8e6b12 44%, #5d410a 100%);
+  color:#000;
+  font-family:"Square721 BT","Square 721 BT","Square721 Cn BT","Eurostile Extended","Arial Black","Helvetica Neue",Arial,sans-serif;
+  font-stretch:condensed;
+  font-weight:900;
+  font-size:19px;
+  line-height:1;
+  letter-spacing:-.2px;
+  text-align:center;
+  cursor:pointer;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.10),
+    inset 0 -4px 8px rgba(0,0,0,.28),
+    0 0 0 1px rgba(0,0,0,.08);
+  text-transform:uppercase;
+}
+
+.sideBtn.red{
+  border-color:#601919;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.08) 0%, rgba(255,255,255,0) 26%),
+    linear-gradient(180deg,#5a0b0b 0%, #8e1111 44%, #4b0808 100%);
+  color:#000;
+}
+
+.sideBtn .tiny,
+.modeLamp .tiny{
+  font-size:.92em;
+}
+
+.sideBtn.lit.yellowGlow{
+  border-color:#ab7a00;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.18) 0%, rgba(255,255,255,0) 28%),
+    linear-gradient(180deg,#ffd95e 0%, #ffbb1d 42%, #f3cf55 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.18),
+    inset 0 -4px 8px rgba(0,0,0,.22),
+    0 0 8px rgba(255,180,40,.18);
+}
+
+.sideBtn.red.lit.redGlow{
+  border-color:#942121;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.16) 0%, rgba(255,255,255,0) 28%),
+    linear-gradient(180deg,#ff7575 0%, #ff2f2f 42%, #ff7f7f 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.16),
+    inset 0 -4px 8px rgba(0,0,0,.22),
+    0 0 8px rgba(255,65,65,.18);
+}
+
+.centerZone{
+  --voiceDisplayW:112px;
+  height:308px;
+  border-radius:1px;
+  padding:16px 0 16px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  gap:9px;
+  z-index:2;
+}
+
+.bigModeZone{
+  width:var(--voiceDisplayW);
+  max-width:var(--voiceDisplayW);
+  height:154px;
+  border:2px solid #191919;
+  border-radius:7px;
+  background:linear-gradient(180deg,#040404 0%, #0b0b0b 100%);
+  cursor:pointer;
+  padding:7px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.03),
+    inset 0 0 16px rgba(0,0,0,.58),
+    0 0 0 1px rgba(255,255,255,.02);
+}
+
+
+.barsArea{
+  --sideW: 19px;
+  --midW: 22px;
+  --edgePad: 12px;
+  --gapX: 13px;
+  --slotH: 6px;
+  --slotGap: 2px;
+  width:100%;
+  height:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:var(--gapX);
+  padding:10px var(--edgePad);
+  border-radius:7px;
+  background:linear-gradient(180deg,#050505 0%, #0b0b0b 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.02),
+    inset 0 0 14px rgba(0,0,0,.48);
+}
+
+.barCol{
+  display:grid;
+  grid-template-rows:repeat(16, var(--slotH));
+  row-gap:var(--slotGap);
+  align-content:center;
+  justify-items:stretch;
+  align-items:stretch;
+}
+
+.barCol.side{ width:var(--sideW); }
+.barCol.mid{ width:var(--midW); }
+
+.slot{
+  width:100%;
+  height:100%;
+  border-radius:1px;
+  border:1px solid transparent;
+  transition:background .18s ease, box-shadow .22s ease, border-color .18s ease, opacity .22s ease;
+}
+
+.slot.off{
+  background:transparent;
+  border-color:transparent;
+  box-shadow:none;
+  opacity:0;
+}
+
+.slot.dim-red{border-color:rgba(90,20,20,.7);background:linear-gradient(180deg,#662222 0%, #4d1717 100%);opacity:.82;}
+.slot.dim-red2{border-color:rgba(70,16,16,.55);background:linear-gradient(180deg,#451616 0%, #321010 100%);opacity:.62;}
+.slot.dim-yellow{border-color:rgba(110,95,20,.7);background:linear-gradient(180deg,#6f6018 0%, #4f4210 100%);opacity:.82;}
+.slot.dim-yellow2{border-color:rgba(80,70,16,.55);background:linear-gradient(180deg,#4f4514 0%, #352d0d 100%);opacity:.62;}
+.slot.dim-green{border-color:rgba(25,95,28,.7);background:linear-gradient(180deg,#2d6a2d 0%, #1d481d 100%);opacity:.82;}
+.slot.dim-green2{border-color:rgba(20,68,22,.55);background:linear-gradient(180deg,#214a21 0%, #163316 100%);opacity:.62;}
+.slot.dim-blue{border-color:rgba(25,55,120,.7);background:linear-gradient(180deg,#244a88 0%, #162d55 100%);opacity:.82;}
+.slot.dim-blue2{border-color:rgba(18,40,88,.55);background:linear-gradient(180deg,#18355f 0%, #10213c 100%);opacity:.62;}
+
+.slot.red{border-color:rgba(90,20,10,.72);background:linear-gradient(180deg,#ff8d8d 0%, #ff5555 40%, #f23333 100%);box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(255,70,70,.18);opacity:1;}
+.slot.orange{border-color:rgba(120,55,10,.72);background:linear-gradient(180deg,#ffbf73 0%, #ff9538 42%, #ea6d08 100%);box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(255,140,50,.18);opacity:1;}
+.slot.yellow{border-color:rgba(140,120,10,.72);background:linear-gradient(180deg,#fff79b 0%, #ffe75a 42%, #d6b800 100%);box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(255,235,80,.18);opacity:1;}
+.slot.green{border-color:rgba(30,110,25,.72);background:linear-gradient(180deg,#97ff9f 0%, #4aea52 42%, #18b821 100%);box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(70,255,90,.16);opacity:1;}
+.slot.blue{border-color:rgba(25,65,130,.72);background:linear-gradient(180deg,#9fd1ff 0%, #55a0ff 42%, #1f61db 100%);box-shadow: inset 0 -1px 0 rgba(0,0,0,.32), 0 0 4px rgba(90,160,255,.18);opacity:1;}
+.slot.whitehot{border-color:rgba(190,190,190,.72);background:linear-gradient(180deg,#ffffff 0%, #ffe8e8 32%, #ff8d8d 100%);box-shadow: inset 0 -1px 0 rgba(0,0,0,.26), 0 0 5px rgba(255,255,255,.14);opacity:1;}
+
+.panelLampWrap{
+  width:100%;
+  height:100%;
+  padding:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.panelLamp{
+  width:100%;
+  height:100%;
+  border-radius:8px;
+  border:1px solid #0d0d0d;
+  background:linear-gradient(180deg,#101010 0%, #171717 100%);
+  box-shadow: inset 0 0 14px rgba(0,0,0,.50);
+  opacity:.28;
+  transition: opacity .10s ease, background .10s ease, box-shadow .12s ease;
+}
+.panelLamp.redOn{
+  background:linear-gradient(180deg,#ff8585 0%, #ff4646 48%, #d91d1d 100%);
+  box-shadow:0 0 10px rgba(255,55,55,.24), inset 0 0 18px rgba(255,255,255,.10);
+  opacity:1;
+}
+.panelLamp.yellowOn{
+  background:linear-gradient(180deg,#fff1a3 0%, #ffd957 48%, #d3a600 100%);
+  box-shadow:0 0 10px rgba(255,210,55,.20), inset 0 0 18px rgba(255,255,255,.10);
+  opacity:1;
+}
+.panelLamp.cooling{ opacity:.36; }
+
+.bottomModes{
+  width:var(--voiceDisplayW);
+  max-width:var(--voiceDisplayW);
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.leftIndicators{ display:none; }
+.smallIndicator{ display:none; }
+.smallIndicator.active{ display:none; }
+
+.modeLamps{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+.modeLamp{
+  width:100%;
+  height:32px;
+  border-radius:4px;
+  color:#000;
+  font-family:"Square721 BT","Square 721 BT","Square721 Cn BT","Eurostile Extended","Arial Black","Helvetica Neue",Arial,sans-serif;
+  font-weight:900;
+  font-size:15px;
+  line-height:.9;
+  letter-spacing:-.35px;
+  text-align:center;
+  cursor:pointer;
+  text-transform:uppercase;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.08),
+    inset 0 -4px 8px rgba(0,0,0,.25);
+}
+
+.modeLamp.modeNor{
+  border:1px solid #66520e;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.08) 0%, rgba(255,255,255,0) 24%),
+    linear-gradient(180deg,#66580f 0%, #7c6c14 46%, #4f430e 100%);
+}
+
+.modeLamp.modeAuto{
+  border:1px solid #7e3d09;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.08) 0%, rgba(255,255,255,0) 24%),
+    linear-gradient(180deg,#6f320c 0%, #874010 46%, #56260a 100%);
+}
+
+.modeLamp.modeSpm{
+  border:1px solid #213e73;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.08) 0%, rgba(255,255,255,0) 24%),
+    linear-gradient(180deg,#213764 0%, #2c487f 46%, #18294b 100%);
+}
+
+.modeLamp.activeNor{
+  border-color:#9b7a00;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.15) 0%, rgba(255,255,255,0) 24%),
+    linear-gradient(180deg,#ffe77a 0%, #ffd72f 48%, #efbf00 100%);
+  color:#000;
+}
+.modeLamp.activeAuto{
+  border-color:#954400;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.14) 0%, rgba(255,255,255,0) 24%),
+    linear-gradient(180deg,#ff983f 0%, #e75609 48%, #c43e00 100%);
+  color:#000;
+}
+.modeLamp.activeSpm{
+  border-color:#1a458e;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.12) 0%, rgba(255,255,255,0) 24%),
+    linear-gradient(180deg,#4c8dff 0%, #1d56d7 50%, #1236a0 100%);
+  color:#000;
+}
+
+.modeShell{
+
+  width:100%;
+  max-width:780px;
+  border:1.8px solid var(--gold2);
+  border-radius:22px;
+  padding:14px 12px 16px;
+  box-shadow:var(--shadow1), var(--shadow2);
+}
+
+.modeTitleHead{
+  font-size:24px;
+  letter-spacing:3px;
+  color:var(--gold);
+  font-weight:900;
+}
+
+.modeSubHead{
+  margin-top:8px;
+  font-size:16px;
+  letter-spacing:2px;
+  color:var(--gold2);
+  font-weight:800;
+}
+
+.modeGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:12px;
+}
+
+.modeCard{
+  min-height:116px;
+  border-radius:22px;
+  border:2px solid #262626;
+  background:linear-gradient(135deg,#140b00,#000000 72%);
+  color:var(--gold);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  cursor:pointer;
+  padding:8px;
+}
+
+.modeCard.active{
+  border:2.4px solid var(--red);
+  box-shadow:0 0 18px rgba(255,0,0,.45), 0 0 28px rgba(255,0,0,.16);
+}
+
+.modeCard.big{
+  grid-column:1 / span 2;
+  min-height:118px;
+}
+
+.modeCardTitle{
+  font-size:18px;
+  font-weight:900;
+  line-height:1.05;
+  letter-spacing:1px;
+  text-align:center;
+}
+
+.modeCardSub{
+  margin-top:4px;
+  font-size:10px;
+  font-weight:900;
+  color:var(--gold2);
+  letter-spacing:1px;
+}
+
+.toolsGrid{
+  width:100%;
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap:9px;
+}
+
+.dtmfPad{
+  width:100%;
+  max-width:560px;
+  display:grid;
+  grid-template-columns:repeat(4, minmax(72px, 1fr));
+  gap:9px;
+}
+
+.dtmfKey{
+  height:58px;
+  border-radius:0;
+  border:1.6px solid var(--gold2);
+  background:linear-gradient(135deg,#1B1200,#0A0A0A);
+  color:var(--gold);
+  font-weight:900;
+  font-size:18px;
+  letter-spacing:1px;
+  cursor:pointer;
+}
+
+.dtmfKey:disabled{
+  border-color:#2E2E2E;
+  color:var(--dim);
+  cursor:default;
+  filter:saturate(.7);
+}
+
+.dtmfHint{
+  margin-top:8px;
+  font-size:10px;
+  color:var(--dim);
+  letter-spacing:.8px;
+  font-weight:700;
+  text-align:center;
+}
+
+.toolBtn{
+  height:48px;
+  font-size:12px;
+}
+
+.toolBtn.redTone{border-color:#6A0000;color:#ff9a9a}
+.toolBtn.greenTone{border-color:#1d5b1d;color:#a7ffb1}
+.toolBtn.yellowTone{color:var(--gold)}
+
+.toolInputRow{
+  width:100%;
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+.toolInput{
+  width:min(320px,100%);
+  height:44px;
+  border-radius:12px;
+  border:1.8px solid var(--gold2);
+  background:#0a0a0a;
+  color:var(--gold);
+  padding:0 12px;
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:.5px;
+  outline:none;
+}
+
+
+
+
+.auxPanelShell{
+  width:100%;
+  max-width:1180px;
+  --aux-mid: 48px;
+  --aux-row: 70px;
+  --aux-gap: 8px;
+  --aux-sep: 28px;
+}
+
+.auxPanelGrid{
+  width:100%;
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  gap:18px;
+}
+
+.auxBoard{
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0) 12%),
+    repeating-linear-gradient(90deg,
+      rgba(255,255,255,.014) 0px,
+      rgba(255,255,255,.014) 1px,
+      rgba(0,0,0,0) 1px,
+      rgba(0,0,0,0) 6px),
+    linear-gradient(180deg,#151515 0%, #090909 44%, #030303 100%);
+  border:1.2px solid #2c2c2c;
+  border-radius:0;
+  clip-path:polygon(8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px), 0 8px);
+  padding:16px 14px 18px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.05),
+    inset 0 -2px 0 rgba(0,0,0,.62),
+    inset 0 0 36px rgba(255,255,255,.010),
+    0 16px 28px rgba(0,0,0,.46),
+    0 0 0 1px rgba(255,255,255,.008);
+}
+
+.auxBoardTop{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) var(--aux-mid) minmax(0,1fr);
+  align-items:center;
+  gap:12px;
+  margin-bottom:16px;
+}
+
+.auxArrow{
+  width:100%;
+  height:var(--aux-row);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-size:0;
+  line-height:1;
+  color:transparent;
+  background:none;
+  border:none;
+  border-radius:0;
+  box-shadow:none;
+  position:relative;
+  overflow:visible;
+}
+
+.auxArrow::before{
+  content:"";
+  width:150%;
+  height:78%;
+  background:linear-gradient(180deg, rgba(245,232,210,.88), rgba(225,210,188,.62));
+  clip-path:polygon(0 50%, 100% 0, 100% 100%);
+  filter:drop-shadow(0 0 6px rgba(255,245,215,.12));
+  transition:filter .18s ease, background .18s ease;
+}
+
+.auxArrow.right::before{
+  clip-path:polygon(100% 50%, 0 0, 0 100%);
+}
+
+.auxArrow.left,
+.auxArrow.right{
+  justify-content:center;
+  padding:0;
+}
+
+.auxArrow.glow::before{
+  background:linear-gradient(180deg, rgba(255,190,185,.98), rgba(255,108,100,.88));
+  filter:
+    drop-shadow(0 0 8px rgba(255,90,90,.58))
+    drop-shadow(0 0 18px rgba(255,70,70,.44))
+    drop-shadow(0 0 30px rgba(255,70,70,.24));
+}
+
+.auxTopKnob,
+.auxKnob{
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 34% 30%, rgba(255,255,255,.08) 0%, rgba(255,255,255,.01) 16%, rgba(0,0,0,0) 18%),
+    radial-gradient(circle at 50% 54%, #080808 0%, #111111 34%, #1b1b1b 54%, #262626 72%, #0d0d0d 88%, #000000 100%);
+  border:2px solid #0e0e0e;
+  box-shadow:
+    inset 0 2px 3px rgba(255,255,255,.04),
+    inset 0 -5px 8px rgba(0,0,0,.76),
+    inset 0 0 0 2px rgba(36,36,36,.84),
+    inset 0 0 0 9px rgba(10,10,10,.84),
+    0 0 0 2px rgba(0,0,0,.28);
+  justify-self:center;
+}
+
+.auxBoardBody{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) var(--aux-mid) minmax(0,1fr);
+  gap:12px;
+  align-items:start;
+}
+
+.auxBtnCol{
+  display:grid;
+  grid-template-rows:repeat(4, var(--aux-row)) var(--aux-sep) repeat(4, var(--aux-row));
+  gap:var(--aux-gap);
+}
+
+.auxGap{
+  height:var(--aux-sep);
+}
+
+.auxKnobCol{
+  display:grid;
+  grid-template-rows:repeat(4, var(--aux-row)) var(--aux-sep) repeat(4, var(--aux-row));
+  gap:var(--aux-gap);
+  align-items:center;
+  justify-items:center;
+}
+
+.auxKnobCol .auxGap{
+  width:100%;
+  height:var(--aux-sep);
+}
+
+.panelKey{
+  height:var(--aux-row);
+  min-height:var(--aux-row);
+  border-radius:0;
+  border:2px solid #121212;
+  font-weight:900;
+  letter-spacing:.6px;
+  line-height:1.03;
+  text-align:center;
+  padding:8px 6px;
+  cursor:pointer;
+  user-select:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:17px;
+  color:#111;
+  transition:box-shadow .16s ease, filter .12s ease, background .18s ease, border-color .18s ease, color .18s ease;
+}
+
+.panelKey:hover{filter:brightness(1.02);}
+.panelKey:active{transform:none;}
+
+.panelKey.green{
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0) 14%),
+    linear-gradient(180deg,#3f5642 0%, #36493a 100%);
+  border-color:#223024;
+  box-shadow:
+    inset 0 4px 7px rgba(0,0,0,.44),
+    inset 0 -2px 4px rgba(255,255,255,.02),
+    inset 0 0 0 1px rgba(255,255,255,.03),
+    0 0 0 2px rgba(0,0,0,.24);
+}
+
+.panelKey.red{
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0) 14%),
+    linear-gradient(180deg,#704543 0%, #623c3a 100%);
+  border-color:#3f2120;
+  box-shadow:
+    inset 0 4px 7px rgba(0,0,0,.44),
+    inset 0 -2px 4px rgba(255,255,255,.02),
+    inset 0 0 0 1px rgba(255,255,255,.03),
+    0 0 0 2px rgba(0,0,0,.24);
+}
+
+.panelKey.white{
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,0) 14%),
+    linear-gradient(180deg,#d9d9d9 0%, #c7c7c7 100%);
+  border-color:#555555;
+  box-shadow:
+    inset 0 4px 7px rgba(0,0,0,.28),
+    inset 0 -2px 4px rgba(255,255,255,.03),
+    inset 0 0 0 1px rgba(255,255,255,.04),
+    0 0 0 2px rgba(0,0,0,.22);
+}
+
+.panelKey.yellow{
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0) 14%),
+    linear-gradient(180deg,#7b713a 0%, #6d6433 100%);
+  border-color:#473f1d;
+  box-shadow:
+    inset 0 4px 7px rgba(0,0,0,.40),
+    inset 0 -2px 4px rgba(255,255,255,.02),
+    inset 0 0 0 1px rgba(255,255,255,.03),
+    0 0 0 2px rgba(0,0,0,.22);
+}
+
+.panelKey.green.glow{
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,0) 14%),
+    linear-gradient(180deg,#7ab580 0%, #65a76d 100%);
+  border-color:#7ab580;
+  box-shadow:
+    inset 0 2px 4px rgba(255,255,255,.08),
+    inset 0 -2px 3px rgba(0,0,0,.14),
+    inset 0 0 18px rgba(120,255,150,.12),
+    0 0 0 2px rgba(82,132,88,.34),
+    0 0 14px rgba(120,255,150,.22),
+    0 0 28px rgba(120,255,150,.12);
+}
+
+.panelKey.red.glow{
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,0) 14%),
+    linear-gradient(180deg,#e57f79 0%, #d96761 100%);
+  border-color:#e57f79;
+  box-shadow:
+    inset 0 2px 4px rgba(255,255,255,.08),
+    inset 0 -2px 3px rgba(0,0,0,.14),
+    inset 0 0 18px rgba(255,110,110,.14),
+    0 0 0 2px rgba(124,60,56,.34),
+    0 0 14px rgba(255,88,88,.24),
+    0 0 28px rgba(255,88,88,.14);
+}
+
+.panelKey.yellow.glow{
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,0) 14%),
+    linear-gradient(180deg,#cdbd5e 0%, #c1b052 100%);
+  border-color:#cdbd5e;
+  box-shadow:
+    inset 0 2px 4px rgba(255,255,255,.08),
+    inset 0 -2px 3px rgba(0,0,0,.14),
+    inset 0 0 18px rgba(255,232,110,.10),
+    0 0 0 2px rgba(112,102,48,.34),
+    0 0 14px rgba(255,226,90,.20),
+    0 0 28px rgba(255,226,90,.12);
+}
+
+.panelKey.white.glow{
+  background:
+    linear-gradient(180deg, rgba(255,235,235,.22), rgba(255,210,210,.06) 18%),
+    linear-gradient(180deg,#ff9e97 0%, #ec635d 100%);
+  color:#2a0c0b;
+  border-color:#ff8f87;
+  box-shadow:
+    inset 0 0 20px rgba(255,255,255,.18),
+    inset 0 0 40px rgba(255,120,120,.22),
+    0 0 0 2px rgba(128,58,54,.32),
+    0 0 16px rgba(255,88,88,.28),
+    0 0 30px rgba(255,88,88,.16);
+}
+
+.panelKey.smallText{font-size:14px;}
+.panelKey.tinyText{font-size:12px;line-height:1.08;}
+
+
+.footer{
+  width:100%;
+  text-align:center;
+  font-size:10px;
+  color:var(--dim);
+  letter-spacing:1.2px;
+  font-weight:600;
+  margin-top:16px;
+}
+
+@media (max-width:480px){
+  .app{padding:8px}
+  .frame{padding:8px}
+  .btnSmall{width:96px;font-size:11px}
+  .modeGrid{gap:10px}
+  .modeCard{min-height:100px}
+  .modeCard.big{min-height:104px}
+  .modeCardTitle{font-size:15px}
+  .modeTitleHead{font-size:18px}
+  .modeSubHead{font-size:12px}
+  .stepBtn{width:112px;height:28px;font-size:13px;}
+  .tacticalBody{grid-template-columns:63px 124px 63px;column-gap:0;max-width:250px;}
+  .sideCol{height:216px;margin-top:14px;margin-bottom:14px;padding-top:16px;padding-bottom:14px;}
+  .sideBtn{width:42px;height:30px;font-size:16px;}
+  .centerZone{--voiceDisplayW:96px;height:278px;padding:14px 0 14px;}
+  .bigModeZone{max-width:var(--voiceDisplayW);width:var(--voiceDisplayW);height:132px;padding:6px;}
+  .barsArea{--sideW: 16px;--midW: 18px;--edgePad: 10px;--gapX: 10px;--slotH: 5px;--slotGap: 2px;}
+  .bottomModes{max-width:var(--voiceDisplayW);width:var(--voiceDisplayW);gap:5px;margin-top:2px;}
+  .smallIndicator{display:none;width:0;height:0;}
+  .modeLamp{height:30px;font-size:12px;}
+  .auxPanelGrid{
+    grid-template-columns:repeat(2, minmax(0,1fr));
+    gap:8px;
+  }
+  .auxPanelShell{
+    --aux-mid:20px;
+    --aux-row:44px;
+    --aux-gap:4px;
+    --aux-sep:14px;
+  }
+  .auxBoard{
+    padding:8px 6px 10px;
+    border-width:1px;
+    clip-path:polygon(5px 0, calc(100% - 5px) 0, 100% 5px, 100% calc(100% - 5px), calc(100% - 5px) 100%, 5px 100%, 0 calc(100% - 5px), 0 5px);
+  }
+  .auxBoardTop{
+    grid-template-columns:minmax(0,1fr) var(--aux-mid) minmax(0,1fr);
+    gap:6px;
+    margin-bottom:8px;
+  }
+  .auxArrow{
+    height:var(--aux-row);
+    font-size:0;
+  }
+  .auxTopKnob,.auxKnob{
+    width:20px;
+    height:20px;
+    box-shadow:
+      inset 0 1px 1px rgba(255,255,255,.08),
+      inset 0 -2px 3px rgba(0,0,0,.60),
+      inset 0 0 0 3px rgba(8,8,8,.76),
+      inset 0 0 0 5px rgba(28,28,28,.34),
+      0 0 0 1px rgba(0,0,0,.30);
+  }
+  .auxBoardBody{
+    grid-template-columns:minmax(0,1fr) var(--aux-mid) minmax(0,1fr);
+    gap:6px;
+  }
+  .auxBtnCol{
+    grid-template-rows:repeat(4, var(--aux-row)) var(--aux-sep) repeat(4, var(--aux-row));
+    gap:var(--aux-gap);
+  }
+  .auxKnobCol{
+    grid-template-rows:repeat(4, var(--aux-row)) var(--aux-sep) repeat(4, var(--aux-row));
+    gap:var(--aux-gap);
+  }
+  .auxGap,.auxKnobCol .auxGap{
+    height:var(--aux-sep);
+  }
+  .panelKey{
+    height:var(--aux-row);
+    min-height:var(--aux-row);
+    font-size:10px;
+    padding:3px 2px;
+    letter-spacing:.2px;
+    line-height:1.02;
+    border-width:1px;
+  }
+  .panelKey.smallText{font-size:9px;}
+  .panelKey.tinyText{font-size:7px; line-height:1.02;}
+}
+
+/* v12 shell hard-edge test */
+.sideCol, .centerZone{box-shadow:none !important;}
+.sideCol::after, .centerZone::after{display:none !important;}
+.sideCol.left{padding-left:22px !important; padding-right:6px !important; border-radius:1px 0 0 1px !important;}
+.sideCol.right{padding-left:6px !important; padding-right:22px !important; border-radius:0 1px 1px 0 !important;}
+.centerZone{border-radius:1px !important;}
+@media (max-width:640px){
+  .sideCol.left{padding-left:20px !important; padding-right:5px !important;}
+  .sideCol.right{padding-left:5px !important; padding-right:20px !important;}
+  .centerZone{border-radius:1px !important;}
+}
+
+
+
+/* SWITCH PADS Season 1/2 rebuilt narrow boards */
+.switchpadExactFrame{
+  padding-top:0;
+}
+.switchpadExactHead{
+  margin-bottom:12px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+}
+.switchpadExact{
+  width:min(100%, 540px);
+  margin:0 auto;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  gap:28px;
+}
+.switchpadExact .s12Board{
+  width:calc((100% - 28px)/2);
+  min-width:0;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,0) 14%),
+    linear-gradient(180deg,#434853 0%, #22262e 58%, #12151a 100%);
+  border:2px solid rgba(133,142,158,.36);
+  border-radius:18px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.07),
+    inset 0 0 0 1px rgba(255,255,255,.03),
+    inset 0 -18px 24px rgba(0,0,0,.18),
+    0 6px 14px rgba(0,0,0,.18);
+  padding:16px 12px 14px;
+}
+.switchpadExact .s12Grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px 6px;
+}
+.switchpadExact .s12Module{
+  min-width:0;
+  display:grid;
+  grid-template-rows:28px 57px;
+  gap:0;
+  background:linear-gradient(180deg,#121315 0%, #070708 100%);
+  border:1px solid #1a1c20;
+  border-radius:4px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.03),
+    inset 0 -1px 0 rgba(255,255,255,.02),
+    inset 0 0 0 1px rgba(0,0,0,.55);
+  padding:2px;
+}
+.switchpadExact .s12Lights{
+  background:linear-gradient(180deg,#050506 0%, #111216 100%);
+  border:1px solid #030304;
+  border-bottom:none;
+  border-radius:2px 2px 0 0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:16px;
+  padding:0 2px;
+  box-shadow:
+    inset 0 3px 5px rgba(0,0,0,.88),
+    inset 0 -1px 0 rgba(255,255,255,.04);
+}
+.switchpadExact .s12Lamp{
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  flex:0 0 14px;
+  pointer-events:none;
+}
+.switchpadExact .s12Lamp.green{
+  background:radial-gradient(circle at 35% 35%, #d7ffce 0%, #7eff6f 26%, #24cc41 56%, #0f5f18 100%);
+  box-shadow:0 0 10px rgba(80,255,110,.6), 0 0 18px rgba(50,220,80,.35);
+}
+.switchpadExact .s12Lamp.yellow{
+  background:radial-gradient(circle at 35% 35%, #fff6bf 0%, #ffe75f 28%, #d6b227 58%, #6a520c 100%);
+  box-shadow:0 0 10px rgba(255,232,95,.55), 0 0 18px rgba(224,190,50,.28);
+}
+.switchpadExact .s12Lamp.red{
+  background:radial-gradient(circle at 35% 35%, #ffd1d1 0%, #ff9f9f 20%, #b91624 44%, #3f0508 100%);
+  opacity:.32;
+  box-shadow:none;
+}
+.switchpadExact .s12Lamp.red.active{
+  opacity:1;
+  box-shadow:0 0 11px rgba(255,74,92,.96), 0 0 22px rgba(255,40,40,.48);
+}
+.switchpadExact .s12OverlayBtn{
+  position:static;
+  inset:auto;
+  width:100%;
+  height:53px;
+  min-height:53px;
+  align-self:start;
+  padding:4px 3px;
+  margin:4px 0 0;
+  border-radius:2px;
+  border:1px solid rgba(12,12,12,.92);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.18),
+    inset 0 -10px 12px rgba(0,0,0,.16),
+    0 1px 0 rgba(0,0,0,.58),
+    0 3px 6px rgba(0,0,0,.22);
+  background:#777;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  text-align:center;
+  transform:translateY(-1px);
+}
+.switchpadExact .s12OverlayBtn > span{
+  display:block;
+  width:100%;
+  font-weight:900;
+  line-height:.92;
+  letter-spacing:.01em;
+  overflow-wrap:anywhere;
+  font-size:17px;
+  text-rendering:geometricPrecision;
+  -webkit-font-smoothing:antialiased;
+  text-shadow:none;
+}
+.switchpadExact .s12OverlayBtn.small > span{ font-size:14px; }
+.switchpadExact .s12OverlayBtn.tiny > span{ font-size:12px; }
+.switchpadExact .s12OverlayBtn.grplHook > span{ font-size:16px; }
+.switchpadExact .s12OverlayBtn .nowrap{ white-space:nowrap; display:inline-block; }
+.switchpadExact .s12OverlayBtn .big{ font-size:1.9em; line-height:.8; margin-right:1px; }
+.switchpadExact .s12OverlayBtn .combo{ display:flex; align-items:flex-end; justify-content:center; gap:1px; }
+.switchpadExact .s12OverlayBtn .combo .tail{ font-size:.9em; line-height:1; }
+.switchpadExact .s12OverlayBtn.key-red{ color:#fff; background:linear-gradient(180deg,#da3345 0%, #c61d33 100%); }
+.switchpadExact .s12OverlayBtn.key-orange{ color:#141414; background:linear-gradient(180deg,#f39d28 0%, #e58417 100%); }
+.switchpadExact .s12OverlayBtn.key-green{ color:#111; background:linear-gradient(180deg,#39a44c 0%, #2c9541 100%); }
+.switchpadExact .s12OverlayBtn.key-green-white{ color:#fff; background:linear-gradient(180deg,#39a44c 0%, #2c9541 100%); }
+.switchpadExact .s12OverlayBtn.key-white{ color:#151515; background:linear-gradient(180deg,#f3f3f3 0%, #e8e8e8 100%); }
+.switchpadExact .s12OverlayBtn.glow{
+  filter:brightness(1.06);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.24),
+    inset 0 -12px 14px rgba(0,0,0,.10),
+    0 2px 0 rgba(0,0,0,.62),
+    0 0 10px rgba(255,255,255,.08),
+    0 6px 10px rgba(0,0,0,.24);
+}
+@media (max-width: 640px){
+  .switchpadExact{
+    width:min(100%, 94vw);
+    gap:18px;
+  }
+  .switchpadExact .s12Board{
+    width:calc((100% - 18px)/2);
+    padding:12px 8px 10px;
+    border-radius:14px;
+  }
+  .switchpadExact .s12Grid{ gap:8px 4px; }
+  .switchpadExact .s12Module{ grid-template-rows:24px 54px; padding:2px; }
+  .switchpadExact .s12Lights{ justify-content:center; gap:10px; padding:0 1px; }
+  .switchpadExact .s12Lamp{ width:13px; height:13px; flex-basis:13px; }
+  .switchpadExact .s12OverlayBtn{ height:44px; min-height:44px; padding:3px 2px; margin-top:4px; }
+  .switchpadExact .s12OverlayBtn > span{ font-size:13px; }
+  .switchpadExact .s12OverlayBtn.small > span{ font-size:11px; }
+  .switchpadExact .s12OverlayBtn.tiny > span{ font-size:10px; }
+  .switchpadExact .s12OverlayBtn.grplHook > span{ font-size:13px; }
+}
+
+
+
+
+/* GPS AUTO PURSUIT CONTROL */
+.gpsAutoPanel{
+  width:min(720px, 100%);
+  margin:14px auto 0;
+  padding:12px 14px 14px;
+  border:1px solid rgba(214,172,88,.55);
+  background:linear-gradient(180deg, rgba(20,20,20,.96), rgba(5,5,5,.98));
+  border-radius:10px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
+}
+.gpsAutoTitle{
+  color:var(--gold);
+  font-weight:900;
+  letter-spacing:.08em;
+  text-align:center;
+  font-size:16px;
+  margin-bottom:8px;
+}
+.gpsAutoGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:10px;
+  align-items:end;
+}
+.gpsField label{
+  display:block;
+  color:var(--dim);
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.06em;
+  margin-bottom:5px;
+  text-align:center;
+}
+.gpsInput{
+  width:100%;
+  height:38px;
+  border-radius:6px;
+  border:1px solid rgba(214,172,88,.65);
+  background:#050505;
+  color:#ffd36a;
+  font-weight:900;
+  font-size:18px;
+  text-align:center;
+  outline:none;
+  box-shadow:inset 0 2px 6px rgba(0,0,0,.85);
+}
+.gpsToggleBtn{
+  width:100%;
+  height:38px;
+  border-radius:6px;
+  border:1px solid rgba(160,40,40,.8);
+  background:linear-gradient(180deg,#332020,#130808);
+  color:#ffb7a8;
+  font-size:14px;
+  font-weight:900;
+  letter-spacing:.08em;
+  cursor:pointer;
+}
+.gpsToggleBtn.on{
+  border-color:rgba(255,188,70,.9);
+  background:linear-gradient(180deg,#f0a52e,#b05a11);
+  color:#111;
+  box-shadow:0 0 13px rgba(255,126,20,.35);
+}
+.audioSourceRow{
+  width:min(720px, 100%);
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.audioSourceBtn{
+  width:100%;
+  height:42px;
+  border-radius:6px;
+  border:1px solid rgba(214,172,88,.55);
+  background:linear-gradient(180deg,#1b160b,#090909);
+  color:var(--gold);
+  font-size:14px;
+  font-weight:900;
+  letter-spacing:.08em;
+  cursor:pointer;
+  transition:.12s;
+}
+.audioSourceBtn:disabled{
+  border-color:#2e2e2e;
+  color:var(--dim);
+  cursor:default;
+  box-shadow:none;
+  filter:saturate(.7);
+}
+.audioSourceBtn.active{
+  border:2px solid var(--red);
+  color:#fff0d0;
+  background:linear-gradient(180deg,#4a190d,#160605);
+  box-shadow:0 0 14px rgba(255,0,0,.42), 0 0 26px rgba(255,0,0,.16);
+}
+.audioSourceHint{
+  width:100%;
+  text-align:center;
+  color:var(--dim);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.05em;
+  margin-top:8px;
+}
+.audioChannelFrame{
+  padding-top:12px;
+  padding-bottom:12px;
+}
+.gpsAutoStatus{
+  margin-top:8px;
+  text-align:center;
+  color:#cfcfcf;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.03em;
+}
+.gpsAutoStatus.warn{ color:#ff9a74; }
+.gpsAutoStatus.ok{ color:#ffd36a; }
+@media (max-width:640px){
+  .gpsAutoGrid{ grid-template-columns:1fr; gap:8px; }
+  .gpsAutoPanel{ padding:10px; }
+  .audioSourceRow{ grid-template-columns:1fr 1fr; gap:8px; }
+  .audioSourceBtn{ height:40px; font-size:13px; }
+}
+
+</style>
+</head>
+
+<body>
+<div class="app">
+
+  <div class="frame center">
+    <span class="pill">
+      <img class="appIcon" src="./app_icon.png" alt="app icon">
+      <span>VOICEBOX REMOTE CONTROLER</span>
+    </span>
+  </div>
+
+  <div class="frame col">
+    <div class="row" style="justify-content:space-between; max-width:860px;">
+      <div class="h2">SCANNER</div>
+      <div class="h2" id="scannerState" style="color:var(--dim)">OFFLINE</div>
+    </div>
+    <div class="scanbar" id="scanbar"></div>
+    <div class="sub center" id="scanText">CONNECT TO ENABLE SCAN SEQUENCE</div>
+  </div>
+
+  <div class="frame col">
+    <div class="kv">
+      <div class="line" id="statusText">LINK: NOT CONNECTED</div>
+      <div class="line" id="bleText">BLE: UNKNOWN</div>
+      <div class="line" id="deviceText">DEVICE: (none)</div>
+      <div class="line" id="idText">VOICEBOX ACCESS ID: -</div>
+      <div class="line" id="accessText" style="color:var(--dim)">TACTICAL ACCESS: NOT CHECKED</div>
+      <div class="line" id="displayModeStatus">DISPLAY MODE: -</div>
+      <div class="line" id="vehicleModeStatus">PANP MODE: -</div>
+      <div class="line" id="gainStatus">GAIN: -</div>
+      <div class="line dim" id="notifyStatus">STATE: -</div>
+    </div>
+
+    <div style="height:10px;"></div>
+
+    <div class="row">
+      <button id="btnScan" class="btn btnSmall"><span class="btnTopIcon">◉</span><span>SCAN</span></button>
+      <button id="btnConnect" class="btn btnSmall" disabled><span class="btnTopIcon">◆</span><span>CONNECT</span></button>
+      <button id="btnDisconnect" class="btn btnSmall" disabled style="border-color:var(--red);"><span class="btnTopIcon">✕</span><span>DISCONNECT</span></button>
+    </div>
+
+    <div class="mini center" style="margin-top:10px;">
+      Steps: Press SCAN → Select device (KITT_REMOTE_SYSTEM) → Access ID will be checked → Press CONNECT
+    </div>
+  </div>
+
+  <div class="frame col">
+    <div class="h2">POWER SEQUENCE</div>
+    <div class="sub">STARTUP / SHUTDOWN</div>
+    <div style="height:10px;"></div>
+
+    <div class="row" style="max-width:920px; justify-content:space-between;">
+      <button id="btnStartup" class="btn toolBtn greenTone" style="max-width:420px; width:min(420px,48%);">
+        <div class="label">STARTUP</div>
+      </button>
+      <button id="btnShutdown" class="btn toolBtn redTone" style="max-width:420px; width:min(420px,48%); border-color:var(--red);">
+        <div class="label">SHUTDOWN</div>
+      </button>
+    </div>
+  </div>
+
+  <div class="frame col">
+    <div class="h2">TACTICAL LAMP CONTROL</div>
+    <div class="sub">COUNTDOWN • BOX • PANP MODE • DISPLAY</div>
+    <div style="height:12px;"></div>
+
+    <div class="tacticalWrap">
+      <div class="tacticalPanel">
+
+        <div class="stepStack">
+          <button class="stepBtn red" id="step1Btn">POWER</button>
+          <button class="stepBtn orange" id="step2Btn">MIN RPM</button>
+          <button class="stepBtn yellow" id="step3Btn">FUEL ON</button>
+          <button class="stepBtn yellow" id="step4Btn">IGNITORS</button>
+        </div>
+
+        <div class="tacticalBody">
+          <div class="sideCol left">
+            <button class="sideBtn" data-box="2" data-side="L">AIR</button>
+            <button class="sideBtn" data-box="3" data-side="L">OIL</button>
+            <button class="sideBtn red" data-box="4" data-side="L">P1</button>
+            <button class="sideBtn red" data-box="5" data-side="L">P2</button>
+          </div>
+
+          <div class="centerZone seaCenterZone">
+            <button id="bigModeZone" class="bigModeZone" title="Next Display Mode"></button>
+
+            <div class="bottomModes">
+              <div class="leftIndicators" aria-hidden="true">
+                <div class="smallIndicator" id="indNor"></div>
+                <div class="smallIndicator" id="indAuto"></div>
+                <div class="smallIndicator" id="indSpm"></div>
+              </div>
+
+              <div class="modeLamps">
+                <button class="modeLamp modeAuto" id="nanoAutoBtn">AUTO<br>CRUISE</button>
+                <button class="modeLamp modeNor" id="nanoNorBtn">NORMAL<br>CRUISE</button>
+                <button class="modeLamp modeSpm" id="nanoSpmBtn">PURSUIT</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="sideCol right">
+            <button class="sideBtn" data-box="2" data-side="R">S1</button>
+            <button class="sideBtn" data-box="3" data-side="R">S2</button>
+            <button class="sideBtn red" data-box="4" data-side="R">P3</button>
+            <button class="sideBtn red" data-box="5" data-side="R">P4</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="gpsAutoPanel" id="gpsAutoPanel">
+      <div class="gpsAutoTitle">GPS AUTO MODE</div>
+      <div class="gpsAutoGrid">
+        <div class="gpsField">
+          <label for="gpsLowInput">LOW SPEED / NORMAL</label>
+          <input id="gpsLowInput" class="gpsInput" type="number" inputmode="decimal" min="0" max="300" step="1" value="55">
+        </div>
+        <div class="gpsField">
+          <label for="gpsHighInput">HIGH SPEED / PURSUIT</label>
+          <input id="gpsHighInput" class="gpsInput" type="number" inputmode="decimal" min="1" max="300" step="1" value="60">
+        </div>
+        <div class="gpsField">
+          <label>GPS SWITCH</label>
+          <button id="gpsAutoToggle" class="gpsToggleBtn" type="button">GPS AUTO OFF</button>
+        </div>
+      </div>
+      <div class="gpsAutoStatus" id="gpsAutoStatus">GPS AUTO: OFF</div>
+    </div>
+
+</div>
+
+  <div class="frame col audioChannelFrame">
+    <div class="h2">AUDIO INPUT CHANNEL</div>
+    <div class="sub">SELECT INPUT SOURCE</div>
+    <div style="height:10px;"></div>
+    <div class="audioSourceRow" aria-label="Audio input channel selection">
+      <button id="btnAudioLine" class="audioSourceBtn" type="button" disabled>LINE</button>
+      <button id="btnAudioMic" class="audioSourceBtn" type="button" disabled>MIC</button>
+    </div>
+    <div class="audioSourceHint" id="audioSourceStatus">AUDIO SOURCE: -</div>
+  </div>
+
+  <div class="frame col">
+    <div class="modeShell">
+      <div class="center"><div class="modeTitleHead">MODE SELECT</div></div>
+      <div class="center"><div class="modeSubHead">PUSH BUTTON TO SWITCH</div></div>
+
+      <div class="modeGrid">
+        <button class="modeCard" data-mode="1"><div class="modeCardIcon">●</div><div class="modeCardTitle">KITT</div><div class="modeCardSub">MODE 1</div></button>
+        <button class="modeCard" data-mode="2"><div class="modeCardIcon">≡</div><div class="modeCardTitle">KARR</div><div class="modeCardSub">MODE 2</div></button>
+        <button class="modeCard" data-mode="3"><div class="modeCardIcon">▲</div><div class="modeCardTitle">PILOT<br>KITT</div><div class="modeCardSub">MODE 3</div></button>
+        <button class="modeCard" data-mode="4"><div class="modeCardIcon">○</div><div class="modeCardTitle">PILOT<br>KARR</div><div class="modeCardSub">MODE 4</div></button>
+        <button class="modeCard" data-mode="6"><div class="modeCardIcon">■</div><div class="modeCardTitle">BLUE<br>KITT</div><div class="modeCardSub">MODE 6</div></button>
+        <button class="modeCard" data-mode="7"><div class="modeCardIcon">◆</div><div class="modeCardTitle">GREEN<br>KARR</div><div class="modeCardSub">MODE 7</div></button>
+        <button class="modeCard" data-mode="5"><div class="modeCardIcon">⚠</div><div class="modeCardTitle">DAMAGE<br>KITT</div><div class="modeCardSub">MODE 5</div></button>
+        <button class="modeCard" data-mode="8"><div class="modeCardIcon">🔥</div><div class="modeCardTitle">FLAME<br>KITT</div><div class="modeCardSub">MODE 8</div></button>
+        <button class="modeCard big" data-mode="9"><div class="modeCardIcon">▂▅█</div><div class="modeCardTitle">SPECTRUM</div><div class="modeCardSub">MODE 9</div></button>
+        <button class="modeCard big" data-mode="10"><div class="modeCardIcon">≋</div><div class="modeCardTitle">ANALYSIS</div><div class="modeCardSub">MODE 10</div></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="frame col">
+    <div class="h2">GAIN CONTROL</div>
+    <div class="sub">VOICE DISPLAY SENSITIVITY ＋ or －</div>
+    <div style="height:10px;"></div>
+
+    <div class="row" style="max-width:920px;">
+      <button id="btnGainUp" class="btn" style="max-width:420px; width:min(420px,100%);" disabled><div class="label">GAIN +</div></button>
+      <button id="btnGainDown" class="btn" style="max-width:420px; width:min(420px,100%);" disabled><div class="label">GAIN -</div></button>
+    </div>
+  </div>
+
+  <div class="frame col">
+    <div class="h2">EXTERNAL COMMANDS</div>
+    <div class="sub">MODE OFF • COUNTDOWN OFF • BOX OFF • ALL OFF • DTMF</div>
+    <div style="height:12px;"></div>
+
+    <div class="toolsGrid">
+      <button id="btnModeOff"      class="btn toolBtn yellowTone">MODE OFF</button>
+      <button id="btnCountdownOff" class="btn toolBtn yellowTone">COUNTDOWN OFF</button>
+      <button id="btnBoxOff"       class="btn toolBtn yellowTone">BOX OFF</button>
+      <button id="btnAllOff"       class="btn toolBtn yellowTone">ALL OFF</button>
+      <button id="btnDTMF7"        class="btn toolBtn yellowTone">DTMF 7 / 400ms</button>
+      <button id="btnDTMF8"        class="btn toolBtn yellowTone">DTMF 8 / 400ms</button>
+    </div>
+
+    <div style="height:14px;"></div>
+
+    <div class="toolInputRow">
+      <input id="dtmfInput" class="toolInput" type="text" value="DTMF=8,400" placeholder="例如：DTMF=8,400">
+      <button id="btnSendCustom" class="btn btnSmall" style="width:140px;">SEND CMD</button>
+    </div>
+  </div>
+
+
+  <div class="frame col">
+    <div class="h2">DTMF KEYPAD</div>
+    <div class="sub">16 TONES</div>
+    <div style="height:12px;"></div>
+
+    <div class="dtmfPad">
+      <button class="dtmfKey" data-dtmf-key="1">1</button>
+      <button class="dtmfKey" data-dtmf-key="2">2</button>
+      <button class="dtmfKey" data-dtmf-key="3">3</button>
+      <button class="dtmfKey" data-dtmf-key="A">A</button>
+
+      <button class="dtmfKey" data-dtmf-key="4">4</button>
+      <button class="dtmfKey" data-dtmf-key="5">5</button>
+      <button class="dtmfKey" data-dtmf-key="6">6</button>
+      <button class="dtmfKey" data-dtmf-key="B">B</button>
+
+      <button class="dtmfKey" data-dtmf-key="7">7</button>
+      <button class="dtmfKey" data-dtmf-key="8">8</button>
+      <button class="dtmfKey" data-dtmf-key="9">9</button>
+      <button class="dtmfKey" data-dtmf-key="C">C</button>
+
+      <button class="dtmfKey" data-dtmf-key="*">*</button>
+      <button class="dtmfKey" data-dtmf-key="0">0</button>
+      <button class="dtmfKey" data-dtmf-key="#">#</button>
+      <button class="dtmfKey" data-dtmf-key="D">D</button>
+    </div>
+
+    <div class="dtmfHint">WEB KEYS ARE AUTO-MAPPED BY ESP32 TO NANO DTMF INDEX 0 TO 15</div>
+  </div>
+
+
+
+  
+  <div class="frame col switchpadExactFrame">
+    <div class="switchpadExactHead">
+      <div class="h2">SWITCH PADS</div>
+      <div class="sub">PRESS BUTTON TO ENABLE</div>
+      <div style="height:12px;"></div>
+    </div>
+    <div class="switchpadExact" aria-label="Season 1 and 2 switch pads">
+      <div class="s12Board" aria-label="Left switch pad board">
+        <div class="s12Grid">
+          <div class="s12Module"><div class="s12Lights"><span class="s12Lamp green"></span><span class="s12Lamp yellow"></span><span class="s12Lamp red"></span></div><button class="panelKey s12OverlayBtn key-red" aria-label="ROCKET BOOST" title="ROCKET BOOST" data-audio="L1-FX beep turbo boost.mp3"><span>ROCKET<br>BOOST</span></button></div>
+          <div class="s12Module"><div class="s12Lights"><span class="s12Lamp green"></span><span class="s12Lamp yellow"></span><span class="s12Lamp red"></span></div><button class="panelKey s12OverlayBtn key-orange" aria-label="SKI MODE" title="SKI MODE" data-audio="L2-Ski Mode.wav"><span>SKI<br>MODE</span></button></div>
+          <div class="s12Module"><div class="s12Lights"><span class="s12Lamp green"></span><span class="s12Lamp yellow"></span><span class="s12Lamp red"></span></div><button class="panelKey s12OverlayBtn key-white" aria-label="LASER" title="LASER" data-audio="L3-FX LASER.mp3"><span class="nowrap">LASER</span></button></div>
+          <div class="s12Module"><div class="s12Lights"><span class="s12Lamp green"></span><span class="s12Lamp yellow"></span><span class="s12Lamp red"></span></div><button class="panelKey s12OverlayBtn key-orange" aria-label="P AUX" title="P AUX" data-audio="L4-FX in out.mp3"><span><span class="combo"><span class="big">P</span><span class="tail">AUX</span></span></span></button></div>
+          <div class="s12Module"><div class="s12Lights"><span class="s12Lamp green"></span><span class="s12Lamp yellow"></span><span class="s12Lamp red"></span></div><button class="panelKey s12OverlayBtn key-green-white" aria-label="AUTO ROOF L" title="AUTO ROOF L" data-audio="L5-Auto roof.mp3"><span>AUTO<br>ROOF<br>L</span></button></div>
+          <div class="s12Module"><div class="s12Lights"><span class="s12Lamp green"></span><span class="s12Lamp yellow"></span><span class="s12Lamp red"></span></div><button class="panelKey s12OverlayBtn key-green grplHook" aria-label="GRPL HOOK" title="GRPL HOOK" data-audio="L6-FX shoot grappling hook.mp3"><span>GRPL<br>HOOK</span></button></div>
+          <div class="s12Module"><div class="s12Lights"><span class="s12Lamp green"></span><span class="s12Lamp yellow"></span><span class="s12Lamp red"></span></div><button class="panelKey s12OverlayBtn key-green" aria-label="OIL SLICK" title="OIL SLICK" data-audio="L7-FX scanner beeps.mp3"><span>OIL<br>SLICK</span></button></div>
+          <div class="s12Module"><div class="s12Lights"><span class="s12Lamp green"></span><span class="s12Lamp yellow"></span><span class="s12Lamp red"></span></div><button class="panelKey s12OverlayBtn key-green-white small" aria-label="SMOKE RELEASE" title="SMOKE RELEASE" data-audio="L8-FX compute.39.mp3"><span>SMOKE<br>RELEASE</span></button></div>
+          <div class="s12Module"><div class="s12Lights"><span class="s12Lamp green"></span><span class="s12Lamp yellow"></span><span class="s12Lamp red"></span></div><button class="panelKey s12OverlayBtn key-red" aria-label="EJECT L" title="EJECT L" data-audio="L9-Eject.mp3"><span>EJECT<br>L</span></button></div>
+          <div class="s12Module"><div class="s12Lights"><span class="s12Lamp green"></span><span class="s12Lamp yellow"></span><span class="s12Lamp red"></span></div><button class="panelKey s12OverlayBtn key-red small" aria-label="MICRO JAM" title="MICRO JAM" data-audio="L10-FX scanner beeps microjam.mp3"><span>MICRO<br>JAM</span></button></div>
+        </div>
+      </div>
+      <div class="s12Board" aria-label="Right switch pad board">
+        <div class="s12Grid">
+          <div class="s12Module"><div class="s12Lights"><span class="s12Lamp green"></span><span class="s12Lamp yellow"></span><span class="s12Lamp red"></span></div><button class="panelKey s12OverlayBtn key-red" aria-label="TURBO BOOST" title="TURBO BOOST" data-audio="R1-Turbo Boost.mp3"><span>TURBO<br>BOOST</span></button></div>
+          <div class="s12Module"><div class="s12Lights"><span class="s12Lamp green"></span><span class="s12Lamp yellow"></span><span class="s12Lamp red"></span></div><button class="panelKey s12OverlayBtn key-white" aria-label="6 RM" title="6 RM" data-audio="R2-OPEN DOOR.mp3"><span class="nowrap"><span class="combo"><span class="big">6</span><span class="tail">RM</span></span></span></button></div>
+          <div class="s12Module"><div class="s12Lights"><span class="s12Lamp green"></span><span class="s12Lamp yellow"></span><span class="s12Lamp red"></span></div><button class="panelKey s12OverlayBtn key-white" aria-label="7 DLA" title="7 DLA" data-audio="R3-Scan area.mp3"><span class="nowrap"><span class="combo"><span class="big">7</span><span class="tail">DLA</span></span></span></button></div>
+          <div class="s12Module"><div class="s12Lights"><span class="s12Lamp green"></span><span class="s12Lamp yellow"></span><span class="s12Lamp red"></span></div><button class="panelKey s12OverlayBtn key-orange" aria-label="P ENG" title="P ENG" data-audio="R4-Turbo Turbo Boost.mp3"><span class="nowrap"><span class="combo"><span class="big">P</span><span class="tail">ENG</span></span></span></button></div>
+          <div class="s12Module"><div class="s12Lights"><span class="s12Lamp green"></span><span class="s12Lamp yellow"></span><span class="s12Lamp red"></span></div><button class="panelKey s12OverlayBtn key-orange" aria-label="8 PL1" title="8 PL1" data-audio="R5-Scan area2.mp3"><span class="nowrap"><span class="combo"><span class="big">8</span><span class="tail">PL1</span></span></span></button></div>
+          <div class="s12Module"><div class="s12Lights"><span class="s12Lamp green"></span><span class="s12Lamp yellow"></span><span class="s12Lamp red"></span></div><button class="panelKey s12OverlayBtn key-green-white" aria-label="AUTO ROOF R" title="AUTO ROOF R" data-audio="R6-Auto roof.mp3"><span>AUTO<br>ROOF<br>R</span></button></div>
+          <div class="s12Module"><div class="s12Lights"><span class="s12Lamp green"></span><span class="s12Lamp yellow"></span><span class="s12Lamp red"></span></div><button class="panelKey s12OverlayBtn key-orange small" aria-label="SILENT MODE" title="SILENT MODE" data-audio="R7-Silent alarm Michael.mp3"><span>SILENT<br>MODE</span></button></div>
+          <div class="s12Module"><div class="s12Lights"><span class="s12Lamp green"></span><span class="s12Lamp yellow"></span><span class="s12Lamp red"></span></div><button class="panelKey s12OverlayBtn key-white" aria-label="P IND" title="P IND" data-audio="R8-FX radar.mp3"><span class="nowrap"><span class="combo"><span class="big">P</span><span class="tail">IND</span></span></span></button></div>
+          <div class="s12Module"><div class="s12Lights"><span class="s12Lamp green"></span><span class="s12Lamp yellow"></span><span class="s12Lamp red"></span></div><button class="panelKey s12OverlayBtn key-green-white" aria-label="H6" title="H6" data-audio="R9-KKScan.mp3"><span class="nowrap"><span class="combo"><span class="tail">H</span><span class="big">6</span></span></span></button></div>
+          <div class="s12Module"><div class="s12Lights"><span class="s12Lamp green"></span><span class="s12Lamp yellow"></span><span class="s12Lamp red"></span></div><button class="panelKey s12OverlayBtn key-red" aria-label="EJECT R" title="EJECT R" data-audio="R10-Eject.mp3"><span>EJECT<br>R</span></button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="footer">KNIGHT RIDER WEB REMOTE CONTROL SYSTEM</div>
+</div>
+
+<audio id="sScan" src="./scan.mp3" preload="auto"></audio>
+<audio id="sConn" src="./connect.mp3" preload="auto"></audio>
+<audio id="sBtn"  src="./button.mp3" preload="auto"></audio>
+<audio id="panelPlayer" preload="none"></audio>
+
+<script>
+(() => {
+  const SVC_UUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
+  const RX_UUID  = "6e400002-b5a3-f393-e0a9-e50e24dcca9e";
+  const TX_UUID  = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
+
+  // Same Google Apps Script used by the VoiceBox order recorder.
+  const TACTICAL_ACCESS_API_URL =
+    "https://script.google.com/macros/s/AKfycbxpWNAiRfTEM-W4od29iHQHfEAkZhG6YDvnA5ESTLRmNOeED9WUBTusLZh86q2wa41gag/exec";
+
+  const $ = (id)=>document.getElementById(id);
+
+  const btnScan       = $("btnScan");
+  const btnConnect    = $("btnConnect");
+  const btnDisconnect = $("btnDisconnect");
+  const btnGainUp     = $("btnGainUp");
+  const btnGainDown   = $("btnGainDown");
+  const btnAudioLine  = $("btnAudioLine");
+  const btnAudioMic   = $("btnAudioMic");
+  const audioSourceStatus = $("audioSourceStatus");
+
+  const statusText         = $("statusText");
+  const bleText            = $("bleText");
+  const deviceText         = $("deviceText");
+  const idText             = $("idText");
+  const accessText         = $("accessText");
+  const scanText           = $("scanText");
+  const scannerState       = $("scannerState");
+  const displayModeStatus  = $("displayModeStatus");
+  const vehicleModeStatus  = $("vehicleModeStatus");
+  const gainStatus         = $("gainStatus");
+  const notifyStatus       = $("notifyStatus");
+  const bigModeZone        = $("bigModeZone");
+
+  const sScan = $("sScan");
+  const sConn = $("sConn");
+  const sBtn  = $("sBtn");
+  const panelPlayer = $("panelPlayer");
+
+  let device = null;
+  let server = null;
+  let rxChar = null;
+  let txChar = null;
+  let accessAuthorized = false;
+
+  const ui = {
+    connected: false,
+    displayMode: null,
+    gain: null,
+    audioMode: null,
+    step: [false,false,false,false],
+    boxL: [false,false,false,false,false],
+    boxR: [false,false,false,false,false],
+    vehicleMode: null,
+    vuL: 0,
+    vuM: 0,
+    vuR: 0,
+    hasVu: false,
+    panelCooling: false,
+    mode9Hold: Array(12).fill(0),
+    mode9LastTs: 0
+  };
+
+  function playOnce(audio){
+    try{
+      audio.pause();
+      audio.currentTime = 0;
+      const p = audio.play();
+      if (p && p.catch) p.catch(()=>{});
+    }catch(_){}
+  }
+
+
+  const PANEL_AUDIO_BASE = "./";
+
+  function playPanelClip(clip){
+    if (!clip || !panelPlayer) return;
+    try{
+      panelPlayer.pause();
+      panelPlayer.currentTime = 0;
+      const clipPath = /\.(mp3|wav|ogg|m4a)$/i.test(clip) ? clip : `${clip}.mp3`;
+      panelPlayer.src = `${PANEL_AUDIO_BASE}${clipPath}`;
+      const p = panelPlayer.play();
+      if (p && p.catch) p.catch(()=>{});
+    }catch(_){}
+  }
+
+  function cmdForDisplayMode(m){
+    return (m === 10) ? "0" : String(m);
+  }
+
+  function buildBoxHalfCmd(side, idx, isOn){
+    const n = idx + 1;
+    return `BOX${n}${side}${isOn ? "ON" : "OFF"}`;
+  }
+
+  async function writeChar(c){
+    if (!ui.connected || !rxChar) return;
+    const data = new TextEncoder().encode(c);
+    try{
+      if (typeof rxChar.writeValueWithoutResponse === "function"){
+        await rxChar.writeValueWithoutResponse(data);
+        return;
+      }
+    } catch(_) {}
+    try{
+      await rxChar.writeValue(data);
+    } catch(_) {}
+  }
+
+  async function writeLine(line){
+    if (!ui.connected || !rxChar) return;
+    const text = line.endsWith("\n") ? line : line + "\n";
+    const data = new TextEncoder().encode(text);
+    try{
+      if (typeof rxChar.writeValueWithoutResponse === "function"){
+        await rxChar.writeValueWithoutResponse(data);
+        return;
+      }
+    } catch(_) {}
+    try{
+      await rxChar.writeValue(data);
+    } catch(_) {}
+  }
+
+  async function writeLinesBulk(lines){
+    if (!ui.connected || !rxChar || !Array.isArray(lines) || !lines.length) return;
+    const payload = lines.map(line => line.endsWith("\n") ? line : line + "\n").join("");
+    const data = new TextEncoder().encode(payload);
+    try{
+      if (typeof rxChar.writeValueWithoutResponse === "function"){
+        await rxChar.writeValueWithoutResponse(data);
+        return;
+      }
+    } catch(_) {}
+    try{
+      await rxChar.writeValue(data);
+    } catch(_) {}
+  }
+
+
+  function setAccessStatus(text, kind = ""){
+    if (!accessText) return;
+    accessText.textContent = text;
+    if (kind === "ok") accessText.style.color = "#9cff9c";
+    else if (kind === "warn") accessText.style.color = "#ff9a74";
+    else if (kind === "checking") accessText.style.color = "var(--gold)";
+    else accessText.style.color = "var(--dim)";
+  }
+
+  function checkTacticalAccess(voiceBoxId){
+    return new Promise((resolve, reject)=>{
+      if (!TACTICAL_ACCESS_API_URL){
+        reject(new Error("Access API is not configured"));
+        return;
+      }
+
+      const callbackName =
+        "__krtwAccess_" +
+        Date.now() + "_" +
+        Math.random().toString(36).slice(2);
+
+      const script = document.createElement("script");
+      let done = false;
+
+      const cleanup = ()=>{
+        if (done) return;
+        done = true;
+        clearTimeout(timer);
+        try{ delete window[callbackName]; }catch(_){ window[callbackName] = undefined; }
+        try{ script.remove(); }catch(_){}
+      };
+
+      window[callbackName] = (data)=>{
+        cleanup();
+        resolve(data || {});
+      };
+
+      const timer = setTimeout(()=>{
+        cleanup();
+        reject(new Error("Access check timeout"));
+      }, 10000);
+
+      script.onerror = ()=>{
+        cleanup();
+        reject(new Error("Access check failed"));
+      };
+
+      const url = new URL(TACTICAL_ACCESS_API_URL);
+      url.searchParams.set("action", "check");
+      url.searchParams.set("id", voiceBoxId || "");
+      url.searchParams.set("callback", callbackName);
+
+      script.src = url.toString();
+      document.head.appendChild(script);
+    });
+  }
+
+  async function refreshTacticalAccess(){
+    accessAuthorized = false;
+    btnConnect.disabled = true;
+
+    if (!device || !device.id){
+      setAccessStatus("TACTICAL ACCESS: NO VOICEBOX ID", "warn");
+      return false;
+    }
+
+    setAccessStatus("TACTICAL ACCESS: CHECKING...", "checking");
+
+    try{
+      const result = await checkTacticalAccess(device.id);
+      accessAuthorized = !!(result && result.ok && result.authorized);
+
+      if (accessAuthorized){
+        setAccessStatus("TACTICAL ACCESS: ACTIVATED", "ok");
+        btnConnect.disabled = false;
+        return true;
+      }
+
+      setAccessStatus(
+        "TACTICAL ACCESS: NOT ACTIVATED — PURCHASE REQUIRED",
+        "warn"
+      );
+      btnConnect.disabled = true;
+      return false;
+
+    }catch(err){
+      accessAuthorized = false;
+      setAccessStatus(
+        "TACTICAL ACCESS: CHECK FAILED — PLEASE TRY AGAIN",
+        "warn"
+      );
+      btnConnect.disabled = true;
+      return false;
+    }
+  }
+
+  const scanbar = $("scanbar");
+  let scanPos = 0;
+  let scanDir = 1;
+  let scanTimer = null;
+
+  for (let i = 0; i < 8; i++){
+    const d = document.createElement("div");
+    d.className = "led";
+    scanbar.appendChild(d);
+  }
+
+  function renderScanner(){
+    const leds = [...scanbar.children];
+    leds.forEach(d => d.className = "led");
+    if (!ui.connected) return;
+    for (let i = 0; i < 8; i++){
+      const dist = Math.abs(i - scanPos);
+      if (dist === 0) leds[i].classList.add("on");
+      else if (dist === 1) leds[i].classList.add("tail1");
+      else if (dist === 2) leds[i].classList.add("tail2");
+    }
+  }
+
+  function startScanner(){
+    stopScanner();
+    scanPos = 0;
+    scanDir = 1;
+    renderScanner();
+    scanTimer = setInterval(() => {
+      scanPos += scanDir;
+      if (scanPos >= 7){ scanPos = 7; scanDir = -1; }
+      else if (scanPos <= 0){ scanPos = 0; scanDir = 1; }
+      renderScanner();
+    }, 150);
+  }
+
+  function stopScanner(){
+    if (scanTimer){ clearInterval(scanTimer); scanTimer = null; }
+    [...scanbar.children].forEach(d => d.className = "led");
+  }
+
+  function renderDisplayModeCards(){
+    document.querySelectorAll(".modeCard").forEach(card=>{
+      card.classList.toggle("active", Number(card.dataset.mode) === ui.displayMode);
+    });
+  }
+
+  function renderSteps(){
+    ["step1Btn","step2Btn","step3Btn","step4Btn"].forEach((id, idx)=>{
+      $(id).classList.toggle("lit", ui.step[idx]);
+    });
+  }
+
+  function renderBoxes(){
+    document.querySelectorAll(".sideBtn").forEach(btn=>{
+      const idx = Number(btn.dataset.box) - 1;
+      const side = btn.dataset.side;
+      const isOn = side === "L" ? ui.boxL[idx] : ui.boxR[idx];
+
+      btn.classList.toggle("lit", isOn);
+
+      if (btn.classList.contains("red")) {
+        btn.classList.toggle("redGlow", isOn);
+        btn.classList.remove("yellowGlow");
+      } else {
+        btn.classList.toggle("yellowGlow", isOn);
+        btn.classList.remove("redGlow");
+      }
+    });
+  }
+
+  function renderVehicleMode(){
+    const norBtn  = $("nanoNorBtn");
+    const autoBtn = $("nanoAutoBtn");
+    const spmBtn  = $("nanoSpmBtn");
+    const indNor  = $("indNor");
+    const indAuto = $("indAuto");
+    const indSpm  = $("indSpm");
+
+    [norBtn, autoBtn, spmBtn].forEach(btn=>{
+      if (!btn) return;
+      btn.classList.remove("activeNor", "activeAuto", "activeSpm");
+    });
+    [indNor, indAuto, indSpm].forEach(ind=>ind && ind.classList.remove("active"));
+
+    if (ui.vehicleMode === "NOR"){
+      if (norBtn) norBtn.classList.add("activeNor");
+      if (indNor) indNor.classList.add("active");
+    } else if (ui.vehicleMode === "AUTO"){
+      if (autoBtn) autoBtn.classList.add("activeAuto");
+      if (indAuto) indAuto.classList.add("active");
+    } else if (ui.vehicleMode === "SPM"){
+      if (spmBtn) spmBtn.classList.add("activeSpm");
+      if (indSpm) indSpm.classList.add("active");
+    }
+  }
+
+  function syncBoxBits(bits10){
+    if (!Array.isArray(bits10) || bits10.length !== 10) return;
+    ui.boxL = [bits10[0], bits10[2], bits10[4], bits10[6], bits10[8]];
+    ui.boxR = [bits10[1], bits10[3], bits10[5], bits10[7], bits10[9]];
+  }
+
+  function setBarsHtml(){
+    bigModeZone.innerHTML = `
+      <div class="barsArea">
+        <div class="barCol side" id="vuColL">${Array.from({length:16}, ()=>'<div class="slot off"></div>').join('')}</div>
+        <div class="barCol mid" id="vuColM">${Array.from({length:16}, ()=>'<div class="slot off"></div>').join('')}</div>
+        <div class="barCol side" id="vuColR">${Array.from({length:16}, ()=>'<div class="slot off"></div>').join('')}</div>
+      </div>
+    `;
+    bigModeZone.dataset.render = "bars";
+  }
+
+  function setPanelHtml(){
+    bigModeZone.innerHTML = `
+      <div class="panelLampWrap">
+        <div class="panelLamp" id="panelLamp"></div>
+      </div>
+    `;
+    bigModeZone.dataset.render = "panel";
+  }
+
+  function setSpectrumHtml(){
+    bigModeZone.innerHTML = `
+      <div style="width:100%;height:100%;padding:0;display:flex;align-items:center;justify-content:center;">
+        <canvas id="specCanvas" width="176" height="246" style="width:100%;height:100%;border-radius:8px;background:#050505;"></canvas>
+      </div>
+    `;
+    bigModeZone.dataset.render = "spectrum";
+  }
+
+  function setWaveformHtml(){
+    bigModeZone.innerHTML = `
+      <div style="width:100%;height:100%;padding:0;display:flex;align-items:center;justify-content:center;">
+        <canvas id="waveCanvas" width="176" height="246" style="width:100%;height:100%;border-radius:8px;background:#050505;"></canvas>
+      </div>
+    `;
+    bigModeZone.dataset.render = "waveform";
+  }
+
+  function ensureBars(){
+    if (bigModeZone.dataset.render !== "bars") setBarsHtml();
+  }
+
+  function ensurePanel(){
+    if (bigModeZone.dataset.render !== "panel") setPanelHtml();
+  }
+
+  function ensureSpectrum(){
+    if (bigModeZone.dataset.render !== "spectrum") setSpectrumHtml();
+  }
+
+  function ensureWaveform(){
+    if (bigModeZone.dataset.render !== "waveform") setWaveformHtml();
+  }
+
+  function getCol(id){ return $(id); }
+
+  function clearColumn(colEl){
+    if (!colEl) return;
+    for (let i = 0; i < 16; i++) colEl.children[i].className = "slot off";
+  }
+
+  function setSlot(colEl, idx, cls){
+    if (!colEl) return;
+    if (idx < 0 || idx > 15) return;
+    colEl.children[idx].className = "slot " + cls;
+  }
+
+  function clamp16(v){
+    return Math.max(0, Math.min(16, Math.round(v || 0)));
+  }
+
+  function buildKittCoreIndices(level){
+    const lv = clamp16(level);
+    const centerTop = 7;
+    const centerBottom = 8;
+    const pairs = Math.floor(lv / 2);
+    const hasExtra = lv % 2;
+
+    const core = [];
+    for (let p = 0; p < pairs; p++){
+      core.push(centerTop - p);
+      core.push(centerBottom + p);
+    }
+    if (hasExtra) core.push(centerTop - pairs);
+    return core.sort((a,b)=>a-b);
+  }
+
+  function buildTailAroundCore(coreIdx){
+    if (!coreIdx.length) return [];
+    const s = new Set(coreIdx);
+    const topMost = coreIdx[0];
+    const bottomMost = coreIdx[coreIdx.length - 1];
+    const tail = [];
+
+    if (topMost > 0 && !s.has(topMost - 1)) tail.push([topMost - 1, 1]);
+    if (topMost > 1 && !s.has(topMost - 2)) tail.push([topMost - 2, 2]);
+    if (bottomMost < 15 && !s.has(bottomMost + 1)) tail.push([bottomMost + 1, 1]);
+    if (bottomMost < 14 && !s.has(bottomMost + 2)) tail.push([bottomMost + 2, 2]);
+
+    return tail;
+  }
+
+  function halfFlipIndex(i){
+    return (i <= 7) ? i + 8 : i - 8;
+  }
+
+  function paintFromCoreAndTail(colEl, coreIdx, tailIdxLv, colorClass, dimClass, dimClass2){
+    clearColumn(colEl);
+    coreIdx.forEach(i => setSlot(colEl, i, colorClass));
+    tailIdxLv.forEach(([i,lv]) => setSlot(colEl, i, lv === 1 ? dimClass : dimClass2));
+  }
+
+  function paintKittColumn(colEl, level, colorClass, dimClass, dimClass2){
+    const core = buildKittCoreIndices(level);
+    const tail = buildTailAroundCore(core);
+    paintFromCoreAndTail(colEl, core, tail, colorClass, dimClass, dimClass2);
+  }
+
+  function paintKittColumnHalfFlipWithTail(colEl, level, colorClass, dimClass, dimClass2){
+    const core = buildKittCoreIndices(level);
+    const tail = buildTailAroundCore(core);
+
+    const coreFlipped = core.map(halfFlipIndex).sort((a,b)=>a-b);
+    const tailFlipped = tail.map(([i,lv]) => [halfFlipIndex(i), lv]).sort((a,b)=>a[0]-b[0]);
+
+    paintFromCoreAndTail(colEl, coreFlipped, tailFlipped, colorClass, dimClass, dimClass2);
+  }
+
+  // ===== ESP32 原始 DAMAGE_KITT frames =====
+  const BKITT_FRAMES = [
+    [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,1,0],[0,0,0],[0,1,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
+    [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,2,0],[0,1,0],[0,3,0],[0,0,0],[0,1,0],[0,0,0],[0,1,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
+    [[0,0,0],[0,0,0],[0,1,0],[0,2,0],[0,1,0],[0,3,1],[1,3,1],[2,0,1],[3,3,1],[0,1,1],[0,1,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
+    [[0,0,0],[0,0,0],[0,2,0],[0,3,0],[0,2,0],[0,3,1],[2,3,2],[3,1,3],[3,3,3],[2,3,1],[0,1,1],[0,3,0],[0,1,0],[0,1,0],[0,0,0],[0,0,0]],
+    [[0,0,0],[0,0,0],[0,3,0],[0,3,0],[0,3,0],[1,3,3],[2,3,1],[3,1,1],[3,3,3],[2,3,3],[0,1,2],[0,3,1],[1,1,0],[0,1,0],[0,3,0],[0,1,0]],
+    [[0,0,0],[0,0,0],[0,3,0],[0,3,0],[1,3,1],[1,3,2],[2,3,2],[3,1,3],[3,3,3],[3,3,3],[0,1,1],[1,3,2],[1,1,0],[0,1,0],[0,3,0],[0,3,0]],
+    [[0,2,0],[1,1,1],[2,3,0],[1,3,2],[2,2,2],[2,3,3],[3,3,3],[3,1,3],[3,3,3],[3,3,3],[1,1,1],[2,3,2],[2,1,0],[1,1,2],[0,3,0],[0,3,0]],
+    [[0,3,0],[2,1,2],[2,3,0],[1,3,2],[2,2,2],[2,3,3],[3,3,3],[3,1,3],[3,3,3],[3,3,3],[1,1,1],[2,3,2],[2,1,0],[0,1,2],[2,3,1],[0,3,0]]
+  ];
+
+  function paletteIndexToClass(cIdx){
+    // ESP32 pKitt: {0=black, 1=DARKER_RED, 2=DIM_RED, 3=RED}
+    if (cIdx === 0) return "off";
+    if (cIdx === 1) return "dim-red2";
+    if (cIdx === 2) return "dim-red";
+    return "red";
+  }
+
+  function renderFrameMatrix(frame){
+    ensureBars();
+    const colL = getCol("vuColL");
+    const colM = getCol("vuColM");
+    const colR = getCol("vuColR");
+    if (!colL || !colM || !colR) return;
+
+    for (let y = 0; y < 16; y++){
+      setSlot(colL, y, paletteIndexToClass(frame[y][0]));
+      setSlot(colM, y, paletteIndexToClass(frame[y][1]));
+      setSlot(colR, y, paletteIndexToClass(frame[y][2]));
+    }
+  }
+
+  function paintMode8Flame(colEl, level){
+    clearColumn(colEl);
+    const lv = clamp16(level);
+    if (lv <= 0) return;
+
+    // 16階對半：每半區由上而下 = 暗紅、紅、橘、黃、綠、綠、綠、綠
+    // top half 0..7, bottom half 8..15 對稱
+    const paletteTop = ["dim-red", "red", "orange", "yellow", "green", "green", "green", "green"];
+    const paletteBottom = ["green", "green", "green", "green", "yellow", "orange", "red", "dim-red"];
+
+    const pairs = Math.floor(lv / 2);
+    const hasExtra = lv % 2;
+
+    for (let p = 0; p < pairs; p++){
+      const up = 7 - p;
+      const dn = 8 + p;
+      setSlot(colEl, up, paletteTop[up]);
+      setSlot(colEl, dn, paletteBottom[p]);
+    }
+
+    if (hasExtra){
+      const idx = 7 - pairs;
+      if (idx >= 0) setSlot(colEl, idx, paletteTop[idx]);
+    }
+  }
+
+  function renderPanelLamp(color, on){
+    ensurePanel();
+    const p = $("panelLamp");
+    if (!p) return;
+    p.className = "panelLamp";
+    if (on){
+      p.classList.add(color === "red" ? "redOn" : "yellowOn");
+      ui.panelCooling = false;
+    ui.mode9Hold = Array(12).fill(0);
+    } else if (ui.panelCooling){
+      p.classList.add("cooling");
+      p.classList.add(color === "red" ? "redOn" : "yellowOn");
+    }
+  }
+
+  function triggerPanelCooling(color){
+    ui.panelCooling = true;
+    renderPanelLamp(color, false);
+    clearTimeout(triggerPanelCooling._t);
+    triggerPanelCooling._t = setTimeout(()=>{
+      ui.panelCooling = false;
+    ui.mode9Hold = Array(12).fill(0);
+      renderPanelLamp(color, false);
+    }, 80);
+  }
+
+  function renderTalkPanelMode(color, level, modeNo){
+    const now = Date.now();
+    ensurePanel();
+
+    if (!ui.hasVu && ui.displayMode === modeNo){
+      const previewOn = (now % 760) < 300;
+      if (previewOn){
+        ui.panelCooling = false;
+    ui.mode9Hold = Array(12).fill(0);
+        renderPanelLamp(color, true);
+      } else {
+        triggerPanelCooling(color);
+      }
+      return;
+    }
+
+    if (level <= 2){
+      triggerPanelCooling(color);
+      return;
+    }
+
+    const lv = clamp16(level);
+
+    const period = Math.max(85, 250 - lv * 10);
+    const duty   = Math.min(0.84, 0.46 + lv * 0.021);
+    const phase  = now % period;
+    const notch  = (now % 920) < 65;
+
+    if (notch){
+      triggerPanelCooling(color);
+      return;
+    }
+
+    if (phase < period * duty){
+      ui.panelCooling = false;
+    ui.mode9Hold = Array(12).fill(0);
+      renderPanelLamp(color, true);
+    } else {
+      triggerPanelCooling(color);
+    }
+  }
+
+  function renderMode1(m){
+    ensureBars();
+    const side = clamp16(m - 4);
+    const mid  = clamp16(m);
+    paintKittColumn(getCol("vuColL"), side, "red", "dim-red", "dim-red2");
+    paintKittColumn(getCol("vuColM"), mid,  "red", "dim-red", "dim-red2");
+    paintKittColumn(getCol("vuColR"), side, "red", "dim-red", "dim-red2");
+  }
+
+  function renderMode2(m){
+    ensureBars();
+    const side = clamp16(m - 4);
+    const mid  = clamp16(m);
+    paintKittColumnHalfFlipWithTail(getCol("vuColL"), side, "yellow", "dim-yellow", "dim-yellow2");
+    paintKittColumn(getCol("vuColM"), mid,  "yellow", "dim-yellow", "dim-yellow2");
+    paintKittColumnHalfFlipWithTail(getCol("vuColR"), side, "yellow", "dim-yellow", "dim-yellow2");
+  }
+
+  function renderMode3(m){
+    renderTalkPanelMode("red", m, 3);
+  }
+
+  function renderMode4(m){
+    renderTalkPanelMode("yellow", m, 4);
+  }
+
+  function renderMode5(m){
+    // 比例上修一階：同樣輸入下顯示少一階，避免太容易滿格卡住
+    const lv = clamp16(m);
+    if (lv <= 1){
+      ensureBars();
+      renderFrameMatrix(Array.from({length:16}, ()=>[0,0,0]));
+      return;
+    }
+    const fIdx = Math.max(0, Math.min(7, lv - 2));
+    renderFrameMatrix(BKITT_FRAMES[fIdx]);
+  }
+
+  function renderMode6(m){
+    ensureBars();
+    const side = clamp16(m - 4);
+    const mid  = clamp16(m);
+    paintKittColumn(getCol("vuColL"), side, "blue", "dim-blue", "dim-blue2");
+    paintKittColumn(getCol("vuColM"), mid,  "blue", "dim-blue", "dim-blue2");
+    paintKittColumn(getCol("vuColR"), side, "blue", "dim-blue", "dim-blue2");
+  }
+
+  function renderMode7(m){
+    ensureBars();
+    const side = clamp16(m - 4);
+    const mid  = clamp16(m);
+    paintKittColumnHalfFlipWithTail(getCol("vuColL"), side, "green", "dim-green", "dim-green2");
+    paintKittColumn(getCol("vuColM"), mid,  "green", "dim-green", "dim-green2");
+    paintKittColumnHalfFlipWithTail(getCol("vuColR"), side, "green", "dim-green", "dim-green2");
+  }
+
+  function renderMode8(vl, vm, vr){
+    ensureBars();
+    paintMode8Flame(getCol("vuColL"), clamp16(vl));
+    paintMode8Flame(getCol("vuColM"), clamp16(vm));
+    paintMode8Flame(getCol("vuColR"), clamp16(vr));
+  }
+
+  function lerp(a, b, t){
+    return a + (b - a) * t;
+  }
+
+  function buildFakeSpectrumTargets(vl, vm, vr, count){
+    const out = [];
+    const now = Date.now() * 0.01;
+    for (let i = 0; i < count; i++){
+      const t = i / (count - 1);
+      let base;
+      if (t <= 0.5){
+        base = lerp(vl, vm, t / 0.5);
+      } else {
+        base = lerp(vm, vr, (t - 0.5) / 0.5);
+      }
+      const dome = 1.0 - Math.abs(t - 0.5) * 0.45;
+      const ripple = Math.sin(now + i * 0.75) * 1.4 + Math.sin(now * 0.53 + i * 1.1) * 0.8;
+      const v = Math.max(0, Math.min(16, base * dome + ripple));
+      out.push(v);
+    }
+    return out;
+  }
+
+  function renderFakeSpectrum(vl, vm, vr){
+    ensureSpectrum();
+    const c = $("specCanvas");
+    if (!c) return;
+    const ctx = c.getContext("2d");
+    if (!ctx) return;
+
+    const W = c.width;
+    const H = c.height;
+    const barCount = 12;
+    const gap = 4;
+    const barW = Math.floor((W - gap * (barCount - 1)) / barCount);
+    const targets = buildFakeSpectrumTargets(clamp16(vl), clamp16(vm), clamp16(vr), barCount);
+
+    if (!Array.isArray(ui.mode9Hold) || ui.mode9Hold.length !== barCount){
+      ui.mode9Hold = Array(barCount).fill(0);
+    }
+
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = "#050505";
+    ctx.fillRect(0, 0, W, H);
+
+    // faint grid
+    ctx.strokeStyle = "rgba(255,255,255,0.05)";
+    ctx.lineWidth = 1;
+    for (let gy = 0; gy <= 8; gy++){
+      const y = Math.round((H - 8) - gy * ((H - 16) / 8));
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(W, y);
+      ctx.stroke();
+    }
+
+    for (let i = 0; i < barCount; i++){
+      const x = i * (barW + gap);
+      const v = targets[i];
+      ui.mode9Hold[i] = Math.max(v, ui.mode9Hold[i] - 0.55);
+
+      const h = Math.max(2, Math.round((v / 16) * (H - 18)));
+      const peakH = Math.max(2, Math.round((ui.mode9Hold[i] / 16) * (H - 18)));
+      const y = H - h - 4;
+      const py = H - peakH - 4;
+
+      const grad = ctx.createLinearGradient(0, y, 0, H);
+      grad.addColorStop(0.00, "#9fd1ff");
+      grad.addColorStop(0.28, "#55a0ff");
+      grad.addColorStop(0.56, "#4aea52");
+      grad.addColorStop(0.78, "#ffe75a");
+      grad.addColorStop(1.00, "#ff5555");
+      ctx.fillStyle = grad;
+      ctx.fillRect(x, y, barW, h);
+
+      // glow
+      ctx.fillStyle = "rgba(255,255,255,0.06)";
+      ctx.fillRect(x, y, barW, 3);
+
+      // peak hold line
+      ctx.fillStyle = "rgba(255,255,255,0.85)";
+      ctx.fillRect(x, py, barW, 2);
+    }
+  }
+
+  function renderMode9(vl, vm, vr){
+    renderFakeSpectrum(vl, vm, vr);
+  }
+
+  function renderOscWaveform(vl, vm, vr){
+    ensureWaveform();
+    const c = $("waveCanvas");
+    if (!c) return;
+    const ctx = c.getContext("2d");
+    if (!ctx) return;
+
+    const W = c.width;
+    const H = c.height;
+    const centerY = Math.round(H * 0.5);
+    const usableAmp = Math.round(H * 0.46);   // 接近畫面極限的大振幅
+
+    if (!Array.isArray(ui.mode10WaveR) || ui.mode10WaveR.length !== W){
+      ui.mode10WaveR = Array(W).fill(centerY);
+      ui.mode10WaveB = Array(W).fill(centerY);
+      ui.mode10WaveG = Array(W).fill(centerY);
+      ui.mode10Phase = 0;
+      ui.mode10LastR = centerY;
+      ui.mode10LastB = centerY;
+      ui.mode10LastG = centerY;
+    }
+
+    const l = clamp16(vl);
+    const m = clamp16(vm);
+    const r = clamp16(vr);
+
+    const amp = (m / 16) * usableAmp;
+    const balance = (r - l) / 16;
+
+    // 沒聲音時靠近中線；有聲音時才放大到現在的大小
+    const active = Math.min(1, Math.max(0, (m - 1) / 15));
+
+    // 爆音瞬間衝頂：當中央音量很高時，額外給一個 attack boost
+    const blast = Math.max(0, (m - 10) / 6);   // m>10 開始明顯爆衝
+    const attackBoost = 1.0 + blast * 2.2;     // 最高約 3.2x 額外加成
+
+    // 正確方向：
+    // 1. 反應速度快：提高 scrollStep
+    // 2. 波形不要太密集：維持較低頻率
+    // 3. 斜率不要太高：後面用較小 stepLimit 壓住
+    const f1 = 0.18 + active * 0.42;
+    const f2 = 0.38 + Math.abs(balance) * 0.40 + active * 0.18;
+    const scrollStep = 5;
+
+    for (let s = 0; s < scrollStep; s++){
+      ui.mode10Phase += f1;
+
+      const baseNoise = (Math.sin(ui.mode10Phase * 3.2) + Math.sin(ui.mode10Phase * 4.9 + 0.8)) * (0.01 + active * 0.05);
+
+      // 安靜時振幅很小；有聲音時才拉到原本大幅度
+      // 再乘 attackBoost，讓爆音瞬間直接衝頂
+      const a1 = Math.max(0.35, amp * 4.20 * active * 3.0 * attackBoost);
+      const a2 = Math.max(0.28, amp * 3.40 * active * 3.0 * attackBoost);
+      const a3 = Math.max(0.24, amp * 2.90 * active * 3.0 * attackBoost);
+
+      let yR, yB, yG;
+      if (m <= 1){
+        yR = centerY + Math.sin(ui.mode10Phase * 1.05) * 0.45;
+        yB = centerY + Math.sin(ui.mode10Phase * 1.18 + 0.8) * 0.35;
+        yG = centerY + Math.sin(ui.mode10Phase * 0.92 + 1.4) * 0.30;
+      } else {
+        const c1 =
+          Math.sin(ui.mode10Phase * 0.82) * 0.98 +
+          Math.sin(ui.mode10Phase * (1.58 + f2 * 0.18) + balance * 1.6) * 0.26 +
+          Math.sin(ui.mode10Phase * 3.20 + 0.3) * 0.10 +
+          baseNoise;
+        const c2 =
+          Math.sin(ui.mode10Phase * 0.94 + 0.9) * 0.94 +
+          Math.sin(ui.mode10Phase * (1.78 + f2 * 0.16) + 1.1 - balance * 1.1) * 0.23 +
+          Math.sin(ui.mode10Phase * 3.70 + 1.1) * 0.09 +
+          baseNoise * 0.9;
+        const c3 =
+          Math.sin(ui.mode10Phase * 0.74 + 1.7) * 0.96 +
+          Math.sin(ui.mode10Phase * (1.92 + f2 * 0.15) + 2.0 + balance * 0.9) * 0.21 +
+          Math.sin(ui.mode10Phase * 4.10 + 0.5) * 0.08 +
+          baseNoise * 1.1;
+
+        yR = centerY + c1 * a1;
+        yB = centerY + c2 * a2;
+        yG = centerY + c3 * a3;
+      }
+
+      // 安靜時更穩，避免大振幅；有聲音時再放開
+      // 壓低斜率，避免尖銳密集；保留爆音時的衝頂空間
+      const stepLimit = 4 + active * 18 + blast * 16;
+      const limR = ui.mode10LastR + Math.max(-stepLimit, Math.min(stepLimit, yR - ui.mode10LastR));
+      const limB = ui.mode10LastB + Math.max(-stepLimit, Math.min(stepLimit, yB - ui.mode10LastB));
+      const limG = ui.mode10LastG + Math.max(-stepLimit, Math.min(stepLimit, yG - ui.mode10LastG));
+      ui.mode10LastR = limR;
+      ui.mode10LastB = limB;
+      ui.mode10LastG = limG;
+
+      ui.mode10WaveR.shift(); ui.mode10WaveR.push(limR);
+      ui.mode10WaveB.shift(); ui.mode10WaveB.push(limB);
+      ui.mode10WaveG.shift(); ui.mode10WaveG.push(limG);
+    }
+
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = "#050505";
+    ctx.fillRect(0, 0, W, H);
+
+    // Knight Rider 車機分析儀風格格線
+    ctx.strokeStyle = "rgba(218,166,74,0.08)";
+    ctx.lineWidth = 1;
+    for (let gy = 0; gy <= 8; gy++){
+      const y = Math.round(8 + gy * ((H - 16) / 8));
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(W, y);
+      ctx.stroke();
+    }
+    for (let gx = 0; gx <= 10; gx++){
+      const x = Math.round(gx * (W / 10));
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, H);
+      ctx.stroke();
+    }
+
+    // 中線
+    ctx.strokeStyle = "rgba(218,166,74,0.22)";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(0, centerY + 0.5);
+    ctx.lineTo(W, centerY + 0.5);
+    ctx.stroke();
+
+    function drawWave(arr, glow, core, wGlow, wCore){
+      ctx.strokeStyle = glow;
+      ctx.lineWidth = wGlow;
+      ctx.beginPath();
+      ctx.moveTo(0, arr[0]);
+      for (let x = 1; x < W; x++) ctx.lineTo(x, arr[x]);
+      ctx.stroke();
+
+      ctx.strokeStyle = core;
+      ctx.lineWidth = wCore;
+      ctx.beginPath();
+      ctx.moveTo(0, arr[0]);
+      for (let x = 1; x < W; x++) ctx.lineTo(x, arr[x]);
+      ctx.stroke();
+    }
+
+    // Knight Rider 車機分析儀：紅線主導，藍綠做輔助分析軌
+    drawWave(ui.mode10WaveB, "rgba(85,160,255,0.16)", "rgba(120,185,255,0.78)", 1.6, 0.55);
+    drawWave(ui.mode10WaveG, "rgba(70,255,90,0.15)",  "rgba(120,255,150,0.74)", 1.5, 0.52);
+    drawWave(ui.mode10WaveR, "rgba(255,40,40,0.34)",  "rgba(255,120,120,0.98)", 2.8, 0.95);
+
+    // 額外淡紅掃描殘影，更像車機分析儀
+    ctx.strokeStyle = "rgba(255,40,40,0.08)";
+    ctx.lineWidth = 5.0;
+    ctx.beginPath();
+    ctx.moveTo(0, ui.mode10WaveR[0]);
+    for (let x = 1; x < W; x++) ctx.lineTo(x, ui.mode10WaveR[x]);
+    ctx.stroke();
+  }
+
+  function renderMode10(vl, vm, vr){
+    renderOscWaveform(vl, vm, vr);
+  }
+
+  function renderDisplayByMode(mode, vuL, vuM, vuR){
+    switch(Number(mode || 1)){
+      case 1: return renderMode1(vuM);
+      case 2: return renderMode2(vuM);
+      case 3: return renderMode3(vuM);
+      case 4: return renderMode4(vuM);
+      case 5: return renderMode5(vuM);
+      case 6: return renderMode6(vuM);
+      case 7: return renderMode7(vuM);
+      case 8: return renderMode8(vuL, vuM, vuR);
+      case 9: return renderMode9(vuL, vuM, vuR);
+      case 10:return renderMode10(vuL, vuM, vuR);
+      default:return renderMode1(vuM);
+    }
+  }
+
+  function renderAudioMode(){
+    if (btnAudioLine) btnAudioLine.classList.toggle("active", ui.audioMode === "LINE");
+    if (btnAudioMic) btnAudioMic.classList.toggle("active", ui.audioMode === "MIC");
+    if (audioSourceStatus){
+      audioSourceStatus.textContent = "AUDIO SOURCE: " + (ui.audioMode ?? "-");
+    }
+  }
+
+  function parseNotify(text){
+    const raw = String(text || "").trim();
+    notifyStatus.textContent = raw ? raw : "STATE: -";
+
+    const stateText = raw.startsWith("STATE:") ? raw.slice(6) : raw;
+
+    const m = stateText.match(/\bMODE\s*=\s*(\d+)/i);
+    const g = stateText.match(/\bG\s*=\s*(\d+)/i);
+    const nano = stateText.match(/\bNANO\s*=\s*(NOR|AUTO|SPM|OFF)\b/i);
+    const step = stateText.match(/\bSTEP\s*=\s*([01]{4})\b/i);
+    const box = stateText.match(/\bBOX\s*=\s*([01]{10})\b/i);
+    const audio = stateText.match(/\bAUDIO\s*=\s*(LINE|MIC)\b/i);
+    const vu = stateText.match(/\bVU\s*=\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/i);
+
+    if (m){
+      ui.displayMode = parseInt(m[1], 10);
+      displayModeStatus.textContent = "DISPLAY MODE: " + ui.displayMode;
+      renderDisplayModeCards();
+    }
+    if (g){
+      ui.gain = parseInt(g[1], 10);
+      gainStatus.textContent = "GAIN: " + ui.gain;
+    }
+    if (nano){
+      const v = nano[1].toUpperCase();
+      ui.vehicleMode = (v === "OFF") ? null : v;
+      vehicleModeStatus.textContent = "PANP MODE: " + (ui.vehicleMode ?? "OFF");
+      renderVehicleMode();
+    }
+    if (step){
+      ui.step = step[1].split("").map(ch => ch === "1");
+      renderSteps();
+    }
+    if (box){
+      const bits10 = box[1].split("").map(ch => ch === "1");
+      syncBoxBits(bits10);
+      renderBoxes();
+    }
+    if (audio){
+      ui.audioMode = audio[1].toUpperCase();
+      renderAudioMode();
+    }
+    if (vu){
+      ui.hasVu = true;
+      ui.vuL = clamp16(parseInt(vu[1], 10) || 0);
+      ui.vuM = clamp16(parseInt(vu[2], 10) || 0);
+      ui.vuR = clamp16(parseInt(vu[3], 10) || 0);
+    }
+
+    renderDisplayByMode(ui.displayMode, ui.vuL, ui.vuM, ui.vuR);
+  }
+
+  function resetUiStates(){
+    ui.displayMode = null;
+    ui.gain = null;
+    ui.audioMode = null;
+    ui.vehicleMode = null;
+    ui.step = [false,false,false,false];
+    ui.boxL = [false,false,false,false,false];
+    ui.boxR = [false,false,false,false,false];
+    ui.vuL = 0;
+    ui.vuM = 0;
+    ui.vuR = 0;
+    ui.hasVu = false;
+    ui.panelCooling = false;
+    ui.mode9Hold = Array(12).fill(0);
+
+    displayModeStatus.textContent = "DISPLAY MODE: -";
+    vehicleModeStatus.textContent = "PANP MODE: -";
+    gainStatus.textContent = "GAIN: -";
+    notifyStatus.textContent = "STATE: -";
+    if (!device) {
+      setAccessStatus("TACTICAL ACCESS: NOT CHECKED");
+    }
+
+    renderDisplayModeCards();
+    renderSteps();
+    renderBoxes();
+    renderVehicleMode();
+    renderAudioMode();
+    setBarsHtml();
+    renderMode1(0);
+  }
+
+  function setConnectedUI(isConn){
+    ui.connected = isConn;
+
+    btnDisconnect.disabled = !isConn;
+    btnConnect.disabled = (device == null) || isConn || !accessAuthorized;
+    btnGainUp.disabled = !isConn;
+    btnGainDown.disabled = !isConn;
+    if (btnAudioLine) btnAudioLine.disabled = !isConn;
+    if (btnAudioMic) btnAudioMic.disabled = !isConn;
+
+    document.querySelectorAll(".modeCard").forEach(card=>{
+      card.disabled = !isConn;
+      card.style.pointerEvents = isConn ? "auto" : "none";
+      card.style.filter = isConn ? "none" : "grayscale(.45) brightness(.75)";
+    });
+
+    [
+      "step1Btn","step2Btn","step3Btn","step4Btn",
+      "nanoNorBtn","nanoAutoBtn","nanoSpmBtn",
+      "btnStartup","btnShutdown","btnAllOff","btnModeOff","btnCountdownOff","btnBoxOff","btnDTMF7","btnDTMF8","btnSendCustom"
+    ].forEach(id => $(id).disabled = !isConn);
+
+    bigModeZone.disabled = !isConn;
+    bigModeZone.style.pointerEvents = isConn ? "auto" : "none";
+
+    document.querySelectorAll(".sideBtn").forEach(btn=>{
+      btn.disabled = !isConn;
+      btn.style.pointerEvents = isConn ? "auto" : "none";
+    });
+
+    document.querySelectorAll(".dtmfKey").forEach(btn=>{
+      btn.disabled = !isConn;
+      btn.style.pointerEvents = isConn ? "auto" : "none";
+    });
+
+    statusText.textContent = isConn ? "LINK: ESTABLISHED" : "LINK: NOT CONNECTED";
+    scannerState.textContent = isConn ? "ACTIVE" : "OFFLINE";
+    scannerState.style.color = isConn ? "var(--red)" : "var(--dim)";
+    scanText.textContent = isConn ? "CONNECTED — SCAN SEQUENCE RUNNING" : "CONNECT TO ENABLE SCAN SEQUENCE";
+
+    if (isConn) startScanner();
+    else {
+      stopScanner();
+    
+
+  // ===== GPS AUTO NORMAL / PURSUIT =====
+  let gpsWatchId = null;
+  let gpsLastPoint = null;
+  let gpsAutoEnabled = false;
+  let gpsAutoLastMode = null;
+
+  function gpsStatus(text, kind=""){
+    const el = document.getElementById("gpsAutoStatus");
+    if (!el) return;
+    el.textContent = text;
+    el.classList.remove("ok", "warn");
+    if (kind) el.classList.add(kind);
+  }
+
+  function readGpsLimits(){
+    const lowEl = document.getElementById("gpsLowInput");
+    const highEl = document.getElementById("gpsHighInput");
+    let low = Number(lowEl?.value || 55);
+    let high = Number(highEl?.value || 60);
+    if (!Number.isFinite(low)) low = 55;
+    if (!Number.isFinite(high)) high = 60;
+    if (high <= low){
+      high = low + 5;
+      if (highEl) highEl.value = String(high);
+    }
+    return { low, high };
+  }
+
+  function haversineMeters(a, b){
+    const R = 6371000;
+    const toRad = d => d * Math.PI / 180;
+    const dLat = toRad(b.lat - a.lat);
+    const dLon = toRad(b.lon - a.lon);
+    const lat1 = toRad(a.lat);
+    const lat2 = toRad(b.lat);
+    const s = Math.sin(dLat/2)**2 + Math.cos(lat1)*Math.cos(lat2)*Math.sin(dLon/2)**2;
+    return 2 * R * Math.atan2(Math.sqrt(s), Math.sqrt(1-s));
+  }
+
+  function speedFromPosition(pos){
+    let speedKmh = Number.isFinite(pos.coords.speed) && pos.coords.speed !== null
+      ? pos.coords.speed * 3.6
+      : null;
+
+    const nowPoint = {
+      lat: pos.coords.latitude,
+      lon: pos.coords.longitude,
+      time: pos.timestamp || Date.now()
+    };
+
+    if (speedKmh === null && gpsLastPoint){
+      const dt = (nowPoint.time - gpsLastPoint.time) / 1000;
+      if (dt > 1){
+        const meters = haversineMeters(gpsLastPoint, nowPoint);
+        speedKmh = (meters / dt) * 3.6;
+      }
+    }
+    gpsLastPoint = nowPoint;
+    return speedKmh;
+  }
+
+  async function setGpsVehicleMode(targetMode){
+    if (!gpsAutoEnabled) return;
+    if (gpsAutoLastMode === targetMode && ui.vehicleMode === targetMode) return;
+
+    ui.vehicleMode = targetMode;
+    gpsAutoLastMode = targetMode;
+    vehicleModeStatus.textContent = "PANP MODE: " + (ui.vehicleMode ?? "OFF");
+    renderVehicleMode();
+
+    if (ui.connected){
+      await writeLine(targetMode === "SPM" ? "MODE=SPM" : "MODE=NOR");
+    }
+  }
+
+  async function handleGpsPosition(pos){
+    const speedKmh = speedFromPosition(pos);
+    const { low, high } = readGpsLimits();
+
+    if (speedKmh === null){
+      gpsStatus(`GPS AUTO: ON｜WAITING SPEED DATA｜LOW ${low} / HIGH ${high}`, "warn");
+      return;
+    }
+
+    const speedText = speedKmh.toFixed(1);
+    gpsStatus(`GPS AUTO: ON｜SPEED ${speedText} km/h｜LOW ${low} / HIGH ${high}`, "ok");
+
+    if (speedKmh >= high){
+      await setGpsVehicleMode("SPM");
+    } else if (speedKmh <= low){
+      await setGpsVehicleMode("NOR");
+    }
+  }
+
+  function handleGpsError(err){
+    gpsStatus(`GPS ERROR: ${err.message || err.code}`, "warn");
+  }
+
+  function stopGpsAuto(){
+    if (gpsWatchId !== null){
+      navigator.geolocation.clearWatch(gpsWatchId);
+      gpsWatchId = null;
+    }
+    gpsAutoEnabled = false;
+    gpsAutoLastMode = null;
+    gpsLastPoint = null;
+    const btn = document.getElementById("gpsAutoToggle");
+    if (btn){
+      btn.classList.remove("on");
+      btn.textContent = "GPS AUTO OFF";
+    }
+    gpsStatus("GPS AUTO: OFF");
+  }
+
+  function startGpsAuto(){
+    if (!navigator.geolocation){
+      gpsStatus("GPS AUTO: THIS BROWSER DOES NOT SUPPORT GPS", "warn");
+      return;
+    }
+    if (!window.isSecureContext){
+      gpsStatus("GPS AUTO: NEED HTTPS OR LOCALHOST", "warn");
+      return;
+    }
+    readGpsLimits();
+    gpsAutoEnabled = true;
+    gpsLastPoint = null;
+    const btn = document.getElementById("gpsAutoToggle");
+    if (btn){
+      btn.classList.add("on");
+      btn.textContent = "GPS AUTO ON";
+    }
+    gpsStatus("GPS AUTO: STARTING GPS...", "ok");
+    gpsWatchId = navigator.geolocation.watchPosition(handleGpsPosition, handleGpsError, {
+      enableHighAccuracy: true,
+      maximumAge: 1000,
+      timeout: 10000
+    });
+  }
+
+  const gpsToggleBtn = document.getElementById("gpsAutoToggle");
+  if (gpsToggleBtn){
+    gpsToggleBtn.addEventListener("click", ()=>{
+      if (gpsAutoEnabled) stopGpsAuto();
+      else startGpsAuto();
+    });
+  }
+
+  ["gpsLowInput", "gpsHighInput"].forEach(id=>{
+    const el = document.getElementById(id);
+    if (el){
+      el.addEventListener("change", ()=>{
+        const {low, high} = readGpsLimits();
+        if (gpsAutoEnabled) gpsStatus(`GPS AUTO: ON｜LOW ${low} / HIGH ${high}`, "ok");
+      });
+    }
+  });
+
+  resetUiStates();
+    }
+  }
+
+  async function doScanPickDevice(){
+    if (!navigator.bluetooth){
+      bleText.textContent = "BLE: NOT SUPPORTED (Use Chrome/Edge)";
+      alert("This browser does not support Web Bluetooth。");
+      return;
+    }
+
+    playOnce(sScan);
+    bleText.textContent = "BLE: READY";
+
+    device = await navigator.bluetooth.requestDevice({
+      acceptAllDevices: true,
+      optionalServices: [SVC_UUID],
+    });
+
+    deviceText.textContent = "DEVICE: " + (device.name && device.name.trim() ? device.name : "(Unnamed)");
+    idText.textContent = "VOICEBOX ACCESS ID: " + (device.id || "-");
+
+    accessAuthorized = false;
+    btnConnect.disabled = true;
+    await refreshTacticalAccess();
+  }
+
+  async function doConnect(){
+    if (!device || !accessAuthorized) return;
+    playOnce(sBtn);
+
+    try{
+      device.addEventListener("gattserverdisconnected", onDisconnected);
+      server = await device.gatt.connect();
+      const svc = await server.getPrimaryService(SVC_UUID);
+      rxChar = await svc.getCharacteristic(RX_UUID);
+
+      try{
+        txChar = await svc.getCharacteristic(TX_UUID);
+        if (txChar?.properties?.notify){
+          await txChar.startNotifications();
+          txChar.addEventListener("characteristicvaluechanged", (ev)=>{
+            const txt = new TextDecoder().decode(ev.target.value);
+            parseNotify(txt);
+          });
+        }
+      } catch(_) {}
+
+      setConnectedUI(true);
+      playOnce(sConn);
+    } catch(e){
+      alert("CONNECT FAILED\n" + (e?.message || e));
+      onDisconnected();
+    }
+  }
+
+  function doDisconnect(){
+    playOnce(sBtn);
+    try{
+      if (txChar){
+        try{ txChar.stopNotifications(); } catch(_){}
+      }
+      if (device?.gatt?.connected) device.gatt.disconnect();
+    } catch(_){}
+    onDisconnected();
+  }
+
+  function onDisconnected(){
+    server = null;
+    rxChar = null;
+    txChar = null;
+    setConnectedUI(false);
+  }
+
+  document.querySelectorAll(".modeCard").forEach(card=>{
+    card.addEventListener("click", async ()=>{
+      if (!ui.connected) return;
+      const m = Number(card.dataset.mode);
+      ui.displayMode = m;
+      renderDisplayModeCards();
+      displayModeStatus.textContent = "DISPLAY MODE: " + m;
+      playOnce(sBtn);
+      await writeChar(cmdForDisplayMode(m));
+      renderDisplayByMode(ui.displayMode, ui.vuL, ui.vuM, ui.vuR);
+    });
+  });
+
+  bigModeZone.addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    playOnce(sBtn);
+    await writeChar("m");
+    ui.displayMode = typeof ui.displayMode === "number" ? (ui.displayMode % 10) + 1 : 1;
+    renderDisplayModeCards();
+    displayModeStatus.textContent = "DISPLAY MODE: " + ui.displayMode;
+    renderDisplayByMode(ui.displayMode, ui.vuL, ui.vuM, ui.vuR);
+  });
+
+
+  async function playDTMF7(){
+    await writeLine("DTMF=7,400");
+  }
+
+  async function playDTMF8(){
+    await writeLine("DTMF=8,400");
+  }
+
+  async function countdownOffAll(sendDtmf = false){
+    ui.step = [false,false,false,false];
+    renderSteps();
+
+    const lines = ["STEP1OFF","STEP2OFF","STEP3OFF","STEP4OFF"];
+    if (sendDtmf) lines.push("DTMF=7,400");
+    await writeLinesBulk(lines);
+  }
+
+  async function boxOffAll(sendDtmf = false){
+    for (let i = 0; i < 5; i++){
+      ui.boxL[i] = false;
+      ui.boxR[i] = false;
+    }
+    renderBoxes();
+
+    const lines = [];
+    for (let i = 0; i < 5; i++){
+      lines.push(buildBoxHalfCmd("L", i, false));
+      lines.push(buildBoxHalfCmd("R", i, false));
+    }
+    if (sendDtmf) lines.push("DTMF=8,400");
+    await writeLinesBulk(lines);
+  }
+
+  async function toggleStep(idx){
+    if (!ui.connected) return;
+    ui.step[idx] = !ui.step[idx];
+    renderSteps();
+    playOnce(sBtn);
+    await writeLine(`STEP${idx + 1}${ui.step[idx] ? "ON" : "OFF"}`);
+  }
+
+  $("step1Btn").addEventListener("click", ()=>toggleStep(0));
+  $("step2Btn").addEventListener("click", ()=>toggleStep(1));
+  $("step3Btn").addEventListener("click", ()=>toggleStep(2));
+  $("step4Btn").addEventListener("click", ()=>toggleStep(3));
+
+  async function toggleBox(side, idx){
+    if (!ui.connected) return;
+    const arr = side === "L" ? ui.boxL : ui.boxR;
+    arr[idx] = !arr[idx];
+    renderBoxes();
+    playOnce(sBtn);
+    await writeLine(buildBoxHalfCmd(side, idx, arr[idx]));
+  }
+
+  document.querySelectorAll(".sideBtn").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      toggleBox(btn.dataset.side, Number(btn.dataset.box) - 1);
+    });
+  });
+
+  $("nanoNorBtn").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    playOnce(sBtn);
+    ui.vehicleMode = (ui.vehicleMode === "NOR") ? null : "NOR";
+    vehicleModeStatus.textContent = "PANP MODE: " + (ui.vehicleMode ?? "OFF");
+    renderVehicleMode();
+    await writeLine(ui.vehicleMode === "NOR" ? "MODE=NOR" : "MODE=OFF");
+  });
+
+  $("nanoAutoBtn").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    playOnce(sBtn);
+    ui.vehicleMode = (ui.vehicleMode === "AUTO") ? null : "AUTO";
+    vehicleModeStatus.textContent = "PANP MODE: " + (ui.vehicleMode ?? "OFF");
+    renderVehicleMode();
+    await writeLine(ui.vehicleMode === "AUTO" ? "MODE=AUTO" : "MODE=OFF");
+  });
+
+  $("nanoSpmBtn").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    playOnce(sBtn);
+    ui.vehicleMode = (ui.vehicleMode === "SPM") ? null : "SPM";
+    vehicleModeStatus.textContent = "PANP MODE: " + (ui.vehicleMode ?? "OFF");
+    renderVehicleMode();
+    await writeLine(ui.vehicleMode === "SPM" ? "MODE=SPM" : "MODE=OFF");
+  });
+
+  if (btnAudioLine){
+    btnAudioLine.addEventListener("click", async ()=>{
+      if (!ui.connected) return;
+      playOnce(sBtn);
+      ui.audioMode = "LINE";
+      renderAudioMode();
+      await writeLine("AUDIO=LINE");
+    });
+  }
+
+  if (btnAudioMic){
+    btnAudioMic.addEventListener("click", async ()=>{
+      if (!ui.connected) return;
+      playOnce(sBtn);
+      ui.audioMode = "MIC";
+      renderAudioMode();
+      await writeLine("AUDIO=MIC");
+    });
+  }
+
+  btnGainUp.addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    playOnce(sBtn);
+    await writeChar("+");
+  });
+
+  btnGainDown.addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    playOnce(sBtn);
+    await writeChar("-");
+  });
+
+  $("btnStartup").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    playOnce(sBtn);
+    ui.vehicleMode = "NOR";
+    vehicleModeStatus.textContent = "PANP MODE: NOR";
+    renderVehicleMode();
+    await writeLine("STARTUP");
+  });
+
+  $("btnShutdown").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    playOnce(sBtn);
+    ui.vehicleMode = null;
+    vehicleModeStatus.textContent = "PANP MODE: OFF";
+    renderVehicleMode();
+    await writeLine("SHUTDOWN");
+  });
+
+  $("btnCountdownOff").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    await writeLine("COUNTDOWNOFF");
+    await writeLine("DTMF=7,400");
+  });
+
+  $("btnBoxOff").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    await writeLine("BOXOFF");
+    await writeLine("DTMF=8,400");
+  });
+
+  $("btnAllOff").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    await writeLine("ALLOFF");
+    await writeLine("DTMF=8,400");
+  });
+
+  $("btnModeOff").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    playOnce(sBtn);
+    await writeLine("MODE=OFF");
+  });
+
+  $("btnDTMF7").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    await writeLine("DTMF=7,400");
+  });
+
+  $("btnDTMF8").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    await writeLine("DTMF=8,400");
+  });
+
+  $("btnSendCustom").addEventListener("click", async ()=>{
+    if (!ui.connected) return;
+    const v = $("dtmfInput").value.trim();
+    if (!v) return;
+    playOnce(sBtn);
+    await writeLine(v);
+  });
+
+
+  async function sendMappedDTMF(key, duration = 400){
+    if (!ui.connected) return;
+    if (!key) return;
+    await writeLine(`DTMF=${key},${duration}`);
+  }
+
+  document.querySelectorAll(".dtmfKey").forEach(btn=>{
+    btn.addEventListener("click", async ()=>{
+      await sendMappedDTMF(btn.dataset.dtmfKey, 400);
+    });
+  });
+
+
+  btnScan.addEventListener("click", async ()=>{ try{ await doScanPickDevice(); } catch(_){} });
+  btnConnect.addEventListener("click", async ()=>{ await doConnect(); });
+  btnDisconnect.addEventListener("click", ()=>{ doDisconnect(); });
+
+  document.querySelectorAll(".panelKey").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      playPanelClip(btn.dataset.audio);
+
+      btn.classList.remove("glow");
+      void btn.offsetWidth;
+      btn.classList.add("glow");
+      clearTimeout(btn._glowTimer);
+      btn._glowTimer = setTimeout(()=>{
+        btn.classList.remove("glow");
+      }, 3000);
+
+      if (btn.classList.contains("s12OverlayBtn")){
+        const lamp = btn.parentElement ? btn.parentElement.querySelector(".s12Lamp.red") : null;
+        if (lamp){
+          lamp.classList.remove("active");
+          void lamp.offsetWidth;
+          lamp.classList.add("active");
+          clearTimeout(lamp._lampTimer);
+          lamp._lampTimer = setTimeout(()=>{
+            lamp.classList.remove("active");
+          }, 3000);
+        }
+      }
+
+      const board = btn.closest(".auxBoard");
+      if (board){
+        const side = btn.dataset.arrow === "right" ? "right" : "left";
+        const arrow = board.querySelector(`.auxArrow.${side}`);
+        if (arrow){
+          arrow.classList.remove("glow");
+          void arrow.offsetWidth;
+          arrow.classList.add("glow");
+          clearTimeout(arrow._glowTimer);
+          arrow._glowTimer = setTimeout(()=>{
+            arrow.classList.remove("glow");
+          }, 5000);
+        }
+      }
+    });
+  });
+
+  resetUiStates();
+  setConnectedUI(false);
+})();
+</script>
+</body>
+</html>
