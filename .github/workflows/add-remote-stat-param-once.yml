@@ -1,0 +1,55 @@
+name: Add VoiceBox Remote Stat Param Once
+
+on:
+  push:
+    paths:
+      - '.github/workflows/add-remote-stat-param-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add per-page remote parameter only
+        shell: python
+        run: |
+          from pathlib import Path
+
+          files = {
+              '1-2Sea-GPS.html': '1-2',
+              '3-4Sea-GPS.html': '3-4',
+          }
+
+          needle = '  url.searchParams.set("id", voiceBoxId || "");\n  url.searchParams.set("callback", callbackName);'
+
+          for name, remote in files.items():
+              p = Path(name)
+              text = p.read_text(encoding='utf-8')
+              replacement = (
+                  '  url.searchParams.set("id", voiceBoxId || "");\n'
+                  f'  url.searchParams.set("remote", "{remote}");\n'
+                  '  url.searchParams.set("callback", callbackName);'
+              )
+              if replacement in text:
+                  continue
+              count = text.count(needle)
+              if count != 1:
+                  raise SystemExit(f'Expected exactly one target in {name}, found {count}')
+              p.write_text(text.replace(needle, replacement, 1), encoding='utf-8')
+      - name: Verify only intended lines changed
+        shell: bash
+        run: |
+          git diff --check
+          git diff -- 1-2Sea-GPS.html 3-4Sea-GPS.html
+      - name: Commit
+        shell: bash
+        run: |
+          if git diff --quiet -- 1-2Sea-GPS.html 3-4Sea-GPS.html; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add 1-2Sea-GPS.html 3-4Sea-GPS.html
+          git commit -m 'Track Tactical Remote page usage by season'
+          git push
