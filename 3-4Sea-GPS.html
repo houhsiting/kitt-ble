@@ -1811,6 +1811,7 @@ body{min-width:320px}
       const url = new URL(TACTICAL_ACCESS_API_URL);
       url.searchParams.set("action", "check");
       url.searchParams.set("id", voiceBoxId || "");
+      url.searchParams.set("remote", "3-4");
       url.searchParams.set("callback", callbackName);
       script.src = url.toString();
       document.head.appendChild(script);
